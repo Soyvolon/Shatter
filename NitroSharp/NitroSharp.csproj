@@ -1,0 +1,64 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>NitroSharp</RootNamespace>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DSharpPlus" Version="4.0.0-nightly-00725" />
+    <PackageReference Include="DSharpPlus.CommandsNext" Version="4.0.0-nightly-00725" />
+    <PackageReference Include="DSharpPlus.Interactivity" Version="4.0.0-nightly-00725" />
+    <PackageReference Include="DSharpPlus.Rest" Version="4.0.0-nightly-00725" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.8">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Npgsql" Version="4.1.4" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.1.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Commands\Dev\" />
+    <Folder Include="Commands\Filter\" />
+    <Folder Include="Commands\Games\" />
+    <Folder Include="Commands\Image\" />
+    <Folder Include="Commands\Info\" />
+    <Folder Include="Commands\Irc\" />
+    <Folder Include="Commands\Memberlog\" />
+    <Folder Include="Commands\Memes\" />
+    <Folder Include="Commands\Mod\" />
+    <Folder Include="Commands\Music\" />
+    <Folder Include="Commands\Utility\" />
+    <Folder Include="Commands\Tag\" />
+    <Folder Include="Commands\Poll\" />
+    <Folder Include="Configs\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Configs\bot_config.json">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="Configs\database_config.json">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

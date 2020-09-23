@@ -1,0 +1,49 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Text;
+
+namespace NitroSharp.Structures
+{
+    public class Wallet
+    {
+        [Key]
+        public ulong UserId { get; private set; }
+
+        public int Balance { get; private set; }
+
+        public Wallet(ulong userId)
+        {
+            this.UserId = userId;
+        }
+
+        /// <summary>
+        /// Adds to the users balance.
+        /// </summary>
+        /// <param name="amount">Ammount to add.</param>
+        /// <returns>The new balance.</returns>
+        public int Add(int amount)
+        {
+            Balance += amount;
+            return Balance;
+        }
+
+        /// <summary>
+        /// Subtracts to the users balance.
+        /// </summary>
+        /// <param name="amount">Ammount to subtract.</param>
+        /// <returns>The new balance.</returns>
+        public int Subtract(int amount)
+        {
+            Balance -= amount;
+            return Balance;
+        }
+
+        /// <summary>
+        /// Checks to see if the user has enough money.
+        /// </summary>
+        /// <param name="amount">Value to check against.</param>
+        /// <returns>True if the user has more money than the value passed to <paramref name="amount"/></returns>
+        public bool HasEnough(int amount = 0) => Balance >= amount;
+    }
+}
