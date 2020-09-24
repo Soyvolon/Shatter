@@ -11,7 +11,7 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.Entities;
 using DSharpPlus.Interactivity;
 
-using NitroSharp.Modules;
+using NitroSharp.Services;
 using NitroSharp.Structures;
 using NitroSharp.Utils;
 
@@ -25,7 +25,7 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace NitroSharp
 {
-    public class DiscordBot : ModuleBase
+    public class DiscordBot
     {
         #region Boot Status
         public enum BootStatus { offline, booting, ready }
@@ -36,16 +36,16 @@ namespace NitroSharp
         public static IEnumerable<string> CommandList { get; private set; }
         public DatabaseConfig Database { get; private set; }
         public BotConfig Config { get; private set; }
+        public DiscordShardedClient Client { get; private set; }
+        public DiscordRestClient Rest { get; private set; }
         #endregion
 
         #region Private Variables
-        private readonly HashSet<ModuleBase> modules = new HashSet<ModuleBase>();
-        private readonly HashSet<Type> toInitalize = new HashSet<Type>();
-        private LogLevel logLevel;
-        private bool test;
+        private readonly LogLevel logLevel;
+        private readonly bool test;
         #endregion
 
-        public DiscordBot(bool test = false) : base(null, null)
+        public DiscordBot(bool test = false)
         {
             logLevel = LogLevel.Debug;
             this.test = test;
@@ -153,49 +153,8 @@ namespace NitroSharp
         }
         #endregion
 
-        #region Modules
-        public DiscordBot AddModule<T>()
-        {
-            return AddModule(typeof(T));
-        }
-
-        /// <summary>
-        /// Add a ModuleBase type to the used modules.
-        /// </summary>
-        /// <param name="type">Type of ModuleBase to add</param>
-        public DiscordBot AddModule(Type type)
-        {
-            toInitalize.Add(type);
-
-            return this;
-        }
-
-        private void InitalizeModules()
-        {
-            foreach (Type type in toInitalize)
-            {
-                ModuleBase m = (ModuleBase)Activator.CreateInstance(type, args: new object[] { Client, Rest, this });
-                modules.Add(m);
-            }
-        }
-
-        public ModuleBase GetModule<T>()
-        {
-            return GetModule(typeof(T));
-        }
-
-        public ModuleBase GetModule(Type type)
-        {
-            foreach (ModuleBase m in modules)
-                if (type == m.GetType())
-                    return m;
-
-            return null;
-        }
-        #endregion
-
         #region Initialize
-        public override async Task InitializeAsync()
+        public async Task InitializeAsync()
         {
             Boot = BootStatus.booting;
 
@@ -224,11 +183,6 @@ namespace NitroSharp
             var interactionConfig = GetInteractivityConfiguration();
 
             await Client.UseInteractivityAsync(interactionConfig).ConfigureAwait(false);
-
-            InitalizeModules();
-
-            foreach (ModuleBase m in modules)
-                await m.InitializeAsync().ConfigureAwait(false);
         }
 
         private DiscordConfiguration GetDiscordConfiguration()
@@ -248,7 +202,8 @@ namespace NitroSharp
         private CommandsNextConfiguration GetCommandsNextConfiguration()
         {
             var services = new ServiceCollection()
-                .AddScoped<NSDatabaseModel>();
+                .AddScoped<NSDatabaseModel>()
+                .AddSingleton<ImageService>();
 
             var ccfg = new CommandsNextConfiguration
             {
@@ -327,13 +282,10 @@ namespace NitroSharp
         #endregion
 
         #region Start
-        public override async Task StartAsync()
+        public async Task StartAsync()
         {
             await Client.StartAsync().ConfigureAwait(false);
             await Rest.InitializeAsync().ConfigureAwait(false);
-
-            foreach (ModuleBase m in modules)
-                await m.StartAsync().ConfigureAwait(false);
 
             Boot = BootStatus.ready;
         }

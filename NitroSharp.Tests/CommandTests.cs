@@ -14,7 +14,7 @@ using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 
 using NitroSharp.Commands.Config;
 using NitroSharp.Extensions;
-using NitroSharp.Modules;
+using NitroSharp.Services;
 
 using NUnit.Framework;
 
@@ -40,9 +40,6 @@ namespace NitroSharp.Tests
         {
 
             Bot = new DiscordBot(true); // Designate test run.
-            Program.Bot = Bot;
-
-            Bot.AddModule<ImageModule>();
 
             await Bot.InitializeAsync();
 
@@ -341,6 +338,33 @@ namespace NitroSharp.Tests
             var res_2 = await cmd_2;
 
             Assert.True(res_1.IsSuccessful && res_2.IsSuccessful, "Both commands should have executed.");
+        }
+
+        [Order(11)]
+        [Test]
+        public async Task CatCommandTest()
+        {
+            Commands.TryGetValue("cat", out Command cmd);
+
+            Assert.NotNull(cmd, "Cat command not found.");
+
+            var ctx = CNext.CreateFakeContext(Actors[0], TestingChannel, $"]cat", "]", cmd);
+
+            var res = await cmd.ExecuteAsync(ctx);
+
+            Assert.True(res.IsSuccessful, "Command should have executed.");
+
+            ctx = CNext.CreateFakeContext(Actors[0], TestingChannel, $"]cat asdfadsfasf", "]", cmd, $"asdfadsfasf");
+
+            res = await cmd.ExecuteAsync(ctx);
+
+            Assert.False(res.IsSuccessful, "Command should have failed.");
+
+            ctx = CNext.CreateFakeContext(Actors[0], TestingChannel, $"]cats", "]", cmd);
+
+            res = await cmd.ExecuteAsync(ctx);
+
+            Assert.True(res.IsSuccessful, "Command should have executed.");
         }
     }
 }

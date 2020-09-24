@@ -7,40 +7,26 @@ using System.Threading.Tasks;
 
 using DSharpPlus;
 
-namespace NitroSharp.Modules
+namespace NitroSharp.Services
 {
-    public class ImageModule : ModuleBase
+    public class ImageService
     {
-        private readonly DiscordBot _bot;
-
         private const string ImgDir = "./Resources/Images";
         private Dictionary<string, string> FilePaths  = new Dictionary<string, string>()
         {
             {"burn", "burn_img.gif" }
         };
 
-        public ImageModule(DiscordShardedClient c, DiscordRestClient r, DiscordBot bot) : base(c, r) 
-        {
-            this._bot = bot;
-        }
-
-        public override Task InitializeAsync()
+        public ImageService()
         {
             Dictionary<string, string> fullLengthPaths = new Dictionary<string, string>();
             // Get the full paths from the local paths of the images.
-            foreach(var image in FilePaths)
+            foreach (var image in FilePaths)
             {
                 fullLengthPaths.TryAdd(image.Key, Path.GetFullPath(Path.Combine(ImgDir, image.Value)));
             }
 
             FilePaths = fullLengthPaths;
-
-            return Task.CompletedTask;
-        }
-
-        public override Task StartAsync()
-        {
-            return Task.CompletedTask;
         }
 
         /// <summary>

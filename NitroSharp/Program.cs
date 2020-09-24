@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 using Microsoft.Extensions.Logging;
 
-using NitroSharp.Modules;
+using NitroSharp.Services;
 
 namespace NitroSharp
 {
@@ -35,8 +35,6 @@ namespace NitroSharp
         static void Main(string[] args)
         {
             Bot = new DiscordBot();
-
-            AddModules();
             
             Bot.InitializeAsync().ConfigureAwait(false).GetAwaiter().GetResult();
 
@@ -44,12 +42,6 @@ namespace NitroSharp
 
             Task.Delay(-1).ConfigureAwait(false).GetAwaiter().GetResult();
             // Stop the bot from closing itself.
-        }
-
-        private static void AddModules()
-        {
-            // Use this place to enable modules.
-            Bot.AddModule<ImageModule>();
         }
     }
 }
