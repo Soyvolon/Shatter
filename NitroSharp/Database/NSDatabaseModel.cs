@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 using NitroSharp.Structures;
 
@@ -24,7 +25,9 @@ namespace NitroSharp.Database
                 Task.Run(async () => await Program.Bot.RegisterDatabase()).GetAwaiter().GetResult();
             }
 
-            options.UseNpgsql(Program.Bot.Database.GetConnectionString());
+            options.UseNpgsql(Program.Bot.Database.GetConnectionString())
+                .EnableDetailedErrors()
+                .EnableSensitiveDataLogging();
         }
     }
 }

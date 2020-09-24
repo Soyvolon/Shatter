@@ -15,6 +15,7 @@ namespace NitroSharp.Structures
         public Wallet(ulong userId)
         {
             this.UserId = userId;
+            Balance = 100;
         }
 
         /// <summary>
@@ -45,5 +46,17 @@ namespace NitroSharp.Structures
         /// <param name="amount">Value to check against.</param>
         /// <returns>True if the user has more money than the value passed to <paramref name="amount"/></returns>
         public bool HasEnough(int amount = 0) => Balance >= amount;
+
+        /// <summary>
+        /// Transfers an ammount to another wallet.
+        /// </summary>
+        /// <param name="ammount">Ammount to transfer</param>
+        /// <param name="to">Wallet to transfer to.</param>
+        /// <returns>Money reamining.</returns>
+        public int Transfer(int ammount, Wallet to)
+        {
+            to.Add(ammount);
+            return this.Subtract(ammount);
+        }
     }
 }

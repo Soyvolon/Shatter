@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 
 using Microsoft.Extensions.Logging;
 
+using NitroSharp.Modules;
+
 namespace NitroSharp
 {
     public class Program
@@ -47,7 +49,7 @@ namespace NitroSharp
         private static void AddModules()
         {
             // Use this place to enable modules.
-
+            Bot.AddModule<ImageModule>();
         }
     }
 }

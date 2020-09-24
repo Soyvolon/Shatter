@@ -36,10 +36,8 @@ namespace NitroSharp.Utils
             }
             else
             {
-                var embed = CommandUtils.ErrorBase(e.Context);
-                embed.Description = "An unknown error occoured. Please report this to Partner Bot Staff with pb!report <error message>\n\n" +
-                    "Replace <error message> with the following:\n" +
-                    $"```{e.Exception.Message}\n{e.Exception.StackTrace}```";
+                var embed = CommandUtils.ErrorBase(e.Context)
+                    .WithDescription($"An unhadled error occoured: {e.Exception.Message}");
 
                 await e.Context.RespondAsync(embed: embed).ConfigureAwait(false);
             }
@@ -47,12 +45,18 @@ namespace NitroSharp.Utils
 
         private static async Task ChecksFailedResponderAsync(CommandErrorEventArgs args, ChecksFailedException e)
         {
-            return;
+            var embed = CommandUtils.ErrorBase(args.Context)
+                .WithDescription($"Invalid Permissions: {e.Message}");
+
+            await args.Context.RespondAsync(embed: embed);
         }
 
         private static async Task ArgumentResponder(CommandErrorEventArgs args)
         {
-            return;
+            var embed = CommandUtils.ErrorBase(args.Context)
+                .WithDescription($"Invalid Arguments");
+
+            await args.Context.RespondAsync(embed: embed);
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Globalization;
+using System.Threading.Tasks;
 
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
@@ -6,6 +8,7 @@ using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
 using NitroSharp.Database;
+using NitroSharp.Extensions;
 using NitroSharp.Structures;
 
 namespace NitroSharp.Commands.Economy
@@ -23,24 +26,43 @@ namespace NitroSharp.Commands.Economy
         [Description("Shows your current balance.")]
         [Aliases(new string[] { "bal", "money" })]
         [RequireUserPermissions(Permissions.AccessChannels)]
-        public async Task BalanceCommandAsync(CommandContext ctx, Optional<DiscordMember> member)
+        public async Task BalanceCommandAsync(CommandContext ctx, DiscordMember? member = null)
         {
-            ulong id;
-            if(member.HasValue)
-            {
-                id =member.Value.Id;
-            }
+            bool save = false;
+
+            DiscordMember m;
+            if (member is null)
+                m = ctx.Member;
             else
+                m = member;
+
+            var wallet = _model.Wallets.Find(m.Id);
+
+            if (wallet is null)
             {
-                id = ctx.Member.Id;
+                wallet = new Wallet(m.Id);
+                // Save the new wallet to the database.
+                _model.Wallets.Add(wallet);
+                save = true;
             }
 
-            var wallet = _model.Wallets.Find(id);
+            var cfg = _model.Find<GuildConfig>(ctx.Guild.Id);
 
-            if(wallet is null)
-                wallet = new Wallet(id);
+            if(cfg is null)
+            {
+                cfg = new GuildConfig(ctx.Guild.Id);
+                _model.Add(cfg);
+                save = true;
+            }
 
+            if (save)
+                _ = await _model.SaveChangesAsync();
 
+            var b = CommandUtils.SuccessBase(ctx)
+                .WithTitle($"{m.DisplayName}'s Balance")
+                .WithDescription(Formatter.Bold(wallet.Balance.ToMoney(cfg.Culture)));
+
+            await ctx.RespondAsync(embed: b.Build());
         }
     }
 }

@@ -93,6 +93,20 @@ namespace NitroSharp.Commands
             return new DiscordEmbedBuilder().WithColor(new DiscordColor(Colors[ColorType.Nitro].Random())).WithTimestamp(DateTime.Now).WithFooter($"{ctx.Prefix}{ctx.Command.Name}");
         }
 
+        public static async Task RespondBasicSuccessAsync(CommandContext ctx, string message)
+        {
+            var b = SuccessBase(ctx)
+                .WithDescription(message);
+            await ctx.RespondAsync(embed: b.Build());
+        }
+
+        public static async Task RespondBasicErrorAsync(CommandContext ctx, string message)
+        {
+            var b = ErrorBase(ctx)
+                .WithDescription(message);
+            await ctx.RespondAsync(embed: b.Build());
+        }
+
         public static async Task RespondWithFile(CommandContext ctx, string caption, string fileName, string contents)
         {
             FileStream fs = new FileStream($"{fileName}-{ctx.User.Id}.txt", FileMode.OpenOrCreate);

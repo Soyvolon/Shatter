@@ -8,10 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="DSharpPlus" Version="4.0.0-nightly-00725" />
-    <PackageReference Include="DSharpPlus.CommandsNext" Version="4.0.0-nightly-00725" />
-    <PackageReference Include="DSharpPlus.Interactivity" Version="4.0.0-nightly-00725" />
-    <PackageReference Include="DSharpPlus.Rest" Version="4.0.0-nightly-00725" />
+    <PackageReference Include="DSharpPlus" Version="4.0.0-nightly-00726" />
+    <PackageReference Include="DSharpPlus.CommandsNext" Version="4.0.0-nightly-00726" />
+    <PackageReference Include="DSharpPlus.Interactivity" Version="4.0.0-nightly-00726" />
+    <PackageReference Include="DSharpPlus.Rest" Version="4.0.0-nightly-00726" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.8">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -50,6 +50,7 @@
     <Folder Include="Commands\Tag\" />
     <Folder Include="Commands\Poll\" />
     <Folder Include="Configs\" />
+    <Folder Include="Resources\Images\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -58,6 +59,9 @@
     </None>
     <None Update="Configs\database_config.json">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Images\burn_img.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 

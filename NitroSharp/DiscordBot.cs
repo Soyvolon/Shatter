@@ -42,11 +42,13 @@ namespace NitroSharp
         private readonly HashSet<ModuleBase> modules = new HashSet<ModuleBase>();
         private readonly HashSet<Type> toInitalize = new HashSet<Type>();
         private LogLevel logLevel;
+        private bool test;
         #endregion
 
-        public DiscordBot() : base(null, null)
+        public DiscordBot(bool test = false) : base(null, null)
         {
             logLevel = LogLevel.Debug;
+            this.test = test;
         }
 
         #region Configuration
@@ -97,7 +99,8 @@ namespace NitroSharp
                 sw.Close();
 
                 Console.WriteLine(@"New Bot Configuration generated due to missing config or error. Please open and edit Configs\bot_config.json to new bot settings.");
-                Console.ReadLine();
+                if(!test)
+                    Console.ReadLine();
                 Environment.Exit(0);
             }
         }
@@ -143,7 +146,8 @@ namespace NitroSharp
                 sw.Close();
 
                 Console.WriteLine(@"New Database Configuration generated due to missing config or error. Please open and edit Configs\database_config.json to new database settings.");
-                Console.ReadLine();
+                if(!test)
+                    Console.ReadLine();
                 Environment.Exit(0);
             }
         }
@@ -255,7 +259,7 @@ namespace NitroSharp
                 IgnoreExtraArguments = false,
                 PrefixResolver = PrefixResolver,
                 StringPrefixes = new string[] { Config.Prefix },
-                Services = services.BuildServiceProvider()
+                Services = services.BuildServiceProvider(),
             };
 
             return ccfg;
@@ -281,7 +285,7 @@ namespace NitroSharp
         private async Task<int> PrefixResolver(DiscordMessage msg)
         {
             if (!msg.Channel.PermissionsFor(await msg.Channel.Guild.GetMemberAsync(Client.CurrentUser.Id).ConfigureAwait(false)).HasPermission(Permissions.SendMessages)) return -1; //Checks if bot can't send messages, if so ignore.
-            if (msg.Content.StartsWith(Config.Prefix)) return Config.Prefix.Length; //Always respond with default prefix.
+            else if (msg.Content.StartsWith(Client.CurrentUser.Mention)) return Client.CurrentUser.Mention.Length; // Always respond to a mention.
             else
             {
                 try
