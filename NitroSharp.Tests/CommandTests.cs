@@ -348,19 +348,37 @@ namespace NitroSharp.Tests
 
             Assert.NotNull(cmd, "Cat command not found.");
 
-            var ctx = CNext.CreateFakeContext(Actors[0], TestingChannel, $"]cat", "]", cmd);
+            var ctx = CNext.CreateFakeContext(Actors[0], TestingChannel, $"]cat jpg png", "]", cmd, "jpg png");
 
             var res = await cmd.ExecuteAsync(ctx);
 
             Assert.True(res.IsSuccessful, "Command should have executed.");
 
-            ctx = CNext.CreateFakeContext(Actors[0], TestingChannel, $"]cat asdfadsfasf", "]", cmd, $"asdfadsfasf");
+            ctx = CNext.CreateFakeContext(Actors[0], TestingChannel, $"]cat gif", "]", cmd, "gif");
 
             res = await cmd.ExecuteAsync(ctx);
 
-            Assert.False(res.IsSuccessful, "Command should have failed.");
+            Assert.True(res.IsSuccessful, "Command should have executed.");
 
-            ctx = CNext.CreateFakeContext(Actors[0], TestingChannel, $"]cats", "]", cmd);
+            ctx = CNext.CreateFakeContext(Actors[0], TestingChannel, $"]cat gif jpg random", "]", cmd, "gif jpg random");
+
+            res = await cmd.ExecuteAsync(ctx);
+
+            Assert.True(res.IsSuccessful, "Command should have executed.");
+
+            ctx = CNext.CreateFakeContext(Actors[0], TestingChannel, $"]cat mine that", "]", cmd, "mine that");
+
+            res = await cmd.ExecuteAsync(ctx);
+
+            Assert.True(res.IsSuccessful, "Command should have executed.");
+
+            ctx = CNext.CreateFakeContext(Actors[0], TestingChannel, $"]cat id=qsGk4el-D", "]", cmd, "id=qsGk4el-D");
+
+            res = await cmd.ExecuteAsync(ctx);
+
+            Assert.True(res.IsSuccessful, "Command should have executed.");
+
+            ctx = CNext.CreateFakeContext(Actors[0], TestingChannel, $"]cat id=", "]", cmd, "id=");
 
             res = await cmd.ExecuteAsync(ctx);
 

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace NitroSharp.Structures
+namespace NitroSharp.Utils
 {
     public class Advice
     {

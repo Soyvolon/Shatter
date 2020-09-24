@@ -5,6 +5,7 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 
 using NitroSharp.Structures;
+using NitroSharp.Utils;
 
 namespace NitroSharp.Commands.Fun
 {
