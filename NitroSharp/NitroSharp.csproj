@@ -18,6 +18,7 @@
     </PackageReference>
     <PackageReference Include="Npgsql" Version="4.1.4" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.1.4" />
+    <PackageReference Include="System.Drawing.Common" Version="4.7.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -43,14 +44,12 @@
     <Folder Include="Commands\Info\" />
     <Folder Include="Commands\Irc\" />
     <Folder Include="Commands\Memberlog\" />
-    <Folder Include="Commands\Memes\" />
     <Folder Include="Commands\Mod\" />
     <Folder Include="Commands\Music\" />
     <Folder Include="Commands\Utility\" />
     <Folder Include="Commands\Tag\" />
     <Folder Include="Commands\Poll\" />
     <Folder Include="Configs\" />
-    <Folder Include="Resources\Images\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -60,8 +59,23 @@
     <None Update="Configs\database_config.json">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
-    <None Update="Resources\Images\burn_img.gif">
+    <None Update="Resources\Fonts\arial.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Fonts\arialblack.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Fonts\comicsans.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Fonts\handwritten.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Fonts\sftoon.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Images\burn_img.gif">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 

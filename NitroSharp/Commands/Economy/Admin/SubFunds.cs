@@ -31,8 +31,12 @@ namespace NitroSharp.Commands.Economy.Admin
 
             if (wallet is null)
             {
-                wallet = new Wallet(m.Id);
+                wallet = new Wallet(m.Id, ctx.Member.Username);
                 _model.Add(wallet);
+            }
+            else
+            {
+                wallet.Username = m.Username;
             }
 
             var cfg = await _model.FindAsync<GuildConfig>(ctx.Guild.Id);

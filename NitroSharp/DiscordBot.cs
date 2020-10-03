@@ -22,6 +22,7 @@ using Newtonsoft.Json;
 
 using NitroSharp.Database;
 using System.Security.Cryptography.X509Certificates;
+using NitroSharp.Commands.CustomArguments;
 
 namespace NitroSharp
 {
@@ -178,6 +179,8 @@ namespace NitroSharp
                 c.SetHelpFormatter<HelpFormatter>();
 
                 CommandList = c.RegisteredCommands.Keys;
+
+                c.RegisterConverter(new MoneyLeaderboardTypeConverter());
             }
 
             var interactionConfig = GetInteractivityConfiguration();
@@ -193,7 +196,8 @@ namespace NitroSharp
                 TokenType = TokenType.Bot,
                 MinimumLogLevel = logLevel,
                 ShardCount = Config.Shards,
-                Intents = DiscordIntents.Guilds | DiscordIntents.GuildBans | DiscordIntents.GuildMessages | DiscordIntents.DirectMessages,
+                Intents = DiscordIntents.Guilds | DiscordIntents.GuildBans | DiscordIntents.GuildMessages
+                | DiscordIntents.DirectMessages | DiscordIntents.GuildMessageReactions,
             };
 
             return cfg;
@@ -203,7 +207,7 @@ namespace NitroSharp
         {
             var services = new ServiceCollection()
                 .AddScoped<NSDatabaseModel>()
-                .AddSingleton<ImageService>();
+                .AddScoped<MemeService>();
 
             var ccfg = new CommandsNextConfiguration
             {

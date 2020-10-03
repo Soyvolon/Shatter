@@ -40,10 +40,18 @@ namespace NitroSharp.Commands.Economy
 
             if (wallet is null)
             {
-                wallet = new Wallet(m.Id);
+                wallet = new Wallet(m.Id, ctx.User.Username);
                 // Save the new wallet to the database.
                 _model.Wallets.Add(wallet);
                 save = true;
+            }
+            else
+            {
+                if (wallet.Username != ctx.Member.Username)
+                {
+                    wallet.Username = ctx.Member.Username;
+                    save = true;
+                }
             }
 
             var cfg = _model.Find<GuildConfig>(ctx.Guild.Id);

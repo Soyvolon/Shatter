@@ -11,11 +11,20 @@ namespace NitroSharp.Structures
         public ulong UserId { get; private set; }
 
         public int Balance { get; private set; }
+        public string Username { get; set; }
 
         public Wallet(ulong userId)
         {
             this.UserId = userId;
+            Username = "";
             Balance = 100;
+        }
+
+        public Wallet(ulong userId, string user)
+        {
+            this.UserId = userId;
+            Balance = 100;
+            Username = user;
         }
 
         /// <summary>

@@ -38,7 +38,7 @@ namespace NitroSharp.Utils
                     }
 
                     if (arg.Contains("gif") || arg.Contains("jpg") || arg.Contains("png"))
-                        typeTree += type + ",";
+                        typeTree += arg + ",";
                 }
 
                 if (order.Length > 0)

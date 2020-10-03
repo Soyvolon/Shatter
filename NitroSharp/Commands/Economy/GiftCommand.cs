@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using System.Security.Principal;
 using System.Threading.Tasks;
 
 using DSharpPlus;
@@ -43,7 +44,7 @@ namespace NitroSharp.Commands.Economy
 
                 if(from is null)
                 {
-                    from = new Wallet(ctx.Member.Id);
+                    from = new Wallet(ctx.Member.Id, ctx.Member.Username);
                     _model.Add(from);
                     save = true;
                 }
@@ -54,9 +55,15 @@ namespace NitroSharp.Commands.Economy
 
                     if(to is null)
                     {
-                        to = new Wallet(m.Id);
+                        to = new Wallet(m.Id, m.Username);
                         _model.Add(to);
                     }
+                    else
+                    {
+                        to.Username = m.Username;
+                    }
+
+                    from.Username = ctx.Member.Username;
 
                     var remains = from.Transfer(ammount, to);
 

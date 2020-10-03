@@ -175,7 +175,7 @@ namespace NitroSharp.Tests
 
             Assert.NotNull(cmd, "Balance command not found.");
 
-            for(int i = 0; i < 2; i++)
+            for (int i = 0; i < 2; i++)
             {
                 var ctxI = CNext.CreateFakeContext(Actors[i], TestingChannel, $"]balance", "]", cmd);
 
@@ -278,8 +278,8 @@ namespace NitroSharp.Tests
 
             var res = await cmd.ExecuteAsync(ctx);
 
-            Assert.True(res.IsSuccessful, "Command should have executed."); 
-            
+            Assert.True(res.IsSuccessful, "Command should have executed.");
+
             ctx = CNext.CreateFakeContext(Actors.Random(), TestingChannel, $"]tableflip ala", "]", cmd, "ala");
 
             res = await cmd.ExecuteAsync(ctx);
@@ -381,6 +381,142 @@ namespace NitroSharp.Tests
             ctx = CNext.CreateFakeContext(Actors[0], TestingChannel, $"]cat id=", "]", cmd, "id=");
 
             res = await cmd.ExecuteAsync(ctx);
+
+            Assert.True(res.IsSuccessful, "Command should have executed.");
+        }
+
+        [Order(12)]
+        [Test]
+        public async Task RichestCommandTest()
+        {
+            Commands.TryGetValue("richest", out Command cmd);
+
+            Assert.NotNull(cmd, "Richest command not found.");
+
+            var ctx = CNext.CreateFakeContext(Actors[0], TestingChannel, $"]richest", "]", cmd);
+
+            var res = await cmd.ExecuteAsync(ctx);
+
+            Assert.True(res.IsSuccessful, "Command should have executed.");
+
+            ctx = CNext.CreateFakeContext(Actors[0], TestingChannel, $"]richest server", "]", cmd, "server");
+
+            res = await cmd.ExecuteAsync(ctx);
+
+            Assert.True(res.IsSuccessful, "Command should have executed.");
+
+            ctx = CNext.CreateFakeContext(Actors[0], TestingChannel, $"]richest mine", "]", cmd, "mine");
+
+            res = await cmd.ExecuteAsync(ctx);
+
+            Assert.False(res.IsSuccessful, "Command should have failed.");
+        }
+
+        [Order(13)]
+        [Test]
+        public async Task DonaldCommandTest()
+        {
+            Commands.TryGetValue("donald", out Command cmd);
+
+            Assert.NotNull(cmd, "Donald command not found.");
+
+            var ctx = CNext.CreateFakeContext(Actors[0], TestingChannel, $"]donald My IQ is one of the highest.", "]", cmd, "My IQ is one of the highest.");
+
+            var res = await cmd.ExecuteAsync(ctx);
+
+            Assert.True(res.IsSuccessful, "Command should have executed.");
+        }
+
+        [Order(14)]
+        [Test]
+        public async Task GruCommandTest()
+        {
+            Commands.TryGetValue("gru", out Command cmd);
+
+            Assert.NotNull(cmd, "Gru command not found.");
+
+            var ctx = CNext.CreateFakeContext(Actors[0], TestingChannel, $"]gru Find a gru meme template | Create a custom gru meme generator | Nobody uses it", "]",
+                cmd, "Find a gru meme template | Create a custom gru meme generator | Nobody uses it");
+
+            var res = await cmd.ExecuteAsync(ctx);
+
+            Assert.True(res.IsSuccessful, "Command should have executed.");
+
+            ctx = CNext.CreateFakeContext(Actors[0], TestingChannel, $"]gru Find a gru meme template | Create a custom gru meme generat", "]",
+                cmd, "Find a gru meme template | Create a custom gru meme generat");
+
+            res = await cmd.ExecuteAsync(ctx);
+
+            Assert.True(res.IsSuccessful, "Command should have executed.");
+
+            ctx = CNext.CreateFakeContext(Actors[0], TestingChannel, $"]gru Find a gru meme template | Create a custom | gru | meme generat", "]",
+                cmd, "Find a gru meme template | Create a custom | gru | meme generat");
+
+            res = await cmd.ExecuteAsync(ctx);
+
+            Assert.True(res.IsSuccessful, "Command should have executed.");
+        }
+
+        [Order(15)]
+        [Test]
+        public async Task NutCommandTest()
+        {
+            Commands.TryGetValue("nut", out Command cmd);
+
+            Assert.NotNull(cmd, "Nut command not found.");
+
+            var ctx = CNext.CreateFakeContext(Actors[0], TestingChannel, $"]nut Find a gru meme template | Create a custom gru meme generator | Nobody uses it", "]",
+                cmd, "Find a gru meme template | Create a custom gru meme generator | Nobody uses it");
+
+            var res = await cmd.ExecuteAsync(ctx);
+
+            Assert.True(res.IsSuccessful, "Command should have executed.");
+        }
+
+        [Order(16)]
+        [Test]
+        public async Task PrisonerCommandTest()
+        {
+            Commands.TryGetValue("prisoner", out Command cmd);
+
+            Assert.NotNull(cmd, "Prisoner command not found.");
+
+            var ctx = CNext.CreateFakeContext(Actors[0], TestingChannel, $"]prisoner I used the Gru Meme Generator", "]",
+                cmd, "I used the Gru Meme Generator");
+
+            var res = await cmd.ExecuteAsync(ctx);
+
+            Assert.True(res.IsSuccessful, "Command should have executed.");
+        }
+
+        [Order(17)]
+        [Test]
+        public async Task PunchCommandTest()
+        {
+            Commands.TryGetValue("punch", out Command cmd);
+
+            Assert.NotNull(cmd, "Punch command not found.");
+
+            var ctx = CNext.CreateFakeContext(Actors[0], TestingChannel, $"]punch {Actors[1].Mention}", "]",
+                cmd, $"{Actors[1].Mention}");
+
+            var res = await cmd.ExecuteAsync(ctx);
+
+            Assert.True(res.IsSuccessful, "Command should have executed.");
+        }
+
+        [Order(18)]
+        [Test]
+        public async Task TheSearchCommandTest()
+        {
+            Commands.TryGetValue("thesearch", out Command cmd);
+
+            Assert.NotNull(cmd, "The Search command not found.");
+
+            var ctx = CNext.CreateFakeContext(Actors[0], TestingChannel, $"]thesearch Don't use NitroSharp", "]",
+                cmd, "Don't use NitroSharp");
+
+            var res = await cmd.ExecuteAsync(ctx);
 
             Assert.True(res.IsSuccessful, "Command should have executed.");
         }

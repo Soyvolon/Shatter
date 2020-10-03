@@ -117,4 +117,29 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="Images_Burn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\images\burn_img.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Images_CAH" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\images\cah.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Images_DeathNote" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\images\death.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Images_Gru" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\images\gru.jpg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Images_NutMeme" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\images\nutmeme.jpg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Images_Prison" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\images\prison.jpg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Images_Punch" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\images\punch.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Images_TheSearch" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\images\thesearch.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>
