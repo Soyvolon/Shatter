@@ -28,7 +28,7 @@ namespace NitroSharp.Commands.Config
 
             var config = await _model.Configs.FindAsync(ctx.Guild.Id);
 
-            if(config is null)
+            if (config is null)
             {
                 config = new GuildConfig
                 {

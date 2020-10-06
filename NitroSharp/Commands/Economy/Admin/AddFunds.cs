@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
@@ -29,7 +28,7 @@ namespace NitroSharp.Commands.Economy.Admin
         {
             var wallet = await _model.FindAsync<Wallet>(m.Id);
 
-            if(wallet is null)
+            if (wallet is null)
             {
                 wallet = new Wallet(m.Id, ctx.Member.Username);
                 _model.Add(wallet);
@@ -41,7 +40,7 @@ namespace NitroSharp.Commands.Economy.Admin
 
             var cfg = await _model.FindAsync<GuildConfig>(ctx.Guild.Id);
 
-            if(cfg is null)
+            if (cfg is null)
             {
                 cfg = new GuildConfig(ctx.Guild.Id);
                 _model.Add(cfg);

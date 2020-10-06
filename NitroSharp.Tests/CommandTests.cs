@@ -1,20 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
 
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
-using DSharpPlus.CommandsNext.Builders;
 using DSharpPlus.Entities;
 
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.VisualStudio.TestPlatform.ObjectModel;
-
-using NitroSharp.Commands.Config;
 using NitroSharp.Extensions;
-using NitroSharp.Services;
 
 using NUnit.Framework;
 
@@ -119,12 +111,6 @@ namespace NitroSharp.Tests
             Assert.True(res.IsSuccessful, "Command should have executed.");
 
             ctx = CNext.CreateFakeContext(Actors.Random(), TestingChannel, "]prefix", "]", cmd);
-
-            res = await cmd.ExecuteAsync(ctx);
-
-            Assert.False(res.IsSuccessful, "Command should have failed.");
-
-            ctx = CNext.CreateFakeContext(Actors.Random(), TestingChannel, "]prefix > <", "]", cmd, "> <");
 
             res = await cmd.ExecuteAsync(ctx);
 
@@ -279,12 +265,6 @@ namespace NitroSharp.Tests
             var res = await cmd.ExecuteAsync(ctx);
 
             Assert.True(res.IsSuccessful, "Command should have executed.");
-
-            ctx = CNext.CreateFakeContext(Actors.Random(), TestingChannel, $"]tableflip ala", "]", cmd, "ala");
-
-            res = await cmd.ExecuteAsync(ctx);
-
-            Assert.False(res.IsSuccessful, "Command should have failed.");
         }
 
         [Order(9)]
@@ -300,12 +280,6 @@ namespace NitroSharp.Tests
             var res = await cmd.ExecuteAsync(ctx);
 
             Assert.True(res.IsSuccessful, "Command should have executed.");
-
-            ctx = CNext.CreateFakeContext(Actors.Random(), TestingChannel, $"]unflip ala", "]", cmd, "ala");
-
-            res = await cmd.ExecuteAsync(ctx);
-
-            Assert.False(res.IsSuccessful, "Command should have failed.");
         }
 
         [Order(10)]
@@ -321,12 +295,6 @@ namespace NitroSharp.Tests
             var res = await cmd.ExecuteAsync(ctx);
 
             Assert.True(res.IsSuccessful, "Command should have executed.");
-
-            ctx = CNext.CreateFakeContext(Actors[0], TestingChannel, $"]burn {Actors[1].Mention} asdfadsfasf", "]", cmd, $"{Actors[1].Mention} asdfadsfasf");
-
-            res = await cmd.ExecuteAsync(ctx);
-
-            Assert.False(res.IsSuccessful, "Command should have failed.");
 
             var ctx_1 = CNext.CreateFakeContext(Actors[0], TestingChannel, $"]burn {Actors[1].Mention}", "]", cmd, $"{Actors[1].Mention}");
             var ctx_2 = CNext.CreateFakeContext(Actors[1], TestingChannel, $"]burn {Actors[0].Mention}", "]", cmd, $"{Actors[0].Mention}");
@@ -404,12 +372,6 @@ namespace NitroSharp.Tests
             res = await cmd.ExecuteAsync(ctx);
 
             Assert.True(res.IsSuccessful, "Command should have executed.");
-
-            ctx = CNext.CreateFakeContext(Actors[0], TestingChannel, $"]richest mine", "]", cmd, "mine");
-
-            res = await cmd.ExecuteAsync(ctx);
-
-            Assert.False(res.IsSuccessful, "Command should have failed.");
         }
 
         [Order(13)]
@@ -517,6 +479,75 @@ namespace NitroSharp.Tests
                 cmd, "Don't use NitroSharp");
 
             var res = await cmd.ExecuteAsync(ctx);
+
+            Assert.True(res.IsSuccessful, "Command should have executed.");
+        }
+
+        [Order(19)]
+        [Test]
+        public async Task CoinFlipGameCommandTest()
+        {
+            Commands.TryGetValue("coinflip", out Command cmd);
+
+            Assert.NotNull(cmd, "Coin Flip command not found.");
+
+            var ctx = CNext.CreateFakeContext(Actors[0], TestingChannel, $"]coinflip", "]",
+                cmd);
+
+            var res = await cmd.ExecuteAsync(ctx);
+
+            Assert.True(res.IsSuccessful, "Command should have executed.");
+        }
+
+        [Order(19)]
+        [Test]
+        public async Task TriviaGameCommandTest()
+        {
+            Commands.TryGetValue("trivia", out Command cmd);
+
+            Assert.NotNull(cmd, "Trivia command not found.");
+
+            var ctx = CNext.CreateFakeContext(Actors[0], TestingChannel, $"]trivia", "]",
+                cmd);
+
+            var res = await cmd.ExecuteAsync(ctx);
+
+            Assert.True(res.IsSuccessful, "Command should have executed.");
+        }
+
+        [Order(20)]
+        [Test]
+        public async Task TriviaTopCommandTest()
+        {
+            Commands.TryGetValue("triviatop", out Command cmd);
+
+            Assert.NotNull(cmd, "Trivia Top command not found.");
+
+            var ctx = CNext.CreateFakeContext(Actors[0], TestingChannel, $"]triviatop", "]",
+                cmd);
+
+            var res = await cmd.ExecuteAsync(ctx);
+
+            Assert.True(res.IsSuccessful, "Command should have executed.");
+
+            ctx = CNext.CreateFakeContext(Actors[0], TestingChannel, $"]triviatop server", "]",
+                cmd, "server");
+
+            res = await cmd.ExecuteAsync(ctx);
+
+            Assert.True(res.IsSuccessful, "Command should have executed.");
+
+            ctx = CNext.CreateFakeContext(Actors[0], TestingChannel, $"]triviatop me", "]",
+                cmd, "me");
+
+            res = await cmd.ExecuteAsync(ctx);
+
+            Assert.True(res.IsSuccessful, "Command should have executed.");
+
+            ctx = CNext.CreateFakeContext(Actors[0], TestingChannel, $"]triviatop percent", "]",
+                cmd, "percent");
+
+            res = await cmd.ExecuteAsync(ctx);
 
             Assert.True(res.IsSuccessful, "Command should have executed.");
         }

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 using DSharpPlus;
@@ -32,7 +31,7 @@ namespace NitroSharp.Commands.Economy
         [RequireUserPermissions(Permissions.AccessChannels)]
         [Cooldown(1, 10, CooldownBucketType.User)]
         [Priority(2)]
-        public async Task RichestCommandAsync(CommandContext ctx, MoneyLeaderboardType type)
+        public async Task RichestCommandAsync(CommandContext ctx, LeaderboardType type)
         {
             List<Wallet> wallets;
 
@@ -41,7 +40,7 @@ namespace NitroSharp.Commands.Economy
                     .OrderByDescending(x => x.Balance)
                     .ToList();
 
-            if (type == MoneyLeaderboardType.Server)
+            if (type == LeaderboardType.Server)
             {
                 var users = await ctx.Guild.GetAllMembersAsync();
 
@@ -69,7 +68,7 @@ namespace NitroSharp.Commands.Economy
 
             foreach (var user in wallets)
             {
-                data += $"{c++}. {Formatter.Bold(user.Username == "" ? user.UserId.ToString() : user.Username)} - {user.Balance.ToMoney(cfg.Culture)}\n"; 
+                data += $"{c++}. {Formatter.Bold(user.Username == "" ? user.UserId.ToString() : user.Username)} - {user.Balance.ToMoney(cfg.Culture)}\n";
             }
 
             if (data.Count() > 0)
@@ -79,7 +78,7 @@ namespace NitroSharp.Commands.Economy
                 await totalCalc;
 
                 var embed = new DiscordEmbedBuilder()
-                    .WithTitle($"{(type == MoneyLeaderboardType.Global ? "Global" : ctx.Guild.Name)} Leaderboard")
+                    .WithTitle($"{(type == LeaderboardType.Global ? "Global" : ctx.Guild.Name)} Leaderboard")
                     .AddField("In circulation:", $"{total.ToMoney(cfg.Culture)}")
                     .WithColor(CommandUtils.Colors[ColorType.Nitro].Random());
 
@@ -95,6 +94,6 @@ namespace NitroSharp.Commands.Economy
 
         [Command("richest")]
         [Priority(1)]
-        public async Task RichestCommandAsync(CommandContext ctx) => await RichestCommandAsync(ctx, MoneyLeaderboardType.Global);
+        public async Task RichestCommandAsync(CommandContext ctx) => await RichestCommandAsync(ctx, LeaderboardType.Global);
     }
 }

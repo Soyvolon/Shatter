@@ -24,6 +24,9 @@ namespace NitroSharp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("numeric(20,0)");
 
+                    b.Property<bool>("AllowPublicTriviaGames")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("Culture")
                         .IsRequired()
                         .HasColumnType("text");
@@ -32,9 +35,36 @@ namespace NitroSharp.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<int>("TriviaQuestionLimit")
+                        .HasColumnType("integer");
+
                     b.HasKey("GuildId");
 
                     b.ToTable("Configs");
+                });
+
+            modelBuilder.Entity("NitroSharp.Structures.Trivia.TriviaPlayer", b =>
+                {
+                    b.Property<decimal>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("numeric(20,0)");
+
+                    b.Property<int>("Points")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("QuestionsCorrect")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("QuestionsIncorrect")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("UserId");
+
+                    b.ToTable("TriviaPlayers");
                 });
 
             modelBuilder.Entity("NitroSharp.Structures.Wallet", b =>

@@ -1,11 +1,6 @@
-﻿using System;
-using System.Dynamic;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 using Microsoft.Extensions.Logging;
-
-using NitroSharp.Services;
 
 namespace NitroSharp
 {
@@ -35,12 +30,12 @@ namespace NitroSharp
         static void Main(string[] args)
         {
             Bot = new DiscordBot();
-            
-            Bot.InitializeAsync().ConfigureAwait(false).GetAwaiter().GetResult();
 
-            Bot.StartAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+            Bot.InitializeAsync().GetAwaiter().GetResult();
 
-            Task.Delay(-1).ConfigureAwait(false).GetAwaiter().GetResult();
+            Bot.StartAsync().GetAwaiter().GetResult();
+
+            Task.Delay(-1).GetAwaiter().GetResult();
             // Stop the bot from closing itself.
         }
     }

@@ -1,21 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
-using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Exceptions;
 
-using NitroSharp.Commands;
-
 using Microsoft.Extensions.Logging;
+
+using NitroSharp.Commands;
 
 namespace NitroSharp.Utils
 {
     public static class CommandResponder
     {
-        public static Task RespondSuccess(CommandEventArgs e)
+        // TODO Update Class
+        public static Task RespondSuccess(CommandsNextExtension cnext, CommandExecutionEventArgs e)
         {
             // let's log the name of the command and user
             e.Context.Client.Logger.LogInformation(Program.CommandResponder, $"{e.Context.User.Username} successfully executed '{e.Command.QualifiedName}'", DateTime.Now);
@@ -23,7 +21,7 @@ namespace NitroSharp.Utils
             return Task.CompletedTask;
         }
 
-        public static async Task RespondError(CommandErrorEventArgs e)
+        public static async Task RespondError(CommandsNextExtension cnext, CommandErrorEventArgs e)
         {
             if (e == null) return;
             if (e.Exception is ChecksFailedException cfex)

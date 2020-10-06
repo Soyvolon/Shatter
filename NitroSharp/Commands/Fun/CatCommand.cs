@@ -20,9 +20,9 @@ namespace NitroSharp.Commands.Fun
             CatData cat = default;
             bool skipRandom = false;
 
-            foreach(var arg in args)
+            foreach (var arg in args)
             {
-                if(arg.StartsWith("id="))
+                if (arg.StartsWith("id="))
                 {
                     cat = await Cats.GetCatByIdAsync(arg[3..]);
                     skipRandom = true;
@@ -38,7 +38,7 @@ namespace NitroSharp.Commands.Fun
                 }
             }
 
-            if(cat.Id is null)
+            if (cat.Id is null)
             {
                 await ctx.RespondAsync(":sob: " + Formatter.Italic("no cats were found..."));
             }

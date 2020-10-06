@@ -1,6 +1,4 @@
-﻿using System.Globalization;
-using System.Security.Principal;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
@@ -32,7 +30,7 @@ namespace NitroSharp.Commands.Economy
             {
                 await CommandUtils.RespondBasicErrorAsync(ctx, "You can't give yourself money.");
             }
-            else if(m.IsBot)
+            else if (m.IsBot)
             {
                 await CommandUtils.RespondBasicErrorAsync(ctx, "Robots don't know how to handle money.");
             }
@@ -42,18 +40,18 @@ namespace NitroSharp.Commands.Economy
 
                 var from = await _model.FindAsync<Wallet>(ctx.Member.Id);
 
-                if(from is null)
+                if (from is null)
                 {
                     from = new Wallet(ctx.Member.Id, ctx.Member.Username);
                     _model.Add(from);
                     save = true;
                 }
 
-                if(from.HasEnough(ammount))
+                if (from.HasEnough(ammount))
                 {
                     var to = await _model.FindAsync<Wallet>(m.Id);
 
-                    if(to is null)
+                    if (to is null)
                     {
                         to = new Wallet(m.Id, m.Username);
                         _model.Add(to);
@@ -69,7 +67,7 @@ namespace NitroSharp.Commands.Economy
 
                     var cfg = await _model.FindAsync<GuildConfig>(ctx.Guild.Id);
 
-                    if(cfg is null)
+                    if (cfg is null)
                     {
                         cfg = new GuildConfig(ctx.Guild.Id);
                         _model.Add(cfg);

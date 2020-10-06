@@ -1,5 +1,4 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -31,8 +30,6 @@ namespace NitroSharp.Commands.Memes
             using MemoryStream img = new MemoryStream(Resources.Images_Punch);
             using Bitmap map = new Bitmap(img);
             using Graphics graphic = Graphics.FromImage(map);
-
-            
 
             graphic.DrawImage(userPfp, new Rectangle(115, 30, 100, 100));
             graphic.DrawImage(punchedPfp, new Rectangle(400, 40, 100, 100));

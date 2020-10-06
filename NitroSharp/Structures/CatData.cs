@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Dynamic;
-using System.Text;
-
+﻿
 using Newtonsoft.Json;
 
 namespace NitroSharp.Structures
@@ -24,7 +20,7 @@ namespace NitroSharp.Structures
         [JsonProperty("height")]
         public int Height { get; private set; }
     }
-    
+
     public struct CatBreed
     {
         [JsonProperty("weight")]

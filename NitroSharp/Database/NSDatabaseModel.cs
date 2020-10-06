@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 
 using NitroSharp.Structures;
+using NitroSharp.Structures.Trivia;
 
 namespace NitroSharp.Database
 {
@@ -14,6 +11,7 @@ namespace NitroSharp.Database
     {
         public DbSet<GuildConfig> Configs { get; set; }
         public DbSet<Wallet> Wallets { get; set; }
+        public DbSet<TriviaPlayer> TriviaPlayers { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {

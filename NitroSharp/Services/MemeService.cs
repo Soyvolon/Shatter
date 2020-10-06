@@ -1,15 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Drawing.Text;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-
-using NitroSharp.Properties;
 
 namespace NitroSharp.Services
 {
@@ -77,7 +72,7 @@ namespace NitroSharp.Services
         public Task RegisterFont(string? font, int size = 18)
         {
             Font? f = null;
-            if(FontIds.TryGetValue(font, out int id))
+            if (FontIds.TryGetValue(font ?? "", out int id))
             {
                 try
                 {

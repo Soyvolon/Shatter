@@ -1,6 +1,4 @@
-﻿using System;
-using System.Globalization;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
@@ -56,7 +54,7 @@ namespace NitroSharp.Commands.Economy
 
             var cfg = _model.Find<GuildConfig>(ctx.Guild.Id);
 
-            if(cfg is null)
+            if (cfg is null)
             {
                 cfg = new GuildConfig(ctx.Guild.Id);
                 _model.Add(cfg);

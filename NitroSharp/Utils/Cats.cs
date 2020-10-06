@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Runtime.InteropServices.ComTypes;
-using System.Text;
+﻿using System.Net.Http;
 using System.Threading.Tasks;
 
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 using NitroSharp.Structures;
 
@@ -22,15 +17,14 @@ namespace NitroSharp.Utils
         {
             var request = Api;
 
-            if(!(args is null))
+            if (!(args is null))
             {
                 string order = "";
-                string type = "";
                 string typeTree = "";
 
                 request += "?";
-                
-                foreach(var arg in args)
+
+                foreach (var arg in args)
                 {
                     if (arg.Contains("random") || arg.Contains("asc") || arg.Contains("desc"))
                     {

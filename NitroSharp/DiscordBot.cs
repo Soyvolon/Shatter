@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 
@@ -10,19 +9,18 @@ using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.Entities;
 using DSharpPlus.Interactivity;
-
-using NitroSharp.Services;
-using NitroSharp.Structures;
-using NitroSharp.Utils;
+using DSharpPlus.Lavalink;
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 using Newtonsoft.Json;
 
-using NitroSharp.Database;
-using System.Security.Cryptography.X509Certificates;
 using NitroSharp.Commands.CustomArguments;
+using NitroSharp.Database;
+using NitroSharp.Services;
+using NitroSharp.Structures;
+using NitroSharp.Utils;
 
 namespace NitroSharp
 {
@@ -39,11 +37,15 @@ namespace NitroSharp
         public BotConfig Config { get; private set; }
         public DiscordShardedClient Client { get; private set; }
         public DiscordRestClient Rest { get; private set; }
+        public LavalinkConfig LavaConfig { get; private set; }
         #endregion
 
         #region Private Variables
         private readonly LogLevel logLevel;
         private readonly bool test;
+
+        private YouTubeConfig YTCfg;
+        private Process LavaLink;
         #endregion
 
         public DiscordBot(bool test = false)
@@ -100,7 +102,7 @@ namespace NitroSharp
                 sw.Close();
 
                 Console.WriteLine(@"New Bot Configuration generated due to missing config or error. Please open and edit Configs\bot_config.json to new bot settings.");
-                if(!test)
+                if (!test)
                     Console.ReadLine();
                 Environment.Exit(0);
             }
@@ -147,7 +149,107 @@ namespace NitroSharp
                 sw.Close();
 
                 Console.WriteLine(@"New Database Configuration generated due to missing config or error. Please open and edit Configs\database_config.json to new database settings.");
-                if(!test)
+                if (!test)
+                    Console.ReadLine();
+                Environment.Exit(0);
+            }
+        }
+
+        public async Task RegisterYoutube()
+        {
+            var manualConfig = false;
+
+            if (!Directory.Exists("Configs"))
+                Directory.CreateDirectory("Configs");
+
+            var root = @"Configs\";
+            if (File.Exists($"{root}youtube_config.json"))
+            {
+                using var fs = new FileStream($"{root}youtube_config.json", FileMode.Open);
+                using var sr = new StreamReader(fs);
+                string json = await sr.ReadToEndAsync().ConfigureAwait(false);
+                try
+                {
+                    YTCfg = JsonConvert.DeserializeObject<YouTubeConfig>(json);
+                }
+                catch
+                {
+                    manualConfig = true;
+                }
+            }
+            else
+            {
+                manualConfig = true;
+            }
+
+            if (manualConfig)
+            {
+                YTCfg = new YouTubeConfig()
+                {
+                    ApiKey = ""
+                };
+
+                using var sw = new StreamWriter(new FileStream($"{root}youtube_config.json", FileMode.Create));
+                var json = JsonConvert.SerializeObject(YTCfg, Formatting.Indented);
+
+                foreach (string line in json.Split("\n"))
+                    await sw.WriteLineAsync(line).ConfigureAwait(false);
+
+                await sw.FlushAsync().ConfigureAwait(false);
+                sw.Close();
+
+                Console.WriteLine(@"New YouTube Configuration generated due to missing config or error. Please open and edit Configs\youtube_config.json to new youtube settings.");
+                if (!test)
+                    Console.ReadLine();
+                Environment.Exit(0);
+            }
+        }
+
+        public async Task RegisterLavaLink()
+        {
+            var manualConfig = false;
+
+            if (!Directory.Exists("Configs"))
+                Directory.CreateDirectory("Configs");
+
+            var root = @"Configs\";
+            if (File.Exists($"{root}lavalink_config.json"))
+            {
+                using var fs = new FileStream($"{root}lavalink_config.json", FileMode.Open);
+                using var sr = new StreamReader(fs);
+                string json = await sr.ReadToEndAsync().ConfigureAwait(false);
+                try
+                {
+                    LavaConfig = JsonConvert.DeserializeObject<LavalinkConfig>(json);
+                }
+                catch
+                {
+                    manualConfig = true;
+                }
+            }
+            else
+            {
+                manualConfig = true;
+            }
+
+            if (manualConfig)
+            {
+                LavaConfig = new LavalinkConfig()
+                {
+                    Password = ""
+                };
+
+                using var sw = new StreamWriter(new FileStream($"{root}lavalink_config.json", FileMode.Create));
+                var json = JsonConvert.SerializeObject(LavaConfig, Formatting.Indented);
+
+                foreach (string line in json.Split("\n"))
+                    await sw.WriteLineAsync(line).ConfigureAwait(false);
+
+                await sw.FlushAsync().ConfigureAwait(false);
+                sw.Close();
+
+                Console.WriteLine(@"New LavaLink Configuration generated due to missing config or error. Please open and edit Configs\lavalink_config.json to new lavalink settings.");
+                if (!test)
                     Console.ReadLine();
                 Environment.Exit(0);
             }
@@ -161,8 +263,13 @@ namespace NitroSharp
 
             await RegisterConfiguration().ConfigureAwait(false);
 
-            if(Database is null) // this may already be registered
+            if (Database is null) // this may already be registered
                 await RegisterDatabase().ConfigureAwait(false);
+
+            await RegisterYoutube().ConfigureAwait(false);
+            YouTube.Initalize(YTCfg);
+
+            await RegisterLavaLink().ConfigureAwait(false);
 
             Client = new DiscordShardedClient(GetDiscordConfiguration());
             Rest = new DiscordRestClient(GetDiscordConfiguration());
@@ -180,12 +287,15 @@ namespace NitroSharp
 
                 CommandList = c.RegisteredCommands.Keys;
 
-                c.RegisterConverter(new MoneyLeaderboardTypeConverter());
+                c.RegisterConverter(new LeaderboardTypeConverter());
+                c.RegisterConverter(new QuestionCategoryConverter());
             }
 
             var interactionConfig = GetInteractivityConfiguration();
 
             await Client.UseInteractivityAsync(interactionConfig).ConfigureAwait(false);
+
+            var lavas = await Client.UseLavalinkAsync();
         }
 
         private DiscordConfiguration GetDiscordConfiguration()
@@ -197,7 +307,7 @@ namespace NitroSharp
                 MinimumLogLevel = logLevel,
                 ShardCount = Config.Shards,
                 Intents = DiscordIntents.Guilds | DiscordIntents.GuildBans | DiscordIntents.GuildMessages
-                | DiscordIntents.DirectMessages | DiscordIntents.GuildMessageReactions,
+                | DiscordIntents.DirectMessages | DiscordIntents.GuildMessageReactions | DiscordIntents.GuildVoiceStates,
             };
 
             return cfg;
@@ -207,7 +317,8 @@ namespace NitroSharp
         {
             var services = new ServiceCollection()
                 .AddScoped<NSDatabaseModel>()
-                .AddScoped<MemeService>();
+                .AddScoped<MemeService>()
+                .AddScoped<VoiceService>();
 
             var ccfg = new CommandsNextConfiguration
             {
@@ -215,7 +326,7 @@ namespace NitroSharp
                 EnableMentionPrefix = true,
                 EnableDefaultHelp = true,
                 CaseSensitive = false,
-                IgnoreExtraArguments = false,
+                IgnoreExtraArguments = true,
                 PrefixResolver = PrefixResolver,
                 StringPrefixes = new string[] { Config.Prefix },
                 Services = services.BuildServiceProvider(),
@@ -288,6 +399,19 @@ namespace NitroSharp
         #region Start
         public async Task StartAsync()
         {
+            var processInfo = new ProcessStartInfo("java.exe", "-jar Lavalink.jar")
+            {
+                CreateNoWindow = true,
+                UseShellExecute = Program.IsDebug,
+            };
+
+            if ((LavaLink = Process.Start(processInfo)) == null)
+                throw new InvalidOperationException("Failed to start LavaLink Process");
+
+            LavaLink.Exited += LavaLink_OnExited;
+
+            await Task.Delay(TimeSpan.FromSeconds(2));
+
             await Client.StartAsync().ConfigureAwait(false);
             await Rest.InitializeAsync().ConfigureAwait(false);
 
@@ -297,6 +421,10 @@ namespace NitroSharp
 
         #region Utility Methods
 
+        private void LavaLink_OnExited(object? sender, EventArgs e)
+        {
+            LavaLink.Start();
+        }
         #endregion
     }
 }

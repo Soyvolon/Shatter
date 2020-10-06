@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
-using Newtonsoft.Json;
-
-using NitroSharp.Structures;
 using NitroSharp.Utils;
 
 using NUnit.Framework;
-using NUnit.Framework.Constraints;
 
 namespace NitroSharp.Tests
 {
@@ -62,7 +55,7 @@ namespace NitroSharp.Tests
             Assert.NotNull(res);
             Assert.NotZero(res.Length, "Missing Cat item");
             Assert.True(Path.GetExtension(res[0].Url).Contains("jpg")
-                || Path.GetExtension(res[0].Url).Contains("gif"), "File type incorrect." );
+                || Path.GetExtension(res[0].Url).Contains("gif"), "File type incorrect.");
 
             res = await Cats.GetCatDataAsync("foo", "bar");
 

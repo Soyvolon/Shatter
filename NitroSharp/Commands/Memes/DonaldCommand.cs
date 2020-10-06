@@ -6,8 +6,6 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
-using NitroSharp.Properties;
-
 namespace NitroSharp.Commands.Memes
 {
     public class DonaldCommand : BaseCommandModule
