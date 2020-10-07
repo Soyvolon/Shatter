@@ -37,7 +37,7 @@ namespace NitroSharp.Commands.Music
 
 
             var nowPlaying = conn.CurrentState.CurrentTrack;
-            string data = $":green_circle: :notes:] {nowPlaying.Title} by {nowPlaying.Author} - `{nowPlaying.Length:mm\\:ss}`";
+            string data = $":green_circle: :notes:] {nowPlaying.Title} by {nowPlaying.Author} - `{conn.CurrentState.PlaybackPosition:mm\\:ss}/{nowPlaying.Length:mm\\:ss}`";
 
             if(_voice.GuildQueues.TryGetValue(ctx.Guild.Id, out var queue))
             {
@@ -58,7 +58,7 @@ namespace NitroSharp.Commands.Music
 
             var interact = ctx.Client.GetInteractivity();
 
-            var pages = interact.GeneratePagesInEmbed(data, SplitType.Line, CommandUtils.SuccessBase(ctx));
+            var pages = interact.GeneratePagesInEmbed(data, SplitType.Line, CommandUtils.SuccessBase());
 
             var emojis = new PaginationEmojis()
             {

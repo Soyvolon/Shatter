@@ -45,7 +45,7 @@ namespace NitroSharp.Commands.Games.Trivia
                 if (lowerArgs.Contains("info"))
                 {
                     // Display argmuent information here.
-                    var infoEmbed = CommandUtils.SuccessBase(ctx)
+                    var infoEmbed = CommandUtils.SuccessBase()
                         .WithTitle("Trivia Leaderboards")
                         .WithDescription("Additional Arguments for the Trivia Leadboards.\n" +
                         $"Example: `{ctx.Prefix}triviatop server")

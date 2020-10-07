@@ -44,7 +44,7 @@ namespace NitroSharp.Commands.Fun
             }
             else
             {
-                var embed = CommandUtils.SuccessBase(ctx)
+                var embed = CommandUtils.SuccessBase()
                     .WithTitle($"Cats! [id={cat.Id}]")
                     .WithImageUrl(cat.Url);
 

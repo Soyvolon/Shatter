@@ -1,5 +1,5 @@
-﻿using System.Threading.Tasks;
-using System.Xml;
+﻿using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
@@ -9,21 +9,21 @@ using NitroSharp.Services;
 
 namespace NitroSharp.Commands.Music
 {
-    public class ClearMusicQueueCommand : BaseCommandModule
+    public class MusicChannelCommand : BaseCommandModule
     {
         private readonly VoiceService _voice;
 
-        public ClearMusicQueueCommand(VoiceService voice)
+        public MusicChannelCommand(VoiceService voice)
         {
             this._voice = voice;
         }
 
-        [Command("clearsongs")]
-        [Description("Clears the song Queue. Leaves the current song playing.")]
-        [Aliases("clearqueue")]
+        [Command("playingchannel")]
+        [Description("Switch the playing channel to your current channel!")]
+        [Aliases("musicchannel")]
         [RequireUserPermissions(Permissions.UseVoice)]
         [RequireBotPermissions(Permissions.UseVoice)]
-        public async Task ClearSongsCommandAsync(CommandContext ctx)
+        public async Task ExampleCommandAsync(CommandContext ctx)
         {
             var conn = await _voice.GetGuildConnection(ctx);
 
@@ -36,11 +36,11 @@ namespace NitroSharp.Commands.Music
             if (_voice.IsDJ(ctx, out bool HostChanged)
                 || ctx.Member.PermissionsIn(conn.Channel).HasPermission(Permissions.ManageChannels))
             {
-                _voice.GuildQueues[ctx.Guild.Id] = new System.Collections.Concurrent.ConcurrentQueue<DSharpPlus.Lavalink.LavalinkTrack>();
-                await CommandUtils.RespondBasicSuccessAsync(ctx, $"Cleared the Queue.{(HostChanged ? $"\n{ ctx.Member.Mention} is the new host!" : "")}");
+                _voice.PlayingStatusMessages[ctx.Guild.Id] = ctx.Channel.Id;
+                await CommandUtils.RespondBasicSuccessAsync(ctx, $"Playing message channel changed.{(HostChanged ? $"\n{ ctx.Member.Mention} is the new host!" : "")}");
             }
             else
-                await CommandUtils.RespondBasicErrorAsync(ctx, "You do not have permission to clear the queue!");
+                await CommandUtils.RespondBasicErrorAsync(ctx, "You do not have permission to change the playing messages channel!");
         }
     }
 }

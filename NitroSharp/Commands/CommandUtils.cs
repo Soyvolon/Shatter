@@ -75,11 +75,11 @@ namespace NitroSharp.Commands
             }
         };
 
-        public static DiscordEmbedBuilder ErrorBase(CommandContext ctx)
+        public static DiscordEmbedBuilder ErrorBase()
         {
             try
             {
-                return new DiscordEmbedBuilder().WithColor(DiscordColor.Red).WithTimestamp(DateTime.Now).WithTitle($"{ctx.Command.Name} error").WithFooter($"{ctx.Prefix}{ctx.Command.Name}");
+                return new DiscordEmbedBuilder().WithColor(DiscordColor.Red);
             }
             catch
             {
@@ -87,21 +87,21 @@ namespace NitroSharp.Commands
             }
         }
 
-        public static DiscordEmbedBuilder SuccessBase(CommandContext ctx)
+        public static DiscordEmbedBuilder SuccessBase()
         {
-            return new DiscordEmbedBuilder().WithColor(new DiscordColor(Colors[ColorType.Nitro].Random())).WithTimestamp(DateTime.Now).WithFooter($"{ctx.Prefix}{ctx.Command.Name}");
+            return new DiscordEmbedBuilder().WithColor(new DiscordColor(Colors[ColorType.Nitro].Random()));
         }
 
         public static async Task RespondBasicSuccessAsync(CommandContext ctx, string message)
         {
-            var b = SuccessBase(ctx)
+            var b = SuccessBase()
                 .WithDescription(message);
             await ctx.RespondAsync(embed: b.Build());
         }
 
         public static async Task RespondBasicErrorAsync(CommandContext ctx, string message)
         {
-            var b = ErrorBase(ctx)
+            var b = ErrorBase()
                 .WithDescription(message);
             await ctx.RespondAsync(embed: b.Build());
         }

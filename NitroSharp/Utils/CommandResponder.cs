@@ -34,7 +34,7 @@ namespace NitroSharp.Utils
             }
             else
             {
-                var embed = CommandUtils.ErrorBase(e.Context)
+                var embed = CommandUtils.ErrorBase()
                     .WithDescription($"An unhadled error occoured: {e.Exception.Message}");
 
                 await e.Context.RespondAsync(embed: embed).ConfigureAwait(false);
@@ -43,7 +43,7 @@ namespace NitroSharp.Utils
 
         private static async Task ChecksFailedResponderAsync(CommandErrorEventArgs args, ChecksFailedException e)
         {
-            var embed = CommandUtils.ErrorBase(args.Context)
+            var embed = CommandUtils.ErrorBase()
                 .WithDescription($"Invalid Permissions: {e.Message}");
 
             await args.Context.RespondAsync(embed: embed);
@@ -51,7 +51,7 @@ namespace NitroSharp.Utils
 
         private static async Task ArgumentResponder(CommandErrorEventArgs args)
         {
-            var embed = CommandUtils.ErrorBase(args.Context)
+            var embed = CommandUtils.ErrorBase()
                 .WithDescription($"Invalid Arguments");
 
             await args.Context.RespondAsync(embed: embed);

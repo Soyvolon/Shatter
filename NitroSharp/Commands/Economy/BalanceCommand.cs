@@ -64,7 +64,7 @@ namespace NitroSharp.Commands.Economy
             if (save)
                 _ = await _model.SaveChangesAsync();
 
-            var b = CommandUtils.SuccessBase(ctx)
+            var b = CommandUtils.SuccessBase()
                 .WithTitle($"{m.DisplayName}'s Balance")
                 .WithDescription(Formatter.Bold(wallet.Balance.ToMoney(cfg.Culture)));
 

@@ -11,6 +11,8 @@ using DSharpPlus.Lavalink.EventArgs;
 
 using Google.Apis.YouTube.v3;
 
+using NitroSharp.Commands;
+
 namespace NitroSharp.Services
 {
     public class VoiceService
@@ -19,6 +21,7 @@ namespace NitroSharp.Services
         public readonly ConcurrentDictionary<ulong, ulong> DJs = new ConcurrentDictionary<ulong, ulong>();
         public readonly ConcurrentDictionary<ulong, ConcurrentQueue<LavalinkTrack>> GuildQueues = new ConcurrentDictionary<ulong, ConcurrentQueue<LavalinkTrack>>();
         public readonly ConcurrentDictionary<ulong, List<ulong>> VoteSkips = new ConcurrentDictionary<ulong, List<ulong>>();
+        public readonly ConcurrentDictionary<ulong, ulong> PlayingStatusMessages = new ConcurrentDictionary<ulong, ulong>();
 
         public struct VoiceActionResult
         {
@@ -99,14 +102,26 @@ namespace NitroSharp.Services
             {
                 con = await node.ConnectAsync(ctx.Member.VoiceState.Channel);
                 con.PlaybackFinished += GuildConnection_SongFinished;
-                con.DiscordWebSocketClosed += GuildConnection_Disconnected;
+                con.PlaybackStarted += GuildConnection_SongStarted;
 
                 // Remove any old data that is stored when a new connection is created
                 DJs.TryRemove(con.Guild.Id, out _);
                 GuildQueues.TryRemove(con.Guild.Id, out _);
+                PlayingStatusMessages.TryRemove(con.Guild.Id, out _);
             }
 
             return con;
+        }
+
+        private async Task GuildConnection_SongStarted(LavalinkGuildConnection sender, TrackStartEventArgs e)
+        {
+            if (PlayingStatusMessages.TryGetValue(sender.Guild.Id, out ulong chan))
+            {
+                var nowPlaying = sender.CurrentState.CurrentTrack;
+                await Program.Bot.Rest.CreateMessageAsync(chan, "", false, CommandUtils.SuccessBase()
+                    .WithDescription($":green_circle: :notes:] {nowPlaying.Title} by {nowPlaying.Author} - `{sender.CurrentState.PlaybackPosition:mm\\:ss}/{nowPlaying.Length:mm\\:ss}`"),
+                    null);
+            }
         }
 
         private async Task GuildConnection_SongFinished(LavalinkGuildConnection sender, TrackFinishEventArgs e)
@@ -125,18 +140,6 @@ namespace NitroSharp.Services
                     }
                 }
             }
-        }
-
-        private Task GuildConnection_Disconnected(LavalinkGuildConnection sender, WebSocketCloseEventArgs e)
-        {
-            try
-            {
-                DJs.TryRemove(sender.Guild.Id, out _);
-                GuildQueues.TryRemove(sender.Guild.Id, out _);
-            }
-            catch { }
-
-            return Task.CompletedTask;
         }
 
         private Task<LavalinkGuildConnection?> GetGuildConnection(CommandContext ctx, LavalinkNodeConnection node)
