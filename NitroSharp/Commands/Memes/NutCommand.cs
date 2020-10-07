@@ -13,9 +13,9 @@ namespace NitroSharp.Commands.Memes
 {
     public class NutCommand : BaseCommandModule
     {
-        private readonly Tuple<Rectangle, string>[] captions = new Tuple<Rectangle, string>[]
+        private readonly Tuple<Rectangle, string, Brush?>[] captions = new Tuple<Rectangle, string, Brush?>[]
         {
-            new Tuple<Rectangle, string>(new Rectangle(8, 20, 590, 145), "")
+            new Tuple<Rectangle, string, Brush?>(new Rectangle(8, 20, 590, 145), "", null)
         };
 
         private readonly MemeService _meme;
@@ -33,13 +33,11 @@ namespace NitroSharp.Commands.Memes
             [Description("Text to put in the meme")]
             [RemainingText] string msg)
         {
-            captions[0] = new Tuple<Rectangle, string>(captions[0].Item1, msg);
+            captions[0] = new Tuple<Rectangle, string, Brush?>(captions[0].Item1, msg, null);
 
-            var img = await _meme.BuildMemeAsync(Resources.Images_NutMeme, captions, "arial", 40, new SolidBrush(Color.Black));
+            using var img = await _meme.BuildMemeAsync(Resources.Images_NutMeme, captions, "roboto", 40, new SolidBrush(Color.Black));
 
             await ctx.RespondWithFileAsync("nut-meme.png", img);
-
-            img?.Dispose();
         }
     }
 }

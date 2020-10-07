@@ -13,12 +13,12 @@ namespace NitroSharp.Commands.Memes
 {
     public class GruCommand : BaseCommandModule
     {
-        private readonly Tuple<Rectangle, string>[] captions = new Tuple<Rectangle, string>[]
+        private readonly Tuple<Rectangle, string, Brush?>[] captions = new Tuple<Rectangle, string, Brush?>[]
         {
-            new Tuple<Rectangle, string>(new Rectangle(310, 80, 160, 218), ""),
-            new Tuple<Rectangle, string>(new Rectangle(826, 85, 160, 218), ""),
-            new Tuple<Rectangle, string>(new Rectangle(313, 414, 160, 218), ""),
-            new Tuple<Rectangle, string>(new Rectangle(824, 413, 160, 218), "")
+            new Tuple<Rectangle, string, Brush?>(new Rectangle(310, 80, 160, 218), "", null),
+            new Tuple<Rectangle, string, Brush?>(new Rectangle(826, 85, 160, 218), "", null),
+            new Tuple<Rectangle, string, Brush?>(new Rectangle(313, 414, 160, 218), "", null),
+            new Tuple<Rectangle, string, Brush?>(new Rectangle(824, 413, 160, 218), "", null)
         };
 
         private readonly MemeService _meme;
@@ -45,16 +45,14 @@ namespace NitroSharp.Commands.Memes
                 return;
             }
 
-            captions[0] = new Tuple<Rectangle, string>(captions[0].Item1, captionStrings[0]);
-            captions[1] = new Tuple<Rectangle, string>(captions[1].Item1, captionStrings[1]);
-            captions[2] = new Tuple<Rectangle, string>(captions[2].Item1, captionStrings[2]);
-            captions[3] = new Tuple<Rectangle, string>(captions[3].Item1, captionStrings[2]);
+            captions[0] = new Tuple<Rectangle, string, Brush?>(captions[0].Item1, captionStrings[0], null);
+            captions[1] = new Tuple<Rectangle, string, Brush?>(captions[1].Item1, captionStrings[1], null);
+            captions[2] = new Tuple<Rectangle, string, Brush?>(captions[2].Item1, captionStrings[2], null);
+            captions[3] = new Tuple<Rectangle, string, Brush?>(captions[3].Item1, captionStrings[2], null);
 
-            var img = await _meme.BuildMemeAsync(Resources.Images_Gru, captions, "arialblack", 20, new SolidBrush(Color.Black));
+            using var img = await _meme.BuildMemeAsync(Resources.Images_Gru, captions, "robotoblack", 20, new SolidBrush(Color.Black));
 
             await ctx.RespondWithFileAsync("gru-meme.png", img);
-
-            img?.Dispose();
         }
     }
 }

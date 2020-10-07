@@ -12,7 +12,6 @@ namespace NitroSharp.Utils
 {
     public static class CommandResponder
     {
-        // TODO Update Class
         public static Task RespondSuccess(CommandsNextExtension cnext, CommandExecutionEventArgs e)
         {
             // let's log the name of the command and user

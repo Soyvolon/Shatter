@@ -551,5 +551,7 @@ namespace NitroSharp.Tests
 
             Assert.True(res.IsSuccessful, "Command should have executed.");
         }
+
+        // TODO Add automated testing for applicapble commands (Non-Voice commands).
     }
 }

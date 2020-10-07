@@ -12,43 +12,45 @@ namespace NitroSharp.Services
     {
         private static readonly Dictionary<string, int> FontIds = new Dictionary<string, int>
         {
-            { "arial", 0 },
-            { "arialblack", 1 },
-            { "comicsans", 2 },
-            { "handwritten", 3 },
-            { "sftoon", 4 }
+            { "architect", 0 },
+            { "bangers", 1 },
+            { "apple", 2 },
+            { "robotoblack", 3 },
+            { "roboto", 4 },
+            { "schoolbell", 5 }
         };
 
         private readonly PrivateFontCollection FontCollection = new PrivateFontCollection();
         private readonly FontFamily[] fonts;
 
-        private Brush? brush;
+        private Brush? defaultBrush;
         private Font? font;
         private Bitmap? map;
         private Graphics? img;
 
         public MemeService()
         {
-            FontCollection.AddFontFile("./Resources/Fonts/arial.ttf");
-            FontCollection.AddFontFile("./Resources/Fonts/arialblack.ttf");
-            FontCollection.AddFontFile("./Resources/Fonts/comicsans.ttf");
-            FontCollection.AddFontFile("./Resources/Fonts/handwritten.ttf");
-            FontCollection.AddFontFile("./Resources/Fonts/sftoon.ttf");
+            FontCollection.AddFontFile("./Resources/Fonts/ArchitectsDaughter-Regular.ttf");
+            FontCollection.AddFontFile("./Resources/Fonts/Bangers-Regular.ttf");
+            FontCollection.AddFontFile("./Resources/Fonts/HomemadeApple-Regular.ttf");
+            FontCollection.AddFontFile("./Resources/Fonts/Roboto-Black.ttf");
+            FontCollection.AddFontFile("./Resources/Fonts/Roboto-Regular.ttf");
+            FontCollection.AddFontFile("./Resources/Fonts/Schoolbell-Regular.ttf");
 
             fonts = FontCollection.Families;
         }
 
-        public async Task<MemoryStream?> BuildMemeAsync(byte[] image, Tuple<Rectangle, string>[] captions, string? font = null, int fsize = 16, Brush? brush = null)
+        public async Task<MemoryStream?> BuildMemeAsync(byte[] image, Tuple<Rectangle, string, Brush?>[] captions, string? font = null, int fsize = 16, Brush? defaultBrush = null)
         {
             var a = RegisterBitmap(image);
             var b = RegisterFont(font, fsize);
-            var c = RegisterBrush(brush);
+            var c = RegisterBrush(defaultBrush);
 
             await a; await b; await c;
 
             foreach (var line in captions)
             {
-                await AddText(line.Item1, line.Item2);
+                await AddText(line.Item1, line.Item2, line.Item3);
             }
 
             var mem = new MemoryStream();
@@ -92,22 +94,23 @@ namespace NitroSharp.Services
         public Task RegisterBrush(Brush? brush = null)
         {
             if (brush is null)
-                this.brush = new SolidBrush(Color.Black);
+                this.defaultBrush = new SolidBrush(Color.Black);
             else
-                this.brush = brush;
+                this.defaultBrush = brush;
 
             return Task.CompletedTask;
         }
 
-        public Task AddText(Rectangle position, string caption)
+        public Task AddText(Rectangle position, string caption, Brush? brush)
         {
             if (this.img is null) throw new Exception("Bitmap is null. A Bitmap must be registered with MemeService.RegisterBitmap");
 
             // Register a font and brush if the saved item is null
             if (this.font is null) RegisterFont(null);
-            if (this.brush is null) RegisterBrush(null);
+            if (this.defaultBrush is null) RegisterBrush(null);
 
-            this.img.DrawString(caption, this.font, this.brush, position);
+
+            this.img.DrawString(caption, this.font, brush ?? this.defaultBrush, position);
 
             return Task.CompletedTask;
         }
@@ -115,7 +118,7 @@ namespace NitroSharp.Services
         public void Dispose()
         {
             img?.Dispose();
-            brush?.Dispose();
+            defaultBrush?.Dispose();
             font?.Dispose();
         }
     }

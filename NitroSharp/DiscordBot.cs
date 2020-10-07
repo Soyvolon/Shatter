@@ -45,7 +45,6 @@ namespace NitroSharp
         private readonly bool test;
 
         private YouTubeConfig YTCfg;
-        private Process LavaLink;
         #endregion
 
         public DiscordBot(bool test = false)
@@ -155,56 +154,6 @@ namespace NitroSharp
             }
         }
 
-        public async Task RegisterYoutube()
-        {
-            var manualConfig = false;
-
-            if (!Directory.Exists("Configs"))
-                Directory.CreateDirectory("Configs");
-
-            var root = @"Configs\";
-            if (File.Exists($"{root}youtube_config.json"))
-            {
-                using var fs = new FileStream($"{root}youtube_config.json", FileMode.Open);
-                using var sr = new StreamReader(fs);
-                string json = await sr.ReadToEndAsync().ConfigureAwait(false);
-                try
-                {
-                    YTCfg = JsonConvert.DeserializeObject<YouTubeConfig>(json);
-                }
-                catch
-                {
-                    manualConfig = true;
-                }
-            }
-            else
-            {
-                manualConfig = true;
-            }
-
-            if (manualConfig)
-            {
-                YTCfg = new YouTubeConfig()
-                {
-                    ApiKey = ""
-                };
-
-                using var sw = new StreamWriter(new FileStream($"{root}youtube_config.json", FileMode.Create));
-                var json = JsonConvert.SerializeObject(YTCfg, Formatting.Indented);
-
-                foreach (string line in json.Split("\n"))
-                    await sw.WriteLineAsync(line).ConfigureAwait(false);
-
-                await sw.FlushAsync().ConfigureAwait(false);
-                sw.Close();
-
-                Console.WriteLine(@"New YouTube Configuration generated due to missing config or error. Please open and edit Configs\youtube_config.json to new youtube settings.");
-                if (!test)
-                    Console.ReadLine();
-                Environment.Exit(0);
-            }
-        }
-
         public async Task RegisterLavaLink()
         {
             var manualConfig = false;
@@ -265,9 +214,6 @@ namespace NitroSharp
 
             if (Database is null) // this may already be registered
                 await RegisterDatabase().ConfigureAwait(false);
-
-            await RegisterYoutube().ConfigureAwait(false);
-            YouTube.Initalize(YTCfg);
 
             await RegisterLavaLink().ConfigureAwait(false);
 
@@ -399,17 +345,6 @@ namespace NitroSharp
         #region Start
         public async Task StartAsync()
         {
-            var processInfo = new ProcessStartInfo("java.exe", "-jar Lavalink.jar")
-            {
-                CreateNoWindow = true,
-                UseShellExecute = Program.IsDebug,
-            };
-
-            if ((LavaLink = Process.Start(processInfo)) == null)
-                throw new InvalidOperationException("Failed to start LavaLink Process");
-
-            LavaLink.Exited += LavaLink_OnExited;
-
             await Task.Delay(TimeSpan.FromSeconds(2));
 
             await Client.StartAsync().ConfigureAwait(false);
@@ -421,10 +356,6 @@ namespace NitroSharp
 
         #region Utility Methods
 
-        private void LavaLink_OnExited(object? sender, EventArgs e)
-        {
-            LavaLink.Start();
-        }
         #endregion
     }
 }

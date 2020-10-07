@@ -13,9 +13,9 @@ namespace NitroSharp.Commands.Memes
 {
     public class PrisonerCommand : BaseCommandModule
     {
-        private readonly Tuple<Rectangle, string>[] captions = new Tuple<Rectangle, string>[]
+        private readonly Tuple<Rectangle, string, Brush?>[] captions = new Tuple<Rectangle, string, Brush?>[]
         {
-            new Tuple<Rectangle, string>(new Rectangle(276, 250, 76, 54), "")
+            new Tuple<Rectangle, string, Brush?>(new Rectangle(276, 250, 76, 54), "", null)
         };
 
         private readonly MemeService _meme;
@@ -33,13 +33,11 @@ namespace NitroSharp.Commands.Memes
             [Description("The message for the prisoner")]
             [RemainingText] string msg)
         {
-            captions[0] = new Tuple<Rectangle, string>(captions[0].Item1, msg);
+            captions[0] = new Tuple<Rectangle, string, Brush?>(captions[0].Item1, msg, null);
 
-            var img = await _meme.BuildMemeAsync(Resources.Images_Prison, captions, "arial", 10, new SolidBrush(Color.Black));
+            using var img = await _meme.BuildMemeAsync(Resources.Images_Prison, captions, "roboto", 10, new SolidBrush(Color.Black));
 
             await ctx.RespondWithFileAsync("prisoner-meme.png", img);
-
-            img?.Dispose();
         }
     }
 }

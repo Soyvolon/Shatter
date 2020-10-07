@@ -13,9 +13,9 @@ namespace NitroSharp.Commands.Memes
 {
     public class TheSearchCommand : BaseCommandModule
     {
-        private readonly Tuple<Rectangle, string>[] captions = new Tuple<Rectangle, string>[]
+        private readonly Tuple<Rectangle, string, Brush?>[] captions = new Tuple<Rectangle, string, Brush?>[]
         {
-            new Tuple<Rectangle, string>(new Rectangle(60, 330, 162, 69), "")
+            new Tuple<Rectangle, string, Brush?>(new Rectangle(60, 330, 162, 69), "", null)
         };
 
         private readonly MemeService _meme;
@@ -33,15 +33,13 @@ namespace NitroSharp.Commands.Memes
             [Description("A stupid idea")]
             [RemainingText] string msg)
         {
-            captions[0] = new Tuple<Rectangle, string>(captions[0].Item1, msg.ToUpper());
+            captions[0] = new Tuple<Rectangle, string, Brush?>(captions[0].Item1, msg.ToUpper(), null);
 
             var font = 2;
 
-            var img = await _meme.BuildMemeAsync(Resources.Images_TheSearch, captions, "comicsans", font, new SolidBrush(Color.DarkSlateGray));
+            using var img = await _meme.BuildMemeAsync(Resources.Images_TheSearch, captions, "architect", font, new SolidBrush(Color.DarkSlateGray));
 
             await ctx.RespondWithFileAsync("thesearch-meme.png", img);
-
-            img?.Dispose();
         }
     }
 }
