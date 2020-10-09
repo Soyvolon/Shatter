@@ -29,7 +29,6 @@ namespace NitroSharp.Commands.Image
         [Command("cah")]
         [Description("Create your own Cards Against Humanity cards!")]
         [Aliases("createcard")]
-        [RequireUserPermissions(Permissions.AccessChannels)]
         [RequireBotPermissions(Permissions.AttachFiles)]
         public async Task ExampleCommandAsync(CommandContext ctx,
             [Description("Text to include, separate the sections with `|`")]

@@ -32,12 +32,13 @@ namespace NitroSharp
         #endregion
 
         #region Public Variables
-        public static IEnumerable<string> CommandList { get; private set; }
+        public IEnumerable<string> CommandList { get; private set; }
         public DatabaseConfig Database { get; private set; }
         public BotConfig Config { get; private set; }
         public DiscordShardedClient Client { get; private set; }
         public DiscordRestClient Rest { get; private set; }
         public LavalinkConfig LavaConfig { get; private set; }
+        public Stopwatch Uptime { get; private set; }
         #endregion
 
         #region Private Variables
@@ -345,7 +346,7 @@ namespace NitroSharp
         #region Start
         public async Task StartAsync()
         {
-            await Task.Delay(TimeSpan.FromSeconds(2));
+            Uptime = Stopwatch.StartNew();
 
             await Client.StartAsync().ConfigureAwait(false);
             await Rest.InitializeAsync().ConfigureAwait(false);

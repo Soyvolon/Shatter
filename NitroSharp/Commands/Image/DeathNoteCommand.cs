@@ -28,7 +28,6 @@ namespace NitroSharp.Commands.Image
 
         [Command("deathnote")]
         [Description("Add a user to your deathnote")]
-        [RequireUserPermissions(Permissions.AccessChannels)]
         [RequireBotPermissions(Permissions.AttachFiles)]
         public async Task DeathNoteCommandAsync(CommandContext ctx,
             [Description("User to add to your DeathNote")]

@@ -106,7 +106,7 @@ namespace NitroSharp.Commands.Games.Trivia
 
                     if (response.Result.Content.ToLowerInvariant() == mapped.Item2.ToString())
                     { // Response is correct
-                        await ctx.RespondAsync($"Thats the correct answer! You earned {question.Worth.ToMoney(cfg.Culture)}");
+                        await ctx.RespondAsync($"Thats the correct answer! You earned {question.Worth.ToMoney()}");
                         var wallet = _model.Wallets.Find(response.Result.Author.Id);
                         if (wallet is null)
                             wallet = new Structures.Wallet(response.Result.Author.Id);

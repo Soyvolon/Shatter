@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace NitroSharp.Structures
 {
@@ -9,12 +10,12 @@ namespace NitroSharp.Structures
 
         public int Balance { get; private set; }
         public string Username { get; set; }
+        public DateTime LastDaily { get; set; }
 
-        public Wallet(ulong userId)
+
+        public Wallet(ulong userId) : this(userId, "")
         {
-            this.UserId = userId;
-            Username = "";
-            Balance = 100;
+
         }
 
         public Wallet(ulong userId, string user)
@@ -22,6 +23,7 @@ namespace NitroSharp.Structures
             this.UserId = userId;
             Balance = 100;
             Username = user;
+            LastDaily = DateTime.MinValue;
         }
 
         /// <summary>

@@ -38,19 +38,11 @@ namespace NitroSharp.Commands.Economy.Admin
                 wallet.Username = m.Username;
             }
 
-            var cfg = await _model.FindAsync<GuildConfig>(ctx.Guild.Id);
-
-            if (cfg is null)
-            {
-                cfg = new GuildConfig(ctx.Guild.Id);
-                _model.Add(cfg);
-            }
-
             var res = wallet.Add(ammount);
 
             await _model.SaveChangesAsync();
 
-            await ctx.RespondAsync($"Added {ammount.ToMoney(cfg.Culture)} to {m.Nickname}. Their balance is now {res.ToMoney(cfg.Culture)}");
+            await ctx.RespondAsync($"Added {ammount.ToMoney()} to {m.Nickname}. Their balance is now {res.ToMoney()}");
         }
     }
 }

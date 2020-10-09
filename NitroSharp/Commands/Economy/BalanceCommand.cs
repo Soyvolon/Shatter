@@ -52,21 +52,12 @@ namespace NitroSharp.Commands.Economy
                 }
             }
 
-            var cfg = _model.Find<GuildConfig>(ctx.Guild.Id);
-
-            if (cfg is null)
-            {
-                cfg = new GuildConfig(ctx.Guild.Id);
-                _model.Add(cfg);
-                save = true;
-            }
-
             if (save)
                 _ = await _model.SaveChangesAsync();
 
             var b = CommandUtils.SuccessBase()
                 .WithTitle($"{m.DisplayName}'s Balance")
-                .WithDescription(Formatter.Bold(wallet.Balance.ToMoney(cfg.Culture)));
+                .WithDescription(Formatter.Bold(wallet.Balance.ToMoney()));
 
             await ctx.RespondAsync(embed: b.Build());
         }

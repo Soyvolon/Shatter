@@ -65,15 +65,7 @@ namespace NitroSharp.Commands.Economy
 
                     var remains = from.Transfer(ammount, to);
 
-                    var cfg = await _model.FindAsync<GuildConfig>(ctx.Guild.Id);
-
-                    if (cfg is null)
-                    {
-                        cfg = new GuildConfig(ctx.Guild.Id);
-                        _model.Add(cfg);
-                    }
-
-                    await ctx.RespondAsync($"Gave {ammount.ToMoney(cfg.Culture)} to {m.DisplayName}. You have {remains.ToMoney(cfg.Culture)}");
+                    await ctx.RespondAsync($"Gave {ammount.ToMoney()} to {m.DisplayName}. You have {remains.ToMoney()}");
 
                     save = true;
                 }

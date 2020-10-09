@@ -58,17 +58,10 @@ namespace NitroSharp.Commands.Economy
             string data = "";
 
             int c = 1;
-            var cfg = await cfgFinder;
-
-            if (cfg is null)
-            {
-                cfg = new GuildConfig(ctx.Guild.Id);
-                _model.Add(cfg);
-            }
 
             foreach (var user in wallets)
             {
-                data += $"{c++}. {Formatter.Bold(user.Username == "" ? user.UserId.ToString() : user.Username)} - {user.Balance.ToMoney(cfg.Culture)}\n";
+                data += $"{c++}. {Formatter.Bold(user.Username == "" ? user.UserId.ToString() : user.Username)} - {user.Balance.ToMoney()}\n";
             }
 
             if (data.Count() > 0)
@@ -79,7 +72,7 @@ namespace NitroSharp.Commands.Economy
 
                 var embed = new DiscordEmbedBuilder()
                     .WithTitle($"{(type == LeaderboardType.Global ? "Global" : ctx.Guild.Name)} Leaderboard")
-                    .AddField("In circulation:", $"{total.ToMoney(cfg.Culture)}")
+                    .AddField("In circulation:", $"{total.ToMoney()}")
                     .WithColor(CommandUtils.Colors[ColorType.Nitro].Random());
 
                 var pages = interact.GeneratePagesInEmbed(data, SplitType.Line, embed);

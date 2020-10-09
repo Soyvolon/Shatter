@@ -4,9 +4,9 @@ namespace NitroSharp.Extensions
 {
     public static class IntExtensions
     {
-        public static string ToMoney(this int val, string culture)
+        public static string ToMoney(this int val)
         {
-            return val.ToString("C", new CultureInfo(culture));
+            return val.ToString("N0") + " Gems :small_orange_diamond:";
         }
     }
 }

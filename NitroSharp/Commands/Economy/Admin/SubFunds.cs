@@ -39,14 +39,6 @@ namespace NitroSharp.Commands.Economy.Admin
                 wallet.Username = m.Username;
             }
 
-            var cfg = await _model.FindAsync<GuildConfig>(ctx.Guild.Id);
-
-            if (cfg is null)
-            {
-                cfg = new GuildConfig(ctx.Guild.Id);
-                _model.Add(cfg);
-            }
-
             var res = wallet.Subtract(ammount);
 
             if (res < 0)
@@ -54,7 +46,7 @@ namespace NitroSharp.Commands.Economy.Admin
 
             await _model.SaveChangesAsync();
 
-            await ctx.RespondAsync($"Removed {ammount.ToMoney(cfg.Culture)} from {m.Nickname}. Their balance is now {res.ToMoney(cfg.Culture)}");
+            await ctx.RespondAsync($"Removed {ammount.ToMoney()} from {m.Nickname}. Their balance is now {res.ToMoney()}");
         }
     }
 }
