@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -40,25 +41,22 @@ namespace NitroSharp.Commands.Info
                 $"Users      :: {users}",
             }) + "```**";
 
-            var cpu = new PerformanceCounter("Processor", "% Processor Time", "_Total");
-            var ram = new PerformanceCounter("Memory", "Available MBytes");
-
             var mods = "**```http\n" + string.Join("\n", new string[]
             {
-                $"Memory GB  :: {ram.NextValue()}MB",
-                $"CPU        :: {cpu.NextValue()}%",
+                $"Memory GB  :: [Currently Broken]MB",
+                $"CPU        :: [Currently Broken]%",
                 $"Ping MS    :: {ctx.Client.Ping}MS",
                 $"Uptime     :: {Program.Bot.Uptime.Elapsed:c}"
             }) + "```**";
 
-            var dsharpplus = Assembly.GetAssembly(typeof(DiscordClient)).GetName();
+            var dsharpplus = Assembly.GetAssembly(typeof(DiscordClient))?.GetName() ?? null;
 
             var envir = "**```http\n" + string.Join("\n", new string[]
             {
                 $"C# Version :: {Environment.Version}",
                 $"OS         :: {Environment.OSVersion.VersionString}",
                 $"Library    :: {Library}",
-                $"Version    :: {dsharpplus.Version.ToString()}",
+                $"Version    :: {dsharpplus?.Version}",
             }) + "```**";
 
             var info = "**```http\n" + string.Join("\n", new string[]

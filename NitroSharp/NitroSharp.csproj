@@ -8,18 +8,19 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="DSharpPlus" Version="4.0.0-nightly-00737" />
-    <PackageReference Include="DSharpPlus.CommandsNext" Version="4.0.0-nightly-00737" />
-    <PackageReference Include="DSharpPlus.Interactivity" Version="4.0.0-nightly-00737" />
-    <PackageReference Include="DSharpPlus.Lavalink" Version="4.0.0-nightly-00737" />
-    <PackageReference Include="DSharpPlus.Rest" Version="4.0.0-nightly-00737" />
-    <PackageReference Include="Google.Apis.YouTube.v3" Version="1.49.0.2099" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.8">
+    <PackageReference Include="DSharpPlus" Version="4.0.0-nightly-00743" />
+    <PackageReference Include="DSharpPlus.CommandsNext" Version="4.0.0-nightly-00743" />
+    <PackageReference Include="DSharpPlus.Interactivity" Version="4.0.0-nightly-00743" />
+    <PackageReference Include="DSharpPlus.Lavalink" Version="4.0.0-nightly-00743" />
+    <PackageReference Include="DSharpPlus.Rest" Version="4.0.0-nightly-00743" />
+    <PackageReference Include="Google.Apis.YouTube.v3" Version="1.49.0.2112" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.9">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Npgsql" Version="4.1.5" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.1.4" />
+    <PackageReference Include="Svg" Version="3.1.1" />
     <PackageReference Include="System.Diagnostics.PerformanceCounter" Version="4.7.0" />
     <PackageReference Include="System.Drawing.Common" Version="4.7.0" />
   </ItemGroup>
@@ -43,7 +44,6 @@
     <Folder Include="Commands\Dev\" />
     <Folder Include="Commands\Filter\" />
     <Folder Include="Commands\Irc\" />
-    <Folder Include="Commands\Memberlog\" />
     <Folder Include="Commands\Mod\" />
     <Folder Include="Commands\Tag\" />
     <Folder Include="Commands\Poll\" />
@@ -100,6 +100,9 @@
     </None>
     <None Update="Resources\Images\burn_img.gif">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Images\welcome.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Utils\JSON\ascii_cows.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

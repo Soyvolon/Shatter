@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<svg width="800" height="300" xmlns="http://www.w3.org/2000/svg">
+
+  <g>
+    <title>Layer 1</title>
+    <ellipse fill="#2c2f33" stroke-width="0" cx="649" cy="151" id="svg_7" rx="134" ry="134"/>
+    <rect id="svg_6" height="268" width="470" y="17" x="194.5" stroke-width="0" fill="#2c2f33"/>
+    <ellipse fill="none" stroke-width="11" cx="150" cy="150" id="svg_1" rx="134" ry="134" stroke="#ffffff"/>
+    <line stroke="#ffffff" fill="none" stroke-width="11" stroke-opacity="null" fill-opacity="null" x1="149.5" y1="16" x2="657.82323" y2="16" id="svg_12"/>
+    <line stroke="#ffffff" fill="none" stroke-width="11" stroke-opacity="null" fill-opacity="null" x1="149.5" y1="284.04663" x2="655.82327" y2="284.04663" id="svg_13"/>
+    <path fill="none" stroke-width="11" stroke-opacity="null" fill-opacity="null" d="m654,16c84,0 130,71 130,134c0,62 -48,133 -130,134" id="svg_14" stroke="#ffffff"/>
+    <text fill="#ffffff" stroke="#000" stroke-width="0" stroke-opacity="null" x="310" y="130" id="notice_type" font-size="94" font-family="Helvetica, Arial, sans-serif" text-anchor="start" xml:space="preserve" font-weight="bold" font-style="italic">${title}</text>
+    <text stroke="#000" fill="#ffffff" stroke-width="0" stroke-opacity="null" x="520" y="210" id="notice_message" font-size="${font}" font-family="Helvetica, Arial, sans-serif" text-anchor="middle" xml:space="preserve" font-weight="normal" font-style="normal">${username}</text>
+  </g>
+</svg>

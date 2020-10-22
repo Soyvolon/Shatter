@@ -3,19 +3,24 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.Entities;
+using DSharpPlus.EventArgs;
 using DSharpPlus.Interactivity;
+using DSharpPlus.Interactivity.Extensions;
 using DSharpPlus.Lavalink;
 
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 using Newtonsoft.Json;
 
+using NitroSharp.Commands;
 using NitroSharp.Commands.CustomArguments;
 using NitroSharp.Database;
 using NitroSharp.Services;
@@ -44,7 +49,7 @@ namespace NitroSharp
         #region Private Variables
         private readonly LogLevel logLevel;
         private readonly bool test;
-
+        private NSDatabaseModel eventModel;
         private YouTubeConfig YTCfg;
         #endregion
 
@@ -52,6 +57,7 @@ namespace NitroSharp
         {
             logLevel = LogLevel.Debug;
             this.test = test;
+            eventModel = new NSDatabaseModel();
         }
 
         #region Configuration
@@ -62,10 +68,11 @@ namespace NitroSharp
             if (!Directory.Exists("Configs"))
                 Directory.CreateDirectory("Configs");
 
-            var root = @"Configs\";
-            if (File.Exists($"{root}bot_config.json"))
+            var root = @"Configs";
+            var path = Path.Join(root, "bot_config.json");
+            if (File.Exists(path))
             {
-                using var fs = new FileStream($"{root}bot_config.json", FileMode.Open);
+                using var fs = new FileStream(path, FileMode.Open);
                 using var sr = new StreamReader(fs);
                 string json = await sr.ReadToEndAsync().ConfigureAwait(false);
                 try
@@ -92,7 +99,7 @@ namespace NitroSharp
                     Admins = new ulong[] { 0 }
                 };
 
-                using var sw = new StreamWriter(new FileStream($"{root}bot_config.json", FileMode.Create));
+                using var sw = new StreamWriter(new FileStream(path, FileMode.Create));
                 var json = JsonConvert.SerializeObject(Config, Formatting.Indented);
 
                 foreach (string line in json.Split("\n"))
@@ -101,7 +108,7 @@ namespace NitroSharp
                 await sw.FlushAsync().ConfigureAwait(false);
                 sw.Close();
 
-                Console.WriteLine(@"New Bot Configuration generated due to missing config or error. Please open and edit Configs\bot_config.json to new bot settings.");
+                Console.WriteLine($"New Bot Configuration generated due to missing config or error. Please open and edit {path} to new bot settings.");
                 if (!test)
                     Console.ReadLine();
                 Environment.Exit(0);
@@ -115,10 +122,11 @@ namespace NitroSharp
             if (!Directory.Exists("Configs"))
                 Directory.CreateDirectory("Configs");
 
-            var root = @"Configs\";
-            if (File.Exists($"{root}database_config.json"))
+            var root = @"Configs";
+            var path = Path.Join(root, "database_config.json");
+            if (File.Exists(path))
             {
-                using var fs = new FileStream($"{root}database_config.json", FileMode.Open);
+                using var fs = new FileStream(path, FileMode.Open);
                 using var sr = new StreamReader(fs);
                 string json = await sr.ReadToEndAsync().ConfigureAwait(false);
                 try
@@ -137,9 +145,9 @@ namespace NitroSharp
 
             if (manualConfig)
             {
-                Database = new DatabaseConfig("BotMain", "localhost", "postgres", "password", "GuildConfigs", 0000);
+                Database = new DatabaseConfig("NitroSharp", "localhost", "postgres", "password", "GuildConfigs", 0000);
 
-                using var sw = new StreamWriter(new FileStream($"{root}database_config.json", FileMode.Create));
+                using var sw = new StreamWriter(new FileStream(path, FileMode.Create));
                 var json = JsonConvert.SerializeObject(Database, Formatting.Indented);
 
                 foreach (string line in json.Split("\n"))
@@ -148,7 +156,7 @@ namespace NitroSharp
                 await sw.FlushAsync().ConfigureAwait(false);
                 sw.Close();
 
-                Console.WriteLine(@"New Database Configuration generated due to missing config or error. Please open and edit Configs\database_config.json to new database settings.");
+                Console.WriteLine($"New Database Configuration generated due to missing config or error. Please open and edit {path} to new database settings.");
                 if (!test)
                     Console.ReadLine();
                 Environment.Exit(0);
@@ -162,10 +170,11 @@ namespace NitroSharp
             if (!Directory.Exists("Configs"))
                 Directory.CreateDirectory("Configs");
 
-            var root = @"Configs\";
-            if (File.Exists($"{root}lavalink_config.json"))
+            var root = @"Configs";
+            var path = Path.Join(root, "lavalink_config.json");
+            if (File.Exists(path))
             {
-                using var fs = new FileStream($"{root}lavalink_config.json", FileMode.Open);
+                using var fs = new FileStream(path, FileMode.Open);
                 using var sr = new StreamReader(fs);
                 string json = await sr.ReadToEndAsync().ConfigureAwait(false);
                 try
@@ -189,7 +198,7 @@ namespace NitroSharp
                     Password = ""
                 };
 
-                using var sw = new StreamWriter(new FileStream($"{root}lavalink_config.json", FileMode.Create));
+                using var sw = new StreamWriter(new FileStream(path, FileMode.Create));
                 var json = JsonConvert.SerializeObject(LavaConfig, Formatting.Indented);
 
                 foreach (string line in json.Split("\n"))
@@ -198,7 +207,58 @@ namespace NitroSharp
                 await sw.FlushAsync().ConfigureAwait(false);
                 sw.Close();
 
-                Console.WriteLine(@"New LavaLink Configuration generated due to missing config or error. Please open and edit Configs\lavalink_config.json to new lavalink settings.");
+                Console.WriteLine($"New LavaLink Configuration generated due to missing config or error. Please open and edit {path} to new lavalink settings.");
+                if (!test)
+                    Console.ReadLine();
+                Environment.Exit(0);
+            }
+        }
+
+        public async Task RegisterYouTube()
+        {
+            var manualConfig = false;
+
+            if (!Directory.Exists("Configs"))
+                Directory.CreateDirectory("Configs");
+
+            var root = @"Configs";
+            var path = Path.Join(root, "youtube_config.json");
+            if (File.Exists(path))
+            {
+                using var fs = new FileStream(path, FileMode.Open);
+                using var sr = new StreamReader(fs);
+                string json = await sr.ReadToEndAsync().ConfigureAwait(false);
+                try
+                {
+                    YTCfg = JsonConvert.DeserializeObject<YouTubeConfig>(json);
+                }
+                catch
+                {
+                    manualConfig = true;
+                }
+            }
+            else
+            {
+                manualConfig = true;
+            }
+
+            if (manualConfig)
+            {
+                YTCfg = new YouTubeConfig()
+                {
+                    ApiKey = ""
+                };
+
+                using var sw = new StreamWriter(new FileStream(path, FileMode.Create));
+                var json = JsonConvert.SerializeObject(YTCfg, Formatting.Indented);
+
+                foreach (string line in json.Split("\n"))
+                    await sw.WriteLineAsync(line).ConfigureAwait(false);
+
+                await sw.FlushAsync().ConfigureAwait(false);
+                sw.Close();
+
+                Console.WriteLine($"New YoutTube Configuration generated due to missing config or error. Please open and edit {path} to new youtube settings.");
                 if (!test)
                     Console.ReadLine();
                 Environment.Exit(0);
@@ -211,12 +271,16 @@ namespace NitroSharp
         {
             Boot = BootStatus.booting;
 
+            await eventModel.Database.MigrateAsync();
+
             await RegisterConfiguration().ConfigureAwait(false);
 
             if (Database is null) // this may already be registered
                 await RegisterDatabase().ConfigureAwait(false);
 
             await RegisterLavaLink().ConfigureAwait(false);
+            await RegisterYouTube().ConfigureAwait(false);
+            YouTube.Initalize(YTCfg);
 
             Client = new DiscordShardedClient(GetDiscordConfiguration());
             Rest = new DiscordRestClient(GetDiscordConfiguration());
@@ -238,12 +302,18 @@ namespace NitroSharp
                 c.RegisterConverter(new QuestionCategoryConverter());
             }
 
+            #region Register Client Events
+            Client.GuildMemberAdded += Client_GuildMemberAdded;
+            Client.GuildMemberRemoved += Client_GuildMemberRemoved;
+            #endregion
+
             var interactionConfig = GetInteractivityConfiguration();
 
             await Client.UseInteractivityAsync(interactionConfig).ConfigureAwait(false);
 
             var lavas = await Client.UseLavalinkAsync();
         }
+
 
         private DiscordConfiguration GetDiscordConfiguration()
         {
@@ -254,7 +324,8 @@ namespace NitroSharp
                 MinimumLogLevel = logLevel,
                 ShardCount = Config.Shards,
                 Intents = DiscordIntents.Guilds | DiscordIntents.GuildBans | DiscordIntents.GuildMessages
-                | DiscordIntents.DirectMessages | DiscordIntents.GuildMessageReactions | DiscordIntents.GuildVoiceStates,
+                | DiscordIntents.DirectMessages | DiscordIntents.GuildMessageReactions | DiscordIntents.GuildVoiceStates
+                | DiscordIntents.GuildMembers,
             };
 
             return cfg;
@@ -356,7 +427,215 @@ namespace NitroSharp
         #endregion
 
         #region Utility Methods
+        public async Task<string> ReplaceValues(string message, GuildMemberAddEventArgs e)
+        {
+            return await ReplaceValues(message,
+                e.Member.Username,
+                e.Guild.Name,
+                e.Guild.MemberCount.ToString());
+        }
 
+        public async Task<string> ReplaceValues(string message, GuildMemberRemoveEventArgs e)
+        {
+            return await ReplaceValues(message,
+                e.Member.Username,
+                e.Guild.Name,
+                e.Guild.MemberCount.ToString());
+        }
+
+        public async Task<string> ReplaceValues(string message, CommandContext ctx)
+        {
+            return await ReplaceValues(message,
+                ctx.Member.Username,
+                ctx.Guild.Name,
+                ctx.Guild.MemberCount.ToString());
+        }
+
+        public Task<string> ReplaceValues(string message, string user, string guild, string count)
+        {
+            var msg = message.Replace("{server}", guild);
+            msg = msg.Replace("{guild}", guild);
+
+            msg = msg.Replace("{user}", user);
+            msg = msg.Replace("{member}", user);
+
+            msg = msg.Replace("{membercount}", count);
+            return Task.FromResult(msg);
+        }
+
+        public async Task SendJoinMessageAsync(GuildConfig g, CommandContext ctx)
+        {
+            if (!(g.MemberlogChannel is null))
+            {
+                string? msg = null;
+                if (!(g.JoinMessage?.Message is null))
+                    msg = await ReplaceValues(g.JoinMessage.Message, ctx);
+
+                await SendJoinMessageAsync(g, msg, ctx.Member.Username, ctx.Member?.AvatarUrl ?? "");
+            }
+        }
+
+        public async Task SendJoinMessageAsync(GuildConfig g, GuildMemberAddEventArgs e)
+        {
+            if (!(g.MemberlogChannel is null))
+            {
+                string? msg = null;
+                if (!(g.JoinMessage?.Message is null))
+                    msg = await ReplaceValues(g.JoinMessage.Message, e);
+
+                await SendJoinMessageAsync(g, msg, e.Member.Username, e.Member?.AvatarUrl ?? "");
+            }
+        }
+
+        public async Task SendJoinMessageAsync(GuildConfig g, string? msg, string username, string avatarUrl)
+        {
+            if (g.JoinMessage?.IsEmbed ?? false)
+            {
+                DiscordEmbedBuilder embed = new DiscordEmbedBuilder()
+                {
+                    Color = new DiscordColor(CommandUtils.Colors[ColorType.Memberlog][0]),
+                    Description = msg is null ? "" : msg,
+                    Footer = new DiscordEmbedBuilder.EmbedFooter()
+                    {
+                        IconUrl = avatarUrl,
+                        Text = "User Joined"
+                    },
+                    Timestamp = DateTime.Now
+                };
+
+                try
+                {
+                    await Rest.CreateMessageAsync((ulong)g.MemberlogChannel, "", false, embed, null);
+                }
+                catch { } // ignore
+            }
+            else if (g.JoinMessage?.IsImage ?? false)
+            {
+                using var stream = await SvgHandler.GetWelcomeImage(true, username, avatarUrl);
+                if (!(stream is null))
+                {
+                    try
+                    {
+                        await Rest.UploadFileAsync((ulong)g.MemberlogChannel, stream, "welcome-message.png", "", false, null, null);
+                    }
+                    catch { } // ignore
+                }
+            }
+            else if (!(msg is null))
+            {
+                try
+                {
+                    await Rest.CreateMessageAsync((ulong)g.MemberlogChannel, msg, false, null, null);
+                }
+                catch { } // ignore
+            }
+        }
+
+        public async Task SendLeaveMessageAsync(GuildConfig g, CommandContext ctx)
+        {
+            if (!(g.MemberlogChannel is null))
+            {
+                string? msg = null;
+                if (!(g.LeaveMessage?.Message is null))
+                    msg = await ReplaceValues(g.LeaveMessage.Message, ctx);
+
+                await SendLeaveMessageAsync(g, msg, ctx.Member.Username, ctx.Member?.AvatarUrl ?? "");
+            }
+        }
+
+        public async Task SendLeaveMessageAsync(GuildConfig g, GuildMemberRemoveEventArgs e)
+        {
+            if (!(g.MemberlogChannel is null))
+            {
+                string? msg = null;
+                if (!(g.LeaveMessage?.Message is null))
+                    msg = await ReplaceValues(g.LeaveMessage.Message, e);
+
+                await SendLeaveMessageAsync(g, msg, e.Member.Username, e.Member?.AvatarUrl ?? "");
+            }
+        }
+
+        public async Task SendLeaveMessageAsync(GuildConfig g, string? msg, string username, string avatarUrl)
+        {
+            if (g.LeaveMessage?.IsEmbed ?? false)
+            {
+                DiscordEmbedBuilder embed = new DiscordEmbedBuilder()
+                {
+                    Color = new DiscordColor(CommandUtils.Colors[ColorType.Memberlog][1]),
+                    Description = msg is null ? "" : msg,
+                    Footer = new DiscordEmbedBuilder.EmbedFooter()
+                    {
+                        IconUrl = avatarUrl,
+                        Text = "User Left"
+                    },
+                    Timestamp = DateTime.Now
+                };
+
+                try
+                {
+                    await Rest.CreateMessageAsync((ulong)g.MemberlogChannel, "", false, embed, null);
+                }
+                catch { } // ignore
+
+            }
+            else if (g.LeaveMessage?.IsImage ?? false)
+            {
+                using var stream = await SvgHandler.GetWelcomeImage(false, username, avatarUrl);
+                if (!(stream is null))
+                {
+                    try
+                    {
+                        await Rest.UploadFileAsync((ulong)g.MemberlogChannel, stream, "farewell-message.png", "", false, null, null);
+                    }
+                    catch { } // ignore
+                }
+            }
+            else if (!(g.LeaveMessage?.Message is null))
+            {
+                try
+                {
+                    await Rest.CreateMessageAsync((ulong)g.MemberlogChannel, msg, false, null, null);
+                }
+                catch { } // ignore
+            }
+        }
+
+        public async Task SendJoinDMMessage(GuildConfig g)
+        {
+
+        }
+        #endregion
+
+        #region Events
+        private async Task Client_GuildMemberAdded(DiscordClient sender, GuildMemberAddEventArgs e)
+        {
+            var guild = eventModel.Find<GuildConfig>(e.Guild.Id);
+
+            if(!(guild is null))
+            {
+                if(!(guild.MemberlogChannel is null) && !(guild.JoinMessage is null))
+                {
+                    await SendJoinMessageAsync(guild, e);
+                }
+
+                if(!(guild.JoinDmMessage is null))
+                {
+                    await SendJoinDMMessage(guild);
+                }
+            }
+        }
+
+        private async Task Client_GuildMemberRemoved(DiscordClient sender, GuildMemberRemoveEventArgs e)
+        {
+            var guild = eventModel.Find<GuildConfig>(e.Guild.Id);
+            if (!(guild is null))
+            {
+                if (!(guild.MemberlogChannel is null) && !(guild.LeaveMessage is null))
+                {
+                    await SendLeaveMessageAsync(guild, e);
+                }
+            }
+        }
         #endregion
     }
 }

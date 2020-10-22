@@ -67,7 +67,7 @@ namespace NitroSharp.Tests
 
             Assert.NotZero(Actors.Count, "Missing Actors for further testing.");
 
-            var cnext = Client.GetCommandsNext();
+            var cnext = await Client.GetCommandsNextAsync();
             if (cnext.TryGetValue(TestingShardId, out var commandsNextExtension))
             {
                 this.CNext = commandsNextExtension;

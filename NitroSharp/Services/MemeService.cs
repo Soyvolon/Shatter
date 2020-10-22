@@ -30,6 +30,7 @@ namespace NitroSharp.Services
 
         public MemeService()
         {
+            // TODO update paths to be Path.Join for OS specific releases.
             FontCollection.AddFontFile("./Resources/Fonts/ArchitectsDaughter-Regular.ttf");
             FontCollection.AddFontFile("./Resources/Fonts/Bangers-Regular.ttf");
             FontCollection.AddFontFile("./Resources/Fonts/HomemadeApple-Regular.ttf");
