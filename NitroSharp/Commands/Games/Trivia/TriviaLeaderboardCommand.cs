@@ -128,9 +128,10 @@ namespace NitroSharp.Commands.Games.Trivia
                 string data = "";
                 int i = 1;
 
+                players.Reverse();
                 foreach (var player in players)
                     data += $"{i}. {(player.Username == "" ? player.UserId.ToString() : player.Username)} - " +
-                        $"{(sortByPercentCorrect ? player.PercentCorrect.ToString("0.##") + "%" : player.Points + " points")}";
+                        $"{(sortByPercentCorrect ? player.PercentCorrect.ToString("0.##") + "%" : player.Points + " points\n")}";
 
                 var embed = new DiscordEmbedBuilder()
                     .WithTitle($"{(leaderboardType == LeaderboardType.Global ? "Global" : ctx.Guild.Name)} Trivia Leaderboard")

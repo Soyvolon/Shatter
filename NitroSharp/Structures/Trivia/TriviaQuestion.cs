@@ -44,7 +44,7 @@ namespace NitroSharp.Structures.Trivia
             CategoryString = Encoding.ASCII.GetString(Convert.FromBase64String(res.Category));
         }
 
-        public Tuple<string, int> GetMappedAnswers()
+        public Tuple<string, int, string> GetMappedAnswers()
         {
             var questions = PossibleAnswers.ToList();
             questions.Shuffle();
@@ -52,17 +52,21 @@ namespace NitroSharp.Structures.Trivia
             string choices = "";
             int c = 1;
             int correctPos = 0;
+            string correctString = "";
 
             foreach (var answer in questions)
             {
                 choices += $"{c}: {answer.Value}\n";
                 if (answer.Key == CorrectAnswerKey)
+                {
                     correctPos = c;
+                    correctString = answer.Value.ToLowerInvariant().Trim();
+                }
 
                 c++;
             }
 
-            return new Tuple<string, int>(choices, correctPos);
+            return new Tuple<string, int, string>(choices, correctPos, correctString);
         }
     }
 }

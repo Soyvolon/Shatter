@@ -105,7 +105,8 @@ namespace NitroSharp.Commands.Games.Trivia
                         _model.Add(trivia);
                     }
 
-                    if (response.Result.Content.ToLowerInvariant() == mapped.Item2.ToString())
+                    var answerString = response.Result.Content.ToLowerInvariant().Trim();
+                    if (answerString == mapped.Item2.ToString() || answerString == mapped.Item3)
                     { // Response is correct
                         await ctx.RespondAsync($"Thats the correct answer! You earned {question.Worth.ToMoney()}");
                         var wallet = _model.Wallets.Find(response.Result.Author.Id);
