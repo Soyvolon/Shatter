@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+
+using NitroSharp.Extensions;
 
 namespace NitroSharp.Structures.Trivia
 {
@@ -43,11 +46,14 @@ namespace NitroSharp.Structures.Trivia
 
         public Tuple<string, int> GetMappedAnswers()
         {
+            var questions = PossibleAnswers.ToList();
+            questions.Shuffle();
+
             string choices = "";
             int c = 1;
             int correctPos = 0;
 
-            foreach (var answer in PossibleAnswers)
+            foreach (var answer in questions)
             {
                 choices += $"{c}: {answer.Value}\n";
                 if (answer.Key == CorrectAnswerKey)

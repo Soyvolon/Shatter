@@ -24,7 +24,7 @@ namespace NitroSharp.Commands.Memberlog
         [Command("mlmessage")]
         [Description("Set the memberlog join or leave message and type")]
         [Aliases("mlmsg", "memberlogmessage")]
-        [RequireUserPermissions(Permissions.AccessChannels)]
+        [RequireUserPermissions(Permissions.ManageGuild)]
         public async Task MemberlogMessageCommandAsync(CommandContext ctx, 
             [Description("For the `join` or `leave` message")]
             string selection,

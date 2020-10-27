@@ -110,7 +110,10 @@ namespace NitroSharp.Commands.Games.Trivia
                         await ctx.RespondAsync($"Thats the correct answer! You earned {question.Worth.ToMoney()}");
                         var wallet = _model.Wallets.Find(response.Result.Author.Id);
                         if (wallet is null)
+                        {
                             wallet = new Structures.Wallet(response.Result.Author.Id);
+                            await _model.AddAsync(wallet);
+                        }
 
                         wallet.Add(question.Worth);
 
@@ -134,6 +137,7 @@ namespace NitroSharp.Commands.Games.Trivia
             finally
             {
                 TriviaController.EndGame(ctx.Channel.Id);
+                await ctx.RespondAsync("Trivia Game Complete!");
             }
         }
     }
