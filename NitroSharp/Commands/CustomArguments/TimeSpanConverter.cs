@@ -21,26 +21,29 @@ namespace NitroSharp.Commands.CustomArguments
             {
                 if (!char.IsDigit(value[i]))
                 {
-                    switch (value[i].ToString().ToLower())
+                    switch (value[i].ToString())
                     {
+                        case "Y":
                         case "y":
                             if (int.TryParse(value[c..i], out int num))
                             {
                                 span = span.Add(TimeSpan.FromDays(num * 365));
                             }
                             break;
-                        case "m":
+                        case "M":
                             if (int.TryParse(value[c..i], out num))
                             {
                                 span = span.Add(TimeSpan.FromDays(num * 30));
                             }
                             break;
+                        case "W":
                         case "w":
                             if (int.TryParse(value[c..i], out num))
                             {
                                 span = span.Add(TimeSpan.FromDays(num * 7));
                             }
                             break;
+                        case "D":
                         case "d":
                             if (int.TryParse(value[c..i], out num))
                             {
@@ -51,6 +54,12 @@ namespace NitroSharp.Commands.CustomArguments
                             if (int.TryParse(value[c..i], out num))
                             {
                                 span = span.Add(TimeSpan.FromHours(num));
+                            }
+                            break;
+                        case "m":
+                            if(int.TryParse(value[c..i], out num))
+                            {
+                                span = span.Add(TimeSpan.FromMinutes(num));
                             }
                             break;
                     }
