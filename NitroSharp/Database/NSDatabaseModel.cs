@@ -40,7 +40,7 @@ namespace NitroSharp.Database
                 .Property(b => b.UserBans)
                 .HasConversion(
                     v => JsonConvert.SerializeObject(v),
-                    v => JsonConvert.DeserializeObject<ConcurrentDictionary<ulong, DateTime>>(v));
+                    v => JsonConvert.DeserializeObject<ConcurrentDictionary<ulong, DateTime>>(v) ?? new ConcurrentDictionary<ulong, DateTime>());
         }
     }
 }

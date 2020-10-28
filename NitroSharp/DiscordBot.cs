@@ -601,9 +601,18 @@ namespace NitroSharp
             }
         }
 
-        public async Task SendJoinDMMessage(GuildConfig g)
+        public async Task SendJoinDMMessage(GuildConfig g, GuildMemberAddEventArgs e)
         {
+            if (g.JoinDmMessage is null) return;
 
+            var msg = await ReplaceValues(g.JoinDmMessage, e);
+            try
+            {
+                var dms = await e.Member.CreateDmChannelAsync();
+
+                await dms.SendMessageAsync(msg);
+            }
+            catch { } // ignore
         }
         #endregion
 
@@ -621,7 +630,7 @@ namespace NitroSharp
 
                 if(!(guild.JoinDmMessage is null))
                 {
-                    await SendJoinDMMessage(guild);
+                    await SendJoinDMMessage(guild, e);
                 }
             }
         }

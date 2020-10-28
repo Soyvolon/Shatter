@@ -47,6 +47,12 @@ namespace NitroSharp.Commands.CustomArguments
                                 span = span.Add(TimeSpan.FromDays(num));
                             }
                             break;
+                        case "h":
+                            if (int.TryParse(value[c..i], out num))
+                            {
+                                span = span.Add(TimeSpan.FromHours(num));
+                            }
+                            break;
                     }
 
                     c = i + 1;

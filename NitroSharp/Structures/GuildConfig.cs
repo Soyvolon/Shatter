@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Runtime.CompilerServices;
 
 using Google.Apis.YouTube.v3;
 
@@ -33,7 +34,11 @@ namespace NitroSharp.Structures
         #endregion
 
         #region Moderation
-        public ConcurrentDictionary<ulong, DateTime> UserBans { get; set; } = new ConcurrentDictionary<ulong, DateTime>();
+        public ConcurrentDictionary<ulong, DateTime> UserBans { get; set; }
+        [NotMapped]
+        public ConcurrentDictionary<ulong, DateTime> SlowmodeLocks { get; set; }
+        [NotMapped]
+        public ConcurrentDictionary<ulong, DateTime> UserMutes { get; set; }
         #endregion
 
         public GuildConfig() { }
