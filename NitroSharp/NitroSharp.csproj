@@ -42,10 +42,7 @@
 
   <ItemGroup>
     <Folder Include="Commands\Dev\" />
-    <Folder Include="Commands\Filter\" />
     <Folder Include="Commands\Irc\" />
-    <Folder Include="Commands\Tag\" />
-    <Folder Include="Commands\Poll\" />
   </ItemGroup>
 
   <ItemGroup>

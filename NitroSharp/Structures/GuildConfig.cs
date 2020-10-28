@@ -39,6 +39,8 @@ namespace NitroSharp.Structures
         public ConcurrentDictionary<ulong, DateTime> SlowmodeLocks { get; set; }
         [NotMapped]
         public ConcurrentDictionary<ulong, DateTime> UserMutes { get; set; }
+        [NotMapped]
+        public ulong? ModLogChannel { get; set; }
         #endregion
 
         public GuildConfig() { }
@@ -55,9 +57,15 @@ namespace NitroSharp.Structures
             JoinMessage = null;
             LeaveMessage = null;
             UserBans = new ConcurrentDictionary<ulong, DateTime>();
+            SlowmodeLocks = new ConcurrentDictionary<ulong, DateTime>();
+            UserMutes = new ConcurrentDictionary<ulong, DateTime>();
+            ModLogChannel = null;
         }
 
-        public GuildConfig(ulong gid, string p, string c, bool aptg, int tql, string? joinDmMsg, ulong? mlogchan, MemberlogMessage? jmsg, MemberlogMessage? lmsg, ConcurrentDictionary<ulong, DateTime> bans)
+        public GuildConfig(ulong gid, string p, string c, bool aptg, int tql, string? joinDmMsg, ulong? mlogchan,
+            MemberlogMessage? jmsg, MemberlogMessage? lmsg, ConcurrentDictionary<ulong, DateTime> bans,
+            ConcurrentDictionary<ulong, DateTime> locks, ConcurrentDictionary<ulong, DateTime> mutes,
+            ulong? modlogchan)
         {
             GuildId = gid;
 
@@ -72,8 +80,11 @@ namespace NitroSharp.Structures
             MemberlogChannel = mlogchan;
             JoinMessage = jmsg;
             LeaveMessage = lmsg;
-            UserBans = bans;
-        }
 
+            UserBans = bans;
+            SlowmodeLocks = locks;
+            UserMutes = mutes;
+            ModLogChannel = modlogchan;
+        }
     }
 }
