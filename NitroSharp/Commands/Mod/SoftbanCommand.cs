@@ -22,7 +22,27 @@ namespace NitroSharp.Commands.Mod
             [RemainingText]
             string reason = "unspecified")
         {
-            throw new NotImplementedException();
+            try
+            {
+                await discordMember.BanAsync(7, reason);
+            }
+            catch
+            {
+                await CommandUtils.RespondBasicErrorAsync(ctx, "Failed to start the softban.");
+                return;
+            }
+
+            try
+            {
+                await discordMember.UnbanAsync("Softban unban");
+            }
+            catch
+            {
+                await CommandUtils.RespondBasicErrorAsync(ctx, "Failed to unban the user after a ban. Please manually unban the user.");
+                return;
+            }
+
+            await CommandUtils.RespondBasicSuccessAsync(ctx, $"Sucesffuly softbanned {discordMember.Username}");
         }
     }
 }

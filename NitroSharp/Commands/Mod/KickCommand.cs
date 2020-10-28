@@ -21,7 +21,7 @@ namespace NitroSharp.Commands.Mod
             [RemainingText]
             string reason = "unspecified")
         {
-            throw new NotImplementedException();
+            await discordMember.RemoveAsync(reason);
         }
     }
 }

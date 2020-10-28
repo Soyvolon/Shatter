@@ -6,19 +6,47 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
+using NitroSharp.Database;
+using NitroSharp.Structures;
+
 namespace NitroSharp.Commands.Mod
 {
     public class SetModLogCommand : BaseCommandModule
     {
+        private readonly NSDatabaseModel _model;
+
+        public SetModLogCommand(NSDatabaseModel model)
+        {
+            this._model = model;
+        }
+
         [Command("setmodlog")]
         [Description("Sets the mod log output to the current channel, or the designated channel.")]
         [Aliases("modlogs")]
         [RequireUserPermissions(Permissions.ManageGuild)]
         public async Task SetModLogCommandAsync(CommandContext ctx,
-            [Description("Channel to set the modlogs to. Leave blank to set in the channel the command was run in.")]
+            [Description("Channel to set the modlogs to. Leave blank to disable Mod Logs.")]
             DiscordChannel? discordChannel = null)
         {
-            throw new NotImplementedException();
+            var cfg = _model.Find<GuildConfig>(ctx.Guild.Id);
+            if(cfg is null)
+            {
+                cfg = new GuildConfig(ctx.Guild.Id);
+                _model.Add(cfg);
+            }
+
+            cfg.ModLogChannel = discordChannel?.Id ?? null;
+
+            if(discordChannel is null)
+            {
+                await CommandUtils.RespondBasicSuccessAsync(ctx, "Modlogs disabled.");
+            }
+            else
+            {
+                await CommandUtils.RespondBasicSuccessAsync(ctx, $"Modlogs set to {discordChannel.Mention}");
+            }
+
+            await _model.SaveChangesAsync();
         }
     }
 }
