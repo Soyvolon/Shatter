@@ -13,7 +13,6 @@ namespace NitroSharp.Commands.Info
     {
         [Command("ping")]
         [Description("Check if Nitro is alive")]
-        [RequireUserPermissions(Permissions.Administrator)]
         public async Task PingCommandAsync(CommandContext ctx)
         {
             Stopwatch timer = new Stopwatch();

@@ -300,6 +300,7 @@ namespace NitroSharp
 
                 c.RegisterConverter(new LeaderboardTypeConverter());
                 c.RegisterConverter(new QuestionCategoryConverter());
+                c.RegisterConverter(new TimeSpanConverter());
             }
 
             #region Register Client Events

@@ -1,6 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Concurrent;
+using System.Threading.Tasks;
 
 using Microsoft.EntityFrameworkCore;
+
+using Newtonsoft.Json;
 
 using NitroSharp.Structures;
 using NitroSharp.Structures.Trivia;
@@ -26,6 +30,17 @@ namespace NitroSharp.Database
             options.UseNpgsql(Program.Bot.Database.GetConnectionString())
                 .EnableDetailedErrors()
                 .EnableSensitiveDataLogging();
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<GuildConfig>()
+                .Property(b => b.UserBans)
+                .HasConversion(
+                    v => JsonConvert.SerializeObject(v),
+                    v => JsonConvert.DeserializeObject<ConcurrentDictionary<ulong, DateTime>>(v));
         }
     }
 }

@@ -1,4 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+using Google.Apis.YouTube.v3;
 
 namespace NitroSharp.Structures
 {
@@ -6,6 +12,7 @@ namespace NitroSharp.Structures
     {
         [Key]
         public ulong GuildId { get; set; }
+
         #region GuildConfig
         public string Prefix { get; set; }
 
@@ -25,6 +32,10 @@ namespace NitroSharp.Structures
         public MemberlogMessage? LeaveMessage { get; set; }
         #endregion
 
+        #region Moderation
+        public ConcurrentDictionary<ulong, DateTime> UserBans { get; set; } = new ConcurrentDictionary<ulong, DateTime>();
+        #endregion
+
         public GuildConfig() { }
 
         public GuildConfig(ulong gid)
@@ -38,9 +49,10 @@ namespace NitroSharp.Structures
             MemberlogChannel = null;
             JoinMessage = null;
             LeaveMessage = null;
+            UserBans = new ConcurrentDictionary<ulong, DateTime>();
         }
 
-        public GuildConfig(ulong gid, string p, string c, bool aptg, int tql, string? joinDmMsg, ulong? mlogchan, MemberlogMessage? jmsg, MemberlogMessage? lmsg)
+        public GuildConfig(ulong gid, string p, string c, bool aptg, int tql, string? joinDmMsg, ulong? mlogchan, MemberlogMessage? jmsg, MemberlogMessage? lmsg, ConcurrentDictionary<ulong, DateTime> bans)
         {
             GuildId = gid;
 
@@ -55,6 +67,7 @@ namespace NitroSharp.Structures
             MemberlogChannel = mlogchan;
             JoinMessage = jmsg;
             LeaveMessage = lmsg;
+            UserBans = bans;
         }
 
     }
