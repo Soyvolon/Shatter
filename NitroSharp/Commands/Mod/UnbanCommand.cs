@@ -8,6 +8,7 @@ using DSharpPlus.Entities;
 
 using NitroSharp.Database;
 using NitroSharp.Structures;
+using NitroSharp.Structures.Guilds;
 
 namespace NitroSharp.Commands.Mod
 {
@@ -41,7 +42,7 @@ namespace NitroSharp.Commands.Mod
                 await CommandUtils.RespondBasicErrorAsync(ctx, $"Failed to unban {user.Id}");
             }
 
-            var cfg = _model.Find<GuildConfig>(ctx.Guild.Id);
+            var cfg = _model.Find<GuildModeration>(ctx.Guild.Id);
 
             if(!(cfg is null))
             {

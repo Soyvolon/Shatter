@@ -16,6 +16,7 @@ using NitroSharp.Commands.CustomArguments;
 using NitroSharp.Database;
 using NitroSharp.Extensions;
 using NitroSharp.Structures;
+using NitroSharp.Structures.Guilds;
 
 namespace NitroSharp.Commands.Economy
 {
@@ -48,8 +49,6 @@ namespace NitroSharp.Commands.Economy
 
                 wallets = wallets.Where(x => users.Any(y => y.Id == x.UserId)).ToList();
             }
-
-            var cfgFinder = _model.FindAsync<GuildConfig>(ctx.Guild.Id);
 
             int total = 0;
 

@@ -9,6 +9,7 @@ using DSharpPlus.Entities;
 
 using NitroSharp.Database;
 using NitroSharp.Structures;
+using NitroSharp.Structures.Guilds;
 
 namespace NitroSharp.Commands.Memberlog
 {
@@ -56,11 +57,11 @@ namespace NitroSharp.Commands.Memberlog
                 return;
             }
 
-            var guild = await _model.FindAsync<GuildConfig>(ctx.Guild.Id);
+            var guild = await _model.FindAsync<GuildMemberlogs>(ctx.Guild.Id);
 
             if(guild is null)
             {
-                guild = new GuildConfig(ctx.Guild.Id);
+                guild = new GuildMemberlogs(ctx.Guild.Id);
                 await _model.AddAsync(guild);
             }
 

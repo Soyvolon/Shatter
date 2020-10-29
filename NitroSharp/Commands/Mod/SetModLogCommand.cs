@@ -8,6 +8,7 @@ using DSharpPlus.Entities;
 
 using NitroSharp.Database;
 using NitroSharp.Structures;
+using NitroSharp.Structures.Guilds;
 
 namespace NitroSharp.Commands.Mod
 {
@@ -28,10 +29,10 @@ namespace NitroSharp.Commands.Mod
             [Description("Channel to set the modlogs to. Leave blank to disable Mod Logs.")]
             DiscordChannel? discordChannel = null)
         {
-            var cfg = _model.Find<GuildConfig>(ctx.Guild.Id);
+            var cfg = _model.Find<GuildModeration>(ctx.Guild.Id);
             if(cfg is null)
             {
-                cfg = new GuildConfig(ctx.Guild.Id);
+                cfg = new GuildModeration(ctx.Guild.Id);
                 _model.Add(cfg);
             }
 

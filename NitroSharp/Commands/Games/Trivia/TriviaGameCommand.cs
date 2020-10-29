@@ -10,6 +10,7 @@ using DSharpPlus.Interactivity.Extensions;
 
 using NitroSharp.Database;
 using NitroSharp.Extensions;
+using NitroSharp.Structures.Guilds;
 using NitroSharp.Structures.Trivia;
 using NitroSharp.Utils;
 
@@ -40,7 +41,7 @@ namespace NitroSharp.Commands.Games.Trivia
 
             if (cfg is null)
             {
-                cfg = new Structures.GuildConfig(ctx.Guild.Id);
+                cfg = new GuildConfig(ctx.Guild.Id);
                 _model.Configs.Add(cfg);
                 await _model.SaveChangesAsync();
             }

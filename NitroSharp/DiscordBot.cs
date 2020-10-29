@@ -25,6 +25,7 @@ using NitroSharp.Commands.CustomArguments;
 using NitroSharp.Database;
 using NitroSharp.Services;
 using NitroSharp.Structures;
+using NitroSharp.Structures.Guilds;
 using NitroSharp.Utils;
 
 namespace NitroSharp
@@ -464,7 +465,7 @@ namespace NitroSharp
             return Task.FromResult(msg);
         }
 
-        public async Task SendJoinMessageAsync(GuildConfig g, CommandContext ctx)
+        public async Task SendJoinMessageAsync(GuildMemberlogs g, CommandContext ctx)
         {
             if (!(g.MemberlogChannel is null))
             {
@@ -476,7 +477,7 @@ namespace NitroSharp
             }
         }
 
-        public async Task SendJoinMessageAsync(GuildConfig g, GuildMemberAddEventArgs e)
+        public async Task SendJoinMessageAsync(GuildMemberlogs g, GuildMemberAddEventArgs e)
         {
             if (!(g.MemberlogChannel is null))
             {
@@ -488,7 +489,7 @@ namespace NitroSharp
             }
         }
 
-        public async Task SendJoinMessageAsync(GuildConfig g, string? msg, string username, string avatarUrl)
+        public async Task SendJoinMessageAsync(GuildMemberlogs g, string? msg, string username, string avatarUrl)
         {
             if (g.JoinMessage?.IsEmbed ?? false)
             {
@@ -532,7 +533,7 @@ namespace NitroSharp
             }
         }
 
-        public async Task SendLeaveMessageAsync(GuildConfig g, CommandContext ctx)
+        public async Task SendLeaveMessageAsync(GuildMemberlogs g, CommandContext ctx)
         {
             if (!(g.MemberlogChannel is null))
             {
@@ -544,7 +545,7 @@ namespace NitroSharp
             }
         }
 
-        public async Task SendLeaveMessageAsync(GuildConfig g, GuildMemberRemoveEventArgs e)
+        public async Task SendLeaveMessageAsync(GuildMemberlogs g, GuildMemberRemoveEventArgs e)
         {
             if (!(g.MemberlogChannel is null))
             {
@@ -556,7 +557,7 @@ namespace NitroSharp
             }
         }
 
-        public async Task SendLeaveMessageAsync(GuildConfig g, string? msg, string username, string avatarUrl)
+        public async Task SendLeaveMessageAsync(GuildMemberlogs g, string? msg, string username, string avatarUrl)
         {
             if (g.LeaveMessage?.IsEmbed ?? false)
             {
@@ -601,7 +602,7 @@ namespace NitroSharp
             }
         }
 
-        public async Task SendJoinDMMessage(GuildConfig g, GuildMemberAddEventArgs e)
+        public async Task SendJoinDMMessage(GuildMemberlogs g, GuildMemberAddEventArgs e)
         {
             if (g.JoinDmMessage is null) return;
 
@@ -619,7 +620,7 @@ namespace NitroSharp
         #region Events
         private async Task Client_GuildMemberAdded(DiscordClient sender, GuildMemberAddEventArgs e)
         {
-            var guild = eventModel.Find<GuildConfig>(e.Guild.Id);
+            var guild = eventModel.Find<GuildMemberlogs>(e.Guild.Id);
 
             if(!(guild is null))
             {
@@ -637,7 +638,7 @@ namespace NitroSharp
 
         private async Task Client_GuildMemberRemoved(DiscordClient sender, GuildMemberRemoveEventArgs e)
         {
-            var guild = eventModel.Find<GuildConfig>(e.Guild.Id);
+            var guild = eventModel.Find<GuildMemberlogs>(e.Guild.Id);
             if (!(guild is null))
             {
                 if (!(guild.MemberlogChannel is null) && !(guild.LeaveMessage is null))

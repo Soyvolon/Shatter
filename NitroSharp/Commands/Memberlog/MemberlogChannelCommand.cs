@@ -7,6 +7,7 @@ using DSharpPlus.Entities;
 
 using NitroSharp.Database;
 using NitroSharp.Structures;
+using NitroSharp.Structures.Guilds;
 
 namespace NitroSharp.Commands.Memberlog
 {
@@ -28,11 +29,11 @@ namespace NitroSharp.Commands.Memberlog
             [Description("The channel memberlog messages are sent in.")]
             DiscordChannel? channel = null)
         {
-            var guild = _model.Find<GuildConfig>(ctx.Guild.Id);
+            var guild = _model.Find<GuildMemberlogs>(ctx.Guild.Id);
 
             if(guild is null)
             {
-                guild = new GuildConfig(ctx.Guild.Id);
+                guild = new GuildMemberlogs(ctx.Guild.Id);
                 await _model.AddAsync(guild);
             }
 

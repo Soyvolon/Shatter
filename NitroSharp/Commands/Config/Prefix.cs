@@ -6,6 +6,7 @@ using DSharpPlus.CommandsNext.Attributes;
 
 using NitroSharp.Database;
 using NitroSharp.Structures;
+using NitroSharp.Structures.Guilds;
 
 namespace NitroSharp.Commands.Config
 {

@@ -6,18 +6,19 @@ using System.Text;
 
 using NitroSharp.Database;
 using NitroSharp.Structures;
+using NitroSharp.Structures.Guilds;
 
 namespace NitroSharp.Extensions
 {
     public static class ConcurentDictionaryExtensions
     {
-        public static void UpdateOrAddValue<K, V>(this ConcurrentDictionary<K, V> dict, K key, V value, GuildConfig cfg, NSDatabaseModel _model)
+        public static void UpdateOrAddValue<K, V>(this ConcurrentDictionary<K, V> dict, K key, V value, IGuildData cfg, NSDatabaseModel _model)
         {
             dict[key] = value;
             _model.Update(cfg);
         }
 
-        public static bool RemoveValue<K, V>(this ConcurrentDictionary<K, V> dict, K key, GuildConfig cfg, NSDatabaseModel _model, out V value)
+        public static bool RemoveValue<K, V>(this ConcurrentDictionary<K, V> dict, K key, IGuildData cfg, NSDatabaseModel _model, out V value)
         {
             _model.Update(cfg);
             return dict.TryRemove(key, out value);

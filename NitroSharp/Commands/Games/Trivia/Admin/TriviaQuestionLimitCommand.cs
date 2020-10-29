@@ -5,6 +5,7 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 
 using NitroSharp.Database;
+using NitroSharp.Structures.Guilds;
 
 namespace NitroSharp.Commands.Games.Trivia.Admin
 {
@@ -26,7 +27,7 @@ namespace NitroSharp.Commands.Games.Trivia.Admin
 
             if (cfg is null)
             {
-                cfg = new Structures.GuildConfig(ctx.Guild.Id);
+                cfg = new GuildConfig(ctx.Guild.Id);
                 _model.Add(cfg);
             }
 

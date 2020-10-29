@@ -6,6 +6,7 @@ using DSharpPlus.CommandsNext.Attributes;
 
 using NitroSharp.Database;
 using NitroSharp.Structures;
+using NitroSharp.Structures.Guilds;
 
 namespace NitroSharp.Commands.Memberlog
 {
@@ -45,11 +46,11 @@ namespace NitroSharp.Commands.Memberlog
                 return;
             }
 
-            var guild = _model.Find<GuildConfig>(ctx.Guild.Id);
+            var guild = _model.Find<GuildMemberlogs>(ctx.Guild.Id);
 
             if(guild is null)
             {
-                guild = new GuildConfig(ctx.Guild.Id);
+                guild = new GuildMemberlogs(ctx.Guild.Id);
                 _model.Add(guild);
             }
 
