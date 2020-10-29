@@ -87,6 +87,8 @@ namespace NitroSharp.Discord.Utils
         #region Guild Filters
         public async Task GuildFilters_MessageCreated(DiscordClient sender, MessageCreateEventArgs e)
         {
+            if (e.Author.IsBot || (e.Author.IsSystem ?? false)) return;
+
             var model = Services.GetService<NSDatabaseModel>();
             var filter = await model.FindAsync<GuildFilters>(e.Guild.Id);
 

@@ -43,6 +43,15 @@ namespace NitroSharp.Discord.Commands.Filter
             string? filterName = null)
             => await FilterIgnoreCommandAsync(ctx, channel.Id, filterName);
 
+        [Command("filterignore")]
+        public async Task FilterIgnoreCommandAsync(CommandContext ctx,
+            [Description("Role to toggle exemption status for.")]
+            DiscordRole role,
+
+            [Description("Filter to ignore. Leave blank to apply to all filters")]
+            string? filterName = null)
+            => await FilterIgnoreCommandAsync(ctx, role.Id, filterName);
+
         private async Task FilterIgnoreCommandAsync(CommandContext ctx, ulong id, string? filterName = null)
         {
             var name = filterName?.ToLower() ?? GuildFilters.AllFilters; // A indicates ALL filters.
@@ -61,15 +70,29 @@ namespace NitroSharp.Discord.Commands.Filter
                 return;
             }
 
-            var currentBypass = filter.BypassFilters.TryGetValue(id, out HashSet<string>? currentNames);
+            var exsists = filter.BypassFilters.TryGetValue(id, out HashSet<string>? currentNames);
 
-            if (currentNames is null) currentNames = new HashSet<string>();
-            currentNames.Add(name);
+            bool added = true;
+            if (currentNames is null)
+            {
+                currentNames = new HashSet<string>();
+                currentNames.Add(name);
+            }
+            else
+            {
+                if (currentNames.Contains(name))
+                {
+                    currentNames.Remove(name);
+                    added = false;
+                }
+                else
+                    currentNames.Add(name);
+            }
 
             filter.BypassFilters.UpdateOrAddValue(id, currentNames, filter, _model);
             await _model.SaveChangesAsync();
 
-            await CommandUtils.RespondBasicSuccessAsync(ctx, "Bypass filter added.");
+            await CommandUtils.RespondBasicSuccessAsync(ctx, $"Bypass filter {(added ? "added" : "removed")}.");
         }
     }
 }
