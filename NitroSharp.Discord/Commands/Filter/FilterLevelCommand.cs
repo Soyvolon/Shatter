@@ -25,6 +25,7 @@ namespace NitroSharp.Discord.Commands.Filter
         [Description("Sets the strictness of filters on your server.")]
         [Aliases("flevel")]
         [RequireUserPermissions(Permissions.ManageGuild)]
+        [RequireBotPermissions(Permissions.ManageMessages)]
         public async Task FilterLevelCommandAsync(CommandContext ctx,
             [Description("Filter to set the severity for.")]
             string filterName,

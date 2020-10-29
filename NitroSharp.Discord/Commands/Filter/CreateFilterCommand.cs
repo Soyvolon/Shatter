@@ -28,6 +28,7 @@ namespace NitroSharp.Discord.Commands.Filter
         [Description("Create a new word based filter for your server.")]
         [Aliases("filtercreate", "fcreate")]
         [RequireUserPermissions(Permissions.ManageGuild)]
+        [RequireBotPermissions(Permissions.ManageMessages)]
         public async Task CreateFilterCommandAsync(CommandContext ctx,
             [Description("One word name of the new filter")]
             string filterName,

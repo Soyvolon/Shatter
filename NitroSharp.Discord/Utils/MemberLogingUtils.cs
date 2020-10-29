@@ -13,7 +13,6 @@ namespace NitroSharp.Discord.Utils
 {
     public static class MemberLogingUtils
     {
-        #region Utility Methods
         public static async Task<string> ReplaceValues(string message, GuildMemberAddEventArgs e)
         {
             return await ReplaceValues(message,
@@ -200,6 +199,5 @@ namespace NitroSharp.Discord.Utils
             }
             catch { } // ignore
         }
-        #endregion
     }
 }

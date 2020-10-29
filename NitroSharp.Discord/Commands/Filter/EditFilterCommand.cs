@@ -27,6 +27,7 @@ namespace NitroSharp.Discord.Commands.Filter
         [Description("Edits an exsisting filter, or adds a new one.")]
         [Aliases("filteredit", "fedit", "fupdate", "updatefilter", "filterupdate")]
         [RequireUserPermissions(Permissions.ManageGuild)]
+        [RequireBotPermissions(Permissions.ManageMessages)]
         public async Task EditFilterCommandAsync(CommandContext ctx,
             [Description("Name of the filter.")]
             string filterName,

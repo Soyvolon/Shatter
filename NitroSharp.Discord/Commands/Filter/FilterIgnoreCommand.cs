@@ -25,6 +25,7 @@ namespace NitroSharp.Discord.Commands.Filter
         [Description("Sets a user as exempt from filters. Users with the Manage Message permission are automatically exmept from filters.")]
         [Aliases("ignorefilter", "fignore")]
         [RequireUserPermissions(Permissions.ManageGuild)]
+        [RequireBotPermissions(Permissions.ManageMessages)]
         public async Task FilterIgnoreCommandAsync(CommandContext ctx,
             [Description("User to toggle exemption status for.")]
             DiscordMember discordMember,
@@ -41,15 +42,6 @@ namespace NitroSharp.Discord.Commands.Filter
             [Description("Filter to ignore. Leave blank to apply to all filters")]
             string? filterName = null)
             => await FilterIgnoreCommandAsync(ctx, channel.Id, filterName);
-
-        [Command("filterignore")]
-        public async Task FilterIgnoreCommandAsync(CommandContext ctx,
-            [Description("Role to toggle exemption status for.")]
-            DiscordRole role,
-
-            [Description("Filter to ignore. Leave blank to apply to all filters")]
-            string? filterName = null)
-            => await FilterIgnoreCommandAsync(ctx, role.Id, filterName);
 
         private async Task FilterIgnoreCommandAsync(CommandContext ctx, ulong id, string? filterName = null)
         {

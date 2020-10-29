@@ -23,6 +23,7 @@ namespace NitroSharp.Discord.Commands.Filter
         [Description("Lists the filters for your server.")]
         [Aliases("filterlist", "flist")]
         [RequireUserPermissions(Permissions.ManageGuild)]
+        [RequireBotPermissions(Permissions.ManageMessages)]
         public async Task ListFiltersCommandAsync(CommandContext ctx)
         {
             var filter = await _model.FindAsync<GuildFilters>(ctx.Guild.Id);

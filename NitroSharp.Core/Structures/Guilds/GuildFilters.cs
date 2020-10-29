@@ -20,7 +20,7 @@ namespace NitroSharp.Core.Structures.Guilds
         public ConcurrentDictionary<ulong, HashSet<string>> BypassFilters { get; set; }
 
         [NotMapped]
-        HashSet<string> DirectMatches
+        public HashSet<string> DirectMatches
         {
             get
             {
@@ -35,27 +35,12 @@ namespace NitroSharp.Core.Structures.Guilds
         }
 
         [NotMapped]
-        HashSet<string> LookalikeMatches
+        public HashSet<string> FoundAnywhereMatches
         {
             get
             {
                 var set = new HashSet<string>();
                 var data = Filters.Where(x => x.Value.Item1 == 2);
-                foreach (var ary in data)
-                {
-                    set.UnionWith(ary.Value.Item2);
-                }
-                return set;
-            }
-        }
-
-        [NotMapped]
-        HashSet<string> FoundAnywhereMatches
-        {
-            get
-            {
-                var set = new HashSet<string>();
-                var data = Filters.Where(x => x.Value.Item1 == 3);
                 foreach (var ary in data)
                 {
                     set.UnionWith(ary.Value.Item2);

@@ -23,6 +23,7 @@ namespace NitroSharp.Discord.Commands.Filter
         [Description("Deletes a word filter.")]
         [Aliases("filterdelete", "delfilter", "fdelete")]
         [RequireUserPermissions(Permissions.ManageGuild)]
+        [RequireBotPermissions(Permissions.ManageMessages)]
         public async Task DeleteFilterCommandAsync(CommandContext ctx,
             [Description("Name of the filter to delete.")]
             string filterName)

@@ -1,8 +1,11 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 using DSharpPlus;
 using DSharpPlus.EventArgs;
 
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
@@ -11,11 +14,12 @@ using NitroSharp.Core.Structures.Guilds;
 
 namespace NitroSharp.Discord.Utils
 {
-    public class DiscordEventHandler
+    public class DiscordEventHandler : IDisposable
     {
         private readonly DiscordRestClient Rest;
         private readonly DiscordShardedClient Client;
         private readonly ServiceProvider Services;
+        private bool disposedValue;
 
         public DiscordEventHandler(DiscordShardedClient client, DiscordRestClient rest, ServiceProvider services)
         {
@@ -29,10 +33,15 @@ namespace NitroSharp.Discord.Utils
             // Register client events.
             Client.Ready += Client_Ready;
 
-            Client.GuildMemberAdded += Client_GuildMemberAdded;
-            Client.GuildMemberRemoved += Client_GuildMemberRemoved;
-        }
+            #region Memberlogging Assignment
+            Client.GuildMemberAdded += MemberLog_GuildMemberAdded;
+            Client.GuildMemberRemoved += MemberLog_GuildMemberRemoved;
+            #endregion
 
+            #region Guild Filters Assignment
+            Client.MessageCreated += GuildFilters_MessageCreated;
+            #endregion
+        }
         private Task Client_Ready(DiscordClient sender, ReadyEventArgs e)
         {
             Client.Logger.LogInformation(DiscordBot.Event_CommandHandler, "Client Ready!");
@@ -40,7 +49,9 @@ namespace NitroSharp.Discord.Utils
             return Task.CompletedTask;
         }
 
-        private async Task Client_GuildMemberAdded(DiscordClient sender, GuildMemberAddEventArgs e)
+        #region Memberlogging
+
+        private async Task MemberLog_GuildMemberAdded(DiscordClient sender, GuildMemberAddEventArgs e)
         {
             var eventModel = Services.GetService<NSDatabaseModel>();
             var guild = eventModel.Find<GuildMemberlogs>(e.Guild.Id);
@@ -59,7 +70,7 @@ namespace NitroSharp.Discord.Utils
             }
         }
 
-        private async Task Client_GuildMemberRemoved(DiscordClient sender, GuildMemberRemoveEventArgs e)
+        private async Task MemberLog_GuildMemberRemoved(DiscordClient sender, GuildMemberRemoveEventArgs e)
         {
             var eventModel = Services.GetService<NSDatabaseModel>();
             var guild = eventModel.Find<GuildMemberlogs>(e.Guild.Id);
@@ -70,6 +81,66 @@ namespace NitroSharp.Discord.Utils
                     await MemberLogingUtils.SendLeaveMessageAsync(guild, e);
                 }
             }
+        }
+        #endregion
+
+        #region Guild Filters
+        public async Task GuildFilters_MessageCreated(DiscordClient sender, MessageCreateEventArgs e)
+        {
+            var model = Services.GetService<NSDatabaseModel>();
+            var filter = await model.FindAsync<GuildFilters>(e.Guild.Id);
+
+            if (!(filter is null))
+            {
+                var cancelSource = new CancellationTokenSource();
+                GuildFiltersUtil.FilterUtils[e.Message.Id] = new System.Tuple<Task, CancellationTokenSource>(
+                    Task.Run(async () => await GuildFiltersUtil.Run(filter, e, cancelSource.Token)),
+                    cancelSource);
+            }
+        }
+        #endregion
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                // Unregister events
+                Client.Ready -= Client_Ready;
+
+                #region Memberlogging Assignment
+                Client.GuildMemberAdded -= MemberLog_GuildMemberAdded;
+                Client.GuildMemberRemoved -= MemberLog_GuildMemberRemoved;
+                #endregion
+
+                #region Guild Filters Assignment
+                Client.MessageCreated -= GuildFilters_MessageCreated;
+                #endregion
+
+                if (disposing)
+                {
+                    // Stop any in progress operations.
+                    foreach(var value in GuildFiltersUtil.FilterUtils.Values)
+                    {
+                        value.Item2.Cancel();
+                    }
+                }
+
+                disposedValue = true;
+            }
+        }
+
+        // // TODO: override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
+        // ~DiscordEventHandler()
+        // {
+        //     // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+        //     Dispose(disposing: false);
+        // }
+
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
     }
 }

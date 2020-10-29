@@ -55,7 +55,6 @@ namespace NitroSharp.Discord
         #region Private Variables
         private readonly LogLevel logLevel;
         private readonly bool test;
-        private NSDatabaseModel eventModel;
         private YouTubeConfig YTCfg;
         private ServiceCollection services;
         private ServiceProvider provider;
@@ -224,9 +223,12 @@ namespace NitroSharp.Discord
         {
             Bot = null;
 
+            Client.MessageCreated -= Client_MessageCreated;
+
+            eventHandler.Dispose();
+
             if (!(CommandsInProgress is null))
             {
-                Client.MessageCreated -= Client_MessageCreated;
 
                 foreach (var cmd in CommandsInProgress.AsParallel())
                 {
@@ -247,9 +249,12 @@ namespace NitroSharp.Discord
         {
             Bot = null;
 
+            Client.MessageCreated -= Client_MessageCreated;
+
+            eventHandler.Dispose();
+
             if (!(CommandsInProgress is null))
             {
-                Client.MessageCreated -= Client_MessageCreated;
 
                 await Task.Run(() =>
                 {
