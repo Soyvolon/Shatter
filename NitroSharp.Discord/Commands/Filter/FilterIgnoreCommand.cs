@@ -6,7 +6,7 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
-namespace NitroSharp.Commands.Filter
+namespace NitroSharp.Discord.Commands.Filter
 {
     public class FilterIgnoreCommand : BaseCommandModule
     {

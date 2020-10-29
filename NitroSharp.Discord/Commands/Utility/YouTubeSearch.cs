@@ -4,9 +4,9 @@ using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 
-using NitroSharp.Utils;
+using NitroSharp.Core.Utils;
 
-namespace NitroSharp.Commands.Utility
+namespace NitroSharp.Discord.Commands.Utility
 {
     public class YouTubeSearch : BaseCommandModule
     {

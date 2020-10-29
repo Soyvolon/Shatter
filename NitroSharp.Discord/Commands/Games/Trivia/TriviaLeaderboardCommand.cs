@@ -12,11 +12,12 @@ using DSharpPlus.Interactivity.Extensions;
 
 using Microsoft.EntityFrameworkCore;
 
-using NitroSharp.Commands.CustomArguments;
-using NitroSharp.Database;
-using NitroSharp.Structures.Trivia;
+using NitroSharp.Discord.Commands.CustomArguments;
 
-namespace NitroSharp.Commands.Games.Trivia
+using NitroSharp.Core.Database;
+using NitroSharp.Core.Structures.Trivia;
+
+namespace NitroSharp.Discord.Commands.Games.Trivia
 {
     public class TriviaLeaderboardCommand : BaseCommandModule
     {

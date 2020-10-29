@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 
-namespace NitroSharp.Extensions
+namespace NitroSharp.Core.Extensions
 {
     public static class IntExtensions
     {

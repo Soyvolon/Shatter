@@ -10,9 +10,9 @@ using DSharpPlus.Interactivity.Extensions;
 
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 
-using NitroSharp.Services;
+using NitroSharp.Discord.Services;
 
-namespace NitroSharp.Commands.Music
+namespace NitroSharp.Discord.Commands.Music
 {
     public class MusicListCommand : BaseCommandModule
     {

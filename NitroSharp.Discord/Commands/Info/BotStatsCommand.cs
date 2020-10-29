@@ -9,7 +9,7 @@ using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 
-namespace NitroSharp.Commands.Info
+namespace NitroSharp.Discord.Commands.Info
 {
     public class BotStatsCommand : BaseCommandModule
     {
@@ -23,7 +23,7 @@ namespace NitroSharp.Commands.Info
         {
             int guilds = 0, channels = 0, users = 0;
 
-            foreach(var shard in Program.Bot.Client.ShardClients.Values)
+            foreach(var shard in DiscordBot.Bot.Client.ShardClients.Values)
             {
                 foreach(var g in shard.Guilds.Values)
                 {
@@ -46,7 +46,7 @@ namespace NitroSharp.Commands.Info
                 $"Memory GB  :: [Currently Broken]MB",
                 $"CPU        :: [Currently Broken]%",
                 $"Ping MS    :: {ctx.Client.Ping}MS",
-                $"Uptime     :: {Program.Bot.Uptime.Elapsed:c}"
+                $"Uptime     :: {DiscordBot.Bot.Uptime.Elapsed:c}"
             }) + "```**";
 
             var dsharpplus = Assembly.GetAssembly(typeof(DiscordClient))?.GetName() ?? null;
@@ -63,7 +63,7 @@ namespace NitroSharp.Commands.Info
             {
                 $"Creator    :: {Creator}",
                 $"Modules    :: Coming Soon",
-                $"Commands   :: {Program.Bot.CommandList.Count()}",
+                $"Commands   :: {DiscordBot.Bot.CommandList.Count()}",
                 $"Website    :: Coming Soon",
                 //$"Patreon    :: Coming Soon",
                 $"PayPal     :: https://paypal.me/pools/c/8tgZB4cjzU"

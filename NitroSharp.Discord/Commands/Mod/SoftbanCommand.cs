@@ -6,7 +6,7 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
-namespace NitroSharp.Commands.Mod
+namespace NitroSharp.Discord.Commands.Mod
 {
     public class SoftbanCommand : BaseCommandModule
     {

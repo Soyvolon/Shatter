@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace NitroSharp.Structures.Guilds
+namespace NitroSharp.Core.Structures.Guilds
 {
     public class GuildFilters : IGuildData
     {

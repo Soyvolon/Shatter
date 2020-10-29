@@ -6,9 +6,9 @@ using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Lavalink;
 using DSharpPlus.Lavalink.EventArgs;
 
-using NitroSharp.Services;
+using NitroSharp.Discord.Services;
 
-namespace NitroSharp.Commands.Music
+namespace NitroSharp.Discord.Commands.Music
 {
     public class SkipToMusicCommand : BaseCommandModule
     {

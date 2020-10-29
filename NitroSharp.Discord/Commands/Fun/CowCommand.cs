@@ -8,9 +8,9 @@ using DSharpPlus.CommandsNext.Attributes;
 
 using Newtonsoft.Json;
 
-using NitroSharp.Extensions;
+using NitroSharp.Core.Extensions;
 
-namespace NitroSharp.Commands.Fun
+namespace NitroSharp.Discord.Commands.Fun
 {
     public class CowCommand : BaseCommandModule
     {

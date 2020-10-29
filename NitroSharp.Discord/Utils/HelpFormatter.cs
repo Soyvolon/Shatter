@@ -8,7 +8,7 @@ using DSharpPlus.CommandsNext.Converters;
 using DSharpPlus.CommandsNext.Entities;
 using DSharpPlus.Entities;
 
-namespace NitroSharp.Utils
+namespace NitroSharp.Discord.Utils
 {
     /// <summary>
     /// This is currently the same as the DefaultHelpFormatter from DSharpPlus. Modify this class to edit your help formatting.

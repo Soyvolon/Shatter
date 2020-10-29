@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace NitroSharp.Structures.Trivia
+namespace NitroSharp.Core.Structures.Trivia
 {
     public class TriviaPlayer
     {

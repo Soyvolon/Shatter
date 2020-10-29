@@ -4,10 +4,10 @@ using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 
-using NitroSharp.Database;
-using NitroSharp.Structures.Guilds;
+using NitroSharp.Core.Database;
+using NitroSharp.Core.Structures.Guilds;
 
-namespace NitroSharp.Commands.Games.Trivia.Admin
+namespace NitroSharp.Discord.Commands.Games.Trivia.Admin
 {
     public class TriviaQuestionLimitCommand : BaseCommandModule
     {

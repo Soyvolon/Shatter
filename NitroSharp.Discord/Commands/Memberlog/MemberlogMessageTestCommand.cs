@@ -5,11 +5,11 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.EventArgs;
 
-using NitroSharp.Database;
-using NitroSharp.Structures;
-using NitroSharp.Structures.Guilds;
+using NitroSharp.Core.Database;
+using NitroSharp.Core.Structures;
+using NitroSharp.Core.Structures.Guilds;
 
-namespace NitroSharp.Commands.Memberlog
+namespace NitroSharp.Discord.Commands.Memberlog
 {
     public class MemberlogMessageTestCommand : BaseCommandModule
     {
@@ -48,12 +48,12 @@ namespace NitroSharp.Commands.Memberlog
 
             if(!(guild.JoinMessage is null))
             {
-                await Program.Bot.SendJoinMessageAsync(guild, ctx);
+                await DiscordBot.Bot.SendJoinMessageAsync(guild, ctx);
             }
 
             if(!(guild.LeaveMessage is null))
             {
-                await Program.Bot.SendLeaveMessageAsync(guild, ctx);
+                await DiscordBot.Bot.SendLeaveMessageAsync(guild, ctx);
             }
 
             await CommandUtils.RespondBasicSuccessAsync(ctx, "Test complete.");

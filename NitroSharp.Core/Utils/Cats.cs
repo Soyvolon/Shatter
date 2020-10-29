@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 
 using Newtonsoft.Json;
 
-using NitroSharp.Structures;
+using NitroSharp.Core.Structures;
 
-namespace NitroSharp.Utils
+namespace NitroSharp.Core.Utils
 {
     public static class Cats
     {

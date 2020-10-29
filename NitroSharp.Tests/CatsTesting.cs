@@ -2,7 +2,7 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 
-using NitroSharp.Utils;
+using NitroSharp.Core.Utils;
 
 using NUnit.Framework;
 

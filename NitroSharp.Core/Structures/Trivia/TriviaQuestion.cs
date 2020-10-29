@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using NitroSharp.Extensions;
+using NitroSharp.Core.Extensions;
 
-namespace NitroSharp.Structures.Trivia
+namespace NitroSharp.Core.Structures.Trivia
 {
     public class TriviaQuestion
     {

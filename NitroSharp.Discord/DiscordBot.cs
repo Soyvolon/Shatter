@@ -20,15 +20,17 @@ using Microsoft.Extensions.Logging;
 
 using Newtonsoft.Json;
 
-using NitroSharp.Commands;
-using NitroSharp.Commands.CustomArguments;
-using NitroSharp.Database;
-using NitroSharp.Services;
-using NitroSharp.Structures;
-using NitroSharp.Structures.Guilds;
-using NitroSharp.Utils;
+using NitroSharp.Discord.Commands;
+using NitroSharp.Discord.Commands.CustomArguments;
+using NitroSharp.Discord.Services;
 
-namespace NitroSharp
+using NitroSharp.Core.Structures;
+using NitroSharp.Core.Structures.Guilds;
+using NitroSharp.Core.Utils;
+using NitroSharp.Core.Database;
+using NitroSharp.Discord.Utils;
+
+namespace NitroSharp.Discord
 {
     public class DiscordBot
     {
@@ -37,9 +39,10 @@ namespace NitroSharp
         public BootStatus Boot { get; private set; } = BootStatus.offline;
         #endregion
 
+        public static DiscordBot Bot;
+
         #region Public Variables
         public IEnumerable<string> CommandList { get; private set; }
-        public DatabaseConfig Database { get; private set; }
         public BotConfig Config { get; private set; }
         public DiscordShardedClient Client { get; private set; }
         public DiscordRestClient Rest { get; private set; }
@@ -54,234 +57,28 @@ namespace NitroSharp
         private YouTubeConfig YTCfg;
         #endregion
 
-        public DiscordBot(bool test = false)
+        public DiscordBot(BotConfig botConfig, LavalinkConfig lavalinkConfig, YouTubeConfig youtubeConfig, bool test = false)
         {
             logLevel = LogLevel.Debug;
             this.test = test;
             eventModel = new NSDatabaseModel();
+
+            Config = botConfig;
+            LavaConfig = lavalinkConfig;
+            YTCfg = youtubeConfig;
+            
+            // Assign the lastest bot to to the static Bot indidcator.
+            Bot = this;
         }
 
         #region Configuration
-        private async Task RegisterConfiguration()
-        {
-            var manualConfig = false;
-
-            if (!Directory.Exists("Configs"))
-                Directory.CreateDirectory("Configs");
-
-            var root = @"Configs";
-            var path = Path.Join(root, "bot_config.json");
-            if (File.Exists(path))
-            {
-                using var fs = new FileStream(path, FileMode.Open);
-                using var sr = new StreamReader(fs);
-                string json = await sr.ReadToEndAsync().ConfigureAwait(false);
-                try
-                {
-                    Config = JsonConvert.DeserializeObject<BotConfig>(json);
-                }
-                catch
-                {
-                    manualConfig = true;
-                }
-            }
-            else
-            {
-                manualConfig = true;
-            }
-
-            if (manualConfig)
-            {
-                Config = new BotConfig
-                {
-                    Prefix = "c!", // Discord Bot Prefix
-                    Token = "fill_me", // Discord Bot Token
-                    Shards = 1, // Auto sharding
-                    Admins = new ulong[] { 0 }
-                };
-
-                using var sw = new StreamWriter(new FileStream(path, FileMode.Create));
-                var json = JsonConvert.SerializeObject(Config, Formatting.Indented);
-
-                foreach (string line in json.Split("\n"))
-                    await sw.WriteLineAsync(line).ConfigureAwait(false);
-
-                await sw.FlushAsync().ConfigureAwait(false);
-                sw.Close();
-
-                Console.WriteLine($"New Bot Configuration generated due to missing config or error. Please open and edit {path} to new bot settings.");
-                if (!test)
-                    Console.ReadLine();
-                Environment.Exit(0);
-            }
-        }
-
-        public async Task RegisterDatabase()
-        {
-            var manualConfig = false;
-
-            if (!Directory.Exists("Configs"))
-                Directory.CreateDirectory("Configs");
-
-            var root = @"Configs";
-            var path = Path.Join(root, "database_config.json");
-            if (File.Exists(path))
-            {
-                using var fs = new FileStream(path, FileMode.Open);
-                using var sr = new StreamReader(fs);
-                string json = await sr.ReadToEndAsync().ConfigureAwait(false);
-                try
-                {
-                    Database = JsonConvert.DeserializeObject<DatabaseConfig>(json);
-                }
-                catch
-                {
-                    manualConfig = true;
-                }
-            }
-            else
-            {
-                manualConfig = true;
-            }
-
-            if (manualConfig)
-            {
-                Database = new DatabaseConfig("NitroSharp", "localhost", "postgres", "password", "GuildConfigs", 0000);
-
-                using var sw = new StreamWriter(new FileStream(path, FileMode.Create));
-                var json = JsonConvert.SerializeObject(Database, Formatting.Indented);
-
-                foreach (string line in json.Split("\n"))
-                    await sw.WriteLineAsync(line).ConfigureAwait(false);
-
-                await sw.FlushAsync().ConfigureAwait(false);
-                sw.Close();
-
-                Console.WriteLine($"New Database Configuration generated due to missing config or error. Please open and edit {path} to new database settings.");
-                if (!test)
-                    Console.ReadLine();
-                Environment.Exit(0);
-            }
-        }
-
-        public async Task RegisterLavaLink()
-        {
-            var manualConfig = false;
-
-            if (!Directory.Exists("Configs"))
-                Directory.CreateDirectory("Configs");
-
-            var root = @"Configs";
-            var path = Path.Join(root, "lavalink_config.json");
-            if (File.Exists(path))
-            {
-                using var fs = new FileStream(path, FileMode.Open);
-                using var sr = new StreamReader(fs);
-                string json = await sr.ReadToEndAsync().ConfigureAwait(false);
-                try
-                {
-                    LavaConfig = JsonConvert.DeserializeObject<LavalinkConfig>(json);
-                }
-                catch
-                {
-                    manualConfig = true;
-                }
-            }
-            else
-            {
-                manualConfig = true;
-            }
-
-            if (manualConfig)
-            {
-                LavaConfig = new LavalinkConfig()
-                {
-                    Password = ""
-                };
-
-                using var sw = new StreamWriter(new FileStream(path, FileMode.Create));
-                var json = JsonConvert.SerializeObject(LavaConfig, Formatting.Indented);
-
-                foreach (string line in json.Split("\n"))
-                    await sw.WriteLineAsync(line).ConfigureAwait(false);
-
-                await sw.FlushAsync().ConfigureAwait(false);
-                sw.Close();
-
-                Console.WriteLine($"New LavaLink Configuration generated due to missing config or error. Please open and edit {path} to new lavalink settings.");
-                if (!test)
-                    Console.ReadLine();
-                Environment.Exit(0);
-            }
-        }
-
-        public async Task RegisterYouTube()
-        {
-            var manualConfig = false;
-
-            if (!Directory.Exists("Configs"))
-                Directory.CreateDirectory("Configs");
-
-            var root = @"Configs";
-            var path = Path.Join(root, "youtube_config.json");
-            if (File.Exists(path))
-            {
-                using var fs = new FileStream(path, FileMode.Open);
-                using var sr = new StreamReader(fs);
-                string json = await sr.ReadToEndAsync().ConfigureAwait(false);
-                try
-                {
-                    YTCfg = JsonConvert.DeserializeObject<YouTubeConfig>(json);
-                }
-                catch
-                {
-                    manualConfig = true;
-                }
-            }
-            else
-            {
-                manualConfig = true;
-            }
-
-            if (manualConfig)
-            {
-                YTCfg = new YouTubeConfig()
-                {
-                    ApiKey = ""
-                };
-
-                using var sw = new StreamWriter(new FileStream(path, FileMode.Create));
-                var json = JsonConvert.SerializeObject(YTCfg, Formatting.Indented);
-
-                foreach (string line in json.Split("\n"))
-                    await sw.WriteLineAsync(line).ConfigureAwait(false);
-
-                await sw.FlushAsync().ConfigureAwait(false);
-                sw.Close();
-
-                Console.WriteLine($"New YoutTube Configuration generated due to missing config or error. Please open and edit {path} to new youtube settings.");
-                if (!test)
-                    Console.ReadLine();
-                Environment.Exit(0);
-            }
-        }
+        
         #endregion
 
         #region Initialize
         public async Task InitializeAsync()
         {
             Boot = BootStatus.booting;
-
-            await eventModel.Database.MigrateAsync();
-
-            await RegisterConfiguration().ConfigureAwait(false);
-
-            if (Database is null) // this may already be registered
-                await RegisterDatabase().ConfigureAwait(false);
-
-            await RegisterLavaLink().ConfigureAwait(false);
-            await RegisterYouTube().ConfigureAwait(false);
-            YouTube.Initalize(YTCfg);
 
             Client = new DiscordShardedClient(GetDiscordConfiguration());
             Rest = new DiscordRestClient(GetDiscordConfiguration());

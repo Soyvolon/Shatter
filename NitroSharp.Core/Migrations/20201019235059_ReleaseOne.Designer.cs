@@ -4,10 +4,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using NitroSharp.Database;
+using NitroSharp.Core.Database;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace NitroSharp.Migrations
+namespace NitroSharp.Core.Migrations
 {
     [DbContext(typeof(NSDatabaseModel))]
     [Migration("20201019235059_AllMigrations")]
@@ -21,7 +21,7 @@ namespace NitroSharp.Migrations
                 .HasAnnotation("ProductVersion", "3.1.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            modelBuilder.Entity("NitroSharp.Structures.GuildConfig", b =>
+            modelBuilder.Entity("NitroSharp.Core.Structures.GuildConfig", b =>
                 {
                     b.Property<decimal>("GuildId")
                         .ValueGeneratedOnAdd()
@@ -52,7 +52,7 @@ namespace NitroSharp.Migrations
                     b.ToTable("Configs");
                 });
 
-            modelBuilder.Entity("NitroSharp.Structures.Trivia.TriviaPlayer", b =>
+            modelBuilder.Entity("NitroSharp.Core.Structures.Trivia.TriviaPlayer", b =>
                 {
                     b.Property<decimal>("UserId")
                         .ValueGeneratedOnAdd()
@@ -76,7 +76,7 @@ namespace NitroSharp.Migrations
                     b.ToTable("TriviaPlayers");
                 });
 
-            modelBuilder.Entity("NitroSharp.Structures.Wallet", b =>
+            modelBuilder.Entity("NitroSharp.Core.Structures.Wallet", b =>
                 {
                     b.Property<decimal>("UserId")
                         .ValueGeneratedOnAdd()
@@ -97,9 +97,9 @@ namespace NitroSharp.Migrations
                     b.ToTable("Wallets");
                 });
 
-            modelBuilder.Entity("NitroSharp.Structures.GuildConfig", b =>
+            modelBuilder.Entity("NitroSharp.Core.Structures.GuildConfig", b =>
                 {
-                    b.OwnsOne("NitroSharp.Structures.MemberlogMessage", "JoinMessage", b1 =>
+                    b.OwnsOne("NitroSharp.Core.Structures.MemberlogMessage", "JoinMessage", b1 =>
                         {
                             b1.Property<decimal>("GuildConfigGuildId")
                                 .HasColumnType("numeric(20,0)");
@@ -124,7 +124,7 @@ namespace NitroSharp.Migrations
                                 .HasForeignKey("GuildConfigGuildId");
                         });
 
-                    b.OwnsOne("NitroSharp.Structures.MemberlogMessage", "LeaveMessage", b1 =>
+                    b.OwnsOne("NitroSharp.Core.Structures.MemberlogMessage", "LeaveMessage", b1 =>
                         {
                             b1.Property<decimal>("GuildConfigGuildId")
                                 .HasColumnType("numeric(20,0)");

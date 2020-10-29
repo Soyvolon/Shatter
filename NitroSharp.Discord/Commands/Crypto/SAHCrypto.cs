@@ -7,7 +7,7 @@ using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 
-namespace NitroSharp.Commands.Crypto
+namespace NitroSharp.Discord.Commands.Crypto
 {
     public class SAHCrypto : BaseCommandModule
     {

@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.Entities;
 
-using NitroSharp.Extensions;
+using NitroSharp.Core.Extensions;
 
-namespace NitroSharp.Commands
+namespace NitroSharp.Discord.Commands
 {
     public enum ColorType
     {

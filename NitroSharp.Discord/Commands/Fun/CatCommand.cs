@@ -4,10 +4,10 @@ using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 
-using NitroSharp.Structures;
-using NitroSharp.Utils;
+using NitroSharp.Core.Structures;
+using NitroSharp.Core.Utils;
 
-namespace NitroSharp.Commands.Fun
+namespace NitroSharp.Discord.Commands.Fun
 {
     public class CatCommand : BaseCommandModule
     {

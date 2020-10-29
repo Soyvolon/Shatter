@@ -7,7 +7,7 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
-namespace NitroSharp.Commands.Poll
+namespace NitroSharp.Discord.Commands.Poll
 {
     public class AdminPollCommand : BaseCommandModule
     {

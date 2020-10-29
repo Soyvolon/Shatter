@@ -6,7 +6,7 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
-namespace NitroSharp.Commands.Memes
+namespace NitroSharp.Discord.Commands.Memes
 {
     public class DonaldCommand : BaseCommandModule
     {

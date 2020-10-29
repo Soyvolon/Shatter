@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 using Newtonsoft.Json.Linq;
 
-namespace NitroSharp.Utils
+namespace NitroSharp.Core.Utils
 {
     public class Advice
     {

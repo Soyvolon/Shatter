@@ -5,7 +5,7 @@ using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 
-namespace NitroSharp.Commands.Filter
+namespace NitroSharp.Discord.Commands.Filter
 {
     public class DeleteFilterCommand : BaseCommandModule
     {

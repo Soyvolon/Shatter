@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.Interactivity;
 
-namespace NitroSharp.Utils
+namespace NitroSharp.Discord.Utils
 {
     public static class Brainfuck
     {

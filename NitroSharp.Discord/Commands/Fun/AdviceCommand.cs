@@ -4,9 +4,9 @@ using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 
-using NitroSharp.Utils;
+using NitroSharp.Core.Utils;
 
-namespace NitroSharp.Commands.Fun
+namespace NitroSharp.Discord.Commands.Fun
 {
     public class AdviceCommand : BaseCommandModule
     {

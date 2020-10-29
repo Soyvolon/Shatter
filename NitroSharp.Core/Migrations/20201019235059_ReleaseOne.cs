@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace NitroSharp.Migrations
+namespace NitroSharp.Core.Migrations
 {
     public partial class AllMigrations : Migration
     {

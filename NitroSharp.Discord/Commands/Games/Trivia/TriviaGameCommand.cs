@@ -8,13 +8,15 @@ using DSharpPlus.Entities;
 using DSharpPlus.Interactivity;
 using DSharpPlus.Interactivity.Extensions;
 
-using NitroSharp.Database;
-using NitroSharp.Extensions;
-using NitroSharp.Structures.Guilds;
-using NitroSharp.Structures.Trivia;
-using NitroSharp.Utils;
+using NitroSharp.Core.Database;
+using NitroSharp.Core.Extensions;
+using NitroSharp.Core.Structures;
+using NitroSharp.Core.Structures.Guilds;
+using NitroSharp.Core.Structures.Trivia;
+using NitroSharp.Core.Utils;
+using NitroSharp.Discord.Utils;
 
-namespace NitroSharp.Commands.Games.Trivia
+namespace NitroSharp.Discord.Commands.Games.Trivia
 {
     public class TriviaGameCommand : BaseCommandModule
     {
@@ -113,7 +115,7 @@ namespace NitroSharp.Commands.Games.Trivia
                         var wallet = _model.Wallets.Find(response.Result.Author.Id);
                         if (wallet is null)
                         {
-                            wallet = new Structures.Wallet(response.Result.Author.Id);
+                            wallet = new Wallet(response.Result.Author.Id);
                             await _model.AddAsync(wallet);
                         }
 

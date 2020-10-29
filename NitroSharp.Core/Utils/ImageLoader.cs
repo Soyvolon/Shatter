@@ -2,7 +2,7 @@
 using System.IO;
 using System.Net;
 
-namespace NitroSharp.Utils
+namespace NitroSharp.Core.Utils
 {
     public static class ImageLoader
     {

@@ -5,9 +5,9 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
-using NitroSharp.Services;
+using NitroSharp.Discord.Services;
 
-namespace NitroSharp.Commands.Music
+namespace NitroSharp.Discord.Commands.Music
 {
     public class SetMusicHostCommand : BaseCommandModule
     {

@@ -5,7 +5,7 @@ using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 
-namespace NitroSharp.Commands.Fun
+namespace NitroSharp.Discord.Commands.Fun
 {
     public class EmojifyCommand : BaseCommandModule
     {

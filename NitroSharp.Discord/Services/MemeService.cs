@@ -6,7 +6,7 @@ using System.Drawing.Text;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace NitroSharp.Services
+namespace NitroSharp.Discord.Services
 {
     public class MemeService : IDisposable
     {

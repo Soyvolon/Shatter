@@ -46,14 +46,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\NitroSharp.Core\NitroSharp.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="application.yml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Configs\bot_config.json">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </None>
-    <None Update="Configs\database_config.json">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
     <None Update="Lavalink.jar">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

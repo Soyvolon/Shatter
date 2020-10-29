@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace NitroSharp.Structures.Guilds
+namespace NitroSharp.Core.Structures.Guilds
 {
     public interface IGuildData
     {

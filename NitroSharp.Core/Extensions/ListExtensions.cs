@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace NitroSharp.Extensions
+namespace NitroSharp.Core.Extensions
 {
     public static class ListExtensions
     {

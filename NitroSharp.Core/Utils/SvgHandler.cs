@@ -13,11 +13,11 @@ using System.Xml;
 
 using Microsoft.Extensions.Logging;
 
-using NitroSharp.Structures;
+using NitroSharp.Core.Structures;
 
 using Svg;
 
-namespace NitroSharp.Utils
+namespace NitroSharp.Core.Utils
 {
     public static class SvgHandler
     {
@@ -83,7 +83,7 @@ namespace NitroSharp.Utils
             }
             catch (Exception ex)
             {
-                Program.Bot.Client.Logger.LogError(ex, "SVG Handler Failed");
+                CoreUtils.Logger.LogError(ex, "SVG Handler Failed");
                 return null; 
             }
         }

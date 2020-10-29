@@ -7,10 +7,10 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
-using NitroSharp.Properties;
-using NitroSharp.Services;
+using NitroSharp.Discord.Properties;
+using NitroSharp.Discord.Services;
 
-namespace NitroSharp.Commands.Image
+namespace NitroSharp.Discord.Commands.Image
 {
     public class DeathNoteCommand : BaseCommandModule
     {

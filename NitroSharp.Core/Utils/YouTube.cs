@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 using Google.Apis.Services;
 using Google.Apis.YouTube.v3;
 
-using NitroSharp.Structures;
+using NitroSharp.Core.Structures;
 
-namespace NitroSharp.Utils
+namespace NitroSharp.Core.Utils
 {
     public static class YouTube
     {

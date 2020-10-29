@@ -4,9 +4,9 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Converters;
 using DSharpPlus.Entities;
 
-using NitroSharp.Structures.Trivia;
+using NitroSharp.Core.Structures.Trivia;
 
-namespace NitroSharp.Commands.CustomArguments
+namespace NitroSharp.Discord.Commands.CustomArguments
 {
     public class QuestionCategoryConverter : IArgumentConverter<QuestionCategory>
     {

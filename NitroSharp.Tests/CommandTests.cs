@@ -6,7 +6,10 @@ using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.Entities;
 
-using NitroSharp.Extensions;
+using NitroSharp.Core;
+using NitroSharp.Core.Extensions;
+using NitroSharp.Core.Structures;
+using NitroSharp.Discord;
 
 using NUnit.Framework;
 
@@ -30,8 +33,11 @@ namespace NitroSharp.Tests
         [OneTimeSetUp]
         public async Task SetUp()
         {
+            var botCfg = (BotConfig)await ConfigurationManager.RegisterBotConfiguration(null);
+            var lavalConfig = (LavalinkConfig)await ConfigurationManager.RegisterLavaLink(null);
+            var ytCfg = (YouTubeConfig)await ConfigurationManager.RegisterYouTube(null);
 
-            Bot = new DiscordBot(true); // Designate test run.
+            Bot = new DiscordBot(botCfg, lavalConfig, ytCfg, true); // Designate test run.
 
             await Bot.InitializeAsync();
 

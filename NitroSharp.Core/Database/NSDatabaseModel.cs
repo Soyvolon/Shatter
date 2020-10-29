@@ -6,11 +6,12 @@ using Microsoft.EntityFrameworkCore;
 
 using Newtonsoft.Json;
 
-using NitroSharp.Structures;
-using NitroSharp.Structures.Guilds;
-using NitroSharp.Structures.Trivia;
+using NitroSharp.Core;
+using NitroSharp.Core.Structures;
+using NitroSharp.Core.Structures.Guilds;
+using NitroSharp.Core.Structures.Trivia;
 
-namespace NitroSharp.Database
+namespace NitroSharp.Core.Database
 {
     public class NSDatabaseModel : DbContext
     {
@@ -26,17 +27,14 @@ namespace NitroSharp.Database
         public DbSet<TriviaPlayer> TriviaPlayers { get; set; }
         #endregion
 
-        protected override void OnConfiguring(DbContextOptionsBuilder options)
+        protected override async void OnConfiguring(DbContextOptionsBuilder options)
         {
-            if (Program.Bot is null)
-                Program.Bot = new DiscordBot();
+            var dbConfig = await ConfigurationManager.RegisterDatabase(null);
 
-            if (Program.Bot.Database is null)
-            {
-                Task.Run(async () => await Program.Bot.RegisterDatabase()).GetAwaiter().GetResult();
-            }
+            if (dbConfig is null)
+                throw new NullReferenceException("DB Config cannont be null!");
 
-            options.UseNpgsql(Program.Bot.Database.GetConnectionString())
+            options.UseNpgsql(dbConfig.GetConnectionString())
                 .EnableDetailedErrors()
                 .EnableSensitiveDataLogging();
         }

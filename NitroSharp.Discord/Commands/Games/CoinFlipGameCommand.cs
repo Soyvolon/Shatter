@@ -5,10 +5,10 @@ using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 
-using NitroSharp.Database;
-using NitroSharp.Structures;
+using NitroSharp.Core.Database;
+using NitroSharp.Core.Structures;
 
-namespace NitroSharp.Commands.Games
+namespace NitroSharp.Discord.Commands.Games
 {
     public class CoinFlipGameCommand : BaseCommandModule
     {

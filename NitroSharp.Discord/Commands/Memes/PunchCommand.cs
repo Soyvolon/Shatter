@@ -7,10 +7,10 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
-using NitroSharp.Properties;
-using NitroSharp.Utils;
+using NitroSharp.Discord.Properties;
+using NitroSharp.Core.Utils;
 
-namespace NitroSharp.Commands.Memes
+namespace NitroSharp.Discord.Commands.Memes
 {
     public class PunchCommand : BaseCommandModule
     {

@@ -4,11 +4,11 @@ using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 
-using NitroSharp.Database;
-using NitroSharp.Structures;
-using NitroSharp.Structures.Guilds;
+using NitroSharp.Core.Database;
+using NitroSharp.Core.Structures;
+using NitroSharp.Core.Structures.Guilds;
 
-namespace NitroSharp.Commands.Config
+namespace NitroSharp.Discord.Commands.Config
 {
     public class Prefix : BaseCommandModule
     {

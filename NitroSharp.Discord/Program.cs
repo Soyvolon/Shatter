@@ -2,7 +2,10 @@
 
 using Microsoft.Extensions.Logging;
 
-namespace NitroSharp
+using NitroSharp.Core;
+using NitroSharp.Core.Structures;
+
+namespace NitroSharp.Discord
 {
     public class Program
     {
@@ -13,7 +16,7 @@ namespace NitroSharp
 
         public static readonly string VERSION = "0.0.0";
 
-        public static DiscordBot Bot { get; set; }
+        private static DiscordBot Bot { get; set; }
 
         public static bool IsDebug
         {
@@ -29,7 +32,11 @@ namespace NitroSharp
 
         static void Main(string[] args)
         {
-            Bot = new DiscordBot();
+            BotConfig botCfg = (BotConfig)ConfigurationManager.RegisterBotConfiguration(null).GetAwaiter().GetResult();
+            LavalinkConfig lavaCfg = (LavalinkConfig)ConfigurationManager.RegisterLavaLink(null).GetAwaiter().GetResult();
+            YouTubeConfig ytCfg = (YouTubeConfig)ConfigurationManager.RegisterYouTube(null).GetAwaiter().GetResult();
+
+            Bot = new DiscordBot(botCfg, lavaCfg, ytCfg);
 
             Bot.InitializeAsync().GetAwaiter().GetResult();
 

@@ -4,7 +4,7 @@ using System.Text;
 
 using Newtonsoft.Json;
 
-namespace NitroSharp.Structures
+namespace NitroSharp.Core.Structures
 {
     public struct UrbanDictonaryResult
     {

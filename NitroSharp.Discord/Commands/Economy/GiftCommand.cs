@@ -5,11 +5,11 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
-using NitroSharp.Database;
-using NitroSharp.Extensions;
-using NitroSharp.Structures;
+using NitroSharp.Core.Database;
+using NitroSharp.Core.Extensions;
+using NitroSharp.Core.Structures;
 
-namespace NitroSharp.Commands.Economy
+namespace NitroSharp.Discord.Commands.Economy
 {
     public class GiftCommand : BaseCommandModule
     {

@@ -6,9 +6,9 @@ using DSharpPlus.CommandsNext.Exceptions;
 
 using Microsoft.Extensions.Logging;
 
-using NitroSharp.Commands;
+using NitroSharp.Discord.Commands;
 
-namespace NitroSharp.Utils
+namespace NitroSharp.Discord.Utils
 {
     public static class CommandResponder
     {

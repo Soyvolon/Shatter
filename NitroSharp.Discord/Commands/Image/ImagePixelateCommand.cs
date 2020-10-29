@@ -8,9 +8,9 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
-using NitroSharp.Utils;
+using NitroSharp.Core.Utils;
 
-namespace NitroSharp.Commands.Image
+namespace NitroSharp.Discord.Commands.Image
 {
     public class ImagePixelateCommand : BaseCommandModule
     {

@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 using Newtonsoft.Json.Linq;
 
-using NitroSharp.Structures;
+using NitroSharp.Core.Structures;
 
-namespace NitroSharp.Utils
+namespace NitroSharp.Core.Utils
 {
     public class Fortune
     {

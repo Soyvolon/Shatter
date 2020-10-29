@@ -6,9 +6,9 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
-using NitroSharp.Properties;
+using NitroSharp.Discord.Properties;
 
-namespace NitroSharp.Commands.Fun
+namespace NitroSharp.Discord.Commands.Fun
 {
     public class BurnCommand : BaseCommandModule
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace NitroSharp.Structures.Guilds
+namespace NitroSharp.Core.Structures.Guilds
 {
     public class GuildMemberlogs : IGuildData
     {

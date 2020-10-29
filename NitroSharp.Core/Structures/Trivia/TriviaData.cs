@@ -1,7 +1,7 @@
 ﻿
 using Newtonsoft.Json;
 
-namespace NitroSharp.Structures.Trivia
+namespace NitroSharp.Core.Structures.Trivia
 {
     public enum QuestionCategory
     {

@@ -5,10 +5,11 @@ using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 
-using NitroSharp.Database;
-using NitroSharp.Extensions;
+using NitroSharp.Core.Database;
+using NitroSharp.Core.Extensions;
+using NitroSharp.Core.Structures;
 
-namespace NitroSharp.Commands.Economy
+namespace NitroSharp.Discord.Commands.Economy
 {
     public class EconDailyCommand : BaseCommandModule
     {
@@ -30,7 +31,7 @@ namespace NitroSharp.Commands.Economy
 
             if(wallet is null)
             {
-                wallet = new Structures.Wallet(ctx.Member.Id, ctx.Member.Username);
+                wallet = new Wallet(ctx.Member.Id, ctx.Member.Username);
                 _model.Add(wallet);
                 save = true;
             }

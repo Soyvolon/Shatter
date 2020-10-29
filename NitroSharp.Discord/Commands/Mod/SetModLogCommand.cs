@@ -6,11 +6,11 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
-using NitroSharp.Database;
-using NitroSharp.Structures;
-using NitroSharp.Structures.Guilds;
+using NitroSharp.Core.Database;
+using NitroSharp.Core.Structures;
+using NitroSharp.Core.Structures.Guilds;
 
-namespace NitroSharp.Commands.Mod
+namespace NitroSharp.Discord.Commands.Mod
 {
     public class SetModLogCommand : BaseCommandModule
     {

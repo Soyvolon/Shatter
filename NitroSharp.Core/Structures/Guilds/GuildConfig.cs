@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace NitroSharp.Structures.Guilds
+namespace NitroSharp.Core.Structures.Guilds
 {
     public class GuildConfig : IGuildData
     {
@@ -23,7 +23,7 @@ namespace NitroSharp.Structures.Guilds
         public GuildConfig(ulong gid)
         {
             GuildId = gid;
-            Prefix = Program.Bot.Config.Prefix;
+            Prefix = CoreUtils.Prefix;
             Culture = "en-US";
             AllowPublicTriviaGames = true;
             TriviaQuestionLimit = 10;

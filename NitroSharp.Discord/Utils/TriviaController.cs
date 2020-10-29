@@ -1,9 +1,9 @@
 ﻿using System.Collections.Concurrent;
 using System.Threading.Tasks;
 
-using NitroSharp.Structures.Trivia;
+using NitroSharp.Core.Structures.Trivia;
 
-namespace NitroSharp.Utils
+namespace NitroSharp.Discord.Utils
 {
     public static class TriviaController
     {

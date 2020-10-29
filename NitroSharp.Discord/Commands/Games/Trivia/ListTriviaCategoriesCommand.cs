@@ -8,9 +8,9 @@ using DSharpPlus.CommandsNext.Attributes;
 
 using Newtonsoft.Json.Linq;
 
-using NitroSharp.Structures.Trivia;
+using NitroSharp.Core.Structures.Trivia;
 
-namespace NitroSharp.Commands.Games.Trivia
+namespace NitroSharp.Discord.Commands.Games.Trivia
 {
     public class ListTriviaCategoriesCommand : BaseCommandModule
     {

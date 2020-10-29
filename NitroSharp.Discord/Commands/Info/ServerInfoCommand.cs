@@ -6,7 +6,7 @@ using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 
-namespace NitroSharp.Commands.Info
+namespace NitroSharp.Discord.Commands.Info
 {
     public class ServerInfoCommand : BaseCommandModule
     {

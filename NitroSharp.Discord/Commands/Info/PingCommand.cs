@@ -7,7 +7,7 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
-namespace NitroSharp.Commands.Info
+namespace NitroSharp.Discord.Commands.Info
 {
     public class PingCommand : BaseCommandModule
     {

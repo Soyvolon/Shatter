@@ -4,7 +4,7 @@ using System.Text;
 
 using Microsoft.EntityFrameworkCore;
 
-namespace NitroSharp.Structures
+namespace NitroSharp.Core.Structures
 {
     [Owned]
     public class MemberlogMessage

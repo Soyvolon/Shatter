@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace NitroSharp.Structures
+namespace NitroSharp.Core.Structures
 {
     public class Wallet
     {

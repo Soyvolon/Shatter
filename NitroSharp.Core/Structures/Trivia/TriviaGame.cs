@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 using Newtonsoft.Json;
 
-namespace NitroSharp.Structures.Trivia
+namespace NitroSharp.Core.Structures.Trivia
 {
     public class TriviaGame
     {

@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
 
-using NitroSharp.Database;
-using NitroSharp.Structures;
-using NitroSharp.Structures.Guilds;
+using NitroSharp.Core.Database;
+using NitroSharp.Core.Structures;
+using NitroSharp.Core.Structures.Guilds;
 
-namespace NitroSharp.Extensions
+namespace NitroSharp.Core.Extensions
 {
     public static class ConcurentDictionaryExtensions
     {

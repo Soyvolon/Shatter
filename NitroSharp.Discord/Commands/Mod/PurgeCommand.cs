@@ -6,7 +6,7 @@ using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 
-namespace NitroSharp.Commands.Mod
+namespace NitroSharp.Discord.Commands.Mod
 {
     public class PurgeCommand : BaseCommandModule
     {

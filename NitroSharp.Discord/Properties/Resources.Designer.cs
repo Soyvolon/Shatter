@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace NitroSharp.Properties {
+namespace NitroSharp.Discord.Properties {
     using System;
     
     

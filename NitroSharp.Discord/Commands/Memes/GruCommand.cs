@@ -6,10 +6,10 @@ using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 
-using NitroSharp.Properties;
-using NitroSharp.Services;
+using NitroSharp.Discord.Properties;
+using NitroSharp.Discord.Services;
 
-namespace NitroSharp.Commands.Memes
+namespace NitroSharp.Discord.Commands.Memes
 {
     public class GruCommand : BaseCommandModule
     {

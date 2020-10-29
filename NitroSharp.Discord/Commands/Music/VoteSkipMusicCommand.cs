@@ -8,9 +8,9 @@ using DSharpPlus.CommandsNext.Attributes;
 
 using Google.Apis.YouTube.v3.Data;
 
-using NitroSharp.Services;
+using NitroSharp.Discord.Services;
 
-namespace NitroSharp.Commands.Music
+namespace NitroSharp.Discord.Commands.Music
 {
     public class VoteSkipMusicCommand : BaseCommandModule
     {

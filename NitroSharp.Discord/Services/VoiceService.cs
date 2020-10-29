@@ -11,9 +11,9 @@ using DSharpPlus.Lavalink.EventArgs;
 
 using Google.Apis.YouTube.v3;
 
-using NitroSharp.Commands;
+using NitroSharp.Discord.Commands;
 
-namespace NitroSharp.Services
+namespace NitroSharp.Discord.Services
 {
     public class VoiceService
     {
@@ -118,7 +118,7 @@ namespace NitroSharp.Services
             if (PlayingStatusMessages.TryGetValue(sender.Guild.Id, out ulong chan))
             {
                 var nowPlaying = sender.CurrentState.CurrentTrack;
-                await Program.Bot.Rest.CreateMessageAsync(chan, "", false, CommandUtils.SuccessBase()
+                await DiscordBot.Bot.Rest.CreateMessageAsync(chan, "", false, CommandUtils.SuccessBase()
                     .WithDescription($":green_circle: :notes:] {nowPlaying.Title} by {nowPlaying.Author} - `{sender.CurrentState.PlaybackPosition:mm\\:ss}/{nowPlaying.Length:mm\\:ss}`"),
                     null);
             }
@@ -172,7 +172,7 @@ namespace NitroSharp.Services
             {
                 RestEndpoint = new DSharpPlus.Net.ConnectionEndpoint { Hostname = "localhost", Port = 2333 },
                 SocketEndpoint = new DSharpPlus.Net.ConnectionEndpoint { Hostname = "localhost", Port = 2333 },
-                Password = Program.Bot.LavaConfig.Password
+                Password = DiscordBot.Bot.LavaConfig.Password
             };
 
             return lcfg;

@@ -5,9 +5,9 @@ using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 
-using NitroSharp.Commands.CustomArguments;
+using NitroSharp.Discord.Commands.CustomArguments;
 
-namespace NitroSharp.Commands.Filter
+namespace NitroSharp.Discord.Commands.Filter
 {
     public class EditFilterCommand : BaseCommandModule
     {

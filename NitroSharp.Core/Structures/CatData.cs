@@ -1,7 +1,7 @@
 ﻿
 using Newtonsoft.Json;
 
-namespace NitroSharp.Structures
+namespace NitroSharp.Core.Structures
 {
     public struct CatData
     {

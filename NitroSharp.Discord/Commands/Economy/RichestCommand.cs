@@ -12,13 +12,14 @@ using DSharpPlus.Interactivity.Extensions;
 
 using Microsoft.EntityFrameworkCore;
 
-using NitroSharp.Commands.CustomArguments;
-using NitroSharp.Database;
-using NitroSharp.Extensions;
-using NitroSharp.Structures;
-using NitroSharp.Structures.Guilds;
+using NitroSharp.Discord.Commands.CustomArguments;
 
-namespace NitroSharp.Commands.Economy
+using NitroSharp.Core.Database;
+using NitroSharp.Core.Extensions;
+using NitroSharp.Core.Structures;
+using NitroSharp.Core.Structures.Guilds;
+
+namespace NitroSharp.Discord.Commands.Economy
 {
     public class RichestCommand : BaseCommandModule
     {

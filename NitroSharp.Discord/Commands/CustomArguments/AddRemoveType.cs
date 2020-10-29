@@ -8,7 +8,7 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Converters;
 using DSharpPlus.Entities;
 
-namespace NitroSharp.Commands.CustomArguments
+namespace NitroSharp.Discord.Commands.CustomArguments
 {
     public enum AddRemove
     {

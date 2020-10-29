@@ -6,12 +6,12 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
-using NitroSharp.Database;
-using NitroSharp.Extensions;
-using NitroSharp.Structures;
-using NitroSharp.Structures.Guilds;
+using NitroSharp.Core.Database;
+using NitroSharp.Core.Extensions;
+using NitroSharp.Core.Structures;
+using NitroSharp.Core.Structures.Guilds;
 
-namespace NitroSharp.Commands.Mod
+namespace NitroSharp.Discord.Commands.Mod
 {
     public class BanCommand : BaseCommandModule
     {
@@ -93,7 +93,7 @@ namespace NitroSharp.Commands.Mod
             {
             try
             {
-                await Program.Bot.Rest.CreateGuildBanAsync(ctx.Guild.Id, userId, 0, reason);
+                await DiscordBot.Bot.Rest.CreateGuildBanAsync(ctx.Guild.Id, userId, 0, reason);
             }
             catch
             {

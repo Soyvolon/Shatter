@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 using Npgsql;
 
-namespace NitroSharp.Structures
+namespace NitroSharp.Core.Structures
 {
     public class DatabaseConfig
     {

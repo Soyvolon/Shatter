@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NitroSharp.Tests", "NitroSh
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NitroSharp.Discord", "NitroSharp.Discord\NitroSharp.Discord.csproj", "{CA461E2C-A553-4867-9354-04541D654A48}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NitroSharp.Core", "NitroSharp.Core\NitroSharp.Core.csproj", "{09F68BC3-E5A7-4114-978C-F529CA7BAE84}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NitroSharp.Dashboard", "NitroSharp.Dashboard\NitroSharp.Dashboard.csproj", "{6302B50C-7C9B-4F12-86BB-B39951D8A151}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Project", "Project", "{E8D13152-F420-4876-9B88-D890BF0E4DA5}"
@@ -18,6 +16,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Project", "Project", "{E8D1
 		..\Faforever.Qai\NuGet.config = ..\Faforever.Qai\NuGet.config
 		..\Faforever.Qai\README.md = ..\Faforever.Qai\README.md
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NitroSharp", "NitroSharp\NitroSharp.csproj", "{28109C03-BC3A-44F1-A448-7B345CFF957C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NitroSharp.Core", "NitroSharp.Core\NitroSharp.Core.csproj", "{60E6C2A4-8A7B-44E5-A951-9AD0FAFEE2C7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,14 +35,18 @@ Global
 		{CA461E2C-A553-4867-9354-04541D654A48}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA461E2C-A553-4867-9354-04541D654A48}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CA461E2C-A553-4867-9354-04541D654A48}.Release|Any CPU.Build.0 = Release|Any CPU
-		{09F68BC3-E5A7-4114-978C-F529CA7BAE84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{09F68BC3-E5A7-4114-978C-F529CA7BAE84}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{09F68BC3-E5A7-4114-978C-F529CA7BAE84}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{09F68BC3-E5A7-4114-978C-F529CA7BAE84}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6302B50C-7C9B-4F12-86BB-B39951D8A151}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6302B50C-7C9B-4F12-86BB-B39951D8A151}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6302B50C-7C9B-4F12-86BB-B39951D8A151}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6302B50C-7C9B-4F12-86BB-B39951D8A151}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28109C03-BC3A-44F1-A448-7B345CFF957C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28109C03-BC3A-44F1-A448-7B345CFF957C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28109C03-BC3A-44F1-A448-7B345CFF957C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28109C03-BC3A-44F1-A448-7B345CFF957C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60E6C2A4-8A7B-44E5-A951-9AD0FAFEE2C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60E6C2A4-8A7B-44E5-A951-9AD0FAFEE2C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60E6C2A4-8A7B-44E5-A951-9AD0FAFEE2C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60E6C2A4-8A7B-44E5-A951-9AD0FAFEE2C7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
