@@ -1,5 +1,4 @@
-﻿using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
@@ -17,7 +16,7 @@ namespace NitroSharp.Discord.Commands.Fun
         public async Task FortuneCommandAsync(CommandContext ctx)
         {
             var fortune = await Fortune.GetFortuneCookie();
-            if(fortune is null)
+            if (fortune is null)
             {
                 await CommandUtils.RespondBasicErrorAsync(ctx, "Bad Cookie!");
             }

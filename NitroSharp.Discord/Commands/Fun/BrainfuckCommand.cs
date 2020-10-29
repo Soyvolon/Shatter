@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
-using DSharpPlus.Interactivity;
 using DSharpPlus.Interactivity.Extensions;
 
 using NitroSharp.Discord.Utils;
@@ -24,7 +23,7 @@ namespace NitroSharp.Discord.Commands.Fun
             [RemainingText]
             string code)
         {
-            if(await Brainfuck.Verify(code, out string reason))
+            if (await Brainfuck.Verify(code, out string reason))
             {
                 await CommandUtils.RespondBasicSuccessAsync(ctx, "Staring Execution...");
 

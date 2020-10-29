@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
@@ -16,7 +15,7 @@ namespace NitroSharp.Discord.Commands.Mod
         public async Task KickCommandAsync(CommandContext ctx,
             [Description("User to kick")]
             DiscordMember discordMember,
-            
+
             [Description("Reason for the kick")]
             [RemainingText]
             string reason = "unspecified")

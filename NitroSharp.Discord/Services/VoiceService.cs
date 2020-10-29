@@ -4,12 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.Lavalink;
 using DSharpPlus.Lavalink.EventArgs;
-
-using Google.Apis.YouTube.v3;
 
 using NitroSharp.Discord.Commands;
 
@@ -28,12 +25,12 @@ namespace NitroSharp.Discord.Services
             public bool Success { get; set; }
             public string[] Messages { get; set; }
         }
-        
+
         public bool IsDJ(CommandContext ctx, out bool DJChanged)
         {
             DJChanged = false;
 
-            if(DJs.TryGetValue(ctx.Guild.Id, out ulong dj))
+            if (DJs.TryGetValue(ctx.Guild.Id, out ulong dj))
             {
                 if (ctx.Member.Id == dj)
                     return true;

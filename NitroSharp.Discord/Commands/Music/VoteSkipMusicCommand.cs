@@ -6,8 +6,6 @@ using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 
-using Google.Apis.YouTube.v3.Data;
-
 using NitroSharp.Discord.Services;
 
 namespace NitroSharp.Discord.Commands.Music
@@ -35,7 +33,7 @@ namespace NitroSharp.Discord.Commands.Music
                 return;
             }
 
-            if(ctx.Member.VoiceState?.Channel.Id != conn.Channel.Id)
+            if (ctx.Member.VoiceState?.Channel.Id != conn.Channel.Id)
             {
                 await CommandUtils.RespondBasicErrorAsync(ctx, "You need to be in the voice channel with the bot for you to start a voteskip!");
                 return;
@@ -43,15 +41,15 @@ namespace NitroSharp.Discord.Commands.Music
 
             var required = Math.Ceiling(conn.Channel.Users.Count() / 2.0);
 
-            if(_voice.VoteSkips.TryGetValue(ctx.Guild.Id, out var votes) || required == 1)
+            if (_voice.VoteSkips.TryGetValue(ctx.Guild.Id, out var votes) || required == 1)
             {
-                if(votes.Contains(ctx.Member.Id))
+                if (votes.Contains(ctx.Member.Id))
                 {
                     await CommandUtils.RespondBasicErrorAsync(ctx, "You already voted to skip this song!");
                     return;
                 }
 
-                if(votes?.Count + 1 >= required)
+                if (votes?.Count + 1 >= required)
                 {
                     _voice.VoteSkips.TryRemove(ctx.Guild.Id, out _);
                     await conn.StopAsync();

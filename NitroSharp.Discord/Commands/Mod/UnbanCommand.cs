@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
@@ -8,7 +7,6 @@ using DSharpPlus.Entities;
 
 using NitroSharp.Core.Database;
 using NitroSharp.Core.Extensions;
-using NitroSharp.Core.Structures;
 using NitroSharp.Core.Structures.Guilds;
 
 namespace NitroSharp.Discord.Commands.Mod
@@ -29,7 +27,7 @@ namespace NitroSharp.Discord.Commands.Mod
         public async Task UnbanCommandAsync(CommandContext ctx,
             [Description("User to unban. Can be an ID")]
             DiscordUser user,
-            
+
             [Description("Reason for unban.")]
             [RemainingText]
             string reason = "unspecified")
@@ -46,10 +44,10 @@ namespace NitroSharp.Discord.Commands.Mod
 
             var cfg = _model.Find<GuildModeration>(ctx.Guild.Id);
 
-            if(!(cfg is null))
+            if (!(cfg is null))
             {
                 // Remove a temp ban if it exsists.
-                if(cfg.UserBans.RemoveValue(user.Id, cfg, _model, out _))
+                if (cfg.UserBans.RemoveValue(user.Id, cfg, _model, out _))
                     await _model.SaveChangesAsync();
             }
 

@@ -7,8 +7,8 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
-using NitroSharp.Discord.Properties;
 using NitroSharp.Core.Utils;
+using NitroSharp.Discord.Properties;
 
 namespace NitroSharp.Discord.Commands.Memes
 {

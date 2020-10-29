@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Text;
+﻿using System.Collections.Concurrent;
 
 using NitroSharp.Core.Database;
-using NitroSharp.Core.Structures;
 using NitroSharp.Core.Structures.Guilds;
 
 namespace NitroSharp.Core.Extensions

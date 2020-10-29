@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 using DSharpPlus;
@@ -17,10 +16,10 @@ namespace NitroSharp.Discord.Commands.Poll
         public async Task ExampleCommandAsync(CommandContext ctx,
             [Description("Channel for the poll to be dispalyed in")]
             DiscordChannel pollChannel,
-            
+
             [Description("Duration of the poll. Ex. 3h30m")]
             TimeSpan duration,
-            
+
             [Description("Questions and options seperated by a `|`.\nEx: Who is the best? | Option A | Option B")]
             string dataString)
         {

@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Text;
 using System.Threading.Tasks;
-using System.Xml.Serialization;
 
 namespace NitroSharp.Core.Utils
 {
@@ -57,9 +54,9 @@ namespace NitroSharp.Core.Utils
 
             Bitmap swirled = new Bitmap(image.Width, image.Height);
 
-            for(int y = 0; y < (swirled.Height - 1); y++)
+            for (int y = 0; y < (swirled.Height - 1); y++)
             {
-                for(int x = 0; x < (swirled.Width - 1); x++)
+                for (int x = 0; x < (swirled.Width - 1); x++)
                 {
                     // Compute the distance and angle from the swirl center.
                     double pixelX = x - swirlX;
@@ -68,7 +65,7 @@ namespace NitroSharp.Core.Utils
                     double pixelAngle = Math.Atan2(pixelX, pixelY);
 
                     double swirlAmount = 1.0f - (pixelDistance / swirlRadius);
-                    if(swirlAmount > 0.0f)
+                    if (swirlAmount > 0.0f)
                     {
                         double twistAngle = swirlTwists * swirlAmount * Math.PI * 2.0;
 

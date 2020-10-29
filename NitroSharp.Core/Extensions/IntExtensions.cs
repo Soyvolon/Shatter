@@ -1,6 +1,4 @@
-﻿using System.Globalization;
-
-namespace NitroSharp.Core.Extensions
+﻿namespace NitroSharp.Core.Extensions
 {
     public static class IntExtensions
     {

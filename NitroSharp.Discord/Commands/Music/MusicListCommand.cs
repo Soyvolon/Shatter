@@ -8,8 +8,6 @@ using DSharpPlus.Interactivity;
 using DSharpPlus.Interactivity.Enums;
 using DSharpPlus.Interactivity.Extensions;
 
-using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
-
 using NitroSharp.Discord.Services;
 
 namespace NitroSharp.Discord.Commands.Music
@@ -41,7 +39,7 @@ namespace NitroSharp.Discord.Commands.Music
             var nowPlaying = conn.CurrentState.CurrentTrack;
             string data = $":green_circle: :notes:] {nowPlaying.Title} by {nowPlaying.Author} - `{conn.CurrentState.PlaybackPosition:mm\\:ss}/{nowPlaying.Length:mm\\:ss}`";
 
-            if(_voice.GuildQueues.TryGetValue(ctx.Guild.Id, out var queue))
+            if (_voice.GuildQueues.TryGetValue(ctx.Guild.Id, out var queue))
             {
                 int i = 1;
                 int last = queue.Count;

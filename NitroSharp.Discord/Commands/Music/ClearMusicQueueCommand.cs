@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using System.Xml;
 
 using DSharpPlus;
 using DSharpPlus.CommandsNext;

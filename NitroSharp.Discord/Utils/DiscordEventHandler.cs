@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 using DSharpPlus;
 using DSharpPlus.EventArgs;
@@ -16,32 +13,32 @@ namespace NitroSharp.Discord.Utils
 {
     public class DiscordEventHandler
     {
-		private readonly DiscordRestClient Rest;
-		private readonly DiscordShardedClient Client;
+        private readonly DiscordRestClient Rest;
+        private readonly DiscordShardedClient Client;
         private readonly ServiceProvider Services;
 
         public DiscordEventHandler(DiscordShardedClient client, DiscordRestClient rest, ServiceProvider services)
-		{
-			this.Client = client;
-			this.Rest = rest;
+        {
+            this.Client = client;
+            this.Rest = rest;
             this.Services = services;
-		}
+        }
 
-		public void Initalize()
-		{
-			// Register client events.
-			Client.Ready += Client_Ready;
+        public void Initalize()
+        {
+            // Register client events.
+            Client.Ready += Client_Ready;
 
             Client.GuildMemberAdded += Client_GuildMemberAdded;
             Client.GuildMemberRemoved += Client_GuildMemberRemoved;
         }
 
-		private Task Client_Ready(DiscordClient sender, ReadyEventArgs e)
-		{
-			Client.Logger.LogInformation(DiscordBot.Event_CommandHandler, "Client Ready!");
+        private Task Client_Ready(DiscordClient sender, ReadyEventArgs e)
+        {
+            Client.Logger.LogInformation(DiscordBot.Event_CommandHandler, "Client Ready!");
 
-			return Task.CompletedTask;
-		}
+            return Task.CompletedTask;
+        }
 
         private async Task Client_GuildMemberAdded(DiscordClient sender, GuildMemberAddEventArgs e)
         {

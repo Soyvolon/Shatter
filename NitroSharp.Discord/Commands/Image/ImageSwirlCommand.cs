@@ -16,7 +16,7 @@ namespace NitroSharp.Discord.Commands.Image
         [Command("swirl")]
         [Description("Swirl and image!")]
         [RequireBotPermissions(Permissions.AttachFiles)]
-        public async Task ImageSwirlCommandAsync(CommandContext ctx, 
+        public async Task ImageSwirlCommandAsync(CommandContext ctx,
             [Description("The ammount of times to twist the iamge. Choose a value between 0.01 and 5.00")]
             double swirlTwists = .5)
         {
@@ -33,7 +33,7 @@ namespace NitroSharp.Discord.Commands.Image
 
         [Command("swirl")]
         public async Task ImageSwirlCommandAsync(CommandContext ctx, string URL,
-            [Description("The ammount of times to twist the iamge. Choose a value between 0.01 and 5.00")] 
+            [Description("The ammount of times to twist the iamge. Choose a value between 0.01 and 5.00")]
             double swirlTwists = .5)
         {
             var swirl = swirlTwists > 5.0 ? 5.0 : swirlTwists;

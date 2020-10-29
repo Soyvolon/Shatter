@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace NitroSharp.Core.Structures.Guilds
@@ -27,7 +26,7 @@ namespace NitroSharp.Core.Structures.Guilds
             {
                 var set = new HashSet<string>();
                 var data = Filters.Where(x => x.Value.Item1 == 1);
-                foreach(var ary in data)
+                foreach (var ary in data)
                 {
                     set.UnionWith(ary.Value.Item2);
                 }

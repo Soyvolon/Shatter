@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -61,11 +60,11 @@ namespace NitroSharp.Discord.Utils
 
             string output = "";
 
-            while(programPointer < (ulong)program.Length)
+            while (programPointer < (ulong)program.Length)
             {
                 ct.ThrowIfCancellationRequested();
 
-                switch(program[programPointer])
+                switch (program[programPointer])
                 {
                     case 0x3E: // >
                         ++pointer;
@@ -97,13 +96,13 @@ namespace NitroSharp.Discord.Utils
                         break;
 
                     case 0x5B: // [
-                        if(memory[pointer] != 0x00)
+                        if (memory[pointer] != 0x00)
                         {
                             loopPointers.Push(programPointer);
                         }
                         else
                         {
-                            if(loopCache.ContainsKey(programPointer))
+                            if (loopCache.ContainsKey(programPointer))
                             {
                                 programPointer = loopCache[programPointer];
                             }
@@ -115,9 +114,9 @@ namespace NitroSharp.Discord.Utils
                                 var currentPointer = programPointer;
                                 var depth = 1;
 
-                                for(var p = programPointer; p < (ulong)program.Length; p++)
+                                for (var p = programPointer; p < (ulong)program.Length; p++)
                                 {
-                                    switch(program[p])
+                                    switch (program[p])
                                     {
                                         case 0x5B: // [
                                             depth++;
@@ -127,7 +126,7 @@ namespace NitroSharp.Discord.Utils
                                             break;
                                     }
 
-                                    if(depth == 0)
+                                    if (depth == 0)
                                     {
                                         loopCache[currentPointer] = p;
                                         programPointer = p;
@@ -141,7 +140,7 @@ namespace NitroSharp.Discord.Utils
                     case 0x5D: // ]
                         var oldPointer = programPointer;
 
-                        if(loopPointers.TryPop(out programPointer))
+                        if (loopPointers.TryPop(out programPointer))
                         {
                             loopCache[programPointer] = oldPointer;
                             programPointer--;

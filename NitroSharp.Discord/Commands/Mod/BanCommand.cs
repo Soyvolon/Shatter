@@ -8,7 +8,6 @@ using DSharpPlus.Entities;
 
 using NitroSharp.Core.Database;
 using NitroSharp.Core.Extensions;
-using NitroSharp.Core.Structures;
 using NitroSharp.Core.Structures.Guilds;
 
 namespace NitroSharp.Discord.Commands.Mod
@@ -32,7 +31,7 @@ namespace NitroSharp.Discord.Commands.Mod
 
             [Description("Length of the ban")]
             TimeSpan? banLength = null,
-            
+
             [Description("Reason they were banned")]
             [RemainingText]
             string reason = "unspecified")
@@ -90,7 +89,7 @@ namespace NitroSharp.Discord.Commands.Mod
             [Description("Reason they were banned")]
             [RemainingText]
             string reason = "unspecified")
-            {
+        {
             try
             {
                 await DiscordBot.Bot.Rest.CreateGuildBanAsync(ctx.Guild.Id, userId, 0, reason);

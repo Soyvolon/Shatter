@@ -4,7 +4,6 @@ using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Lavalink;
-using DSharpPlus.Lavalink.EventArgs;
 
 using NitroSharp.Discord.Services;
 
@@ -27,7 +26,7 @@ namespace NitroSharp.Discord.Commands.Music
         {
             var conn = await _voice.GetGuildConnection(ctx);
 
-            if(conn is null)
+            if (conn is null)
             {
                 await CommandUtils.RespondBasicErrorAsync(ctx, "I'm not connected to any Voice Channels!");
                 return;

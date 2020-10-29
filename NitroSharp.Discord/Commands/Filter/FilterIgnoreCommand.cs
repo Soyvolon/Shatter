@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using DSharpPlus;
@@ -29,7 +28,7 @@ namespace NitroSharp.Discord.Commands.Filter
         public async Task FilterIgnoreCommandAsync(CommandContext ctx,
             [Description("User to toggle exemption status for.")]
             DiscordMember discordMember,
-            
+
             [Description("Filter to ignore. Leave blank to apply to all filters.")]
             string? filterName = null)
             => await FilterIgnoreCommandAsync(ctx, discordMember.Id, filterName);
@@ -38,7 +37,7 @@ namespace NitroSharp.Discord.Commands.Filter
         public async Task FilterIgnoreCommandAsync(CommandContext ctx,
             [Description("Channel to toggle exemption status for.")]
             DiscordChannel channel,
-            
+
             [Description("Filter to ignore. Leave blank to apply to all filters")]
             string? filterName = null)
             => await FilterIgnoreCommandAsync(ctx, channel.Id, filterName);
@@ -57,14 +56,14 @@ namespace NitroSharp.Discord.Commands.Filter
             var name = filterName?.ToLower() ?? GuildFilters.AllFilters; // A indicates ALL filters.
 
             var filter = await _model.FindAsync<GuildFilters>(ctx.Guild.Id);
-            if(filter is null)
+            if (filter is null)
             {
                 filter = new GuildFilters(ctx.Guild.Id);
                 await _model.AddAsync(filter);
                 await _model.SaveChangesAsync();
             }
 
-            if(name != GuildFilters.AllFilters && !filter.Filters.TryGetValue(name, out var fData))
+            if (name != GuildFilters.AllFilters && !filter.Filters.TryGetValue(name, out var fData))
             {
                 await CommandUtils.RespondBasicErrorAsync(ctx, "Filter name not found.");
                 return;

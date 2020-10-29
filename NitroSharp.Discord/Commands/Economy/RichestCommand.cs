@@ -6,18 +6,15 @@ using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
-using DSharpPlus.Interactivity;
 using DSharpPlus.Interactivity.Enums;
 using DSharpPlus.Interactivity.Extensions;
 
 using Microsoft.EntityFrameworkCore;
 
-using NitroSharp.Discord.Commands.CustomArguments;
-
 using NitroSharp.Core.Database;
 using NitroSharp.Core.Extensions;
 using NitroSharp.Core.Structures;
-using NitroSharp.Core.Structures.Guilds;
+using NitroSharp.Discord.Commands.CustomArguments;
 
 namespace NitroSharp.Discord.Commands.Economy
 {

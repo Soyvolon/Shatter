@@ -35,7 +35,7 @@ namespace NitroSharp.Discord.Commands.Image
             [RemainingText]
             string input)
         {
-            if(input?.Equals("") ?? false)
+            if (input?.Equals("") ?? false)
             {
                 await CommandUtils.RespondBasicErrorAsync(ctx, $"To create a card: `{ctx.Prefix}cah This is the text on the question card | this is the text on the answer card`");
                 return;
@@ -43,7 +43,7 @@ namespace NitroSharp.Discord.Commands.Image
 
             var captionStrings = input.Split("|", StringSplitOptions.RemoveEmptyEntries);
 
-            if(captionStrings.Length < 2)
+            if (captionStrings.Length < 2)
             {
                 await CommandUtils.RespondBasicErrorAsync(ctx, "You need at least two different segments! Separate them with a `|` delimiter. " +
                     "Ex: `This is the text on the question card | this is the text on the answer card`");

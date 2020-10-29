@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Threading.Tasks;
 
 using Microsoft.EntityFrameworkCore;
 
 using Newtonsoft.Json;
 
-using NitroSharp.Core;
 using NitroSharp.Core.Structures;
 using NitroSharp.Core.Structures.Guilds;
 using NitroSharp.Core.Structures.Trivia;
@@ -32,7 +28,7 @@ namespace NitroSharp.Core.Database
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            var dbConfig = ConfigurationManager.RegisterDatabase(null).GetAwaiter().GetResult(); 
+            var dbConfig = ConfigurationManager.RegisterDatabase(null).GetAwaiter().GetResult();
 
             if (dbConfig is null)
                 throw new NullReferenceException("DB Config cannont be null!");

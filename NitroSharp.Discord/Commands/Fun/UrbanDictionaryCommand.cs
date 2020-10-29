@@ -21,7 +21,7 @@ namespace NitroSharp.Discord.Commands.Fun
         {
             var res = await UrbanDictionary.Search(searchTerm);
 
-            if(res is null)
+            if (res is null)
             {
                 await CommandUtils.RespondBasicErrorAsync(ctx, "Bad API Request.");
                 return;
@@ -29,7 +29,7 @@ namespace NitroSharp.Discord.Commands.Fun
 
             var item = res.FirstOrDefault();
 
-            if(item.Word?.Equals("") ?? false)
+            if (item.Word?.Equals("") ?? false)
             {
                 await CommandUtils.RespondBasicErrorAsync(ctx, "Failed to reterive any results!");
                 return;

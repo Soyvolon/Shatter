@@ -7,8 +7,6 @@ using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 
-using Microsoft.Extensions.Logging;
-
 using Newtonsoft.Json;
 
 using NitroSharp.Core.Database;
@@ -33,7 +31,7 @@ namespace NitroSharp.Discord.Commands.Filter
         public async Task CreateFilterCommandAsync(CommandContext ctx,
             [Description("One word name of the new filter")]
             string filterName,
-            
+
             [Description("Words to filter out with this filter, only letters are allowed.")]
             params string[] words)
         {
@@ -46,14 +44,14 @@ namespace NitroSharp.Discord.Commands.Filter
             var filterWords = words.Where(x => GuildFilters.regex.IsMatch(x)).ToHashSet<string>();
 
             var filter = await _model.FindAsync<GuildFilters>(ctx.Guild.Id);
-            if(filter is null)
+            if (filter is null)
             {
                 filter = new GuildFilters(ctx.Guild.Id);
                 await _model.AddAsync(filter);
                 await _model.SaveChangesAsync();
             }
 
-            if(!force && filter.Filters.TryGetValue(name, out _))
+            if (!force && filter.Filters.TryGetValue(name, out _))
             {
                 await CommandUtils.RespondBasicErrorAsync(ctx, $"Filter name already exsits! Use `{ctx.Prefix}filterupdate` to update the filter.\n" +
                     $"Or, use `-force` to replace the values. Ex: `{ctx.Prefix}createfilter {name} -force {string.Join(" ", filterWords)}`");

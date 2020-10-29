@@ -1,19 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Linq;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
-using System.Xml;
 
 using Microsoft.Extensions.Logging;
-
-using NitroSharp.Core.Structures;
 
 using Svg;
 
@@ -23,7 +16,7 @@ namespace NitroSharp.Core.Utils
     {
         private static readonly HttpClient avatarClient = new HttpClient();
 
-        public static async  Task<MemoryStream?> GetWelcomeImage(bool welcome, string username, string pfpUrl)
+        public static async Task<MemoryStream?> GetWelcomeImage(bool welcome, string username, string pfpUrl)
         {
             try
             {
@@ -65,7 +58,7 @@ namespace NitroSharp.Core.Utils
                 using MemoryStream iconStream = new MemoryStream(bytes);
                 using Bitmap iconMap = new Bitmap(iconStream);
 
-                using var circleRes = ClipToCircle(iconMap, new PointF(iconMap.Width/2, iconMap.Height/2), iconMap.Width/2, Color.Transparent);
+                using var circleRes = ClipToCircle(iconMap, new PointF(iconMap.Width / 2, iconMap.Height / 2), iconMap.Width / 2, Color.Transparent);
 
                 using Bitmap resize = new Bitmap(circleRes, new Size(256, 256));
 
@@ -84,7 +77,7 @@ namespace NitroSharp.Core.Utils
             catch (Exception ex)
             {
                 CoreUtils.Logger.LogError(ex, "SVG Handler Failed");
-                return null; 
+                return null;
             }
         }
 

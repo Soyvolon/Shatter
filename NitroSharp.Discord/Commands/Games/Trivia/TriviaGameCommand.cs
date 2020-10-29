@@ -5,7 +5,6 @@ using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
-using DSharpPlus.Interactivity;
 using DSharpPlus.Interactivity.Extensions;
 
 using NitroSharp.Core.Database;
@@ -13,7 +12,6 @@ using NitroSharp.Core.Extensions;
 using NitroSharp.Core.Structures;
 using NitroSharp.Core.Structures.Guilds;
 using NitroSharp.Core.Structures.Trivia;
-using NitroSharp.Core.Utils;
 using NitroSharp.Discord.Utils;
 
 namespace NitroSharp.Discord.Commands.Games.Trivia

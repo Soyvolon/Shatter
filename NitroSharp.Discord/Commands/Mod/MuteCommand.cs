@@ -16,7 +16,7 @@ namespace NitroSharp.Discord.Commands.Mod
         public async Task MuteCommandAsync(CommandContext ctx,
             [Description("Member to mute.")]
             DiscordMember discordMember,
-            
+
             [Description("Time to mute for")]
             DateTime? muteLenght = null)
         {

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
@@ -17,7 +16,7 @@ namespace NitroSharp.Discord.Commands.Mod
         public async Task SoftbanCommandAsync(CommandContext ctx,
             [Description("Member to softban.")]
             DiscordMember discordMember,
-            
+
             [Description("Reason for the softban")]
             [RemainingText]
             string reason = "unspecified")

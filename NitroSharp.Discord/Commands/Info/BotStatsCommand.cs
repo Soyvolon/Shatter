@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -23,9 +21,9 @@ namespace NitroSharp.Discord.Commands.Info
         {
             int guilds = 0, channels = 0, users = 0;
 
-            foreach(var shard in DiscordBot.Bot.Client.ShardClients.Values)
+            foreach (var shard in DiscordBot.Bot.Client.ShardClients.Values)
             {
-                foreach(var g in shard.Guilds.Values)
+                foreach (var g in shard.Guilds.Values)
                 {
                     guilds++;
                     channels += g.Channels.Count;

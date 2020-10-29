@@ -1,8 +1,5 @@
-﻿using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
 
 using DSharpPlus;
@@ -23,7 +20,7 @@ namespace NitroSharp.Discord.Commands.Image
         public async Task ImageNegativeCommandAsync(CommandContext ctx)
         {
             DiscordAttachment[] attach;
-            if((attach = ctx.Message.Attachments.ToArray()).Length > 0)
+            if ((attach = ctx.Message.Attachments.ToArray()).Length > 0)
             {
                 await ImageNegativeCommandAsync(ctx, attach[0].Url.ToString());
             }
@@ -39,7 +36,7 @@ namespace NitroSharp.Discord.Commands.Image
         {
             using var map = ImageLoader.GetBitmapFromUrl(URL);
 
-            if(map is null)
+            if (map is null)
             {
                 await CommandUtils.RespondBasicErrorAsync(ctx, "Failed to get an image!");
                 return;

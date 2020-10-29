@@ -1,12 +1,10 @@
 ﻿using System;
 
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.CommandLineUtils;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 using NitroSharp.Core;
-using NitroSharp.Core.Database;
 using NitroSharp.Core.Structures;
 using NitroSharp.Discord;
 

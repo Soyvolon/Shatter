@@ -5,7 +5,6 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 
 using NitroSharp.Core.Database;
-using NitroSharp.Core.Structures;
 using NitroSharp.Core.Structures.Guilds;
 
 namespace NitroSharp.Discord.Commands.Memberlog
@@ -29,7 +28,7 @@ namespace NitroSharp.Discord.Commands.Memberlog
         {
             string msg = message?.Trim().ToLower() ?? "info";
 
-            if(msg.Equals("info"))
+            if (msg.Equals("info"))
             {
                 var embed = CommandUtils.SuccessBase()
                     .WithTitle("Join DM Message Information")
@@ -48,13 +47,13 @@ namespace NitroSharp.Discord.Commands.Memberlog
 
             var guild = _model.Find<GuildMemberlogs>(ctx.Guild.Id);
 
-            if(guild is null)
+            if (guild is null)
             {
                 guild = new GuildMemberlogs(ctx.Guild.Id);
                 _model.Add(guild);
             }
 
-            if(msg.Equals("disable"))
+            if (msg.Equals("disable"))
             {
                 guild.JoinDmMessage = null;
                 await CommandUtils.RespondBasicSuccessAsync(ctx, "Disabled Join DMs");

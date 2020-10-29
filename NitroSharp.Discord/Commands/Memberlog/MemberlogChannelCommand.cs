@@ -6,7 +6,6 @@ using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
 using NitroSharp.Core.Database;
-using NitroSharp.Core.Structures;
 using NitroSharp.Core.Structures.Guilds;
 
 namespace NitroSharp.Discord.Commands.Memberlog
@@ -31,14 +30,14 @@ namespace NitroSharp.Discord.Commands.Memberlog
         {
             var guild = _model.Find<GuildMemberlogs>(ctx.Guild.Id);
 
-            if(guild is null)
+            if (guild is null)
             {
                 guild = new GuildMemberlogs(ctx.Guild.Id);
                 await _model.AddAsync(guild);
             }
 
             Task res;
-            if(channel is null)
+            if (channel is null)
             { // Disable the memberlog
                 guild.MemberlogChannel = null;
                 res = CommandUtils.RespondBasicSuccessAsync(ctx, "Disabled all member logs.");

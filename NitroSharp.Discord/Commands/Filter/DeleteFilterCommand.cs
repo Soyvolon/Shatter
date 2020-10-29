@@ -1,11 +1,8 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
-
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 using NitroSharp.Core.Database;
 using NitroSharp.Core.Extensions;
@@ -33,7 +30,7 @@ namespace NitroSharp.Discord.Commands.Filter
             var name = filterName.ToLower();
 
             var filter = await _model.FindAsync<GuildFilters>(ctx.Guild.Id);
-            if(filter is null || !filter.Filters.TryGetValue(name, out _))
+            if (filter is null || !filter.Filters.TryGetValue(name, out _))
             {
                 await CommandUtils.RespondBasicErrorAsync(ctx, "Filter dosn't exist.");
                 return;

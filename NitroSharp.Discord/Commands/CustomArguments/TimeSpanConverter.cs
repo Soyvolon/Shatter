@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 using DSharpPlus.CommandsNext;
@@ -57,7 +55,7 @@ namespace NitroSharp.Discord.Commands.CustomArguments
                             }
                             break;
                         case "m":
-                            if(int.TryParse(value[c..i], out num))
+                            if (int.TryParse(value[c..i], out num))
                             {
                                 span = span.Add(TimeSpan.FromMinutes(num));
                             }

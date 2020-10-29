@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 
@@ -29,7 +28,7 @@ namespace NitroSharp.Discord.Commands.Economy
 
             bool save = false;
 
-            if(wallet is null)
+            if (wallet is null)
             {
                 wallet = new Wallet(ctx.Member.Id, ctx.Member.Username);
                 _model.Add(wallet);
@@ -37,7 +36,7 @@ namespace NitroSharp.Discord.Commands.Economy
             }
 
             TimeSpan diff;
-            if((diff = DateTime.UtcNow - wallet.LastDaily).TotalDays > 1.0)
+            if ((diff = DateTime.UtcNow - wallet.LastDaily).TotalDays > 1.0)
             {
                 save = true;
                 wallet.Add(DailyAmount);

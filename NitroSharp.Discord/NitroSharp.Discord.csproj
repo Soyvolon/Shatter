@@ -41,7 +41,7 @@
 
   <ItemGroup>
     <Folder Include="Commands\Dev\" />
-    <Folder Include="Commands\Irc\" />
+    <Folder Include="Commands\HookChat\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -49,12 +49,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="application.yml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Lavalink.jar">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="Resources\Fonts\ArchitectsDaughter-Regular.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

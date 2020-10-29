@@ -1,11 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
-using DSharpPlus.Entities;
 
 using NitroSharp.Core.Database;
 using NitroSharp.Core.Structures;
@@ -26,10 +24,10 @@ namespace NitroSharp.Discord.Commands.Memberlog
         [Description("Set the memberlog join or leave message and type")]
         [Aliases("mlmsg", "memberlogmessage")]
         [RequireUserPermissions(Permissions.ManageGuild)]
-        public async Task MemberlogMessageCommandAsync(CommandContext ctx, 
+        public async Task MemberlogMessageCommandAsync(CommandContext ctx,
             [Description("For the `join` or `leave` message")]
             string selection,
-            
+
             [Description("The type of message to send. `text`, `embed`, `image`, or `disable` to turn off.")]
             string type,
 
@@ -38,20 +36,20 @@ namespace NitroSharp.Discord.Commands.Memberlog
             string message)
         {
             var s = selection.Trim().ToLower();
-            if (!new string[] { "join", "leave"}.Contains(s))
+            if (!new string[] { "join", "leave" }.Contains(s))
             {
                 await CommandUtils.RespondBasicErrorAsync(ctx, "Selection must be one of the following: `join` or `leave`");
                 return;
             }
 
             var t = type.Trim().ToLower();
-            if(!new string[] { "text", "embed", "image", "disable"}.Contains(t))
+            if (!new string[] { "text", "embed", "image", "disable" }.Contains(t))
             {
                 await CommandUtils.RespondBasicErrorAsync(ctx, "Type must be one of the following: `text`, `embed`, `image`, or `disable` to disable.");
                 return;
             }
 
-            if(t == "text" && (message is null || message == ""))
+            if (t == "text" && (message is null || message == ""))
             {
                 await CommandUtils.RespondBasicErrorAsync(ctx, "Type `text` needs a message.");
                 return;
@@ -59,7 +57,7 @@ namespace NitroSharp.Discord.Commands.Memberlog
 
             var guild = await _model.FindAsync<GuildMemberlogs>(ctx.Guild.Id);
 
-            if(guild is null)
+            if (guild is null)
             {
                 guild = new GuildMemberlogs(ctx.Guild.Id);
                 await _model.AddAsync(guild);
@@ -88,7 +86,7 @@ namespace NitroSharp.Discord.Commands.Memberlog
             }
             else
             {
-                if(t == "disable")
+                if (t == "disable")
                 {
                     guild.LeaveMessage = null;
 

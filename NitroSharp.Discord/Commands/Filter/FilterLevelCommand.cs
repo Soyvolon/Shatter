@@ -34,7 +34,7 @@ namespace NitroSharp.Discord.Commands.Filter
         {
             var name = filterName.ToLower();
 
-            if(severity < 1 || severity > 2)
+            if (severity < 1 || severity > 2)
             {
                 await CommandUtils.RespondBasicErrorAsync(ctx, "Severity is out of bounds. Please pick a level, 1 or 2:\n" +
                     "`1` - Only if the word directly matches.\n" +
@@ -43,7 +43,7 @@ namespace NitroSharp.Discord.Commands.Filter
             }
 
             var filter = await _model.FindAsync<GuildFilters>(ctx.Guild.Id);
-            if(filter is null || !filter.Filters.TryGetValue(name, out var filterData))
+            if (filter is null || !filter.Filters.TryGetValue(name, out var filterData))
             {
                 await CommandUtils.RespondBasicErrorAsync(ctx, "Filter does not exist.");
                 return;

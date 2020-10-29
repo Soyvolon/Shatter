@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
@@ -7,7 +6,6 @@ using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
 using NitroSharp.Core.Database;
-using NitroSharp.Core.Structures;
 using NitroSharp.Core.Structures.Guilds;
 
 namespace NitroSharp.Discord.Commands.Mod
@@ -30,7 +28,7 @@ namespace NitroSharp.Discord.Commands.Mod
             DiscordChannel? discordChannel = null)
         {
             var cfg = _model.Find<GuildModeration>(ctx.Guild.Id);
-            if(cfg is null)
+            if (cfg is null)
             {
                 cfg = new GuildModeration(ctx.Guild.Id);
                 _model.Add(cfg);
@@ -38,7 +36,7 @@ namespace NitroSharp.Discord.Commands.Mod
 
             cfg.ModLogChannel = discordChannel?.Id ?? null;
 
-            if(discordChannel is null)
+            if (discordChannel is null)
             {
                 await CommandUtils.RespondBasicSuccessAsync(ctx, "Modlogs disabled.");
             }

@@ -34,7 +34,7 @@ namespace NitroSharp.Discord.Commands.Music
             if (_voice.IsDJ(ctx, out bool HostChanged)
                 || ctx.Member.PermissionsIn(conn.Channel).HasPermission(Permissions.ManageChannels))
             {
-                await conn.PauseAsync(); 
+                await conn.PauseAsync();
                 await CommandUtils.RespondBasicSuccessAsync(ctx, $"Paused!{(HostChanged ? $"\n{ctx.Member.Mention} is the new host!" : "")}");
             }
             else

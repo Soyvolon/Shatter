@@ -1,37 +1,27 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
+using System.Linq;
 using System.Reflection;
-using System.Runtime.InteropServices;
+using System.Threading;
 using System.Threading.Tasks;
 
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
-using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
 using DSharpPlus.Interactivity;
 using DSharpPlus.Interactivity.Extensions;
 using DSharpPlus.Lavalink;
 
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-using Newtonsoft.Json;
-
-using NitroSharp.Discord.Commands;
+using NitroSharp.Core.Database;
+using NitroSharp.Core.Structures;
 using NitroSharp.Discord.Commands.CustomArguments;
 using NitroSharp.Discord.Services;
-
-using NitroSharp.Core.Structures;
-using NitroSharp.Core.Structures.Guilds;
-using NitroSharp.Core.Utils;
-using NitroSharp.Core.Database;
 using NitroSharp.Discord.Utils;
-using System.Collections.Concurrent;
-using System.Threading;
-using System.Linq;
 
 namespace NitroSharp.Discord
 {
@@ -90,7 +80,7 @@ namespace NitroSharp.Discord
         }
 
         #region Configuration
-        
+
         #endregion
 
         #region Initialize
