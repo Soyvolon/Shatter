@@ -9,8 +9,6 @@ namespace NitroSharp.Core.Structures.Guilds
 
         #region GuildConfig
         public string Prefix { get; set; }
-
-        public string Culture { get; set; }
         #endregion
 
         #region Trivia Config
@@ -24,7 +22,6 @@ namespace NitroSharp.Core.Structures.Guilds
         {
             GuildId = gid;
             Prefix = CoreUtils.Prefix;
-            Culture = "en-US";
             AllowPublicTriviaGames = true;
             TriviaQuestionLimit = 10;
         }
@@ -34,8 +31,6 @@ namespace NitroSharp.Core.Structures.Guilds
             GuildId = gid;
 
             Prefix = p;
-
-            Culture = c;
 
             AllowPublicTriviaGames = aptg;
             TriviaQuestionLimit = tql;

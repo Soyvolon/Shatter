@@ -29,20 +29,32 @@ using NitroSharp.Core.Structures.Guilds;
 using NitroSharp.Core.Utils;
 using NitroSharp.Core.Database;
 using NitroSharp.Discord.Utils;
+using System.Collections.Concurrent;
+using System.Threading;
+using System.Linq;
 
 namespace NitroSharp.Discord
 {
-    public class DiscordBot
+    public class DiscordBot : IDisposable, IAsyncDisposable
     {
         #region Boot Status
         public enum BootStatus { offline, booting, ready }
         public BootStatus Boot { get; private set; } = BootStatus.offline;
         #endregion
 
-        public static DiscordBot Bot;
+        #region Event Ids
+        public static EventId Event_CommandResponder { get; } = new EventId(127001, "Command Responder");
+        public static EventId Event_CommandHandler { get; } = new EventId(127002, "Command Handler");
+        #endregion
+
+        #region Static Variables
+        public const string VERSION = "alpha-0.1.0";
+        public static DiscordBot? Bot { get; private set; }
+        public static ConcurrentDictionary<CommandHandler, Tuple<Task, CancellationTokenSource>>? CommandsInProgress { get; private set; }
+        #endregion
 
         #region Public Variables
-        public IEnumerable<string> CommandList { get; private set; }
+        public IReadOnlyDictionary<string, Command> Commands { get; private set; }
         public BotConfig Config { get; private set; }
         public DiscordShardedClient Client { get; private set; }
         public DiscordRestClient Rest { get; private set; }
@@ -55,18 +67,24 @@ namespace NitroSharp.Discord
         private readonly bool test;
         private NSDatabaseModel eventModel;
         private YouTubeConfig YTCfg;
+        private ServiceCollection services;
+        private ServiceProvider provider;
+        private DiscordEventHandler eventHandler;
         #endregion
 
-        public DiscordBot(BotConfig botConfig, LavalinkConfig lavalinkConfig, YouTubeConfig youtubeConfig, bool test = false)
+        public DiscordBot(BotConfig botConfig, LavalinkConfig lavalinkConfig, YouTubeConfig youtubeConfig, ServiceCollection services, bool test = false)
         {
+            CommandsInProgress = new ConcurrentDictionary<CommandHandler, Tuple<Task, CancellationTokenSource>>();
+
             logLevel = LogLevel.Debug;
             this.test = test;
-            eventModel = new NSDatabaseModel();
 
             Config = botConfig;
             LavaConfig = lavalinkConfig;
             YTCfg = youtubeConfig;
-            
+
+            this.services = services;
+
             // Assign the lastest bot to to the static Bot indidcator.
             Bot = this;
         }
@@ -94,23 +112,26 @@ namespace NitroSharp.Discord
 
                 c.SetHelpFormatter<HelpFormatter>();
 
-                CommandList = c.RegisteredCommands.Keys;
+                Commands = c.RegisteredCommands;
 
                 c.RegisterConverter(new LeaderboardTypeConverter());
                 c.RegisterConverter(new QuestionCategoryConverter());
                 c.RegisterConverter(new TimeSpanConverter());
+                c.RegisterConverter(new AddRemoveTypeConverter());
             }
-
-            #region Register Client Events
-            Client.GuildMemberAdded += Client_GuildMemberAdded;
-            Client.GuildMemberRemoved += Client_GuildMemberRemoved;
-            #endregion
 
             var interactionConfig = GetInteractivityConfiguration();
 
             await Client.UseInteractivityAsync(interactionConfig).ConfigureAwait(false);
 
             var lavas = await Client.UseLavalinkAsync();
+
+            // Register any additional client events.
+            eventHandler = new DiscordEventHandler(Client, Rest, provider);
+            eventHandler.Initalize();
+
+            // Register the event needed to send data to the Command Handler.
+            Client.MessageCreated += Client_MessageCreated;
         }
 
 
@@ -132,10 +153,11 @@ namespace NitroSharp.Discord
 
         private CommandsNextConfiguration GetCommandsNextConfiguration()
         {
-            var services = new ServiceCollection()
-                .AddScoped<NSDatabaseModel>()
+            this.services.AddScoped<NSDatabaseModel>()
                 .AddScoped<MemeService>()
                 .AddScoped<VoiceService>();
+
+            provider = services.BuildServiceProvider();
 
             var ccfg = new CommandsNextConfiguration
             {
@@ -144,9 +166,9 @@ namespace NitroSharp.Discord
                 EnableDefaultHelp = true,
                 CaseSensitive = false,
                 IgnoreExtraArguments = true,
-                PrefixResolver = PrefixResolver,
                 StringPrefixes = new string[] { Config.Prefix },
-                Services = services.BuildServiceProvider(),
+                Services = provider,
+                UseDefaultCommandHandler = false
             };
 
             return ccfg;
@@ -168,48 +190,30 @@ namespace NitroSharp.Discord
 
             return icfg;
         }
+        #endregion
 
-        private async Task<int> PrefixResolver(DiscordMessage msg)
+        #region Command Events
+        private Task Client_MessageCreated(DiscordClient sender, MessageCreateEventArgs e)
         {
-            if (!msg.Channel.PermissionsFor(await msg.Channel.Guild.GetMemberAsync(Client.CurrentUser.Id).ConfigureAwait(false)).HasPermission(Permissions.SendMessages)) return -1; //Checks if bot can't send messages, if so ignore.
-            else if (msg.Content.StartsWith(Client.CurrentUser.Mention)) return Client.CurrentUser.Mention.Length; // Always respond to a mention.
-            else
+            if (CommandsInProgress is null)
+                return Task.CompletedTask; // Looks like we can't handle any commands.
+
+            try
             {
-                try
+                var cancel = new CancellationTokenSource();
+                var handler = new CommandHandler(Commands, sender, Config);
+                var task = handler.MessageReceivedAsync(sender.GetCommandsNext(), e.Message, cancel.Token);
+                if (task.Status == TaskStatus.Running)
                 {
-                    using NSDatabaseModel model = new NSDatabaseModel();
-
-                    var gConfig = await model.Configs.FindAsync(msg.Channel.GuildId);
-
-                    if (gConfig is null)
-                    {
-                        gConfig = new GuildConfig
-                        {
-                            GuildId = msg.Channel.GuildId,
-                            Prefix = Config.Prefix
-                        };
-
-                        model.Configs.Add(gConfig);
-
-                        await model.SaveChangesAsync();
-                    }
-
-                    foreach (string cmd in CommandList) //Loop through all current commands.
-                    {
-                        if (msg.Content.StartsWith(gConfig.Prefix + cmd)) //Check if message starts with prefix AND command.
-                        {
-                            return gConfig.Prefix.Length; //Return length of server prefix.
-                        }
-                    }
-
-                    return -1; //If not, ignore.
-                }
-                catch (Exception err)
-                {
-                    Client.Logger.LogError(Program.PrefixManager, $"Resolver failed in guild {msg.Channel.Guild.Name}:", DateTime.Now, err);
-                    return -1;
+                    CommandsInProgress[handler] = new Tuple<Task, CancellationTokenSource>(task, cancel);
                 }
             }
+            catch (Exception ex)
+            {
+                Client.Logger.LogError(Event_CommandHandler, ex, "An unkown error occoured.");
+            }
+
+            return Task.CompletedTask;
         }
         #endregion
 
@@ -225,225 +229,56 @@ namespace NitroSharp.Discord
         }
         #endregion
 
-        #region Utility Methods
-        public async Task<string> ReplaceValues(string message, GuildMemberAddEventArgs e)
+
+        public void Dispose()
         {
-            return await ReplaceValues(message,
-                e.Member.Username,
-                e.Guild.Name,
-                e.Guild.MemberCount.ToString());
-        }
+            Bot = null;
 
-        public async Task<string> ReplaceValues(string message, GuildMemberRemoveEventArgs e)
-        {
-            return await ReplaceValues(message,
-                e.Member.Username,
-                e.Guild.Name,
-                e.Guild.MemberCount.ToString());
-        }
-
-        public async Task<string> ReplaceValues(string message, CommandContext ctx)
-        {
-            return await ReplaceValues(message,
-                ctx.Member.Username,
-                ctx.Guild.Name,
-                ctx.Guild.MemberCount.ToString());
-        }
-
-        public Task<string> ReplaceValues(string message, string user, string guild, string count)
-        {
-            var msg = message.Replace("{server}", guild);
-            msg = msg.Replace("{guild}", guild);
-
-            msg = msg.Replace("{user}", user);
-            msg = msg.Replace("{member}", user);
-
-            msg = msg.Replace("{membercount}", count);
-            return Task.FromResult(msg);
-        }
-
-        public async Task SendJoinMessageAsync(GuildMemberlogs g, CommandContext ctx)
-        {
-            if (!(g.MemberlogChannel is null))
+            if (!(CommandsInProgress is null))
             {
-                string? msg = null;
-                if (!(g.JoinMessage?.Message is null))
-                    msg = await ReplaceValues(g.JoinMessage.Message, ctx);
+                Client.MessageCreated -= Client_MessageCreated;
 
-                await SendJoinMessageAsync(g, msg, ctx.Member.Username, ctx.Member?.AvatarUrl ?? "");
-            }
-        }
-
-        public async Task SendJoinMessageAsync(GuildMemberlogs g, GuildMemberAddEventArgs e)
-        {
-            if (!(g.MemberlogChannel is null))
-            {
-                string? msg = null;
-                if (!(g.JoinMessage?.Message is null))
-                    msg = await ReplaceValues(g.JoinMessage.Message, e);
-
-                await SendJoinMessageAsync(g, msg, e.Member.Username, e.Member?.AvatarUrl ?? "");
-            }
-        }
-
-        public async Task SendJoinMessageAsync(GuildMemberlogs g, string? msg, string username, string avatarUrl)
-        {
-            if (g.JoinMessage?.IsEmbed ?? false)
-            {
-                DiscordEmbedBuilder embed = new DiscordEmbedBuilder()
+                foreach (var cmd in CommandsInProgress.AsParallel())
                 {
-                    Color = new DiscordColor(CommandUtils.Colors[ColorType.Memberlog][0]),
-                    Description = msg is null ? "" : msg,
-                    Footer = new DiscordEmbedBuilder.EmbedFooter()
-                    {
-                        IconUrl = avatarUrl,
-                        Text = "User Joined"
-                    },
-                    Timestamp = DateTime.Now
-                };
-
-                try
-                {
-                    await Rest.CreateMessageAsync((ulong)g.MemberlogChannel, "", false, embed, null);
+                    cmd.Value.Item2.Cancel();
+                    cmd.Value.Item2.Dispose();
+                    cmd.Value.Item1.Dispose();
                 }
-                catch { } // ignore
+
+                // Clear out the dict.
+                CommandsInProgress = null;
+
+                Client.StopAsync().GetAwaiter().GetResult();
+                Rest.Dispose();
             }
-            else if (g.JoinMessage?.IsImage ?? false)
+        }
+
+        public async ValueTask DisposeAsync()
+        {
+            Bot = null;
+
+            if (!(CommandsInProgress is null))
             {
-                using var stream = await SvgHandler.GetWelcomeImage(true, username, avatarUrl);
-                if (!(stream is null))
+                Client.MessageCreated -= Client_MessageCreated;
+
+                await Task.Run(() =>
                 {
-                    try
+                    foreach (var cmd in CommandsInProgress.AsParallel())
                     {
-                        await Rest.UploadFileAsync((ulong)g.MemberlogChannel, stream, "welcome-message.png", "", false, null, null);
+                        cmd.Value.Item2.Cancel();
+                        cmd.Value.Item2.Dispose();
+                        cmd.Value.Item1.Dispose();
                     }
-                    catch { } // ignore
-                }
-            }
-            else if (!(msg is null))
-            {
-                try
-                {
-                    await Rest.CreateMessageAsync((ulong)g.MemberlogChannel, msg, false, null, null);
-                }
-                catch { } // ignore
-            }
-        }
+                });
 
-        public async Task SendLeaveMessageAsync(GuildMemberlogs g, CommandContext ctx)
-        {
-            if (!(g.MemberlogChannel is null))
-            {
-                string? msg = null;
-                if (!(g.LeaveMessage?.Message is null))
-                    msg = await ReplaceValues(g.LeaveMessage.Message, ctx);
+                // Clear out the dict.
+                CommandsInProgress = null;
 
-                await SendLeaveMessageAsync(g, msg, ctx.Member.Username, ctx.Member?.AvatarUrl ?? "");
+                var stop = Client.StopAsync();
+                Rest.Dispose();
+
+                await stop;
             }
         }
-
-        public async Task SendLeaveMessageAsync(GuildMemberlogs g, GuildMemberRemoveEventArgs e)
-        {
-            if (!(g.MemberlogChannel is null))
-            {
-                string? msg = null;
-                if (!(g.LeaveMessage?.Message is null))
-                    msg = await ReplaceValues(g.LeaveMessage.Message, e);
-
-                await SendLeaveMessageAsync(g, msg, e.Member.Username, e.Member?.AvatarUrl ?? "");
-            }
-        }
-
-        public async Task SendLeaveMessageAsync(GuildMemberlogs g, string? msg, string username, string avatarUrl)
-        {
-            if (g.LeaveMessage?.IsEmbed ?? false)
-            {
-                DiscordEmbedBuilder embed = new DiscordEmbedBuilder()
-                {
-                    Color = new DiscordColor(CommandUtils.Colors[ColorType.Memberlog][1]),
-                    Description = msg is null ? "" : msg,
-                    Footer = new DiscordEmbedBuilder.EmbedFooter()
-                    {
-                        IconUrl = avatarUrl,
-                        Text = "User Left"
-                    },
-                    Timestamp = DateTime.Now
-                };
-
-                try
-                {
-                    await Rest.CreateMessageAsync((ulong)g.MemberlogChannel, "", false, embed, null);
-                }
-                catch { } // ignore
-
-            }
-            else if (g.LeaveMessage?.IsImage ?? false)
-            {
-                using var stream = await SvgHandler.GetWelcomeImage(false, username, avatarUrl);
-                if (!(stream is null))
-                {
-                    try
-                    {
-                        await Rest.UploadFileAsync((ulong)g.MemberlogChannel, stream, "farewell-message.png", "", false, null, null);
-                    }
-                    catch { } // ignore
-                }
-            }
-            else if (!(g.LeaveMessage?.Message is null))
-            {
-                try
-                {
-                    await Rest.CreateMessageAsync((ulong)g.MemberlogChannel, msg, false, null, null);
-                }
-                catch { } // ignore
-            }
-        }
-
-        public async Task SendJoinDMMessage(GuildMemberlogs g, GuildMemberAddEventArgs e)
-        {
-            if (g.JoinDmMessage is null) return;
-
-            var msg = await ReplaceValues(g.JoinDmMessage, e);
-            try
-            {
-                var dms = await e.Member.CreateDmChannelAsync();
-
-                await dms.SendMessageAsync(msg);
-            }
-            catch { } // ignore
-        }
-        #endregion
-
-        #region Events
-        private async Task Client_GuildMemberAdded(DiscordClient sender, GuildMemberAddEventArgs e)
-        {
-            var guild = eventModel.Find<GuildMemberlogs>(e.Guild.Id);
-
-            if(!(guild is null))
-            {
-                if(!(guild.MemberlogChannel is null) && !(guild.JoinMessage is null))
-                {
-                    await SendJoinMessageAsync(guild, e);
-                }
-
-                if(!(guild.JoinDmMessage is null))
-                {
-                    await SendJoinDMMessage(guild, e);
-                }
-            }
-        }
-
-        private async Task Client_GuildMemberRemoved(DiscordClient sender, GuildMemberRemoveEventArgs e)
-        {
-            var guild = eventModel.Find<GuildMemberlogs>(e.Guild.Id);
-            if (!(guild is null))
-            {
-                if (!(guild.MemberlogChannel is null) && !(guild.LeaveMessage is null))
-                {
-                    await SendLeaveMessageAsync(guild, e);
-                }
-            }
-        }
-        #endregion
     }
 }

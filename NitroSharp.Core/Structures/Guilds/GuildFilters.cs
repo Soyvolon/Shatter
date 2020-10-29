@@ -3,30 +3,75 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace NitroSharp.Core.Structures.Guilds
 {
     public class GuildFilters : IGuildData
     {
+        public const string AllFilters = "A";
+        public static readonly Regex regex = new Regex("^[a-zA-z]*$");
+
         [Key]
         public ulong GuildId { get; set; }
 
-        public ConcurrentDictionary<string, Tuple<int, string[]>> Filters { get; set; }
+        public ConcurrentDictionary<string, Tuple<int, HashSet<string>>> Filters { get; set; }
+        public ConcurrentDictionary<ulong, HashSet<string>> BypassFilters { get; set; }
 
         [NotMapped]
-        HashSet<string> DirectMatches { get; set; } = new HashSet<string>();
+        HashSet<string> DirectMatches
+        {
+            get
+            {
+                var set = new HashSet<string>();
+                var data = Filters.Where(x => x.Value.Item1 == 1);
+                foreach(var ary in data)
+                {
+                    set.UnionWith(ary.Value.Item2);
+                }
+                return set;
+            }
+        }
+
         [NotMapped]
-        HashSet<string> LookalikeMatches { get; set; } = new HashSet<string>();
+        HashSet<string> LookalikeMatches
+        {
+            get
+            {
+                var set = new HashSet<string>();
+                var data = Filters.Where(x => x.Value.Item1 == 2);
+                foreach (var ary in data)
+                {
+                    set.UnionWith(ary.Value.Item2);
+                }
+                return set;
+            }
+        }
+
         [NotMapped]
-        HashSet<string> FoundAnywhereMatches { get; set; } = new HashSet<string>();
+        HashSet<string> FoundAnywhereMatches
+        {
+            get
+            {
+                var set = new HashSet<string>();
+                var data = Filters.Where(x => x.Value.Item1 == 3);
+                foreach (var ary in data)
+                {
+                    set.UnionWith(ary.Value.Item2);
+                }
+                return set;
+            }
+        }
 
         public GuildFilters() { }
 
         public GuildFilters(ulong gid)
         {
             GuildId = gid;
-            Filters = new ConcurrentDictionary<string, Tuple<int, string[]>>();
+            Filters = new ConcurrentDictionary<string, Tuple<int, HashSet<string>>>();
+            BypassFilters = new ConcurrentDictionary<ulong, HashSet<string>>();
         }
     }
 }

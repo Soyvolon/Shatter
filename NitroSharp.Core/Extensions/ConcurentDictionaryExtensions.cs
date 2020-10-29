@@ -14,8 +14,8 @@ namespace NitroSharp.Core.Extensions
     {
         public static void UpdateOrAddValue<K, V>(this ConcurrentDictionary<K, V> dict, K key, V value, IGuildData cfg, NSDatabaseModel _model)
         {
-            dict[key] = value;
             _model.Update(cfg);
+            dict[key] = value;
         }
 
         public static bool RemoveValue<K, V>(this ConcurrentDictionary<K, V> dict, K key, IGuildData cfg, NSDatabaseModel _model, out V value)

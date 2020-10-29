@@ -63,7 +63,7 @@ namespace NitroSharp.Discord.Commands.Info
             {
                 $"Creator    :: {Creator}",
                 $"Modules    :: Coming Soon",
-                $"Commands   :: {DiscordBot.Bot.CommandList.Count()}",
+                $"Commands   :: {DiscordBot.Bot.Commands.Count()}",
                 $"Website    :: Coming Soon",
                 //$"Patreon    :: Coming Soon",
                 $"PayPal     :: https://paypal.me/pools/c/8tgZB4cjzU"

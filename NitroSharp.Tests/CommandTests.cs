@@ -6,6 +6,8 @@ using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.Entities;
 
+using Microsoft.Extensions.DependencyInjection;
+
 using NitroSharp.Core;
 using NitroSharp.Core.Extensions;
 using NitroSharp.Core.Structures;
@@ -37,7 +39,7 @@ namespace NitroSharp.Tests
             var lavalConfig = (LavalinkConfig)await ConfigurationManager.RegisterLavaLink(null);
             var ytCfg = (YouTubeConfig)await ConfigurationManager.RegisterYouTube(null);
 
-            Bot = new DiscordBot(botCfg, lavalConfig, ytCfg, true); // Designate test run.
+            Bot = new DiscordBot(botCfg, lavalConfig, ytCfg, new ServiceCollection(), true); // Designate test run.
 
             await Bot.InitializeAsync();
 

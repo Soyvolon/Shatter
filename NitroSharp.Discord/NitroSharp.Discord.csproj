@@ -1,9 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <RootNamespace>NitroSharp</RootNamespace>
+    <RootNamespace>NitroSharp.Discord</RootNamespace>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 

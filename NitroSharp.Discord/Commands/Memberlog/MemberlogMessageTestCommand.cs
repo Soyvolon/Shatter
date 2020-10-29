@@ -8,6 +8,7 @@ using DSharpPlus.EventArgs;
 using NitroSharp.Core.Database;
 using NitroSharp.Core.Structures;
 using NitroSharp.Core.Structures.Guilds;
+using NitroSharp.Discord.Utils;
 
 namespace NitroSharp.Discord.Commands.Memberlog
 {
@@ -48,12 +49,12 @@ namespace NitroSharp.Discord.Commands.Memberlog
 
             if(!(guild.JoinMessage is null))
             {
-                await DiscordBot.Bot.SendJoinMessageAsync(guild, ctx);
+                await MemberLogingUtils.SendJoinMessageAsync(guild, ctx);
             }
 
             if(!(guild.LeaveMessage is null))
             {
-                await DiscordBot.Bot.SendLeaveMessageAsync(guild, ctx);
+                await MemberLogingUtils.SendLeaveMessageAsync(guild, ctx);
             }
 
             await CommandUtils.RespondBasicSuccessAsync(ctx, "Test complete.");

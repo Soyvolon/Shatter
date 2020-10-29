@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Threading.Tasks;
 
 using Microsoft.EntityFrameworkCore;
@@ -27,9 +30,9 @@ namespace NitroSharp.Core.Database
         public DbSet<TriviaPlayer> TriviaPlayers { get; set; }
         #endregion
 
-        protected override async void OnConfiguring(DbContextOptionsBuilder options)
+        protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            var dbConfig = await ConfigurationManager.RegisterDatabase(null);
+            var dbConfig = ConfigurationManager.RegisterDatabase(null).GetAwaiter().GetResult(); 
 
             if (dbConfig is null)
                 throw new NullReferenceException("DB Config cannont be null!");
@@ -65,7 +68,13 @@ namespace NitroSharp.Core.Database
                 .Property(b => b.Filters)
                 .HasConversion(
                     v => JsonConvert.SerializeObject(v),
-                    v => JsonConvert.DeserializeObject<ConcurrentDictionary<string, Tuple<int, string[]>>>(v) ?? new ConcurrentDictionary<string, Tuple<int, string[]>>());
+                    v => JsonConvert.DeserializeObject<ConcurrentDictionary<string, Tuple<int, HashSet<string>>>>(v) ?? new ConcurrentDictionary<string, Tuple<int, HashSet<string>>>());
+
+            modelBuilder.Entity<GuildFilters>()
+                .Property(b => b.BypassFilters)
+                .HasConversion(
+                    v => JsonConvert.SerializeObject(v),
+                    v => JsonConvert.DeserializeObject<ConcurrentDictionary<ulong, HashSet<string>>>(v) ?? new ConcurrentDictionary<ulong, HashSet<string>>());
         }
     }
 }

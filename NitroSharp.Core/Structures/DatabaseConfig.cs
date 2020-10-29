@@ -7,28 +7,28 @@ namespace NitroSharp.Core.Structures
 {
     public class DatabaseConfig
     {
-        [JsonProperty]
+        [JsonProperty("GeneralDb")]
         public string GeneralDb { get; private set; }
 
-        [JsonProperty]
+        [JsonProperty("database")]
         private string database;
-        [JsonProperty]
+        [JsonProperty("hostname")]
         private string hostname;
-        [JsonProperty]
+        [JsonProperty("username")]
         private string username;
-        [JsonProperty]
+        [JsonProperty("password")]
         private string password;
-        [JsonProperty]
+        [JsonProperty("port")]
         private int port;
 
         [JsonConstructor]
-        public DatabaseConfig(string db, string host, string user, string pass, string generalName, int port)
+        public DatabaseConfig(string database, string hostname, string username, string password, int port, string GeneralDb)
         {
-            database = db;
-            hostname = host;
-            username = user;
-            password = pass;
-            GeneralDb = generalName;
+            this.database = database;
+            this.hostname = hostname;
+            this.username = username;
+            this.password = password;
+            this.GeneralDb = GeneralDb;
             this.port = port;
         }
 

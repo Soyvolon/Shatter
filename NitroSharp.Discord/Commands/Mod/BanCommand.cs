@@ -50,12 +50,12 @@ namespace NitroSharp.Discord.Commands.Mod
             DateTime? bannedUntil = null;
             if (!(banLength is null))
             {
-
                 var cfg = _model.Find<GuildModeration>(ctx.Guild.Id);
                 if (cfg is null)
                 {
                     cfg = new GuildModeration(ctx.Guild.Id);
                     _model.Add(cfg);
+                    await _model.SaveChangesAsync();
                 }
 
                 bannedUntil = DateTime.UtcNow.Add((TimeSpan)banLength);
@@ -104,12 +104,12 @@ namespace NitroSharp.Discord.Commands.Mod
             DateTime? bannedUntil = null;
             if (!(banLength is null))
             {
-
                 var cfg = _model.Find<GuildModeration>(ctx.Guild.Id);
                 if (cfg is null)
                 {
                     cfg = new GuildModeration(ctx.Guild.Id);
                     _model.Add(cfg);
+                    await _model.SaveChangesAsync();
                 }
 
                 bannedUntil = DateTime.UtcNow.Add((TimeSpan)banLength);

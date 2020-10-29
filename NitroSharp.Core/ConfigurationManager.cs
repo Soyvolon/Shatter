@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 using NitroSharp.Core.Structures;
 
@@ -42,6 +43,7 @@ namespace NitroSharp.Core
         public static async Task<DatabaseConfig?> RegisterDatabase(ILogger? logger)
         {
             var path = Path.Join(Root, "database_config.json");
+
             if (File.Exists(path))
             {
                 using var fs = new FileStream(path, FileMode.Open);

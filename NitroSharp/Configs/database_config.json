@@ -1,15 +1,8 @@
-// Example Configuration
 {
-
   "database": "NitroSharp",
-
   "hostname": "localhost",
-
   "username": "postgres",
-
   "password": "password",
-
-  "GeneralDb":  "",
-
-  "port": 5432
+  "port": 5432,
+  "GeneralDb": "GuildConfgis"
 }

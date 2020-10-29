@@ -134,6 +134,9 @@ namespace NitroSharp.Discord.Commands.Games.Trivia
                     data += $"{i}. {(player.Username == "" ? player.UserId.ToString() : player.Username)} - " +
                         $"{(sortByPercentCorrect ? player.PercentCorrect.ToString("0.##") + "%" : player.Points + " points\n")}";
 
+                if (data == "")
+                    data += "No leaderboards found!";
+
                 var embed = new DiscordEmbedBuilder()
                     .WithTitle($"{(leaderboardType == LeaderboardType.Global ? "Global" : ctx.Guild.Name)} Trivia Leaderboard")
                     .WithColor(DiscordColor.Purple);

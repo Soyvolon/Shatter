@@ -1,14 +1,8 @@
-// Example Configuration
 {
-
   "token": "",
-
-  "prefix": "+",
-
+  "prefix": "",
   "shards": 1,
-
   "superadmins": [
-
+    
   ]
-
 }

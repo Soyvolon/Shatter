@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Exceptions;
+using DSharpPlus.Entities;
 
 using Microsoft.Extensions.Logging;
 
@@ -15,7 +16,7 @@ namespace NitroSharp.Discord.Utils
         public static Task RespondSuccess(CommandsNextExtension cnext, CommandExecutionEventArgs e)
         {
             // let's log the name of the command and user
-            e.Context.Client.Logger.LogInformation(Program.CommandResponder, $"{e.Context.User.Username} successfully executed '{e.Command.QualifiedName}'", DateTime.Now);
+            e.Context.Client.Logger.LogInformation(DiscordBot.Event_CommandResponder, $"{e.Context.User.Username} successfully executed '{e.Command.QualifiedName}'", DateTime.Now);
 
             return Task.CompletedTask;
         }
@@ -38,6 +39,15 @@ namespace NitroSharp.Discord.Utils
 
                 await e.Context.RespondAsync(embed: embed).ConfigureAwait(false);
             }
+        }
+
+        public static async Task RespondCommandNotFound(DiscordChannel executionChannel, string prefix)
+        {
+            var embed = CommandUtils.ErrorBase()
+                .WithTitle("Command not found.")
+                .WithDescription($"Use {prefix}help to see all avalible commands.");
+
+            await executionChannel.SendMessageAsync(embed: embed);
         }
 
         private static async Task ChecksFailedResponderAsync(CommandErrorEventArgs args, ChecksFailedException e)

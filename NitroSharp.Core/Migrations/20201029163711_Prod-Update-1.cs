@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace NitroSharp.Core.Migrations
 {
-    public partial class AllMigrations : Migration
+    public partial class ProdUpdate1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,7 +15,30 @@ namespace NitroSharp.Core.Migrations
                     Prefix = table.Column<string>(nullable: false),
                     Culture = table.Column<string>(nullable: false),
                     AllowPublicTriviaGames = table.Column<bool>(nullable: false),
-                    TriviaQuestionLimit = table.Column<int>(nullable: false),
+                    TriviaQuestionLimit = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Configs", x => x.GuildId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Filters",
+                columns: table => new
+                {
+                    GuildId = table.Column<decimal>(nullable: false),
+                    Filters = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Filters", x => x.GuildId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Memberlogs",
+                columns: table => new
+                {
+                    GuildId = table.Column<decimal>(nullable: false),
                     JoinDmMessage = table.Column<string>(nullable: true),
                     MemberlogChannel = table.Column<decimal>(nullable: true),
                     JoinMessage_Message = table.Column<string>(nullable: true),
@@ -29,7 +52,22 @@ namespace NitroSharp.Core.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Configs", x => x.GuildId);
+                    table.PrimaryKey("PK_Memberlogs", x => x.GuildId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Moderations",
+                columns: table => new
+                {
+                    GuildId = table.Column<decimal>(nullable: false),
+                    UserBans = table.Column<string>(nullable: false),
+                    SlowmodeLocks = table.Column<string>(nullable: false),
+                    UserMutes = table.Column<string>(nullable: false),
+                    ModLogChannel = table.Column<decimal>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Moderations", x => x.GuildId);
                 });
 
             migrationBuilder.CreateTable(
@@ -66,6 +104,15 @@ namespace NitroSharp.Core.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Configs");
+
+            migrationBuilder.DropTable(
+                name: "Filters");
+
+            migrationBuilder.DropTable(
+                name: "Memberlogs");
+
+            migrationBuilder.DropTable(
+                name: "Moderations");
 
             migrationBuilder.DropTable(
                 name: "TriviaPlayers");

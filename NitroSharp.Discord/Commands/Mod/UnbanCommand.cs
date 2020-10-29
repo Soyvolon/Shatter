@@ -7,6 +7,7 @@ using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
 using NitroSharp.Core.Database;
+using NitroSharp.Core.Extensions;
 using NitroSharp.Core.Structures;
 using NitroSharp.Core.Structures.Guilds;
 
@@ -40,6 +41,7 @@ namespace NitroSharp.Discord.Commands.Mod
             catch
             {
                 await CommandUtils.RespondBasicErrorAsync(ctx, $"Failed to unban {user.Id}");
+                return;
             }
 
             var cfg = _model.Find<GuildModeration>(ctx.Guild.Id);
@@ -47,7 +49,8 @@ namespace NitroSharp.Discord.Commands.Mod
             if(!(cfg is null))
             {
                 // Remove a temp ban if it exsists.
-                cfg.UserBans.TryRemove(user.Id, out _);
+                if(cfg.UserBans.RemoveValue(user.Id, cfg, _model, out _))
+                    await _model.SaveChangesAsync();
             }
 
             await CommandUtils.RespondBasicSuccessAsync(ctx, $"Unbanned {user.Id}");

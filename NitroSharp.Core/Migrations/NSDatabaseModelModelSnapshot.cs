@@ -2,7 +2,6 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NitroSharp.Core.Database;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -10,18 +9,17 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace NitroSharp.Core.Migrations
 {
     [DbContext(typeof(NSDatabaseModel))]
-    [Migration("20201019235059_AllMigrations")]
-    partial class AllMigrations
+    partial class NSDatabaseModelModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn)
-                .HasAnnotation("ProductVersion", "3.1.8")
+                .HasAnnotation("ProductVersion", "3.1.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            modelBuilder.Entity("NitroSharp.Core.Structures.GuildConfig", b =>
+            modelBuilder.Entity("NitroSharp.Core.Structures.Guilds.GuildConfig", b =>
                 {
                     b.Property<decimal>("GuildId")
                         .ValueGeneratedOnAdd()
@@ -29,16 +27,6 @@ namespace NitroSharp.Core.Migrations
 
                     b.Property<bool>("AllowPublicTriviaGames")
                         .HasColumnType("boolean");
-
-                    b.Property<string>("Culture")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("JoinDmMessage")
-                        .HasColumnType("text");
-
-                    b.Property<decimal?>("MemberlogChannel")
-                        .HasColumnType("numeric(20,0)");
 
                     b.Property<string>("Prefix")
                         .IsRequired()
@@ -50,6 +38,68 @@ namespace NitroSharp.Core.Migrations
                     b.HasKey("GuildId");
 
                     b.ToTable("Configs");
+                });
+
+            modelBuilder.Entity("NitroSharp.Core.Structures.Guilds.GuildFilters", b =>
+                {
+                    b.Property<decimal>("GuildId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("numeric(20,0)");
+
+                    b.Property<string>("BypassFilters")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Filters")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("GuildId");
+
+                    b.ToTable("Filters");
+                });
+
+            modelBuilder.Entity("NitroSharp.Core.Structures.Guilds.GuildMemberlogs", b =>
+                {
+                    b.Property<decimal>("GuildId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("numeric(20,0)");
+
+                    b.Property<string>("JoinDmMessage")
+                        .HasColumnType("text");
+
+                    b.Property<decimal?>("MemberlogChannel")
+                        .HasColumnType("numeric(20,0)");
+
+                    b.HasKey("GuildId");
+
+                    b.ToTable("Memberlogs");
+                });
+
+            modelBuilder.Entity("NitroSharp.Core.Structures.Guilds.GuildModeration", b =>
+                {
+                    b.Property<decimal>("GuildId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("numeric(20,0)");
+
+                    b.Property<decimal?>("ModLogChannel")
+                        .HasColumnType("numeric(20,0)");
+
+                    b.Property<string>("SlowmodeLocks")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("UserBans")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("UserMutes")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("GuildId");
+
+                    b.ToTable("Moderations");
                 });
 
             modelBuilder.Entity("NitroSharp.Core.Structures.Trivia.TriviaPlayer", b =>
@@ -97,11 +147,11 @@ namespace NitroSharp.Core.Migrations
                     b.ToTable("Wallets");
                 });
 
-            modelBuilder.Entity("NitroSharp.Core.Structures.GuildConfig", b =>
+            modelBuilder.Entity("NitroSharp.Core.Structures.Guilds.GuildMemberlogs", b =>
                 {
                     b.OwnsOne("NitroSharp.Core.Structures.MemberlogMessage", "JoinMessage", b1 =>
                         {
-                            b1.Property<decimal>("GuildConfigGuildId")
+                            b1.Property<decimal>("GuildMemberlogsGuildId")
                                 .HasColumnType("numeric(20,0)");
 
                             b1.Property<string>("ImageUrl")
@@ -116,17 +166,17 @@ namespace NitroSharp.Core.Migrations
                             b1.Property<string>("Message")
                                 .HasColumnType("text");
 
-                            b1.HasKey("GuildConfigGuildId");
+                            b1.HasKey("GuildMemberlogsGuildId");
 
-                            b1.ToTable("Configs");
+                            b1.ToTable("Memberlogs");
 
                             b1.WithOwner()
-                                .HasForeignKey("GuildConfigGuildId");
+                                .HasForeignKey("GuildMemberlogsGuildId");
                         });
 
                     b.OwnsOne("NitroSharp.Core.Structures.MemberlogMessage", "LeaveMessage", b1 =>
                         {
-                            b1.Property<decimal>("GuildConfigGuildId")
+                            b1.Property<decimal>("GuildMemberlogsGuildId")
                                 .HasColumnType("numeric(20,0)");
 
                             b1.Property<string>("ImageUrl")
@@ -141,12 +191,12 @@ namespace NitroSharp.Core.Migrations
                             b1.Property<string>("Message")
                                 .HasColumnType("text");
 
-                            b1.HasKey("GuildConfigGuildId");
+                            b1.HasKey("GuildMemberlogsGuildId");
 
-                            b1.ToTable("Configs");
+                            b1.ToTable("Memberlogs");
 
                             b1.WithOwner()
-                                .HasForeignKey("GuildConfigGuildId");
+                                .HasForeignKey("GuildMemberlogsGuildId");
                         });
                 });
 #pragma warning restore 612, 618
