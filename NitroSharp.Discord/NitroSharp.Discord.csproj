@@ -100,9 +100,6 @@
     <None Update="Resources\Images\welcome.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Utils\JSON\ascii_cows.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 </Project>

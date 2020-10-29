@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NitroSharp\NitroSharp.csproj" />
+    <ProjectReference Include="..\NitroSharp.Discord\NitroSharp.Discord.csproj" />
   </ItemGroup>
 
 </Project>
