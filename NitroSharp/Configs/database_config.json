@@ -1,8 +1,0 @@
-{
-  "database": "NitroSharp",
-  "hostname": "localhost",
-  "username": "postgres",
-  "password": "password",
-  "port": 5432,
-  "GeneralDb": "GuildConfgis"
-}

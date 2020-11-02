@@ -1,0 +1,8 @@
+{
+  "database": "Shatter",
+  "hostname": "localhost",
+  "username": "postgres",
+  "password": "password",
+  "port": 5432,
+  "GeneralDb": "GuildConfgis"
+}

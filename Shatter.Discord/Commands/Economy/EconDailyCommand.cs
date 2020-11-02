@@ -1,0 +1,55 @@
+﻿using System;
+using System.Threading.Tasks;
+
+using DSharpPlus.CommandsNext;
+using DSharpPlus.CommandsNext.Attributes;
+
+using Shatter.Core.Database;
+using Shatter.Core.Extensions;
+using Shatter.Core.Structures;
+
+namespace Shatter.Discord.Commands.Economy
+{
+    public class EconDailyCommand : CommandModule
+    {
+        private const int DailyAmount = 50;
+        private readonly NSDatabaseModel _model;
+
+        public EconDailyCommand(NSDatabaseModel model)
+        {
+            this._model = model;
+        }
+
+        [Command("daily")]
+        [Description("Get your daily reward!")]
+        public async Task EconDailyCommandAsync(CommandContext ctx)
+        {
+            var wallet = _model.Wallets.Find(ctx.Member.Id);
+
+            bool save = false;
+
+            if (wallet is null)
+            {
+                wallet = new Wallet(ctx.Member.Id, ctx.Member.Username);
+                _model.Add(wallet);
+                save = true;
+            }
+
+            TimeSpan diff;
+            if ((diff = DateTime.UtcNow - wallet.LastDaily).TotalDays > 1.0)
+            {
+                save = true;
+                wallet.Add(DailyAmount);
+                wallet.LastDaily = DateTime.UtcNow;
+                await RespondBasicSuccessAsync( $"Daily received! You are {DailyAmount.ToMoney()} richer!");
+            }
+            else
+            {
+                await RespondBasicErrorAsync($"You have {diff:[d:]h:mm:ss} until you can get another daily reward!");
+            }
+
+            if (save)
+                await _model.SaveChangesAsync();
+        }
+    }
+}
