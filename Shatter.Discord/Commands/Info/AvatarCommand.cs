@@ -4,6 +4,8 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
+using Shatter.Discord.Commands.Attributes;
+
 namespace Shatter.Discord.Commands.Info
 {
     public class AvatarCommand : CommandModule
@@ -11,6 +13,7 @@ namespace Shatter.Discord.Commands.Info
         [Command("avatar")]
         [Description("Get someones avatar")]
         [Priority(2)]
+        [ExecutionModule("info")]
         public async Task AvatarCommandAsync(CommandContext ctx, DiscordMember member)
         {
             await ctx.RespondAsync("Here is the avatar for: " + member.DisplayName + "\n" + member.AvatarUrl);

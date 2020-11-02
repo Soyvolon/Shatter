@@ -6,6 +6,7 @@ using DSharpPlus.CommandsNext.Attributes;
 
 using Shatter.Core.Database;
 using Shatter.Core.Structures.Guilds;
+using Shatter.Discord.Commands.Attributes;
 
 namespace Shatter.Discord.Commands.Config
 {
@@ -20,7 +21,7 @@ namespace Shatter.Discord.Commands.Config
 
         [Command("prefix")]
         [Description("Sets this bot's prefix for your server.")]
-        //[Aliases("")]
+        [ExecutionModule("config")]
         [RequireUserPermissions(Permissions.ManageGuild)]
         public async Task SetPrefixAsync(CommandContext ctx, string prefix)
         {

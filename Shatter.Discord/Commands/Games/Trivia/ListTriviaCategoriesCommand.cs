@@ -9,6 +9,7 @@ using DSharpPlus.CommandsNext.Attributes;
 using Newtonsoft.Json.Linq;
 
 using Shatter.Core.Structures.Trivia;
+using Shatter.Discord.Commands.Attributes;
 
 namespace Shatter.Discord.Commands.Games.Trivia
 {
@@ -18,6 +19,7 @@ namespace Shatter.Discord.Commands.Games.Trivia
         [Description("Lists the categories for trivia")]
         [Aliases("tcategories")]
         [RequireUserPermissions(Permissions.AccessChannels)]
+        [ExecutionModule("games")]
         public async Task ListTriviaCategoriesAsync(CommandContext ctx)
         {
             var client = new HttpClient();

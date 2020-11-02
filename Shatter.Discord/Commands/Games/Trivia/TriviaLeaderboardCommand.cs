@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 
 using Shatter.Core.Database;
 using Shatter.Core.Structures.Trivia;
+using Shatter.Discord.Commands.Attributes;
 using Shatter.Discord.Commands.CustomArguments;
 
 namespace Shatter.Discord.Commands.Games.Trivia
@@ -30,6 +31,7 @@ namespace Shatter.Discord.Commands.Games.Trivia
         [Description("The trivia leaderboards!")]
         [Aliases("trivialeaderboard")]
         [RequireUserPermissions(Permissions.AccessChannels)]
+        [ExecutionModule("games")]
         public async Task TriviaLeaderboardCommandAsync(CommandContext ctx,
             [Description("Filter the leaderboards in various ways! Use the keyword `info` to see more filtering options.")]
             [RemainingText] string args)

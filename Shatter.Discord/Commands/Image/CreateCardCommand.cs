@@ -6,6 +6,7 @@ using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 
+using Shatter.Discord.Commands.Attributes;
 using Shatter.Discord.Properties;
 using Shatter.Discord.Services;
 
@@ -30,6 +31,7 @@ namespace Shatter.Discord.Commands.Image
         [Description("Create your own Cards Against Humanity cards!")]
         [Aliases("createcard")]
         [RequireBotPermissions(Permissions.AttachFiles)]
+        [ExecutionModule("image")]
         public async Task ExampleCommandAsync(CommandContext ctx,
             [Description("Text to include, separate the sections with `|`")]
             [RemainingText]

@@ -19,6 +19,7 @@ using Microsoft.Extensions.Logging;
 
 using Shatter.Core.Database;
 using Shatter.Core.Structures;
+using Shatter.Discord.Commands.Attributes;
 using Shatter.Discord.Commands.CustomArguments;
 using Shatter.Discord.Services;
 using Shatter.Discord.Utils;
@@ -45,6 +46,7 @@ namespace Shatter.Discord
 
         #region Public Variables
         public IReadOnlyDictionary<string, Command> Commands { get; private set; }
+        public ConcurrentDictionary<string, List<Command>> CommandGroups { get; private set; }
         public BotConfig Config { get; private set; }
         public DiscordShardedClient Client { get; private set; }
         public DiscordRestClient Rest { get; private set; }
@@ -107,6 +109,22 @@ namespace Shatter.Discord
                 c.RegisterConverter(new QuestionCategoryConverter());
                 c.RegisterConverter(new TimeSpanConverter());
                 c.RegisterConverter(new AddRemoveTypeConverter());
+            }
+
+            CommandGroups = new ConcurrentDictionary<string, List<Command>>();
+
+            foreach(var c in Commands.Values)
+            {
+                var ExGroup = c.CustomAttributes.FirstOrDefault(x => x is ExecutionModuleAttribute);
+                if (ExGroup != default)
+                {
+                    var group = ExGroup as ExecutionModuleAttribute;
+
+                    if (CommandGroups.ContainsKey(group.GroupName))
+                        CommandGroups[group.GroupName].Add(c);
+                    else
+                        CommandGroups[group.GroupName] = new List<Command>() { c };
+                }
             }
 
             var interactionConfig = GetInteractivityConfiguration();

@@ -5,6 +5,7 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Lavalink;
 
+using Shatter.Discord.Commands.Attributes;
 using Shatter.Discord.Services;
 
 namespace Shatter.Discord.Commands.Music
@@ -22,6 +23,7 @@ namespace Shatter.Discord.Commands.Music
         [Description("Skip x songs forward")]
         [RequireUserPermissions(Permissions.UseVoice)]
         [RequireBotPermissions(Permissions.UseVoice)]
+        [ExecutionModule("music")]
         public async Task SkipToMusicCommandAsync(CommandContext ctx, int amount)
         {
             var conn = await _voice.GetGuildConnection(ctx);

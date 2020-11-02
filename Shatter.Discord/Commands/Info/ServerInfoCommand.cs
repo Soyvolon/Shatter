@@ -3,12 +3,15 @@
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 
+using Shatter.Discord.Commands.Attributes;
+
 namespace Shatter.Discord.Commands.Info
 {
     public class ServerInfoCommand : CommandModule
     {
         [Command("serverinfo")]
         [Description("Get server information")]
+        [ExecutionModule("info")]
         public async Task ServerInfoCommandAsync(CommandContext ctx)
         {
             int users = 0, bots = 0;

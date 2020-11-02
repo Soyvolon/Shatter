@@ -8,6 +8,7 @@ using DSharpPlus.Interactivity;
 using DSharpPlus.Interactivity.Enums;
 using DSharpPlus.Interactivity.Extensions;
 
+using Shatter.Discord.Commands.Attributes;
 using Shatter.Discord.Services;
 
 namespace Shatter.Discord.Commands.Music
@@ -25,6 +26,7 @@ namespace Shatter.Discord.Commands.Music
         [Description("Shows the currently playing song along with any queued songs.")]
         [Aliases("musiclist")]
         [RequireUserPermissions(Permissions.AccessChannels)]
+        [ExecutionModule("music")]
         public async Task MusicListCommandAsync(CommandContext ctx)
         {
             var conn = await _voice.GetGuildConnection(ctx);

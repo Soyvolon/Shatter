@@ -6,6 +6,7 @@ using DSharpPlus.CommandsNext.Attributes;
 
 using Shatter.Core.Structures;
 using Shatter.Core.Utils;
+using Shatter.Discord.Commands.Attributes;
 
 namespace Shatter.Discord.Commands.Fun
 {
@@ -15,6 +16,7 @@ namespace Shatter.Discord.Commands.Fun
         [Description("Cats!")]
         [Aliases("cats")]
         [RequireUserPermissions(Permissions.AccessChannels)]
+        [ExecutionModule("fun")]
         public async Task CatCommandAsnyc(CommandContext ctx, params string[]? args)
         {
             CatData cat = default;

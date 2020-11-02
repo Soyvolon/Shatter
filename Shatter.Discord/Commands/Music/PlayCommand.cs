@@ -4,6 +4,7 @@ using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 
+using Shatter.Discord.Commands.Attributes;
 using Shatter.Discord.Services;
 
 namespace Shatter.Discord.Commands.Music
@@ -21,6 +22,7 @@ namespace Shatter.Discord.Commands.Music
         [Description("Play some music!")]
         [RequireUserPermissions(Permissions.UseVoice)]
         [RequireBotPermissions(Permissions.UseVoice)]
+        [ExecutionModule("music")]
         public async Task PlayMusicCommandAsync(CommandContext ctx, [RemainingText] string search)
         {
             if (ctx.Member.VoiceState?.Channel is null)

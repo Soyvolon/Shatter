@@ -7,6 +7,7 @@ using DSharpPlus.CommandsNext.Attributes;
 using Shatter.Core.Database;
 using Shatter.Core.Extensions;
 using Shatter.Core.Structures;
+using Shatter.Discord.Commands.Attributes;
 
 namespace Shatter.Discord.Commands.Economy
 {
@@ -22,6 +23,7 @@ namespace Shatter.Discord.Commands.Economy
 
         [Command("daily")]
         [Description("Get your daily reward!")]
+        [ExecutionModule("economy")]
         public async Task EconDailyCommandAsync(CommandContext ctx)
         {
             var wallet = _model.Wallets.Find(ctx.Member.Id);

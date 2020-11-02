@@ -5,6 +5,7 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 
 using Shatter.Core.Utils;
+using Shatter.Discord.Commands.Attributes;
 
 namespace Shatter.Discord.Commands.Fun
 {
@@ -13,6 +14,7 @@ namespace Shatter.Discord.Commands.Fun
         [Command("fortune")]
         [Description("Open a fortune cookie")]
         [RequireBotPermissions(Permissions.SendMessages)]
+        [ExecutionModule("fun")]
         public async Task FortuneCommandAsync(CommandContext ctx)
         {
             var fortune = await Fortune.GetFortuneCookie();

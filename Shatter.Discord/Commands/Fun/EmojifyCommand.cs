@@ -5,6 +5,8 @@ using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 
+using Shatter.Discord.Commands.Attributes;
+
 namespace Shatter.Discord.Commands.Fun
 {
     public class EmojifyCommand : CommandModule
@@ -64,6 +66,7 @@ namespace Shatter.Discord.Commands.Fun
         [Command("emojify")]
         [Description("Emojify your message!")]
         [RequireBotPermissions(Permissions.SendMessages)]
+        [ExecutionModule("fun")]
         public async Task EmojifyCommandAsync(CommandContext ctx,
             [Description("The message to emojify!")]
             [RemainingText]

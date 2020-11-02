@@ -4,6 +4,8 @@ using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 
+using Shatter.Discord.Commands.Attributes;
+
 namespace Shatter.Discord.Commands.Fun
 {
     public class UnFlipCommand : CommandModule
@@ -12,6 +14,7 @@ namespace Shatter.Discord.Commands.Fun
         [Description("Animated unflipping of the table.")]
         [RequireUserPermissions(Permissions.AccessChannels)]
         [Cooldown(1, 3, CooldownBucketType.User)]
+        [ExecutionModule("fun")]
         public async Task ExampleCommandAsync(CommandContext ctx)
         {
             var msgStatus = ctx.RespondAsync("(╯°□°)╯  ︵  ┻━┻");

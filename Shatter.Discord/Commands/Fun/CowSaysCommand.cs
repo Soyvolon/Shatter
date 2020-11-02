@@ -4,6 +4,8 @@ using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 
+using Shatter.Discord.Commands.Attributes;
+
 namespace Shatter.Discord.Commands.Fun
 {
     public class CowSaysCommand : CommandModule
@@ -14,6 +16,7 @@ namespace Shatter.Discord.Commands.Fun
         [Description("Make the cow say something.")]
         [Aliases("cowsays")]
         [RequireUserPermissions(Permissions.AccessChannels)]
+        [ExecutionModule("fun")]
         public async Task ExampleCommandAsync(CommandContext ctx,
             [Description("What do you want the cow to say?")]
             string msg)

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Shatter.Core.Database;
@@ -9,9 +10,10 @@ using Shatter.Core.Database;
 namespace Shatter.Core.Migrations
 {
     [DbContext(typeof(NSDatabaseModel))]
-    partial class NSDatabaseModelModelSnapshot : ModelSnapshot
+    [Migration("20201102190529_CommandConfigMigration")]
+    partial class CommandConfigMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,7 +38,7 @@ namespace Shatter.Core.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("DisabledModules")
+                    b.Property<string>("DisabledGroups")
                         .IsRequired()
                         .HasColumnType("text");
 

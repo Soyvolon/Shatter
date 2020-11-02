@@ -4,6 +4,7 @@ using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 
+using Shatter.Discord.Commands.Attributes;
 using Shatter.Discord.Services;
 
 namespace Shatter.Discord.Commands.Music
@@ -22,6 +23,7 @@ namespace Shatter.Discord.Commands.Music
         [Aliases("clearqueue")]
         [RequireUserPermissions(Permissions.UseVoice)]
         [RequireBotPermissions(Permissions.UseVoice)]
+        [ExecutionModule("music")]
         public async Task ClearSongsCommandAsync(CommandContext ctx)
         {
             var conn = await _voice.GetGuildConnection(ctx);

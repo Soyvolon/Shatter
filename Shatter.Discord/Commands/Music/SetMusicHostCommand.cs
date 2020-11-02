@@ -5,6 +5,7 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
+using Shatter.Discord.Commands.Attributes;
 using Shatter.Discord.Services;
 
 namespace Shatter.Discord.Commands.Music
@@ -22,6 +23,7 @@ namespace Shatter.Discord.Commands.Music
         [Description("Set the host of the current session")]
         [RequireUserPermissions(Permissions.UseVoice)]
         [RequireBotPermissions(Permissions.UseVoice)]
+        [ExecutionModule("music")]
         public async Task ExampleCommandAsync(CommandContext ctx, DiscordMember newHost)
         {
             var conn = await _voice.GetGuildConnection(ctx);

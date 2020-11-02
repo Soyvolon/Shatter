@@ -8,6 +8,7 @@ using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
 using Shatter.Core.Utils;
+using Shatter.Discord.Commands.Attributes;
 
 namespace Shatter.Discord.Commands.Image
 {
@@ -16,6 +17,7 @@ namespace Shatter.Discord.Commands.Image
         [Command("swirl")]
         [Description("Swirl and image!")]
         [RequireBotPermissions(Permissions.AttachFiles)]
+        [ExecutionModule("image")]
         public async Task ImageSwirlCommandAsync(CommandContext ctx,
             [Description("The ammount of times to twist the iamge. Choose a value between 0.01 and 5.00")]
             double swirlTwists = .5)

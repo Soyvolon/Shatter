@@ -7,6 +7,7 @@ using DSharpPlus.Entities;
 
 using Shatter.Core.Database;
 using Shatter.Core.Structures.Guilds;
+using Shatter.Discord.Commands.Attributes;
 
 namespace Shatter.Discord.Commands.Memberlog
 {
@@ -24,6 +25,7 @@ namespace Shatter.Discord.Commands.Memberlog
         [RequireUserPermissions(Permissions.ManageGuild)]
         [Aliases("memberlogchannel", "mlchan")]
         [Priority(2)]
+        [ExecutionModule("memberlog")]
         public async Task MemberlogChannelCommandAsync(CommandContext ctx,
             [Description("The channel memberlog messages are sent in.")]
             DiscordChannel? channel = null)

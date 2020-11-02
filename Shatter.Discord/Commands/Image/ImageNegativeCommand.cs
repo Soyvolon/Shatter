@@ -8,6 +8,7 @@ using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
 using Shatter.Core.Utils;
+using Shatter.Discord.Commands.Attributes;
 
 namespace Shatter.Discord.Commands.Image
 {
@@ -17,6 +18,7 @@ namespace Shatter.Discord.Commands.Image
         [Description("The negative of an image.")]
         [Aliases("negative")]
         [RequireBotPermissions(Permissions.AttachFiles)]
+        [ExecutionModule("image")]
         public async Task ImageNegativeCommandAsync(CommandContext ctx)
         {
             DiscordAttachment[] attach;

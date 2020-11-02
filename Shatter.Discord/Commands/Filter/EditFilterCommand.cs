@@ -10,6 +10,7 @@ using DSharpPlus.CommandsNext.Attributes;
 using Shatter.Core.Database;
 using Shatter.Core.Extensions;
 using Shatter.Core.Structures.Guilds;
+using Shatter.Discord.Commands.Attributes;
 using Shatter.Discord.Commands.CustomArguments;
 
 namespace Shatter.Discord.Commands.Filter
@@ -28,6 +29,7 @@ namespace Shatter.Discord.Commands.Filter
         [Aliases("filteredit", "fedit", "fupdate", "updatefilter", "filterupdate")]
         [RequireUserPermissions(Permissions.ManageGuild)]
         [RequireBotPermissions(Permissions.ManageMessages)]
+        [ExecutionModule("filter")]
         public async Task EditFilterCommandAsync(CommandContext ctx,
             [Description("Name of the filter.")]
             string filterName,

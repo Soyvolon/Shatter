@@ -6,6 +6,7 @@ using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 
+using Shatter.Discord.Commands.Attributes;
 using Shatter.Discord.Properties;
 using Shatter.Discord.Services;
 
@@ -29,6 +30,7 @@ namespace Shatter.Discord.Commands.Memes
         [Description("The search continues meme")]
         [RequireUserPermissions(Permissions.AccessChannels)]
         [RequireBotPermissions(Permissions.AttachFiles)]
+        [ExecutionModule("memes")]
         public async Task TheSearchCommandAsync(CommandContext ctx,
             [Description("A stupid idea")]
             [RemainingText] string msg)

@@ -6,6 +6,7 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
+using Shatter.Discord.Commands.Attributes;
 using Shatter.Discord.Properties;
 
 namespace Shatter.Discord.Commands.Fun
@@ -18,6 +19,7 @@ namespace Shatter.Discord.Commands.Fun
         [RequireUserPermissions(Permissions.AccessChannels)]
         [RequireBotPermissions(Permissions.AttachFiles)]
         [Cooldown(1, 5, CooldownBucketType.User)]
+        [ExecutionModule("fun")]
         public async Task BurnCommandAsnyc(CommandContext ctx, DiscordMember m)
         {
             var msg = $"{Formatter.Bold(ctx.Member.DisplayName)} " +

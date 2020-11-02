@@ -6,6 +6,7 @@ using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 
+using Shatter.Discord.Commands.Attributes;
 using Shatter.Discord.Properties;
 using Shatter.Discord.Services;
 
@@ -29,6 +30,7 @@ namespace Shatter.Discord.Commands.Memes
         [Description("The prisoners on a bench meme.")]
         [RequireUserPermissions(Permissions.AccessChannels)]
         [RequireBotPermissions(Permissions.AttachFiles)]
+        [ExecutionModule("memes")]
         public async Task PrisonerCommandAsync(CommandContext ctx,
             [Description("The message for the prisoner")]
             [RemainingText] string msg)

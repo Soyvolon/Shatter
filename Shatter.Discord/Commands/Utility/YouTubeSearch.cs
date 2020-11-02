@@ -4,6 +4,7 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 
 using Shatter.Core.Utils;
+using Shatter.Discord.Commands.Attributes;
 
 namespace Shatter.Discord.Commands.Utility
 {
@@ -12,6 +13,7 @@ namespace Shatter.Discord.Commands.Utility
         [Command("ytsearch")]
         [Description("Serach youtube.")]
         [Aliases("searchyt", "searchyoutube", "youtubesearch")]
+        [ExecutionModule("utility")]
         public async Task YouTubeSearchAsync(CommandContext ctx,
             [Description("Search string")]
             [RemainingText]

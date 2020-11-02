@@ -6,6 +6,8 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
+using Shatter.Discord.Commands.Attributes;
+
 namespace Shatter.Discord.Commands.Memes
 {
     public class DonaldCommand : CommandModule
@@ -19,6 +21,7 @@ namespace Shatter.Discord.Commands.Memes
         [Description("Tweet like the Donald")]
         [Aliases("trump")]
         [RequireUserPermissions(Permissions.AccessChannels)]
+        [ExecutionModule("memes")]
         public async Task ExampleCommandAsync(CommandContext ctx,
             [RemainingText]
             [Description("Message in the tweet")] string msg)

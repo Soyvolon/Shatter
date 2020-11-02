@@ -9,6 +9,7 @@ using DSharpPlus.Entities;
 using Shatter.Core.Database;
 using Shatter.Core.Extensions;
 using Shatter.Core.Structures.Guilds;
+using Shatter.Discord.Commands.Attributes;
 
 namespace Shatter.Discord.Commands.Filter
 {
@@ -26,6 +27,7 @@ namespace Shatter.Discord.Commands.Filter
         [Aliases("ignorefilter", "fignore")]
         [RequireUserPermissions(Permissions.ManageGuild)]
         [RequireBotPermissions(Permissions.ManageMessages)]
+        [ExecutionModule("filter")]
         public async Task FilterIgnoreCommandAsync(CommandContext ctx,
             [Description("User to toggle exemption status for.")]
             DiscordMember discordMember,

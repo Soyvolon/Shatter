@@ -8,6 +8,7 @@ using DSharpPlus.CommandsNext.Attributes;
 using Shatter.Core.Database;
 using Shatter.Core.Structures;
 using Shatter.Core.Structures.Guilds;
+using Shatter.Discord.Commands.Attributes;
 
 namespace Shatter.Discord.Commands.Memberlog
 {
@@ -24,6 +25,7 @@ namespace Shatter.Discord.Commands.Memberlog
         [Description("Set the memberlog join or leave message and type")]
         [Aliases("mlmsg", "memberlogmessage")]
         [RequireUserPermissions(Permissions.ManageGuild)]
+        [ExecutionModule("memberlog")]
         public async Task MemberlogMessageCommandAsync(CommandContext ctx,
             [Description("For the `join` or `leave` message")]
             string selection,

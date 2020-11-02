@@ -7,6 +7,7 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 
 using Shatter.Core.Utils;
+using Shatter.Discord.Commands.Attributes;
 
 namespace Shatter.Discord.Commands.Fun
 {
@@ -15,6 +16,7 @@ namespace Shatter.Discord.Commands.Fun
         [Command("urban")]
         [Description("Serach the Urban Dictionary")]
         [RequireBotPermissions(Permissions.SendMessages)]
+        [ExecutionModule("fun")]
         public async Task UrbanDictionaryCommandAsync(CommandContext ctx,
             [Description("What do you want to serach for?")]
             string searchTerm)

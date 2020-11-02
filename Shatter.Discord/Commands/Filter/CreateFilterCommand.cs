@@ -12,6 +12,7 @@ using Newtonsoft.Json;
 using Shatter.Core.Database;
 using Shatter.Core.Extensions;
 using Shatter.Core.Structures.Guilds;
+using Shatter.Discord.Commands.Attributes;
 
 namespace Shatter.Discord.Commands.Filter
 {
@@ -29,6 +30,7 @@ namespace Shatter.Discord.Commands.Filter
         [Aliases("filtercreate", "fcreate")]
         [RequireUserPermissions(Permissions.ManageGuild)]
         [RequireBotPermissions(Permissions.ManageMessages)]
+        [ExecutionModule("filter")]
         public async Task CreateFilterCommandAsync(CommandContext ctx,
             [Description("One word name of the new filter")]
             string filterName,

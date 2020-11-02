@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Shatter.Core.Structures.Guilds
 {
@@ -14,6 +15,12 @@ namespace Shatter.Core.Structures.Guilds
         #region Trivia Config
         public bool AllowPublicTriviaGames { get; set; }
         public int TriviaQuestionLimit { get; set; }
+        #endregion
+
+        #region Command Config
+        public HashSet<string> DisabledModules { get; set; }
+        public HashSet<string> DisabledCommands { get; set; }
+        public HashSet<string> ActivatedCommands { get; set; }
         #endregion
 
         public GuildConfig() { }

@@ -8,6 +8,7 @@ using DSharpPlus.Entities;
 using Shatter.Core.Database;
 using Shatter.Core.Extensions;
 using Shatter.Core.Structures;
+using Shatter.Discord.Commands.Attributes;
 
 namespace Shatter.Discord.Commands.Economy
 {
@@ -24,6 +25,7 @@ namespace Shatter.Discord.Commands.Economy
         [Description("Shows your current balance.")]
         [Aliases(new string[] { "bal", "money" })]
         [RequireUserPermissions(Permissions.AccessChannels)]
+        [ExecutionModule("economy")]
         public async Task BalanceCommandAsync(CommandContext ctx, DiscordMember? member = null)
         {
             bool save = false;

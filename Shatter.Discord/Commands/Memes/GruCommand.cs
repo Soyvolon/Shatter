@@ -6,6 +6,7 @@ using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 
+using Shatter.Discord.Commands.Attributes;
 using Shatter.Discord.Properties;
 using Shatter.Discord.Services;
 
@@ -32,6 +33,7 @@ namespace Shatter.Discord.Commands.Memes
         [Description("The Gru meme.")]
         [RequireUserPermissions(Permissions.AccessChannels)]
         [RequireBotPermissions(Permissions.AttachFiles)]
+        [ExecutionModule("memes")]
         public async Task GruCommandAsync(CommandContext ctx,
             [Description("Gru meme. Text is dilimited by `|`")]
             [RemainingText] string msg)

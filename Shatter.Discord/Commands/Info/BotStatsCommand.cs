@@ -7,6 +7,8 @@ using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 
+using Shatter.Discord.Commands.Attributes;
+
 namespace Shatter.Discord.Commands.Info
 {
     public class BotStatsCommand : CommandModule
@@ -17,6 +19,7 @@ namespace Shatter.Discord.Commands.Info
         [Command("stats")]
         [Description("Get bot statistics!")]
         [Aliases("botinfo")]
+        [ExecutionModule("info")]
         public async Task BotStatsCommandAsync(CommandContext ctx)
         {
             int guilds = 0, channels = 0, users = 0;
@@ -60,7 +63,7 @@ namespace Shatter.Discord.Commands.Info
             var info = "**```http\n" + string.Join("\n", new string[]
             {
                 $"Creator    :: {Creator}",
-                $"Modules    :: Coming Soon",
+                $"Modules    :: {DiscordBot.Bot.CommandGroups.Count()}",
                 $"Commands   :: {DiscordBot.Bot.Commands.Count()}",
                 $"Website    :: Coming Soon",
                 //$"Patreon    :: Coming Soon",

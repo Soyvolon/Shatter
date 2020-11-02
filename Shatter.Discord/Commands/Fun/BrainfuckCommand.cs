@@ -7,6 +7,7 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Interactivity.Extensions;
 
+using Shatter.Discord.Commands.Attributes;
 using Shatter.Discord.Utils;
 
 namespace Shatter.Discord.Commands.Fun
@@ -18,6 +19,7 @@ namespace Shatter.Discord.Commands.Fun
         [Command("brainfuck")]
         [Description("Complie and execute brainfuck code!")]
         [RequireUserPermissions(Permissions.AccessChannels)]
+        [ExecutionModule("fun")]
         public async Task BrainfuckCommandAsync(CommandContext ctx,
             [Description("Brainfuck code")]
             [RemainingText]

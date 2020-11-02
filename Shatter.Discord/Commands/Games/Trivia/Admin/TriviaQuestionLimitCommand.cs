@@ -6,6 +6,7 @@ using DSharpPlus.CommandsNext.Attributes;
 
 using Shatter.Core.Database;
 using Shatter.Core.Structures.Guilds;
+using Shatter.Discord.Commands.Attributes;
 
 namespace Shatter.Discord.Commands.Games.Trivia.Admin
 {
@@ -21,6 +22,7 @@ namespace Shatter.Discord.Commands.Games.Trivia.Admin
         [Command("limittrivia")]
         [Description("Limits the Questions per single trivia game.")]
         [RequireUserPermissions(Permissions.ManageGuild)]
+        [ExecutionModule("games")]
         public async Task ExampleCommandAsync(CommandContext ctx, int limit)
         {
             var cfg = _model.Configs.Find(ctx.Guild.Id);

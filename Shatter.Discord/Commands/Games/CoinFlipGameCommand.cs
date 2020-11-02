@@ -7,6 +7,7 @@ using DSharpPlus.CommandsNext.Attributes;
 
 using Shatter.Core.Database;
 using Shatter.Core.Structures;
+using Shatter.Discord.Commands.Attributes;
 
 namespace Shatter.Discord.Commands.Games
 {
@@ -26,6 +27,7 @@ namespace Shatter.Discord.Commands.Games
         [Aliases("coingame")]
         [RequireUserPermissions(Permissions.AccessChannels)]
         [RequireBotPermissions(Permissions.SendMessages)]
+        [ExecutionModule("games")]
         public async Task ExampleCommandAsync(CommandContext ctx)
         {
             var wallet = _model.Wallets.Find(ctx.User.Id);

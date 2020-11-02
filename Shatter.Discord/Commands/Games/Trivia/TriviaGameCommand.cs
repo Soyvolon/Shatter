@@ -12,6 +12,7 @@ using Shatter.Core.Extensions;
 using Shatter.Core.Structures;
 using Shatter.Core.Structures.Guilds;
 using Shatter.Core.Structures.Trivia;
+using Shatter.Discord.Commands.Attributes;
 using Shatter.Discord.Utils;
 
 namespace Shatter.Discord.Commands.Games.Trivia
@@ -30,6 +31,7 @@ namespace Shatter.Discord.Commands.Games.Trivia
         [RequireUserPermissions(Permissions.AccessChannels)]
         [RequireBotPermissions(Permissions.SendMessages)]
         [Cooldown(1, 5, CooldownBucketType.User)]
+        [ExecutionModule("games")]
         public async Task SingleTriviaCommandAsync(CommandContext ctx,
             [Description("How many questions to ask. Leave blank for a single question.")]
             int questions = 1,

@@ -8,6 +8,7 @@ using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
 using Shatter.Core.Utils;
+using Shatter.Discord.Commands.Attributes;
 
 namespace Shatter.Discord.Commands.Image
 {
@@ -17,6 +18,7 @@ namespace Shatter.Discord.Commands.Image
         [Description("Pixelate an image!")]
         [Aliases("pixel")]
         [RequireBotPermissions(Permissions.AttachFiles)]
+        [ExecutionModule("image")]
         public async Task ImagePixelateCommandAsync(CommandContext ctx)
         {
             DiscordAttachment[] attach;

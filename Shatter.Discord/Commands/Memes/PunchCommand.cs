@@ -8,6 +8,7 @@ using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
 using Shatter.Core.Utils;
+using Shatter.Discord.Commands.Attributes;
 using Shatter.Discord.Properties;
 
 namespace Shatter.Discord.Commands.Memes
@@ -18,6 +19,7 @@ namespace Shatter.Discord.Commands.Memes
         [Description("Suckerpunch another user.")]
         [RequireUserPermissions(Permissions.AccessChannels)]
         [RequireBotPermissions(Permissions.AttachFiles)]
+        [ExecutionModule("memes")]
         public async Task PunchCommandAsync(CommandContext ctx, [Description("The user to suckerpunch")] DiscordMember member)
         {
             using var userPfp = ImageLoader.GetBitmapFromUrl(ctx.Member.GetAvatarUrl(ImageFormat.Png, 64));

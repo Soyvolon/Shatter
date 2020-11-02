@@ -8,6 +8,7 @@ using DSharpPlus.Entities;
 using Shatter.Core.Database;
 using Shatter.Core.Extensions;
 using Shatter.Core.Structures.Guilds;
+using Shatter.Discord.Commands.Attributes;
 
 namespace Shatter.Discord.Commands.Mod
 {
@@ -24,6 +25,7 @@ namespace Shatter.Discord.Commands.Mod
         [Description("Unbans a user for the server.")]
         [Aliases("uban")]
         [RequirePermissions(Permissions.BanMembers)]
+        [ExecutionModule("moderation")]
         public async Task UnbanCommandAsync(CommandContext ctx,
             [Description("User to unban. Can be an ID")]
             DiscordUser user,

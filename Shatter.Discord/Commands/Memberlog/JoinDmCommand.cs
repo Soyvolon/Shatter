@@ -6,6 +6,7 @@ using DSharpPlus.CommandsNext.Attributes;
 
 using Shatter.Core.Database;
 using Shatter.Core.Structures.Guilds;
+using Shatter.Discord.Commands.Attributes;
 
 namespace Shatter.Discord.Commands.Memberlog
 {
@@ -21,6 +22,7 @@ namespace Shatter.Discord.Commands.Memberlog
         [Command("joindm")]
         [Description("Send a message when a user joins.")]
         [RequireUserPermissions(Permissions.ManageGuild)]
+        [ExecutionModule("memberlog")]
         public async Task JoinDmCommandAsync(CommandContext ctx,
             [Description("Message to send, `info` to see more information about this command, or `disable` to disable the join DMs.")]
             [RemainingText]

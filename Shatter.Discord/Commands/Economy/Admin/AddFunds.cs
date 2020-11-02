@@ -8,6 +8,7 @@ using DSharpPlus.Entities;
 using Shatter.Core.Database;
 using Shatter.Core.Extensions;
 using Shatter.Core.Structures;
+using Shatter.Discord.Commands.Attributes;
 
 namespace Shatter.Discord.Commands.Economy.Admin
 {
@@ -24,6 +25,7 @@ namespace Shatter.Discord.Commands.Economy.Admin
         [Description("Adds money to a Wallet.")]
         [Aliases("addmoney")]
         [RequireUserPermissions(Permissions.ManageGuild)]
+        [ExecutionModule("economy")]
         public async Task AddFundsCommandAsync(CommandContext ctx, int ammount, DiscordMember m)
         {
             var wallet = await _model.FindAsync<Wallet>(m.Id);

@@ -6,6 +6,7 @@ using DSharpPlus.CommandsNext.Attributes;
 
 using Shatter.Core.Database;
 using Shatter.Core.Structures.Guilds;
+using Shatter.Discord.Commands.Attributes;
 using Shatter.Discord.Utils;
 
 namespace Shatter.Discord.Commands.Memberlog
@@ -23,6 +24,7 @@ namespace Shatter.Discord.Commands.Memberlog
         [Description("Tests your set memberlog messages")]
         [Aliases("mlmessagetest", "memberlogmessagetest")]
         [RequireUserPermissions(Permissions.ManageGuild)]
+        [ExecutionModule("memberlog")]
         public async Task MemberlogMessageTestCommandAsync(CommandContext ctx)
         {
             var guild = await _model.FindAsync<GuildMemberlogs>(ctx.Guild.Id);

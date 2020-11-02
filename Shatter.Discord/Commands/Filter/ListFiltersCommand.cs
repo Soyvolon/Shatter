@@ -7,6 +7,7 @@ using DSharpPlus.Interactivity.Extensions;
 
 using Shatter.Core.Database;
 using Shatter.Core.Structures.Guilds;
+using Shatter.Discord.Commands.Attributes;
 
 namespace Shatter.Discord.Commands.Filter
 {
@@ -24,6 +25,7 @@ namespace Shatter.Discord.Commands.Filter
         [Aliases("filterlist", "flist")]
         [RequireUserPermissions(Permissions.ManageGuild)]
         [RequireBotPermissions(Permissions.ManageMessages)]
+        [ExecutionModule("filter")]
         public async Task ListFiltersCommandAsync(CommandContext ctx)
         {
             var filter = await _model.FindAsync<GuildFilters>(ctx.Guild.Id);

@@ -7,6 +7,7 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
+using Shatter.Discord.Commands.Attributes;
 using Shatter.Discord.Properties;
 using Shatter.Discord.Services;
 
@@ -29,6 +30,7 @@ namespace Shatter.Discord.Commands.Image
         [Command("deathnote")]
         [Description("Add a user to your deathnote")]
         [RequireBotPermissions(Permissions.AttachFiles)]
+        [ExecutionModule("image")]
         public async Task DeathNoteCommandAsync(CommandContext ctx,
             [Description("User to add to your DeathNote")]
             DiscordMember member)

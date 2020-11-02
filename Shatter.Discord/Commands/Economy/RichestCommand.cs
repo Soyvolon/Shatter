@@ -14,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 using Shatter.Core.Database;
 using Shatter.Core.Extensions;
 using Shatter.Core.Structures;
+using Shatter.Discord.Commands.Attributes;
 using Shatter.Discord.Commands.CustomArguments;
 
 namespace Shatter.Discord.Commands.Economy
@@ -32,6 +33,7 @@ namespace Shatter.Discord.Commands.Economy
         [RequireUserPermissions(Permissions.AccessChannels)]
         [Cooldown(1, 10, CooldownBucketType.User)]
         [Priority(2)]
+        [ExecutionModule("economy")]
         public async Task RichestCommandAsync(CommandContext ctx, LeaderboardType type)
         {
             List<Wallet> wallets;

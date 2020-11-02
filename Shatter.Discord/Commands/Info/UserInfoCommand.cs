@@ -6,12 +6,15 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
+using Shatter.Discord.Commands.Attributes;
+
 namespace Shatter.Discord.Commands.Info
 {
     public class UserInfoCommand : CommandModule
     {
         [Command("userinfo")]
         [Description("Get Information")]
+        [ExecutionModule("info")]
         public async Task UserInfoCommandAsync(CommandContext ctx, DiscordMember m)
         {
             var roles = m.Roles.Where(x => !x.Name.Contains("everyone"));

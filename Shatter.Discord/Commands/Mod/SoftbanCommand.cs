@@ -5,6 +5,8 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
+using Shatter.Discord.Commands.Attributes;
+
 namespace Shatter.Discord.Commands.Mod
 {
     public class SoftbanCommand : CommandModule
@@ -13,6 +15,7 @@ namespace Shatter.Discord.Commands.Mod
         [Description("Bans and then unbans a user (Kick with clearing messages).")]
         [Aliases("sban")]
         [RequirePermissions(Permissions.BanMembers)]
+        [ExecutionModule("moderation")]
         public async Task SoftbanCommandAsync(CommandContext ctx,
             [Description("Member to softban.")]
             DiscordMember discordMember,

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 using Newtonsoft.Json;
 
@@ -71,6 +73,24 @@ namespace Shatter.Core.Database
                 .HasConversion(
                     v => JsonConvert.SerializeObject(v),
                     v => JsonConvert.DeserializeObject<ConcurrentDictionary<ulong, HashSet<string>>>(v) ?? new ConcurrentDictionary<ulong, HashSet<string>>());
+
+            modelBuilder.Entity<GuildConfig>()
+                .Property(b => b.ActivatedCommands)
+                .HasConversion(
+                    v => JsonConvert.SerializeObject(v),
+                    v => JsonConvert.DeserializeObject<HashSet<string>>(v) ?? new HashSet<string>());
+
+            modelBuilder.Entity<GuildConfig>()
+                .Property(b => b.DisabledCommands)
+                .HasConversion(
+                    v => JsonConvert.SerializeObject(v),
+                    v => JsonConvert.DeserializeObject<HashSet<string>>(v) ?? new HashSet<string>());
+
+            modelBuilder.Entity<GuildConfig>()
+                .Property(b => b.DisabledModules)
+                .HasConversion(
+                    v => JsonConvert.SerializeObject(v),
+                    v => JsonConvert.DeserializeObject<HashSet<string>>(v) ?? new HashSet<string>());
         }
     }
 }
