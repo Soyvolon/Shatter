@@ -15,7 +15,7 @@ namespace Shatter.Discord.Commands.Mod
         [Description("Bans and then unbans a user (Kick with clearing messages).")]
         [Aliases("sban")]
         [RequirePermissions(Permissions.BanMembers)]
-        [ExecutionModule("moderation")]
+        [ExecutionModule("mod")]
         public async Task SoftbanCommandAsync(CommandContext ctx,
             [Description("Member to softban.")]
             DiscordMember discordMember,

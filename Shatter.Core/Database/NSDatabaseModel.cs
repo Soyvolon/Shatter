@@ -90,7 +90,13 @@ namespace Shatter.Core.Database
                 .Property(b => b.DisabledModules)
                 .HasConversion(
                     v => JsonConvert.SerializeObject(v),
-                    v => JsonConvert.DeserializeObject<HashSet<string>>(v) ?? new HashSet<string>());
+                    v => JsonConvert.DeserializeObject<HashSet<string>>(v) ?? new HashSet<string>()
+                    {// Deafult disabled command modules.
+                        "memberlog",
+                        "mod",
+                        "music",
+                        "filter"
+                    });
         }
     }
 }

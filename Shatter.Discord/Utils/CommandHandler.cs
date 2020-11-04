@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -13,6 +14,7 @@ using Microsoft.Extensions.Logging;
 using Shatter.Core.Database;
 using Shatter.Core.Structures;
 using Shatter.Core.Structures.Guilds;
+using Shatter.Discord.Commands.Attributes;
 
 namespace Shatter.Discord.Utils
 {
@@ -74,7 +76,21 @@ namespace Shatter.Discord.Utils
                     await CommandResponder.RespondCommandNotFound(msg.Channel, prefix);
                 }
                 else
-                { // We found a command, lets deal with it.
+                {   // We found a command, lets deal with it.
+
+                    if (guildConfig.DisabledCommands.Contains(command.Name))
+                        return; // Command is disabled. Dont do a thing.
+
+                    var moduleAttribute = command.CustomAttributes.FirstOrDefault(x => x is ExecutionModuleAttribute);
+
+                    if(moduleAttribute != default)
+                    {
+                        var m = moduleAttribute as ExecutionModuleAttribute;
+                        if (!guildConfig.ActivatedCommands.Contains(command.Name)
+                            && guildConfig.DisabledModules.Contains(m.GroupName))
+                            return; // Command is disabled, dont do a thing.
+                    }
+
                     var ctx = cnext.CreateContext(msg, prefix, command, args);
                     // We are done here, its up to CommandsNext now.
 
@@ -104,15 +120,7 @@ namespace Shatter.Discord.Utils
             {
                 try
                 {
-                    foreach (string cmd in _commands.Keys) //Loop through all current commands.
-                    {
-                        if (msg.Content.StartsWith(guildConfig.Prefix + cmd)) //Check if message starts with prefix AND command.
-                        {
-                            return guildConfig.Prefix.Length; //Return length of server prefix.
-                        }
-                    }
-
-                    return -1; //If not, ignore.
+                    return guildConfig.Prefix.Length; //Return length of server prefix.
                 }
                 catch (Exception err)
                 {

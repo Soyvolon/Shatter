@@ -14,7 +14,7 @@ namespace Shatter.Discord.Commands.Mod
         [Command("kick")]
         [Description("Kicks a user from the server.")]
         [RequirePermissions(Permissions.KickMembers)]
-        [ExecutionModule("moderation")]
+        [ExecutionModule("mod")]
         public async Task KickCommandAsync(CommandContext ctx,
             [Description("User to kick")]
             DiscordMember discordMember,

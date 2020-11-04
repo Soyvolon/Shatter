@@ -25,7 +25,7 @@ namespace Shatter.Discord.Commands.Mod
         [Description("Unbans a user for the server.")]
         [Aliases("uban")]
         [RequirePermissions(Permissions.BanMembers)]
-        [ExecutionModule("moderation")]
+        [ExecutionModule("mod")]
         public async Task UnbanCommandAsync(CommandContext ctx,
             [Description("User to unban. Can be an ID")]
             DiscordUser user,

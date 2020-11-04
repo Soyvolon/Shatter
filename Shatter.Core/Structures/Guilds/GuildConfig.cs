@@ -23,17 +23,11 @@ namespace Shatter.Core.Structures.Guilds
         public HashSet<string> ActivatedCommands { get; set; }
         #endregion
 
-        public GuildConfig() { }
+        public GuildConfig() : this(0, "", true, 10) { }
 
-        public GuildConfig(ulong gid)
-        {
-            GuildId = gid;
-            Prefix = CoreUtils.Prefix;
-            AllowPublicTriviaGames = true;
-            TriviaQuestionLimit = 10;
-        }
+        public GuildConfig(ulong gid) : this(gid, CoreUtils.Prefix, true, 10) { }
 
-        public GuildConfig(ulong gid, string p, string c, bool aptg, int tql)
+        public GuildConfig(ulong gid, string p, bool aptg, int tql)
         {
             GuildId = gid;
 
@@ -41,6 +35,16 @@ namespace Shatter.Core.Structures.Guilds
 
             AllowPublicTriviaGames = aptg;
             TriviaQuestionLimit = tql;
+
+            ActivatedCommands = new HashSet<string>();
+            DisabledCommands = new HashSet<string>();
+            DisabledModules = new HashSet<string>()
+            {// Deafult disabled command modules.
+                "memberlog",
+                "mod",
+                "music",
+                "filter"
+            };
         }
     }
 }

@@ -26,7 +26,7 @@ namespace Shatter.Discord.Commands.Mod
         [Description("Bans a user from the server.")]
         [Priority(4)]
         [RequirePermissions(Permissions.BanMembers)]
-        [ExecutionModule("moderation")]
+        [ExecutionModule("mod")]
         public async Task BanCommandAsync(CommandContext ctx,
             [Description("User to ban from the server. Can be a user mention or ID")]
             DiscordMember user,
