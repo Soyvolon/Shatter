@@ -71,82 +71,82 @@ namespace Shatter.Discord.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static byte[] Images_Burn {
+        internal static System.Drawing.Bitmap Images_Burn {
             get {
                 object obj = ResourceManager.GetObject("Images_Burn", resourceCulture);
-                return ((byte[])(obj));
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static byte[] Images_CAH {
+        internal static System.Drawing.Bitmap Images_CAH {
             get {
                 object obj = ResourceManager.GetObject("Images_CAH", resourceCulture);
-                return ((byte[])(obj));
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static byte[] Images_DeathNote {
+        internal static System.Drawing.Bitmap Images_DeathNote {
             get {
                 object obj = ResourceManager.GetObject("Images_DeathNote", resourceCulture);
-                return ((byte[])(obj));
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static byte[] Images_Gru {
+        internal static System.Drawing.Bitmap Images_Gru {
             get {
                 object obj = ResourceManager.GetObject("Images_Gru", resourceCulture);
-                return ((byte[])(obj));
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static byte[] Images_NutMeme {
+        internal static System.Drawing.Bitmap Images_NutMeme {
             get {
                 object obj = ResourceManager.GetObject("Images_NutMeme", resourceCulture);
-                return ((byte[])(obj));
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static byte[] Images_Prison {
+        internal static System.Drawing.Bitmap Images_Prison {
             get {
                 object obj = ResourceManager.GetObject("Images_Prison", resourceCulture);
-                return ((byte[])(obj));
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static byte[] Images_Punch {
+        internal static System.Drawing.Bitmap Images_Punch {
             get {
                 object obj = ResourceManager.GetObject("Images_Punch", resourceCulture);
-                return ((byte[])(obj));
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static byte[] Images_TheSearch {
+        internal static System.Drawing.Bitmap Images_TheSearch {
             get {
                 object obj = ResourceManager.GetObject("Images_TheSearch", resourceCulture);
-                return ((byte[])(obj));
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
     }

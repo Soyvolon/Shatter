@@ -41,9 +41,9 @@ namespace Shatter.Discord.Services
             fonts = FontCollection.Families;
         }
 
-        public async Task<MemoryStream?> BuildMemeAsync(byte[] image, Tuple<Rectangle, string, Brush?>[] captions, string? font = null, int fsize = 16, Brush? defaultBrush = null)
+        public async Task<MemoryStream?> BuildMemeAsync(Bitmap image, Tuple<Rectangle, string, Brush?>[] captions, string? font = null, int fsize = 16, Brush? defaultBrush = null)
         {
-            var a = RegisterBitmap(image);
+            var a = RegisterGraphics(image);
             var b = RegisterFont(font, fsize);
             var c = RegisterBrush(defaultBrush);
 
@@ -63,10 +63,9 @@ namespace Shatter.Discord.Services
             return mem;
         }
 
-        public Task RegisterBitmap(byte[] image)
+        public Task RegisterGraphics(Bitmap image)
         {
-            var memory = new MemoryStream(image);
-            this.map = new Bitmap(memory);
+            this.map = image;
             this.img = Graphics.FromImage(this.map);
 
             return Task.CompletedTask;

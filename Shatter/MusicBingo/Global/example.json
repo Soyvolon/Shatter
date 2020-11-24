@@ -1,5 +1,6 @@
 {
   "game_title": "Example Music Bingo Game",
+  "introduction": "URL to the introduction message! Make a custom intro video and upload it to play it at the start of a game!",
   "songs": [
     {
       "display_name": "Example song title (This will show up on the bingo card, so dont make it too long)",

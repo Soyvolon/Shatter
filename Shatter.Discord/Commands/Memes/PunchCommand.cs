@@ -29,8 +29,7 @@ namespace Shatter.Discord.Commands.Memes
             using var punchedPfpGraphic = Graphics.FromImage(punchedPfp);
 
 
-            using MemoryStream img = new MemoryStream(Resources.Images_Punch);
-            using Bitmap map = new Bitmap(img);
+            using Bitmap map = (Bitmap)Resources.Images_Punch.Clone();
             using Graphics graphic = Graphics.FromImage(map);
 
             graphic.DrawImage(userPfp, new Rectangle(115, 30, 100, 100));

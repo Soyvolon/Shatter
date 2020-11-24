@@ -25,7 +25,12 @@ namespace Shatter.Discord.Commands.Fun
             var msg = $"{Formatter.Bold(ctx.Member.DisplayName)} " +
                 $"{Formatter.Italic("burned")} {Formatter.Bold(m.DisplayName)}";
 
-            await ctx.Channel.SendFileAsync("burn-img.gif", new MemoryStream(Resources.Images_Burn), msg);
+            using var mem = new MemoryStream();
+            Resources.Images_Burn?.Save(mem, System.Drawing.Imaging.ImageFormat.Gif);
+
+            mem?.Seek(0, SeekOrigin.Begin);
+
+            await ctx.Channel.SendFileAsync("burn-img.gif", mem, msg);
         }
     }
 }

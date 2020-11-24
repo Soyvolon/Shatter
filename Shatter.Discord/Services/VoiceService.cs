@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+using DSharpPlus;
 using DSharpPlus.CommandsNext;
+using DSharpPlus.Entities;
 using DSharpPlus.Lavalink;
 using DSharpPlus.Lavalink.EventArgs;
 
@@ -15,10 +17,11 @@ namespace Shatter.Discord.Services
     public class VoiceService
     {
         public const int MaxGuildConsPerNode = 100;
-        public readonly ConcurrentDictionary<ulong, ulong> DJs = new ConcurrentDictionary<ulong, ulong>();
-        public readonly ConcurrentDictionary<ulong, ConcurrentQueue<LavalinkTrack>> GuildQueues = new ConcurrentDictionary<ulong, ConcurrentQueue<LavalinkTrack>>();
-        public readonly ConcurrentDictionary<ulong, List<ulong>> VoteSkips = new ConcurrentDictionary<ulong, List<ulong>>();
-        public readonly ConcurrentDictionary<ulong, ulong> PlayingStatusMessages = new ConcurrentDictionary<ulong, ulong>();
+        public ConcurrentDictionary<ulong, ulong> DJs { get; } = new();
+        public ConcurrentDictionary<ulong, ConcurrentQueue<LavalinkTrack>> GuildQueues { get; } = new();
+        public ConcurrentDictionary<ulong, List<ulong>> VoteSkips { get; } = new();
+        public ConcurrentDictionary<ulong, ulong> PlayingStatusMessages { get; } = new();
+        public ConcurrentDictionary<ulong, byte> IgnoreEventsList { get; } = new();
 
         public struct VoiceActionResult
         {
@@ -46,23 +49,41 @@ namespace Shatter.Discord.Services
             return true;
         }
 
-        public async Task<Tuple<bool, LavalinkTrack?>> QueueSong(CommandContext ctx, string search)
-        {
-            var node = await GetOrCreateConnection(ctx);
+        public async Task<Tuple<bool, LavalinkTrack?>> QueueSong(CommandContext ctx, string serach)
+            => await QueueSong(ctx.Client, ctx.Guild, ctx.Member.VoiceState.Channel, ctx.Member.Id, serach);
 
-            LavalinkTrack Track;
+        public async Task<Tuple<bool, LavalinkTrack?>> QueueSong(CommandContext ctx, Uri serach)
+            => await QueueSong(ctx.Client, ctx.Guild, ctx.Member.VoiceState.Channel, ctx.Member.Id, serach);
+
+        public async Task<Tuple<bool, LavalinkTrack?>> QueueSong(DiscordClient client, DiscordGuild guild, 
+            DiscordChannel channel, ulong memberId, string search)
+        {
             if (Uri.TryCreate(search, UriKind.Absolute, out Uri? url))
             {
-                var searchResult = await node.GetTracksAsync(url);
-                Track = searchResult.Tracks.FirstOrDefault();
+                return await QueueSong(client, guild, channel, memberId, url);
             }
             else
             {
-                var searchResult = await node.GetTracksAsync(search);
-                Track = searchResult.Tracks.FirstOrDefault();
-            }
+                var node = await GetOrCreateConnection(client, guild, channel);
 
-            var queueResult = await QueueSong(node, Track, ctx.Member.Id);
+                var searchResult = await node.GetTracksAsync(search);
+                var Track = searchResult.Tracks.FirstOrDefault();
+
+                var queueResult = await QueueSong(node, Track, memberId);
+
+                return new Tuple<bool, LavalinkTrack?>(queueResult, Track);
+            }
+        }
+
+        public async Task<Tuple<bool, LavalinkTrack?>> QueueSong(DiscordClient client, DiscordGuild guild,
+            DiscordChannel channel, ulong memberId, Uri search)
+        {
+            var node = await GetOrCreateConnection(client, guild, channel);
+
+            var searchResult = await node.GetTracksAsync(search);
+            var Track = searchResult.Tracks.FirstOrDefault();
+            
+            var queueResult = await QueueSong(node, Track, memberId);
 
             return new Tuple<bool, LavalinkTrack?>(queueResult, Track);
         }
@@ -90,14 +111,14 @@ namespace Shatter.Discord.Services
             return true;
         }
 
-        public async Task<LavalinkGuildConnection> GetOrCreateConnection(CommandContext ctx)
+        public async Task<LavalinkGuildConnection> GetOrCreateConnection(DiscordClient client, DiscordGuild guild, DiscordChannel channel)
         {
-            var node = await GetNodeConnection(ctx);
+            var node = await GetNodeConnection(client, guild);
 
             LavalinkGuildConnection? con;
-            if ((con = await GetGuildConnection(ctx, node)) is null)
+            if ((con = await GetGuildConnection(guild, node)) is null)
             {
-                con = await node.ConnectAsync(ctx.Member.VoiceState.Channel);
+                con = await node.ConnectAsync(channel);
                 con.PlaybackFinished += GuildConnection_SongFinished;
                 con.PlaybackStarted += GuildConnection_SongStarted;
 
@@ -112,6 +133,8 @@ namespace Shatter.Discord.Services
 
         private async Task GuildConnection_SongStarted(LavalinkGuildConnection sender, TrackStartEventArgs e)
         {
+            if (IgnoreEventsList.ContainsKey(sender.Guild.Id)) return;
+
             if (PlayingStatusMessages.TryGetValue(sender.Guild.Id, out ulong chan))
             {
                 var nowPlaying = sender.CurrentState.CurrentTrack;
@@ -123,6 +146,8 @@ namespace Shatter.Discord.Services
 
         private async Task GuildConnection_SongFinished(LavalinkGuildConnection sender, TrackFinishEventArgs e)
         {
+            if (IgnoreEventsList.ContainsKey(sender.Guild.Id)) return;
+
             if (e.Reason == TrackEndReason.Finished || e.Reason == TrackEndReason.Stopped)
             {
                 if (GuildQueues.TryGetValue(sender.Guild.Id, out var queue))
@@ -139,23 +164,29 @@ namespace Shatter.Discord.Services
             }
         }
 
-        private Task<LavalinkGuildConnection?> GetGuildConnection(CommandContext ctx, LavalinkNodeConnection node)
+        private static Task<LavalinkGuildConnection?> GetGuildConnection(DiscordGuild guild, LavalinkNodeConnection node)
         {
-            return Task.FromResult<LavalinkGuildConnection?>(node.GetGuildConnection(ctx.Guild));
+            return Task.FromResult<LavalinkGuildConnection?>(node.GetGuildConnection(guild));
         }
 
         public async Task<LavalinkGuildConnection?> GetGuildConnection(CommandContext ctx)
         {
-            var node = await GetNodeConnection(ctx);
+            return await GetGuildConnection(ctx.Client, ctx.Guild);
 
-            return await GetGuildConnection(ctx, node);
         }
 
-        private async Task<LavalinkNodeConnection> GetNodeConnection(CommandContext ctx)
+        public async Task<LavalinkGuildConnection?> GetGuildConnection(DiscordClient c, DiscordGuild g)
         {
-            var lava = ctx.Client.GetLavalink();
+            var node = await GetNodeConnection(c, g);
 
-            var idealNode = lava.GetIdealNodeConnection(ctx.Guild.VoiceRegion);
+            return await GetGuildConnection(g, node);
+        }
+
+        private async Task<LavalinkNodeConnection> GetNodeConnection(DiscordClient client, DiscordGuild guild)
+        {
+            var lava = client.GetLavalink();
+
+            var idealNode = lava.GetIdealNodeConnection(guild.VoiceRegion);
 
             if (idealNode is null || idealNode.ConnectedGuilds.Count > MaxGuildConsPerNode)
                 idealNode = await lava.ConnectAsync(GetLavalinkConfiguration());
@@ -163,7 +194,7 @@ namespace Shatter.Discord.Services
             return idealNode;
         }
 
-        private LavalinkConfiguration GetLavalinkConfiguration()
+        private static LavalinkConfiguration GetLavalinkConfiguration()
         {
             var lcfg = new LavalinkConfiguration
             {
