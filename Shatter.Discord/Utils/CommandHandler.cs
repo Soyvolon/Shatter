@@ -120,7 +120,10 @@ namespace Shatter.Discord.Utils
             {
                 try
                 {
-                    return guildConfig.Prefix.Length; //Return length of server prefix.
+                    if(msg.Content.StartsWith(guildConfig.Prefix))
+                        return guildConfig.Prefix.Length; //Return length of server prefix.
+
+                    return -1;
                 }
                 catch (Exception err)
                 {
