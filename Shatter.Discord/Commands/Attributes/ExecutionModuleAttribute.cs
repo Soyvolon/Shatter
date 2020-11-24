@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Shatter.Discord.Commands.Attributes
 {
-    [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
+    [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = true)]
     public class ExecutionModuleAttribute : Attribute
     {
         public ExecutionModuleAttribute(string Group)

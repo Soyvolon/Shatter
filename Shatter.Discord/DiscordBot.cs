@@ -162,7 +162,8 @@ namespace Shatter.Discord
         {
             this.services.AddScoped<NSDatabaseModel>()
                 .AddScoped<MemeService>()
-                .AddScoped<VoiceService>();
+                .AddSingleton<VoiceService>()
+                .AddSingleton<MusicBingoService>();
 
             provider = services.BuildServiceProvider();
 

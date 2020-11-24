@@ -1,0 +1,17 @@
+{
+  "game_title": "Example Music Bingo Game",
+  "songs": [
+    {
+      "display_name": "Example song title (This will show up on the bingo card, so dont make it too long)",
+      "song_link": "A link to the song such as a youtube link.",
+      "song_start": "The time that the song should start at",
+      "song_end": "The time the song should end at. The recommended play length is 10 seconds of music."
+    },
+    {
+      "display_name": "Another song! It is recommended to have at least 24 songs to fully fill the bingo board.",
+      "song_link": "You can have more than 24 songs, but not all of them will show on a single board.",
+      "song_start": "If you have less, then some spots on the board will be blank!",
+      "song_end": "Have fun creaing your own bingo games, just upload the JSON with the .buildbingo command!"
+    }
+  ] 
+}

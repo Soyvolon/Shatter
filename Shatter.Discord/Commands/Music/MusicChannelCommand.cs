@@ -24,7 +24,7 @@ namespace Shatter.Discord.Commands.Music
         [RequireUserPermissions(Permissions.UseVoice)]
         [RequireBotPermissions(Permissions.UseVoice)]
         [ExecutionModule("music")]
-        public async Task ExampleCommandAsync(CommandContext ctx)
+        public async Task MusicChannelCommandAsync(CommandContext ctx)
         {
             var conn = await _voice.GetGuildConnection(ctx);
 
