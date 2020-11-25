@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -100,8 +101,14 @@ namespace Shatter.Discord.Commands.Games.Music.Bingo
             await ctx.RespondAsync(embed: embed);
 
             string msg;
+            int c = 0;
             do
             {
+                if(c++ > 0)
+                {
+                    await RespondBasicErrorAsync("Failed to find a match. Make sure to type the exact name in.");
+                }
+
                 var res = await interact.WaitForMessageAsync(x => x.Author.Id == ctx.Message.Author.Id);
 
                 if (res.TimedOut)
@@ -115,9 +122,48 @@ namespace Shatter.Discord.Commands.Games.Music.Bingo
                     return;
                 }
 
-                msg = res.Result.Content;
+                msg = res.Result.Content.ToLower().Trim();
 
-            } while (false);
+            } while (!(
+                ( // Check to see if it starts with a global: tag, then remove the global and check for a match.
+                    msg.StartsWith("global:", System.StringComparison.OrdinalIgnoreCase)
+                        && (globalNames?.Contains(msg[7..].Trim()) ?? false)
+                ) // if that fails, check for a local match.
+                || (localNames?.Contains(msg) ?? false)
+                // if that fails, check for a global match.
+                || (globalNames?.Contains(msg) ?? false)
+            ));
+
+            string finalPath;
+
+            if(msg.StartsWith("global:"))
+            {
+                msg = msg[7..].Trim();
+                finalPath = Path.Join(globalPath, msg + ".json");
+            }
+            else if(localNames?.Contains(msg) ?? false)
+            {
+                finalPath = Path.Join(localPath, msg + ".json");
+            }
+            else
+            {
+                finalPath = Path.Join(globalPath, msg + ".json");
+            }
+
+            using FileStream fs = new(finalPath, FileMode.Open);
+            using StreamReader sr = new(fs);
+            var json = await sr.ReadToEndAsync();
+
+            var game = JsonConvert.DeserializeObject<MusicBingoGame>(json);
+
+            embed = SuccessBase()
+                .WithTitle("Bingo Game Created!")
+                .WithDescription($"**Board:** {msg}\n\n" +
+                $"Game starting in 15 seconds!");
+
+            await Task.Delay(TimeSpan.FromSeconds(15));
+
+            await _bingo.StartGameAsync(game, ctx);
         }
     }
 }

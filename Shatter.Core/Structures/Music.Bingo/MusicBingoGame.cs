@@ -21,7 +21,7 @@ namespace Shatter.Core.Structures.Music.Bingo
         [JsonIgnore]
         public ulong GameStarter { get; set; }
         [JsonIgnore]
-        public ConcurrentQueue<MusicBingoSong> QueuedSongs { get; init; }
+        private ConcurrentQueue<MusicBingoSong> QueuedSongs { get; init; }
         [JsonIgnore]
         public ConcurrentDictionary<ulong, MusicBingoBoard> BingoBoards { get; init; }
         [JsonIgnore]
@@ -49,6 +49,14 @@ namespace Shatter.Core.Structures.Music.Bingo
                 board.PopulateBoard(Songs);
                 BingoBoards[player] = board;
             }
+        }
+
+        public MusicBingoSong? GetNextSong()
+        {
+            if(QueuedSongs.TryDequeue(out MusicBingoSong? song))
+                PlayedSongs?.Add(song);
+
+            return song;
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -27,6 +28,7 @@ namespace Shatter.Discord.Services
         private readonly IServiceProvider _services;
         public ConcurrentDictionary<ulong, MusicBingoGame> ActiveGames { get; } = new();
         private ConcurrentDictionary<ulong, Tuple<DiscordChannel, DiscordGuild, DiscordClient>> GameConnections { get; } = new();
+        private ConcurrentDictionary<TrackFinishEventArgs, Action> PlayerWaits { get; } = new();
 
         public MusicBingoService(VoiceService voice, IServiceProvider services)
         {
@@ -132,7 +134,7 @@ namespace Shatter.Discord.Services
             }
 
             var _image = _services.GetRequiredService<MemeService>();
-            return await _image.BuildMemeAsync(Resources.Images_BingoBoard, captions, "", 20, new SolidBrush(Color.Black));
+            return await _image.BuildMemeAsync(Resources.Images_BingoBoard, captions, "", 35, new SolidBrush(Color.Black));
         }
 
         public void StopGame(ulong guildId)
@@ -158,10 +160,45 @@ namespace Shatter.Discord.Services
 
         }
 
+        private async Task PlayOutOfSongs(TrackFinishEventArgs e)
+        {
+
+        }
+
         // Special handler for the bingo games to introduce delays and anything else needed.
         private async Task GuildConnection_SongFinished(LavalinkGuildConnection sender, TrackFinishEventArgs e)
         {
+            if(ActiveGames.TryGetValue(sender.Guild.Id, out var game))
+            {
+                var song = game.GetNextSong();
+                if(song is null)
+                {
+                    await PlayOutOfSongs(e);
+                }
+                else
+                {
+                    PlayerWaits[e] = async () =>
+                    {
+                        var serach = e.Player.GetTracksAsync(song.SongLink);
 
+                        await Task.Delay(TimeSpan.FromSeconds(3));
+                        var songRes = await serach;
+
+                        LavalinkTrack? track;
+                        if((track = songRes.Tracks?.FirstOrDefault() ?? default) != default)
+                        {
+                            if(song.SongStart is null || song.SongEnd is null)
+                            {
+                                await e.Player.PlayAsync(track);
+                            }
+                            else
+                            {
+                                await e.Player.PlayPartialAsync(track, (TimeSpan)song.SongStart, (TimeSpan)song.SongEnd);
+                            }
+                        }
+                    };
+                }
+            }
         }
     }
 }

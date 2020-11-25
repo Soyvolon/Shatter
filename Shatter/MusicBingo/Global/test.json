@@ -1,150 +1,67 @@
 {
   "game_title": "Test Game",
   "introduction": "",
+  "epilouge": "",
   "songs": [
     {
-      "display_name": "1",
-      "song_link": "https://youtube.com",
-      "song_start": "2:23",
-      "song_end": "2:33"
+      "display_name": "I Need a Hero",
+      "song_link": "https://www.youtube.com/watch?v=TFVrOC8gOhU&ab_channel=PlayinGameOf",
+      "song_start": "1:09",
+      "song_end": "1:19"
     },
     {
-      "display_name": "2",
-      "song_link": "https://youtube.com",
-      "song_start": "",
-      "song_end": ""
+      "display_name": "American Pie",
+      "song_link": "https://www.youtube.com/watch?v=ngDJIjbAvz4&ab_channel=DonMcLean-Topic",
+      "song_start": "0:25",
+      "song_end": "0:35"
     },
     {
-      "display_name": "3",
-      "song_link": "https://youtube.com",
-      "song_start": "",
-      "song_end": ""
+      "display_name": "Piano Man",
+      "song_link": "https://www.youtube.com/watch?v=gxEPV4kolz0&ab_channel=billyjoelVEVO",
+      "song_start": "0:00",
+      "song_end": "0:10"
     },
     {
-      "display_name": "4",
-      "song_link": "https://youtube.com",
-      "song_start": "",
-      "song_end": ""
+      "display_name": "Don't Mine at Night",
+      "song_link": "https://www.youtube.com/watch?v=X_XGxzMrq04",
+      "song_start": "0:08",
+      "song_end": "0:18"
     },
     {
-      "display_name": "5",
-      "song_link": "https://youtube.com",
-      "song_start": "",
-      "song_end": ""
+      "display_name": "Starlight Brigade",
+      "song_link": "https://youtu.be/J9Q3i5w6-Ug",
+      "song_start": "1:40",
+      "song_end": "1:54"
     },
     {
-      "display_name": "6",
-      "song_link": "https://youtube.com",
-      "song_start": "",
-      "song_end": ""
+      "display_name": "Inventors Daughter",
+      "song_link": "https://www.youtube.com/watch?v=24mtT3bh-xw",
+      "song_start": "1:22",
+      "song_end": "1:32"
     },
     {
-      "display_name": "7",
-      "song_link": "https://youtube.com",
-      "song_start": "",
-      "song_end": ""
+      "display_name": "Inventors Daughter",
+      "song_link": "https://www.youtube.com/watch?v=24mtT3bh-xw",
+      "song_start": "1:22",
+      "song_end": "1:32"
     },
     {
-      "display_name": "8",
-      "song_link": "https://youtube.com",
-      "song_start": "",
-      "song_end": ""
+      "display_name": "How Far We've Come",
+      "song_link": "https://www.youtube.com/watch?v=5d7EbtLb8ok",
+      "song_start": "2:05",
+      "song_end": "2:15"
     },
     {
-      "display_name": "9",
-      "song_link": "https://youtube.com",
-      "song_start": "",
-      "song_end": ""
+      "display_name": "After Party",
+      "song_link": "https://www.youtube.com/watch?v=oiIEwK0Xg-U",
+      "song_start": "1:00",
+      "song_end": "1:10"
     },
     {
-      "display_name": "10",
-      "song_link": "https://youtube.com",
-      "song_start": "",
-      "song_end": ""
-    },
-    {
-      "display_name": "11",
-      "song_link": "https://youtube.com",
-      "song_start": "",
-      "song_end": ""
-    },
-    {
-      "display_name": "12",
-      "song_link": "https://youtube.com",
-      "song_start": "",
-      "song_end": ""
-    },
-    {
-      "display_name": "13",
-      "song_link": "https://youtube.com",
-      "song_start": "",
-      "song_end": ""
-    },
-    {
-      "display_name": "14",
-      "song_link": "https://youtube.com",
-      "song_start": "",
-      "song_end": ""
-    },
-    {
-      "display_name": "15",
-      "song_link": "https://youtube.com",
-      "song_start": "",
-      "song_end": ""
-    },
-    {
-      "display_name": "16",
-      "song_link": "https://youtube.com",
-      "song_start": "",
-      "song_end": ""
-    },
-    {
-      "display_name": "17",
-      "song_link": "https://youtube.com",
-      "song_start": "",
-      "song_end": ""
-    },
-    {
-      "display_name": "18",
-      "song_link": "https://youtube.com",
-      "song_start": "",
-      "song_end": ""
-    },
-    {
-      "display_name": "19",
-      "song_link": "https://youtube.com",
-      "song_start": "",
-      "song_end": ""
-    },
-    {
-      "display_name": "20",
-      "song_link": "https://youtube.com",
-      "song_start": "",
-      "song_end": ""
-    },
-    {
-      "display_name": "21",
-      "song_link": "https://youtube.com",
-      "song_start": "",
-      "song_end": ""
-    },
-    {
-      "display_name": "22",
-      "song_link": "https://youtube.com",
-      "song_start": "",
-      "song_end": ""
-    },
-    {
-      "display_name": "23",
-      "song_link": "https://youtube.com",
-      "song_start": "",
-      "song_end": ""
-    },
-    {
-      "display_name": "24",
-      "song_link": "https://youtube.com",
-      "song_start": "",
-      "song_end": ""
+      "display_name": "Song Name",
+      "song_link": "https://www.youtube.com/watch?v=5d7EbtLb8ok",
+      "song_start": "1:00",
+      "song_end": "1:10"
     }
-  ]
+  ] 
 }

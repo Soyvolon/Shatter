@@ -1,6 +1,7 @@
 {
   "game_title": "Example Music Bingo Game",
   "introduction": "URL to the introduction message! Make a custom intro video and upload it to play it at the start of a game!",
+  "epilouge": "URL to the epilouge message! This plays after someone wins!",
   "songs": [
     {
       "display_name": "Example song title (This will show up on the bingo card, so dont make it too long)",
@@ -14,5 +15,5 @@
       "song_start": "If you have less, then some spots on the board will be blank!",
       "song_end": "Have fun creaing your own bingo games, just upload the JSON with the .buildbingo command!"
     }
-  ] 
+  ]
 }

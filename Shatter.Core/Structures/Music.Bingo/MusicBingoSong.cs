@@ -13,8 +13,8 @@ namespace Shatter.Core.Structures.Music.Bingo
         [JsonProperty("song_link")]
         public Uri SongLink { get; set; }
         [JsonProperty("song_start")]
-        public DateTime? SongStart { get; set; }
+        public TimeSpan? SongStart { get; set; }
         [JsonProperty("song_end")]
-        public DateTime? SongEnd { get; set; }
+        public TimeSpan? SongEnd { get; set; }
     }
 }
