@@ -10,7 +10,7 @@ using DSharpPlus.Interactivity;
 
 namespace Shatter.Discord.Utils
 {
-    public static class Brainfuck
+	public static class Brainfuck
     {
         private const string AllowedChars = "><+-.,[]";
 

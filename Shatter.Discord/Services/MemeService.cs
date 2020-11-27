@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Shatter.Discord.Services
 {
-    public class MemeService : IDisposable
+	public class MemeService : IDisposable
     {
         private static readonly Dictionary<string, int> FontIds = new Dictionary<string, int>
         {

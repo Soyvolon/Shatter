@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace Shatter.Core.Structures
 {
-    public struct FortuneData
+	public struct FortuneData
     {
         [JsonProperty("message")]
         public string Messge { get; set; }

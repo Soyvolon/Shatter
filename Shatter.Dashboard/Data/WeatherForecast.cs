@@ -2,7 +2,7 @@ using System;
 
 namespace Shatter.Dashboard.Data
 {
-    public class WeatherForecast
+	public class WeatherForecast
     {
         public DateTime Date { get; set; }
 

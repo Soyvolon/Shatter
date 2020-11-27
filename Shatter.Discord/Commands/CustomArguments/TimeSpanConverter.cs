@@ -7,7 +7,7 @@ using DSharpPlus.Entities;
 
 namespace Shatter.Discord.Commands.CustomArguments
 {
-    public class TimeSpanConverter : IArgumentConverter<TimeSpan>
+	public class TimeSpanConverter : IArgumentConverter<TimeSpan>
     {
         public Task<Optional<TimeSpan>> ConvertAsync(string value, CommandContext ctx)
         {

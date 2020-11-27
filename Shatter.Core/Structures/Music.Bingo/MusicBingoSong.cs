@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 using Newtonsoft.Json;
 
 namespace Shatter.Core.Structures.Music.Bingo
 {
-    public class MusicBingoSong
+	public class MusicBingoSong
     {
         [JsonProperty("display_name")]
         public string DisplayName { get; set; }

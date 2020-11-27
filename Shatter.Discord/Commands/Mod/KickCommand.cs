@@ -9,7 +9,7 @@ using Shatter.Discord.Commands.Attributes;
 
 namespace Shatter.Discord.Commands.Mod
 {
-    public class KickCommand : CommandModule
+	public class KickCommand : CommandModule
     {
         [Command("kick")]
         [Description("Kicks a user from the server.")]

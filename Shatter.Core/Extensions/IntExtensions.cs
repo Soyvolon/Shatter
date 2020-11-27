@@ -1,6 +1,6 @@
 ﻿namespace Shatter.Core.Extensions
 {
-    public static class IntExtensions
+	public static class IntExtensions
     {
         public static string ToMoney(this int val)
         {

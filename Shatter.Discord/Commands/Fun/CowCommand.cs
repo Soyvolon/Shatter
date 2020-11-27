@@ -13,7 +13,7 @@ using Shatter.Discord.Commands.Attributes;
 
 namespace Shatter.Discord.Commands.Fun
 {
-    public class CowCommand : CommandModule
+	public class CowCommand : CommandModule
     {
         [Command("cow")]
         [Description("Get a random ASCII Cow")]

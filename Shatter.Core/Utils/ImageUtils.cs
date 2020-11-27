@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Shatter.Core.Utils
 {
-    public static class ImageUtils
+	public static class ImageUtils
     {
         public static Task Negate(Bitmap image)
         {

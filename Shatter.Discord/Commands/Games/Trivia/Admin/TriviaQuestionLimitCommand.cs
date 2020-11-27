@@ -10,7 +10,7 @@ using Shatter.Discord.Commands.Attributes;
 
 namespace Shatter.Discord.Commands.Games.Trivia.Admin
 {
-    public class TriviaQuestionLimitCommand : CommandModule
+	public class TriviaQuestionLimitCommand : CommandModule
     {
         private readonly ShatterDatabaseContext _model;
 

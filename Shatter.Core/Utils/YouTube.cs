@@ -8,7 +8,7 @@ using Shatter.Core.Structures;
 
 namespace Shatter.Core.Utils
 {
-    public static class YouTube
+	public static class YouTube
     {
         private static YouTubeService? Service { get; set; }
 

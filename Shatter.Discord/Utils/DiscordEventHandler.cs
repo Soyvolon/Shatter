@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using DSharpPlus;
 using DSharpPlus.EventArgs;
 
-using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
@@ -14,7 +13,7 @@ using Shatter.Core.Structures.Guilds;
 
 namespace Shatter.Discord.Utils
 {
-    public class DiscordEventHandler : IDisposable
+	public class DiscordEventHandler : IDisposable
     {
         private readonly DiscordRestClient Rest;
         private readonly DiscordShardedClient Client;

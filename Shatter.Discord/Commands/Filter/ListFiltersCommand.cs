@@ -11,7 +11,7 @@ using Shatter.Discord.Commands.Attributes;
 
 namespace Shatter.Discord.Commands.Filter
 {
-    public class ListFiltersCommand : CommandModule
+	public class ListFiltersCommand : CommandModule
     {
         private readonly ShatterDatabaseContext _model;
 

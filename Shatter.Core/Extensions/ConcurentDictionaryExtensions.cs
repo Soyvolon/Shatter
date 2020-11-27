@@ -5,7 +5,7 @@ using Shatter.Core.Structures.Guilds;
 
 namespace Shatter.Core.Extensions
 {
-    public static class ConcurentDictionaryExtensions
+	public static class ConcurentDictionaryExtensions
     {
         public static void UpdateOrAddValue<K, V>(this ConcurrentDictionary<K, V> dict, K key, V value, IGuildData cfg, ShatterDatabaseContext _model)
         {

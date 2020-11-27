@@ -8,16 +8,16 @@ using DSharpPlus.Entities;
 
 using Microsoft.Extensions.DependencyInjection;
 
+using NUnit.Framework;
+
 using Shatter.Core;
 using Shatter.Core.Extensions;
 using Shatter.Core.Structures;
 using Shatter.Discord;
 
-using NUnit.Framework;
-
 namespace Shatter.Tests
 {
-    public class CommandTests
+	public class CommandTests
     {
         protected const ulong TestingGuildId = 431462786900688896;
         protected const ulong TestingChannelId = 758504934676234290;

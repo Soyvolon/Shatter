@@ -1,10 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Linq;
 
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 using Newtonsoft.Json;
 
@@ -14,7 +12,7 @@ using Shatter.Core.Structures.Trivia;
 
 namespace Shatter.Core.Database
 {
-    public class ShatterDatabaseContext : DbContext
+	public class ShatterDatabaseContext : DbContext
     {
         #region Guild Configurations
         public DbSet<GuildConfig> Configs { get; set; }
@@ -28,17 +26,10 @@ namespace Shatter.Core.Database
         public DbSet<TriviaPlayer> TriviaPlayers { get; set; }
         #endregion
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            var dbConfig = ConfigurationManager.RegisterDatabase(null).GetAwaiter().GetResult();
+        public ShatterDatabaseContext(DbContextOptions options) : base(options)
+		{
 
-            if (dbConfig is null)
-                throw new NullReferenceException("DB Config cannont be null!");
-
-            optionsBuilder.UseNpgsql(dbConfig.GetConnectionString())
-                .EnableDetailedErrors()
-                .EnableSensitiveDataLogging();
-        }
+		}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

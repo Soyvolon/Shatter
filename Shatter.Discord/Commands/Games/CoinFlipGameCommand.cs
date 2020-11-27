@@ -11,7 +11,7 @@ using Shatter.Discord.Commands.Attributes;
 
 namespace Shatter.Discord.Commands.Games
 {
-    public class CoinFlipGameCommand : CommandModule
+	public class CoinFlipGameCommand : CommandModule
     {
         private readonly ShatterDatabaseContext _model;
         private Random Random { get; set; }

@@ -2,7 +2,7 @@
 
 namespace Shatter.Core.Structures.Guilds
 {
-    public class GuildMemberlogs : IGuildData
+	public class GuildMemberlogs : IGuildData
     {
         [Key]
         public ulong GuildId { get; set; }

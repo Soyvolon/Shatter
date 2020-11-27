@@ -12,7 +12,7 @@ using Shatter.Discord.Services;
 
 namespace Shatter.Discord.Commands.Memes
 {
-    public class TheSearchCommand : CommandModule
+	public class TheSearchCommand : CommandModule
     {
         private readonly Tuple<Rectangle, string, Brush?>[] captions = new Tuple<Rectangle, string, Brush?>[]
         {

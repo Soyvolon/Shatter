@@ -9,7 +9,7 @@ using Shatter.Discord.Services;
 
 namespace Shatter.Discord.Commands.Games.Music.Bingo
 {
-    public class StopBingoGameCommand : CommandModule
+	public class StopBingoGameCommand : CommandModule
     {
         private readonly MusicBingoService _bingo;
         private readonly VoiceService _voice;

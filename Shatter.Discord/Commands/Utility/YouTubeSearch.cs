@@ -8,7 +8,7 @@ using Shatter.Discord.Commands.Attributes;
 
 namespace Shatter.Discord.Commands.Utility
 {
-    public class YouTubeSearch : CommandModule
+	public class YouTubeSearch : CommandModule
     {
         [Command("ytsearch")]
         [Description("Serach youtube.")]

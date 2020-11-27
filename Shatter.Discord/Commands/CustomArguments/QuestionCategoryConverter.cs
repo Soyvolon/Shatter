@@ -8,7 +8,7 @@ using Shatter.Core.Structures.Trivia;
 
 namespace Shatter.Discord.Commands.CustomArguments
 {
-    public class QuestionCategoryConverter : IArgumentConverter<QuestionCategory>
+	public class QuestionCategoryConverter : IArgumentConverter<QuestionCategory>
     {
         public Task<Optional<QuestionCategory>> ConvertAsync(string value, CommandContext ctx)
         {

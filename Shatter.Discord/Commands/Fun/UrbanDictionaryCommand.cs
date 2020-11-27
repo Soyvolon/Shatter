@@ -11,7 +11,7 @@ using Shatter.Discord.Commands.Attributes;
 
 namespace Shatter.Discord.Commands.Fun
 {
-    public class UrbanDictionaryCommand : CommandModule
+	public class UrbanDictionaryCommand : CommandModule
     {
         [Command("urban")]
         [Description("Serach the Urban Dictionary")]

@@ -8,7 +8,7 @@ using Shatter.Core.Structures;
 
 namespace Shatter.Core.Utils
 {
-    public class Fortune
+	public class Fortune
     {
         private const string FortuneRequest = "http://fortunecookieapi.herokuapp.com/v1/cookie";
 

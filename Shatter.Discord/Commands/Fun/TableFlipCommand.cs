@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
@@ -8,14 +8,14 @@ using Shatter.Discord.Commands.Attributes;
 
 namespace Shatter.Discord.Commands.Fun
 {
-    public class TableFlipCommand : CommandModule
+	public class TableFlipCommand : CommandModule
     {
         [Command("tableflip")]
         [Description("Animated Table Flip")]
         [RequireUserPermissions(Permissions.AccessChannels)]
         [Cooldown(1, 3, CooldownBucketType.User)]
         [ExecutionModule("fun")]
-        public async Task ExampleCommandAsync(CommandContext ctx)
+        public static async Task TableflipCommandAsync(CommandContext ctx)
         {
             var msgStatus = ctx.RespondAsync("(°-°)\\ ┬─┬");
             await Task.Delay(500);

@@ -11,7 +11,7 @@ using Shatter.Discord.Services;
 
 namespace Shatter.Discord.Commands.Music
 {
-    public class VoteSkipMusicCommand : CommandModule
+	public class VoteSkipMusicCommand : CommandModule
     {
         private readonly VoiceService _voice;
 

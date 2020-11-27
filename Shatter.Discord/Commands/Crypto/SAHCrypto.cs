@@ -11,7 +11,7 @@ using Shatter.Discord.Commands.Attributes;
 
 namespace Shatter.Discord.Commands.Crypto
 {
-    public class SAHCrypto : CommandModule
+	public class SAHCrypto : CommandModule
     {
         [Command("crypto")]
         [Description("Get the shasum of a string.")]

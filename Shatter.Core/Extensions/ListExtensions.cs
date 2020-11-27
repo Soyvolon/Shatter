@@ -4,7 +4,7 @@ using System.Threading;
 
 namespace Shatter.Core.Extensions
 {
-    public static class ListExtensions
+	public static class ListExtensions
     {
         private static readonly Random r = new Random();
 

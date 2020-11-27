@@ -12,7 +12,7 @@ using Shatter.Discord.Commands.Attributes;
 
 namespace Shatter.Discord.Commands.Image
 {
-    public class ImageSwirlCommand : CommandModule
+	public class ImageSwirlCommand : CommandModule
     {
         [Command("swirl")]
         [Description("Swirl and image!")]

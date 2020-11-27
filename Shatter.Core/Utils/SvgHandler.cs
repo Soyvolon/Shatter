@@ -12,7 +12,7 @@ using Svg;
 
 namespace Shatter.Core.Utils
 {
-    public static class SvgHandler
+	public static class SvgHandler
     {
         private static readonly HttpClient avatarClient = new HttpClient();
 

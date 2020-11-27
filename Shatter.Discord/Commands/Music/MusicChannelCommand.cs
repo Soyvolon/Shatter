@@ -9,7 +9,7 @@ using Shatter.Discord.Services;
 
 namespace Shatter.Discord.Commands.Music
 {
-    public class MusicChannelCommand : CommandModule
+	public class MusicChannelCommand : CommandModule
     {
         private readonly VoiceService _voice;
 

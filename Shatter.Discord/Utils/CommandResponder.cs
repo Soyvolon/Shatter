@@ -11,7 +11,7 @@ using Shatter.Discord.Commands;
 
 namespace Shatter.Discord.Utils
 {
-    public static class CommandResponder
+	public static class CommandResponder
     {
         public static Task RespondSuccessAsync(CommandsNextExtension cnext, CommandExecutionEventArgs e)
         {

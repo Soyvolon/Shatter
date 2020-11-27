@@ -10,7 +10,7 @@ using Shatter.Discord.Services;
 
 namespace Shatter.Discord.Commands.Music
 {
-    public class SkipToMusicCommand : CommandModule
+	public class SkipToMusicCommand : CommandModule
     {
         private readonly VoiceService _voice;
 

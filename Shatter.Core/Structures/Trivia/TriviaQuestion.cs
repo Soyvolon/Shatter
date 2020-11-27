@@ -7,7 +7,7 @@ using Shatter.Core.Extensions;
 
 namespace Shatter.Core.Structures.Trivia
 {
-    public class TriviaQuestion
+	public class TriviaQuestion
     {
         public int Worth { get; private set; }
         public int CorrectAnswerKey { get; private set; }

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Shatter.Core.Structures.Guilds
 {
-    public class GuildModeration : IGuildData
+	public class GuildModeration : IGuildData
     {
         [Key]
         public ulong GuildId { get; set; }

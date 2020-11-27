@@ -17,7 +17,7 @@ using Shatter.Discord.Utils;
 
 namespace Shatter.Discord.Commands.Games.Trivia
 {
-    public class TriviaGameCommand : CommandModule
+	public class TriviaGameCommand : CommandModule
     {
         private readonly ShatterDatabaseContext _model;
 

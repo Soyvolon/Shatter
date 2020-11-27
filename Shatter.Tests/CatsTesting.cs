@@ -2,13 +2,13 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 
-using Shatter.Core.Utils;
-
 using NUnit.Framework;
+
+using Shatter.Core.Utils;
 
 namespace Shatter.Tests
 {
-    public class CatsTesting
+	public class CatsTesting
     {
         HttpClient Http;
 

@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace Shatter.Core.Structures
 {
-    public struct UrbanDictonaryResult
+	public struct UrbanDictonaryResult
     {
         [JsonProperty("definition")]
         public string Definition { get; set; }

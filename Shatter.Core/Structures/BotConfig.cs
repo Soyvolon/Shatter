@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace Shatter.Core.Structures
 {
-    public struct BotConfig
+	public struct BotConfig
     {
         [JsonProperty("token")]
         public string Token { get; set; }

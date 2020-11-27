@@ -11,7 +11,7 @@ using Shatter.Discord.Commands.Attributes;
 
 namespace Shatter.Discord.Commands.Economy
 {
-    public class EconDailyCommand : CommandModule
+	public class EconDailyCommand : CommandModule
     {
         private const int DailyAmount = 50;
         private readonly ShatterDatabaseContext _model;

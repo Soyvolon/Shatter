@@ -12,7 +12,7 @@ using Shatter.Discord.Services;
 
 namespace Shatter.Discord.Commands.Image
 {
-    public class CreateCardCommand : CommandModule
+	public class CreateCardCommand : CommandModule
     {
         private readonly Tuple<Rectangle, string, Brush?>[] captions = new Tuple<Rectangle, string, Brush?>[]
         {

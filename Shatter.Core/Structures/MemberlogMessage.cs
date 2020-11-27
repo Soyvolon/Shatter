@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Shatter.Core.Structures
 {
-    [Owned]
+	[Owned]
     public class MemberlogMessage
     {
         public string? Message { get; set; }

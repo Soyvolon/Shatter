@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Text;
 
 using Newtonsoft.Json;
 
@@ -9,7 +8,7 @@ using Shatter.Core.Extensions;
 
 namespace Shatter.Core.Structures.Music.Bingo
 {
-    public class MusicBingoGame
+	public class MusicBingoGame
     {
         [JsonProperty("game_title")]
         public string GameName { get; set; }

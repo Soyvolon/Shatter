@@ -8,7 +8,7 @@ using Shatter.Discord.Commands.Attributes;
 
 namespace Shatter.Discord.Commands.Fun
 {
-    public class CowSaysCommand : CommandModule
+	public class CowSaysCommand : CommandModule
     {
         public const string cow = "        \\   ^__^\n         \\  (oo)\\_______\n            (__)\\       )\\/\\\n                ||----w |\n                ||     ||\n";
 

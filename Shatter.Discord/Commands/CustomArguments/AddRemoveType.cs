@@ -8,7 +8,7 @@ using DSharpPlus.Entities;
 
 namespace Shatter.Discord.Commands.CustomArguments
 {
-    public enum AddRemove
+	public enum AddRemove
     {
         Add,
         Remove

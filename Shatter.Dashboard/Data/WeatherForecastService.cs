@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Shatter.Dashboard.Data
 {
-    public class WeatherForecastService
+	public class WeatherForecastService
     {
         private static readonly string[] Summaries = new[]
         {

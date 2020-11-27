@@ -19,7 +19,7 @@ using Shatter.Discord.Commands.CustomArguments;
 
 namespace Shatter.Discord.Commands.Economy
 {
-    public class RichestCommand : CommandModule
+	public class RichestCommand : CommandModule
     {
         private readonly ShatterDatabaseContext _model;
 

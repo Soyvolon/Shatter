@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace Shatter.Core.Structures.Trivia
 {
-    public struct TriviaCategory
+	public struct TriviaCategory
     {
         [JsonProperty("id")]
         public int Id { get; set; }

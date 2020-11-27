@@ -9,7 +9,7 @@ using Shatter.Discord.Commands.Attributes;
 
 namespace Shatter.Discord.Commands.Fun
 {
-    public class FortuneCommand : CommandModule
+	public class FortuneCommand : CommandModule
     {
         [Command("fortune")]
         [Description("Open a fortune cookie")]

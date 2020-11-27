@@ -8,7 +8,7 @@ using Shatter.Discord.Commands.Attributes;
 
 namespace Shatter.Discord.Commands.Info
 {
-    public class AvatarCommand : CommandModule
+	public class AvatarCommand : CommandModule
     {
         [Command("avatar")]
         [Description("Get someones avatar")]

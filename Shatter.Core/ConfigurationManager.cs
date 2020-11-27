@@ -10,7 +10,7 @@ using Shatter.Core.Structures;
 
 namespace Shatter.Core
 {
-    public static class ConfigurationManager
+	public static class ConfigurationManager
     {
         private static string Root = "Configs";
 

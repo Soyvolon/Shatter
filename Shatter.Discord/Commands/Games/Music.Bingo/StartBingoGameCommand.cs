@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
-using DSharpPlus.Entities;
 using DSharpPlus.Interactivity.Extensions;
 
 using Newtonsoft.Json;
@@ -18,7 +16,7 @@ using Shatter.Discord.Services;
 
 namespace Shatter.Discord.Commands.Games.Music.Bingo
 {
-    public class StartBingoGameCommand : CommandModule
+	public class StartBingoGameCommand : CommandModule
     {
         private readonly MusicBingoService _bingo;
         private readonly VoiceService _voice;

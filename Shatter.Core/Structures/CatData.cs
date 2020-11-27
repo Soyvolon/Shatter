@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace Shatter.Core.Structures
 {
-    public struct CatData
+	public struct CatData
     {
         [JsonProperty("breeds")]
         public CatBreed[] Breeds { get; private set; }

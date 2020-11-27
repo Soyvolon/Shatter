@@ -10,7 +10,7 @@ using Shatter.Discord.Commands.Attributes;
 
 namespace Shatter.Discord.Commands.Memberlog
 {
-    public class JoinDmCommand : CommandModule
+	public class JoinDmCommand : CommandModule
     {
         private readonly ShatterDatabaseContext _model;
 

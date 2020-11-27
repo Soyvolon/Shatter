@@ -13,10 +13,10 @@ using Shatter.Core.Structures.Guilds;
 
 namespace Shatter.Discord.Utils
 {
-    /// <summary>
-    /// This is currently the same as the DefaultHelpFormatter from DSharpPlus. Modify this class to edit your help formatting.
-    /// </summary>
-    public class HelpFormatter : BaseHelpFormatter
+	/// <summary>
+	/// This is currently the same as the DefaultHelpFormatter from DSharpPlus. Modify this class to edit your help formatting.
+	/// </summary>
+	public class HelpFormatter : BaseHelpFormatter
     {
         public DiscordEmbedBuilder EmbedBuilder { get; }
         private Command Command { get; set; }

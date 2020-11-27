@@ -12,7 +12,7 @@ using Shatter.Discord.Commands.Attributes;
 
 namespace Shatter.Discord.Commands.Image
 {
-    public class ImageNegativeCommand : CommandModule
+	public class ImageNegativeCommand : CommandModule
     {
         [Command("negate")]
         [Description("The negative of an image.")]

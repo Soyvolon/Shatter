@@ -9,7 +9,7 @@ using Shatter.Discord.Commands.Attributes;
 
 namespace Shatter.Discord.Commands.Fun
 {
-    public class AdviceCommand : CommandModule
+	public class AdviceCommand : CommandModule
     {
         [Command("advice")]
         [Description("Advice for the soul")]

@@ -5,7 +5,7 @@ using Shatter.Core.Structures.Trivia;
 
 namespace Shatter.Discord.Utils
 {
-    public static class TriviaController
+	public static class TriviaController
     {
         private static readonly ConcurrentDictionary<ulong, TriviaGame> ActiveTriviaGames = new ConcurrentDictionary<ulong, TriviaGame>();
 

@@ -1,20 +1,16 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 using DSharpPlus;
 using DSharpPlus.EventArgs;
 
-using Microsoft.EntityFrameworkCore.Metadata.Conventions;
-
 using Shatter.Core.Structures.Guilds;
 
 namespace Shatter.Discord.Utils
 {
-    public static class GuildFiltersUtil
+	public static class GuildFiltersUtil
     {
         public static ConcurrentDictionary<ulong, Tuple<Task, CancellationTokenSource>> FilterUtils = new ConcurrentDictionary<ulong, Tuple<Task, CancellationTokenSource>>();
 

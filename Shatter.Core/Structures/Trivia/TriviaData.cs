@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace Shatter.Core.Structures.Trivia
 {
-    public enum QuestionCategory
+	public enum QuestionCategory
     {
         All = 0,
         GeneralKnowledge = 9,

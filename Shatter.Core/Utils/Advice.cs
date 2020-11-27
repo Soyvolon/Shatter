@@ -5,7 +5,7 @@ using Newtonsoft.Json.Linq;
 
 namespace Shatter.Core.Utils
 {
-    public class Advice
+	public class Advice
     {
         public const string AdviceRequest = "http://api.adviceslip.com/advice";
 

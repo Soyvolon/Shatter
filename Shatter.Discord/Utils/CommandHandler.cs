@@ -18,7 +18,7 @@ using Shatter.Discord.Commands.Attributes;
 
 namespace Shatter.Discord.Utils
 {
-    public class CommandHandler
+	public class CommandHandler
     {
         private readonly IReadOnlyDictionary<string, Command> _commands;
         private readonly BotConfig _config;

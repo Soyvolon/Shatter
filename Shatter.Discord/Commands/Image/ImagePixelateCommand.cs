@@ -12,7 +12,7 @@ using Shatter.Discord.Commands.Attributes;
 
 namespace Shatter.Discord.Commands.Image
 {
-    public class ImagePixelateCommand : CommandModule
+	public class ImagePixelateCommand : CommandModule
     {
         [Command("pixelate")]
         [Description("Pixelate an image!")]

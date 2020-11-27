@@ -11,7 +11,7 @@ using Shatter.Discord.Commands.Attributes;
 
 namespace Shatter.Discord.Commands.Memberlog
 {
-    public class MemberlogChannelCommand : CommandModule
+	public class MemberlogChannelCommand : CommandModule
     {
         private readonly ShatterDatabaseContext _model;
 

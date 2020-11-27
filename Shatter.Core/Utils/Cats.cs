@@ -7,7 +7,7 @@ using Shatter.Core.Structures;
 
 namespace Shatter.Core.Utils
 {
-    public static class Cats
+	public static class Cats
     {
         private const string Api = "https://api.thecatapi.com/v1/images/search";
         private const string Order = "order=";

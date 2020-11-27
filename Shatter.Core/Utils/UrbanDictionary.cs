@@ -8,7 +8,7 @@ using Shatter.Core.Structures;
 
 namespace Shatter.Core.Utils
 {
-    public static class UrbanDictionary
+	public static class UrbanDictionary
     {
         private const string RequestString = "http://api.urbandictionary.com/v0/define?term=";
 

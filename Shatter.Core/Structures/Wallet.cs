@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Shatter.Core.Structures
 {
-    public class Wallet
+	public class Wallet
     {
         [Key]
         public ulong UserId { get; private set; }

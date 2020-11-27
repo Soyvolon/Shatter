@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 
 namespace Shatter.Core.Structures.Guilds
 {
-    public class GuildFilters : IGuildData
+	public class GuildFilters : IGuildData
     {
         public const string AllFilters = "A";
         public static readonly Regex regex = new Regex("^[a-zA-z]*$");

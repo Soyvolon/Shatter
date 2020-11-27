@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 using DSharpPlus;
@@ -16,7 +15,7 @@ using Shatter.Discord.Commands.Attributes;
 
 namespace Shatter.Discord.Commands.Config
 {
-    public class ModuleCommand : CommandModule
+	public class ModuleCommand : CommandModule
     {
         private readonly ShatterDatabaseContext _database;
 

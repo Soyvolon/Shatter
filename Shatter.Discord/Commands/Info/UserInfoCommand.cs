@@ -10,7 +10,7 @@ using Shatter.Discord.Commands.Attributes;
 
 namespace Shatter.Discord.Commands.Info
 {
-    public class UserInfoCommand : CommandModule
+	public class UserInfoCommand : CommandModule
     {
         [Command("userinfo")]
         [Description("Get Information")]

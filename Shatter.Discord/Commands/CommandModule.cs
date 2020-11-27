@@ -9,7 +9,7 @@ using Shatter.Core.Extensions;
 
 namespace Shatter.Discord.Commands
 {
-    public enum ColorType
+	public enum ColorType
     {
         Nitro,
         Action,

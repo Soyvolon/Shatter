@@ -4,7 +4,7 @@ using System.Net;
 
 namespace Shatter.Core.Utils
 {
-    public static class ImageLoader
+	public static class ImageLoader
     {
         public static Bitmap? GetBitmapFromUrl(string url)
         {

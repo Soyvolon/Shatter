@@ -13,7 +13,7 @@ using Shatter.Discord.Commands.Attributes;
 
 namespace Shatter.Discord.Commands.Mod
 {
-    public class BanCommand : CommandModule
+	public class BanCommand : CommandModule
     {
         private readonly ShatterDatabaseContext _model;
 

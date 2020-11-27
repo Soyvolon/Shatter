@@ -11,7 +11,7 @@ using Shatter.Discord.Commands.Attributes;
 
 namespace Shatter.Discord.Commands.Info
 {
-    public class BotStatsCommand : CommandModule
+	public class BotStatsCommand : CommandModule
     {
         private const string Library = "DSharpPlus";
         private const string Creator = "Soyvolon#8016";

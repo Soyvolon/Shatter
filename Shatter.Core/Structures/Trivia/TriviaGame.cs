@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace Shatter.Core.Structures.Trivia
 {
-    public class TriviaGame
+	public class TriviaGame
     {
         public readonly ulong ChannelId;
         public readonly QuestionCategory Category;

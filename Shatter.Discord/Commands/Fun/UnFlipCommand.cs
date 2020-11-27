@@ -8,7 +8,7 @@ using Shatter.Discord.Commands.Attributes;
 
 namespace Shatter.Discord.Commands.Fun
 {
-    public class UnFlipCommand : CommandModule
+	public class UnFlipCommand : CommandModule
     {
         [Command("unflip")]
         [Description("Animated unflipping of the table.")]

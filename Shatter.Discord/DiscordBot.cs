@@ -26,7 +26,7 @@ using Shatter.Discord.Utils;
 
 namespace Shatter.Discord
 {
-    public class DiscordBot : IDisposable, IAsyncDisposable
+	public class DiscordBot : IDisposable, IAsyncDisposable
     {
         #region Boot Status
         public enum BootStatus { offline, booting, ready }

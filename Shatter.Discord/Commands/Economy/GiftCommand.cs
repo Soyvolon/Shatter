@@ -12,7 +12,7 @@ using Shatter.Discord.Commands.Attributes;
 
 namespace Shatter.Discord.Commands.Economy
 {
-    public class GiftCommand : CommandModule
+	public class GiftCommand : CommandModule
     {
         private readonly ShatterDatabaseContext _model;
 

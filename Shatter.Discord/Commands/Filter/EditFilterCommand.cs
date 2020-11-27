@@ -15,7 +15,7 @@ using Shatter.Discord.Commands.CustomArguments;
 
 namespace Shatter.Discord.Commands.Filter
 {
-    public class EditFilterCommand : CommandModule
+	public class EditFilterCommand : CommandModule
     {
         private readonly ShatterDatabaseContext _model;
 

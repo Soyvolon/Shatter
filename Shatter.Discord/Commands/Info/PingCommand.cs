@@ -9,7 +9,7 @@ using Shatter.Discord.Commands.Attributes;
 
 namespace Shatter.Discord.Commands.Info
 {
-    public class PingCommand : CommandModule
+	public class PingCommand : CommandModule
     {
         [Command("ping")]
         [Description("Check if Nitro is alive")]

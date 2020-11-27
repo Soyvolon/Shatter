@@ -13,7 +13,7 @@ using Shatter.Discord.Commands.Attributes;
 
 namespace Shatter.Discord.Commands.Economy.Admin
 {
-    public class SubFunds : CommandModule
+	public class SubFunds : CommandModule
     {
         private readonly ShatterDatabaseContext _model;
 

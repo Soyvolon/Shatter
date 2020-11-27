@@ -11,7 +11,7 @@ using Shatter.Discord.Commands;
 
 namespace Shatter.Discord.Utils
 {
-    public static class MemberLogingUtils
+	public static class MemberLogingUtils
     {
         public static async Task<string> ReplaceValues(string message, GuildMemberAddEventArgs e)
         {

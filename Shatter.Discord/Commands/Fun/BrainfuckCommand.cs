@@ -12,7 +12,7 @@ using Shatter.Discord.Utils;
 
 namespace Shatter.Discord.Commands.Fun
 {
-    public class BrainfuckCommand : CommandModule
+	public class BrainfuckCommand : CommandModule
     {
         private const int TimeoutSeconds = 60;
 

@@ -13,7 +13,7 @@ using Shatter.Discord.Services;
 
 namespace Shatter.Discord.Commands.Image
 {
-    public class DeathNoteCommand : CommandModule
+	public class DeathNoteCommand : CommandModule
     {
         private readonly Tuple<Rectangle, string, Brush?>[] captions = new Tuple<Rectangle, string, Brush?>[]
         {

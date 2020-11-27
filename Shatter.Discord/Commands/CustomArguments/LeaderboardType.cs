@@ -6,7 +6,7 @@ using DSharpPlus.Entities;
 
 namespace Shatter.Discord.Commands.CustomArguments
 {
-    public enum LeaderboardType
+	public enum LeaderboardType
     {
         Global,
         Server

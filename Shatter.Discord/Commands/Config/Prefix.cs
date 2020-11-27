@@ -10,7 +10,7 @@ using Shatter.Discord.Commands.Attributes;
 
 namespace Shatter.Discord.Commands.Config
 {
-    public class Prefix : CommandModule
+	public class Prefix : CommandModule
     {
         private readonly ShatterDatabaseContext _model;
 

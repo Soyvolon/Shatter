@@ -13,7 +13,7 @@ using Shatter.Discord.Properties;
 
 namespace Shatter.Discord.Commands.Memes
 {
-    public class PunchCommand : CommandModule
+	public class PunchCommand : CommandModule
     {
         [Command("punch")]
         [Description("Suckerpunch another user.")]

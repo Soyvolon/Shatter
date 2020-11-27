@@ -12,7 +12,7 @@ using Shatter.Discord.Commands.Attributes;
 
 namespace Shatter.Discord.Commands.Mod
 {
-    public class UnbanCommand : CommandModule
+	public class UnbanCommand : CommandModule
     {
         private readonly ShatterDatabaseContext _model;
 

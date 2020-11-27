@@ -1,20 +1,18 @@
-using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.CommandLineUtils;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 using Shatter.Core;
 using Shatter.Core.Database;
 using Shatter.Core.Structures;
-using Shatter.Dashboard;
 using Shatter.Discord;
 
 namespace Shatter
 {
-    public class Program
+	public class Program
     {
         public static int Main(string[] args)
         {
@@ -23,12 +21,25 @@ namespace Shatter
 
         private static async Task<int> Start()
         {
-            ServiceCollection services = new ServiceCollection();
-            services.AddLogging(o => o.AddConsole());
+			ServiceCollection services = new ServiceCollection();
+			services.AddLogging(o => o.AddConsole());
 
-            await using var serviceProvider = services.BuildServiceProvider();
+            var serviceProvider = services.BuildServiceProvider();
 
-            var botConfig = await ConfigurationManager.RegisterBotConfiguration(serviceProvider.GetService<ILogger<Program>>());
+			var db = await ConfigurationManager.RegisterDatabase(serviceProvider.GetService<ILogger<Program>>());
+
+			if (db is null)
+				return -1;
+
+			services.AddDbContext<ShatterDatabaseContext>(options =>
+				 {
+						options.UseSqlite(db.DataSource)
+							.EnableDetailedErrors();
+				 });
+
+			serviceProvider = services.BuildServiceProvider();
+
+			var botConfig = await ConfigurationManager.RegisterBotConfiguration(serviceProvider.GetService<ILogger<Program>>());
 
             if (botConfig is null)
                 return -1;
@@ -45,13 +56,20 @@ namespace Shatter
 
             using var bot = new DiscordBot((BotConfig)botConfig, (LavalinkConfig)lavaConfig, (YouTubeConfig)ytConfig, services);
 
-            var model = new ShatterDatabaseContext();
-            await model.Database.MigrateAsync();
+			var model = serviceProvider.GetRequiredService<ShatterDatabaseContext>();
+
+			if ((await model.Database.GetPendingMigrationsAsync()).Any())
+			{
+				await model.Database.MigrateAsync();
+				await model.SaveChangesAsync();
+			}
 
             await bot.InitializeAsync();
             await bot.StartAsync();
 
             await Task.Delay(-1);
+
+			await serviceProvider.DisposeAsync();
 
             return 0;
         }

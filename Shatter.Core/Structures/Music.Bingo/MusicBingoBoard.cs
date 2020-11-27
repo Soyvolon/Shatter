@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 using static Shatter.Core.Extensions.ListExtensions;
 
 namespace Shatter.Core.Structures.Music.Bingo
 {
-    public class MusicBingoBoard
+	public class MusicBingoBoard
     {
         public MusicBingoSong?[,] Board { get; init; }
         public int PlacedSongs { get; private set; }

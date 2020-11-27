@@ -11,7 +11,7 @@ using Shatter.Discord.Properties;
 
 namespace Shatter.Discord.Commands.Fun
 {
-    public class BurnCommand : CommandModule
+	public class BurnCommand : CommandModule
     {
 
         [Command("burn")]

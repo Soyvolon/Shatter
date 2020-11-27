@@ -2,7 +2,7 @@
 
 namespace Shatter.Core.Structures.Trivia
 {
-    public class TriviaPlayer
+	public class TriviaPlayer
     {
         [Key]
         public ulong UserId { get; set; }

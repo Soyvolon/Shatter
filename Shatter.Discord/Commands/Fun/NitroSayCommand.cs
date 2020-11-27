@@ -8,7 +8,7 @@ using Shatter.Discord.Commands.Attributes;
 
 namespace Shatter.Discord.Commands.Fun
 {
-    public class NitroSayCommand : CommandModule
+	public class NitroSayCommand : CommandModule
     {
         [Command("say")]
         [Description("Makes Nitro say a message")]

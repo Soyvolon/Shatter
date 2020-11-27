@@ -14,7 +14,7 @@ using Shatter.Discord.Commands;
 
 namespace Shatter.Discord.Services
 {
-    public class VoiceService
+	public class VoiceService
     {
         public const int MaxGuildConsPerNode = 100;
         public ConcurrentDictionary<ulong, ulong> DJs { get; } = new();

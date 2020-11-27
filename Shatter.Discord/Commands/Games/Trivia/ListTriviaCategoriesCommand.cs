@@ -13,7 +13,7 @@ using Shatter.Discord.Commands.Attributes;
 
 namespace Shatter.Discord.Commands.Games.Trivia
 {
-    public class ListTriviaCategoriesCommand : CommandModule
+	public class ListTriviaCategoriesCommand : CommandModule
     {
         [Command("triviacategories")]
         [Description("Lists the categories for trivia")]

@@ -9,7 +9,7 @@ using Shatter.Discord.Commands.Attributes;
 
 namespace Shatter.Discord.Commands.Mod
 {
-    public class SoftbanCommand : CommandModule
+	public class SoftbanCommand : CommandModule
     {
         [Command("softban")]
         [Description("Bans and then unbans a user (Kick with clearing messages).")]

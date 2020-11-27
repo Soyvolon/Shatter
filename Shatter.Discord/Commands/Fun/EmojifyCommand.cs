@@ -9,7 +9,7 @@ using Shatter.Discord.Commands.Attributes;
 
 namespace Shatter.Discord.Commands.Fun
 {
-    public class EmojifyCommand : CommandModule
+	public class EmojifyCommand : CommandModule
     {
         public readonly IReadOnlyDictionary<string, string> emojis = new Dictionary<string, string>
         {

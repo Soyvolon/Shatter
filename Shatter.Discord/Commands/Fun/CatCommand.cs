@@ -10,7 +10,7 @@ using Shatter.Discord.Commands.Attributes;
 
 namespace Shatter.Discord.Commands.Fun
 {
-    public class CatCommand : CommandModule
+	public class CatCommand : CommandModule
     {
         [Command("cat")]
         [Description("Cats!")]

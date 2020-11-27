@@ -4,9 +4,8 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Threading;
+using System.Threading.Tasks;
 
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
@@ -21,7 +20,7 @@ using Shatter.Discord.Properties;
 
 namespace Shatter.Discord.Services
 {
-    public class MusicBingoService
+	public class MusicBingoService
     {
         private const string _gameIntro = "https://www.youtube.com/watch?v=V5FTObiHPsA";
 

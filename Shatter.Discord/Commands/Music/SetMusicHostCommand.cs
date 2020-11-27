@@ -10,7 +10,7 @@ using Shatter.Discord.Services;
 
 namespace Shatter.Discord.Commands.Music
 {
-    public class SetMusicHostCommand : CommandModule
+	public class SetMusicHostCommand : CommandModule
     {
         private readonly VoiceService _voice;
 

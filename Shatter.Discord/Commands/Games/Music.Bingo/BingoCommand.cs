@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 
-using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 
@@ -8,7 +7,7 @@ using Shatter.Discord.Services;
 
 namespace Shatter.Discord.Commands.Games.Music.Bingo
 {
-    public class BingoCommand : CommandModule
+	public class BingoCommand : CommandModule
     {
         private readonly MusicBingoService _bingo;
 

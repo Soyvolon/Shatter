@@ -13,7 +13,7 @@ using Shatter.Discord.Commands.Attributes;
 
 namespace Shatter.Discord.Commands.Filter
 {
-    public class FilterIgnoreCommand : CommandModule
+	public class FilterIgnoreCommand : CommandModule
     {
         private readonly ShatterDatabaseContext _model;
 
