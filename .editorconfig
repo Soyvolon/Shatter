@@ -1,0 +1,5 @@
+root = true
+
+[*.cs]
+indent_style = tab
+charset = utf-8

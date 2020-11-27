@@ -5,10 +5,10 @@ VisualStudioVersion = 16.0.30503.244
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Project", "Project", "{E8D13152-F420-4876-9B88-D890BF0E4DA5}"
 	ProjectSection(SolutionItems) = preProject
-		..\Faforever.Qai\.editorconfig = ..\Faforever.Qai\.editorconfig
+		.editorconfig = .editorconfig
 		.gitignore = .gitignore
-		..\Faforever.Qai\NuGet.config = ..\Faforever.Qai\NuGet.config
-		..\Faforever.Qai\README.md = ..\Faforever.Qai\README.md
+		NuGet.config = NuGet.config
+		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shatter", "Shatter\Shatter.csproj", "{88E72C3A-DE75-4A90-A24F-BC08996B2CD8}"
@@ -29,6 +29,11 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shatter.Tests", "Shatter.Tests\Shatter.Tests.csproj", "{3A6AC653-89FE-40D1-B63F-CA1A01B3331E}"
 	ProjectSection(ProjectDependencies) = postProject
 		{58AD44C9-566D-424A-ABCF-B6445106A059} = {58AD44C9-566D-424A-ABCF-B6445106A059}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BC4AE71D-25AB-4FC8-B8E5-9CA7503C7787}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
 Global
