@@ -53,7 +53,7 @@ namespace Shatter.Discord.Utils
 
         private async Task MemberLog_GuildMemberAdded(DiscordClient sender, GuildMemberAddEventArgs e)
         {
-            var eventModel = Services.GetService<NSDatabaseModel>();
+            var eventModel = Services.GetService<ShatterDatabaseContext>();
             var guild = eventModel.Find<GuildMemberlogs>(e.Guild.Id);
 
             if (!(guild is null))
@@ -72,7 +72,7 @@ namespace Shatter.Discord.Utils
 
         private async Task MemberLog_GuildMemberRemoved(DiscordClient sender, GuildMemberRemoveEventArgs e)
         {
-            var eventModel = Services.GetService<NSDatabaseModel>();
+            var eventModel = Services.GetService<ShatterDatabaseContext>();
             var guild = eventModel.Find<GuildMemberlogs>(e.Guild.Id);
             if (!(guild is null))
             {
@@ -89,7 +89,7 @@ namespace Shatter.Discord.Utils
         {
             if (e.Author.IsBot || (e.Author.IsSystem ?? false)) return;
 
-            var model = Services.GetService<NSDatabaseModel>();
+            var model = Services.GetService<ShatterDatabaseContext>();
             var filter = await model.FindAsync<GuildFilters>(e.Guild.Id);
 
             if (!(filter is null))

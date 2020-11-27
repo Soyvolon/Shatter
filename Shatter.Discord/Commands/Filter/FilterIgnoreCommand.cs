@@ -15,9 +15,9 @@ namespace Shatter.Discord.Commands.Filter
 {
     public class FilterIgnoreCommand : CommandModule
     {
-        private readonly NSDatabaseModel _model;
+        private readonly ShatterDatabaseContext _model;
 
-        public FilterIgnoreCommand(NSDatabaseModel model)
+        public FilterIgnoreCommand(ShatterDatabaseContext model)
         {
             this._model = model;
         }

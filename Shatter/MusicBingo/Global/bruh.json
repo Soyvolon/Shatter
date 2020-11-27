@@ -1,0 +1,91 @@
+{
+  "game_title": "Bruh Game",
+  "introduction": "",
+  "epilouge": "",
+  "songs": [
+    {
+      "display_name": "I Need a Hero",
+      "song_link": "https://www.youtube.com/watch?v=TFVrOC8gOhU&ab_channel=PlayinGameOf",
+      "song_start": "0:01:09",
+      "song_end": "0:01:19"
+    },
+    {
+      "display_name": "American Pie",
+      "song_link": "https://www.youtube.com/watch?v=ngDJIjbAvz4&ab_channel=DonMcLean-Topic",
+      "song_start": "0:00:25",
+      "song_end": "0:00:35"
+    },
+    {
+      "display_name": "Piano Man",
+      "song_link": "https://www.youtube.com/watch?v=gxEPV4kolz0&ab_channel=billyjoelVEVO",
+      "song_start": "0:00:01",
+      "song_end": "0:00:10"
+    },
+    {
+      "display_name": "Don't Mine at Night",
+      "song_link": "https://www.youtube.com/watch?v=X_XGxzMrq04",
+      "song_start": "0:00:08",
+      "song_end": "0:00:18"
+    },
+    {
+      "display_name": "Starlight Brigade",
+      "song_link": "https://youtu.be/J9Q3i5w6-Ug",
+      "song_start": "0:01:40",
+      "song_end": "0:01:54"
+    },
+    {
+      "display_name": "Inventors Daughter",
+      "song_link": "https://www.youtube.com/watch?v=24mtT3bh-xw",
+      "song_start": "0:01:22",
+      "song_end": "0:01:32"
+    },
+    {
+      "display_name": "How Far We've Come",
+      "song_link": "https://www.youtube.com/watch?v=5d7EbtLb8ok",
+      "song_start": "0:02:05",
+      "song_end": "0:02:15"
+    },
+    {
+      "display_name": "After Party",
+      "song_link": "https://www.youtube.com/watch?v=oiIEwK0Xg-U",
+      "song_start": "0:01:00",
+      "song_end": "0:01:10"
+    },
+    {
+      "display_name": "Shaggy - It Wasn't Me (Live)",
+      "song_link": "https://youtu.be/EImdI5UECxs",
+      "song_start": "0:00:50",
+      "song_end": "0:01:00"
+    },
+    {
+      "display_name": "Search Me, O God",
+      "song_link": "https://youtu.be/G4shCSGSiCg",
+      "song_start": "0:00:04",
+      "song_end": "0:00:24"
+    },
+    {
+      "display_name": "Richard Clayderman - Mariage D'Amour",
+      "song_link": "https://youtu.be/1ej1SI4BRv8",
+      "song_start": "0:00:04",
+      "song_end": "0:00:13"
+    },
+    {
+      "display_name": "Dean Martin - That's Amore",
+      "song_link": "https://youtu.be/OnFlx2Lnr9Q",
+      "song_start": "0:00:10",
+      "song_end": "0:00:20"
+    },
+    {
+      "display_name": "Ain't No Mountain High Enough",
+      "song_link": "https://youtu.be/5tepYJno7rU",
+      "song_start": "0:00:01",
+      "song_end": "0:00:08"
+    },
+    {
+      "display_name": "Otis Redding - That's How Strong My Love Is",
+      "song_link": "https://youtu.be/l7T9HKmERv0",
+      "song_start": "0:00:06",
+      "song_end": "0:00:16"
+    }
+  ] 
+}

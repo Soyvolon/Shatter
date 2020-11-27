@@ -96,8 +96,8 @@ namespace Shatter.Discord
 
             foreach (CommandsNextExtension c in commands.Values)
             {
-                c.CommandErrored += CommandResponder.RespondError;
-                c.CommandExecuted += CommandResponder.RespondSuccess;
+                c.CommandErrored += CommandResponder.RespondErrorAsync;
+                c.CommandExecuted += CommandResponder.RespondSuccessAsync;
 
                 c.RegisterCommands(Assembly.GetAssembly(typeof(DiscordBot)));
 
@@ -160,7 +160,7 @@ namespace Shatter.Discord
 
         private CommandsNextConfiguration GetCommandsNextConfiguration()
         {
-            this.services.AddScoped<NSDatabaseModel>()
+            this.services.AddScoped<ShatterDatabaseContext>()
                 .AddScoped<MemeService>()
                 .AddSingleton<VoiceService>()
                 .AddSingleton<MusicBingoService>();

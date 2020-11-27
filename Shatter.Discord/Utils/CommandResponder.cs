@@ -13,7 +13,7 @@ namespace Shatter.Discord.Utils
 {
     public static class CommandResponder
     {
-        public static Task RespondSuccess(CommandsNextExtension cnext, CommandExecutionEventArgs e)
+        public static Task RespondSuccessAsync(CommandsNextExtension cnext, CommandExecutionEventArgs e)
         {
             // let's log the name of the command and user
             e.Context.Client.Logger.LogInformation(DiscordBot.Event_CommandResponder, $"{e.Context.User.Username} successfully executed '{e.Command.QualifiedName}'", DateTime.Now);
@@ -21,7 +21,7 @@ namespace Shatter.Discord.Utils
             return Task.CompletedTask;
         }
 
-        public static async Task RespondError(CommandsNextExtension cnext, CommandErrorEventArgs e)
+        public static async Task RespondErrorAsync(CommandsNextExtension cnext, CommandErrorEventArgs e)
         {
             if (e == null) return;
             if (e.Exception is ChecksFailedException cfex)
@@ -30,7 +30,7 @@ namespace Shatter.Discord.Utils
             }
             else if (e.Exception is ArgumentException)
             {
-                await ArgumentResponder(e).ConfigureAwait(false);
+                await ArgumentResponderAsync(e).ConfigureAwait(false);
             }
             else
             {
@@ -41,11 +41,20 @@ namespace Shatter.Discord.Utils
             }
         }
 
-        public static async Task RespondCommandNotFound(DiscordChannel executionChannel, string prefix)
+        public static async Task RespondCommandNotFoundAsync(DiscordChannel executionChannel, string prefix)
         {
             var embed = CommandModule.ErrorBase()
                 .WithTitle("Command not found.")
                 .WithDescription($"Use {prefix}help to see all avalible commands.");
+
+            await executionChannel.SendMessageAsync(embed: embed);
+        }
+
+        public static async Task RespondCommandDisabledAsync(DiscordChannel executionChannel, string prefix)
+        {
+            var embed = CommandModule.ErrorBase()
+                .WithTitle("Command Disabled")
+                .WithDescription($"Use {prefix}help to see all enabled commands.");
 
             await executionChannel.SendMessageAsync(embed: embed);
         }
@@ -58,7 +67,7 @@ namespace Shatter.Discord.Utils
             await args.Context.RespondAsync(embed: embed);
         }
 
-        private static async Task ArgumentResponder(CommandErrorEventArgs args)
+        private static async Task ArgumentResponderAsync(CommandErrorEventArgs args)
         {
             var embed = CommandModule.ErrorBase()
                 .WithDescription($"Invalid Arguments");

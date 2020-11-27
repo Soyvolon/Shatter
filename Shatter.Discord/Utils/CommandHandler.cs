@@ -40,7 +40,7 @@ namespace Shatter.Discord.Utils
             {
                 cancellationToken.ThrowIfCancellationRequested();
 
-                var model = cnext.Services.GetService<NSDatabaseModel>();
+                var model = cnext.Services.GetService<ShatterDatabaseContext>();
 
                 var guildConfig = await model.Configs.FindAsync(msg.Channel.GuildId);
 
@@ -73,7 +73,7 @@ namespace Shatter.Discord.Utils
 
                 if (command is null)
                 { // Looks like that command does not exsist!
-                    await CommandResponder.RespondCommandNotFound(msg.Channel, prefix);
+                    await CommandResponder.RespondCommandNotFoundAsync(msg.Channel, prefix);
                 }
                 else
                 {   // We found a command, lets deal with it.
@@ -86,9 +86,13 @@ namespace Shatter.Discord.Utils
                     if(moduleAttribute != default)
                     {
                         var m = moduleAttribute as ExecutionModuleAttribute;
-                        if (!guildConfig.ActivatedCommands.Contains(command.Name)
+                        if (m is not null && m.GroupName != "config"
+                            && !guildConfig.ActivatedCommands.Contains(command.Name)
                             && guildConfig.DisabledModules.Contains(m.GroupName))
+                        {
+                            await CommandResponder.RespondCommandDisabledAsync(msg.Channel, prefix); 
                             return; // Command is disabled, dont do a thing.
+                        }
                     }
 
                     var ctx = cnext.CreateContext(msg, prefix, command, args);

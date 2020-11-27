@@ -26,7 +26,30 @@ namespace Shatter.Discord.Commands.Games.Music.Bingo
         [ExecutionModule("bingo")]
         public async Task StopBingoGameCommandAsync(CommandContext ctx)
         {
+            if (ctx.Member.VoiceState?.Channel is null)
+            {
+                await RespondBasicErrorAsync("You need to be in a Voice Channel to use the `stopbingo` command!");
+                return;
+            }
 
+            var conn = await _voice.GetGuildConnection(ctx);
+
+            if (conn is not null)
+            {
+                if (!(_voice.IsDJ(ctx, out bool _)
+                || ctx.Member.PermissionsIn(conn.Channel).HasPermission(Permissions.ManageChannels)))
+                {
+                    await RespondBasicErrorAsync("You are not the DJ and cannot stop a bingo game!");
+                    return;
+                }
+                else
+                { // stop anything playing first.
+                    _voice.GuildQueues[ctx.Guild.Id].Clear();
+                    await conn.StopAsync();
+                    _bingo.StopGame(ctx.Guild.Id, false);
+                    await RespondBasicSuccessAsync("Bingo game stopped.");
+                }
+            }
         }
     }
 }

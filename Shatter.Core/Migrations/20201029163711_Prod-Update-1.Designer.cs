@@ -9,7 +9,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Shatter.Core.Migrations
 {
-    [DbContext(typeof(NSDatabaseModel))]
+    [DbContext(typeof(ShatterDatabaseContext))]
     [Migration("20201029163711_Prod-Update-1")]
     partial class ProdUpdate1
     {

@@ -14,9 +14,9 @@ namespace Shatter.Discord.Commands.Economy
     public class EconDailyCommand : CommandModule
     {
         private const int DailyAmount = 50;
-        private readonly NSDatabaseModel _model;
+        private readonly ShatterDatabaseContext _model;
 
-        public EconDailyCommand(NSDatabaseModel model)
+        public EconDailyCommand(ShatterDatabaseContext model)
         {
             this._model = model;
         }

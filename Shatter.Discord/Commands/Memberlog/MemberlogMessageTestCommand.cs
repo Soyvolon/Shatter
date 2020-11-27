@@ -13,9 +13,9 @@ namespace Shatter.Discord.Commands.Memberlog
 {
     public class MemberlogMessageTestCommand : CommandModule
     {
-        private readonly NSDatabaseModel _model;
+        private readonly ShatterDatabaseContext _model;
 
-        public MemberlogMessageTestCommand(NSDatabaseModel model)
+        public MemberlogMessageTestCommand(ShatterDatabaseContext model)
         {
             this._model = model;
         }

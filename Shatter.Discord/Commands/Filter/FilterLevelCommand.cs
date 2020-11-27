@@ -15,9 +15,9 @@ namespace Shatter.Discord.Commands.Filter
 {
     public class FilterLevelCommand : CommandModule
     {
-        private readonly NSDatabaseModel _model;
+        private readonly ShatterDatabaseContext _model;
 
-        public FilterLevelCommand(NSDatabaseModel model)
+        public FilterLevelCommand(ShatterDatabaseContext model)
         {
             this._model = model;
         }

@@ -13,9 +13,9 @@ namespace Shatter.Discord.Commands.Filter
 {
     public class DeleteFilterCommand : CommandModule
     {
-        private readonly NSDatabaseModel _model;
+        private readonly ShatterDatabaseContext _model;
 
-        public DeleteFilterCommand(NSDatabaseModel model)
+        public DeleteFilterCommand(ShatterDatabaseContext model)
         {
             this._model = model;
         }

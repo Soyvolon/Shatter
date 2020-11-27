@@ -14,9 +14,9 @@ namespace Shatter.Discord.Commands.Mod
 {
     public class UnbanCommand : CommandModule
     {
-        private readonly NSDatabaseModel _model;
+        private readonly ShatterDatabaseContext _model;
 
-        public UnbanCommand(NSDatabaseModel model)
+        public UnbanCommand(ShatterDatabaseContext model)
         {
             this._model = model;
         }

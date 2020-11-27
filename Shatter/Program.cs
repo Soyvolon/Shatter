@@ -45,7 +45,7 @@ namespace Shatter
 
             using var bot = new DiscordBot((BotConfig)botConfig, (LavalinkConfig)lavaConfig, (YouTubeConfig)ytConfig, services);
 
-            var model = new NSDatabaseModel();
+            var model = new ShatterDatabaseContext();
             await model.Database.MigrateAsync();
 
             await bot.InitializeAsync();

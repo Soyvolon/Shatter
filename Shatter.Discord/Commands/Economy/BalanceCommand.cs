@@ -14,9 +14,9 @@ namespace Shatter.Discord.Commands.Economy
 {
     public class BalanceCommand : CommandModule
     {
-        private readonly NSDatabaseModel _model;
+        private readonly ShatterDatabaseContext _model;
 
-        public BalanceCommand(NSDatabaseModel model)
+        public BalanceCommand(ShatterDatabaseContext model)
         {
             this._model = model;
         }

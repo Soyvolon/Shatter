@@ -161,6 +161,8 @@ namespace Shatter.Discord.Commands.Games.Music.Bingo
                 .WithDescription($"**Board:** {msg}\n\n" +
                 $"Game starting in 15 seconds!");
 
+            await ctx.RespondAsync(embed: embed);
+
             await Task.Delay(TimeSpan.FromSeconds(15));
 
             await _bingo.StartGameAsync(game, ctx);

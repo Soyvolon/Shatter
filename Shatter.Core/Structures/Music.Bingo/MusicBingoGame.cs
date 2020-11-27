@@ -17,6 +17,8 @@ namespace Shatter.Core.Structures.Music.Bingo
         public List<MusicBingoSong> Songs { get; set; }
         [JsonProperty("introduction")]
         public Uri? Introduction { get; set; }
+        [JsonProperty("epilogue")]
+        public Uri? Epilogue { get; set; }
 
         [JsonIgnore]
         public ulong GameStarter { get; set; }

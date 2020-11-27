@@ -13,9 +13,9 @@ namespace Shatter.Discord.Commands.Filter
 {
     public class ListFiltersCommand : CommandModule
     {
-        private readonly NSDatabaseModel _model;
+        private readonly ShatterDatabaseContext _model;
 
-        public ListFiltersCommand(NSDatabaseModel model)
+        public ListFiltersCommand(ShatterDatabaseContext model)
         {
             this._model = model;
         }

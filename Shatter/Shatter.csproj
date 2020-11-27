@@ -24,11 +24,14 @@
     <None Update="application.yml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Utils\JSON\ascii_cows.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Lavalink.jar">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="MusicBingo\Global\test.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Update="MusicBingo\Global\bruh.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="MusicBingo\Global\example.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

@@ -12,9 +12,9 @@ namespace Shatter.Discord.Commands.Games.Trivia.Admin
 {
     public class TriviaQuestionLimitCommand : CommandModule
     {
-        private readonly NSDatabaseModel _model;
+        private readonly ShatterDatabaseContext _model;
 
-        public TriviaQuestionLimitCommand(NSDatabaseModel model)
+        public TriviaQuestionLimitCommand(ShatterDatabaseContext model)
         {
             this._model = model;
         }

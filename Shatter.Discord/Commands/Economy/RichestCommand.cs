@@ -21,9 +21,9 @@ namespace Shatter.Discord.Commands.Economy
 {
     public class RichestCommand : CommandModule
     {
-        private readonly NSDatabaseModel _model;
+        private readonly ShatterDatabaseContext _model;
 
-        public RichestCommand(NSDatabaseModel model)
+        public RichestCommand(ShatterDatabaseContext model)
         {
             this._model = model;
         }

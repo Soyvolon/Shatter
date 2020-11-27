@@ -19,9 +19,9 @@ namespace Shatter.Discord.Commands.Games.Trivia
 {
     public class TriviaGameCommand : CommandModule
     {
-        private readonly NSDatabaseModel _model;
+        private readonly ShatterDatabaseContext _model;
 
-        public TriviaGameCommand(NSDatabaseModel model)
+        public TriviaGameCommand(ShatterDatabaseContext model)
         {
             this._model = model;
         }

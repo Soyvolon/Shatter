@@ -13,10 +13,10 @@ namespace Shatter.Discord.Commands.Games
 {
     public class CoinFlipGameCommand : CommandModule
     {
-        private readonly NSDatabaseModel _model;
+        private readonly ShatterDatabaseContext _model;
         private Random Random { get; set; }
 
-        public CoinFlipGameCommand(NSDatabaseModel model)
+        public CoinFlipGameCommand(ShatterDatabaseContext model)
         {
             this._model = model;
             Random = new Random();

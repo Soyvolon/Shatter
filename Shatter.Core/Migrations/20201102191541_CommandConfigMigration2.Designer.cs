@@ -9,7 +9,7 @@ using Shatter.Core.Database;
 
 namespace Shatter.Core.Migrations
 {
-    [DbContext(typeof(NSDatabaseModel))]
+    [DbContext(typeof(ShatterDatabaseContext))]
     [Migration("20201102191541_CommandConfigMigration2")]
     partial class CommandConfigMigration2
     {

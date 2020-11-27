@@ -14,9 +14,9 @@ namespace Shatter.Discord.Commands.Economy.Admin
 {
     public class AddFunds : CommandModule
     {
-        private readonly NSDatabaseModel _model;
+        private readonly ShatterDatabaseContext _model;
 
-        public AddFunds(NSDatabaseModel model)
+        public AddFunds(ShatterDatabaseContext model)
         {
             this._model = model;
         }

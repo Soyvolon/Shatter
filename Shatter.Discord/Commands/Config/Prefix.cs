@@ -12,9 +12,9 @@ namespace Shatter.Discord.Commands.Config
 {
     public class Prefix : CommandModule
     {
-        private readonly NSDatabaseModel _model;
+        private readonly ShatterDatabaseContext _model;
 
-        public Prefix(NSDatabaseModel model)
+        public Prefix(ShatterDatabaseContext model)
         {
             this._model = model;
         }

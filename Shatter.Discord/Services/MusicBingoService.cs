@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
@@ -22,13 +23,13 @@ namespace Shatter.Discord.Services
 {
     public class MusicBingoService
     {
-        private const string _gameIntro = "";
+        private const string _gameIntro = "https://www.youtube.com/watch?v=V5FTObiHPsA";
 
         private readonly VoiceService _voice;
         private readonly IServiceProvider _services;
         public ConcurrentDictionary<ulong, MusicBingoGame> ActiveGames { get; } = new();
         private ConcurrentDictionary<ulong, Tuple<DiscordChannel, DiscordGuild, DiscordClient>> GameConnections { get; } = new();
-        private ConcurrentDictionary<TrackFinishEventArgs, Action> PlayerWaits { get; } = new();
+        private ConcurrentDictionary<ulong, Timer> SongTimers { get; } = new();
 
         public MusicBingoService(VoiceService voice, IServiceProvider services)
         {
@@ -44,6 +45,7 @@ namespace Shatter.Discord.Services
             // Get the connection used for this guild and add a reference to this event handler.
             var con = await _voice.GetOrCreateConnection(ctx.Client, ctx.Guild, ctx.Member.VoiceState.Channel);
             con.PlaybackFinished += GuildConnection_SongFinished;
+            con.PlaybackStarted += GuildConnection_SongStarted;
 
             // Add the id to the ignore list.
             _voice.IgnoreEventsList[ctx.Guild.Id] = 0;
@@ -64,6 +66,8 @@ namespace Shatter.Discord.Services
             ActiveGames[ctx.Guild.Id] = game;
 
             await SendBingoBoards(ctx.Guild.Id);
+
+            await PlayIntroduction(con);
 
             return true;
         }
@@ -137,12 +141,16 @@ namespace Shatter.Discord.Services
             return await _image.BuildMemeAsync(Resources.Images_BingoBoard, captions, "", 35, new SolidBrush(Color.Black));
         }
 
-        public void StopGame(ulong guildId)
-        {
+        public void StopGame(ulong guildId, bool hasWinner = true)
+        { // has winner is false when all the songs run out or the game was closed by the command.
+            // TODO: Play custom end of game sounds if there is a winner.
+
             _voice.IgnoreEventsList.TryRemove(guildId, out _); // remove from ignore list.
 
             GameConnections.TryRemove(guildId, out _);
             ActiveGames.TryRemove(guildId, out _);
+            if(SongTimers.TryRemove(guildId, out var t))
+                t.Change(0, Timeout.Infinite);
         }
 
         public bool CheckPlayerWin(ulong guildId, ulong userId)
@@ -155,13 +163,25 @@ namespace Shatter.Discord.Services
             return false;
         }
 
-        private async Task PlayIntroduction()
+        private async Task PlayIntroduction(LavalinkGuildConnection con)
         {
+            var serach = await con.GetTracksAsync(new Uri(_gameIntro));
+            var track = serach.Tracks?.FirstOrDefault() ?? default;
 
+            if (track == default) return;
+
+            var start = TimeSpan.FromSeconds(30);
+            var end = TimeSpan.FromSeconds(35);
+            await con.PlayPartialAsync(track, start, end);
+            await Task.Delay(TimeSpan.FromSeconds(5));
+            await con.StopAsync();
         }
 
-        private async Task PlayOutOfSongs(TrackFinishEventArgs e)
+        private async Task PlayOutOfSongs(TrackFinishEventArgs e, ulong guildId)
         {
+            StopGame(guildId, false);
+
+            // TODO: Replace with custom out of songs vid
 
         }
 
@@ -173,30 +193,53 @@ namespace Shatter.Discord.Services
                 var song = game.GetNextSong();
                 if(song is null)
                 {
-                    await PlayOutOfSongs(e);
+                    await PlayOutOfSongs(e, sender.Guild.Id);                    
                 }
                 else
                 {
-                    PlayerWaits[e] = async () =>
+                    var serach = e.Player.GetTracksAsync(song.SongLink);
+
+                    //await Task.Delay(TimeSpan.FromSeconds(1));
+                    var songRes = await serach;
+
+                    LavalinkTrack? track;
+                    if ((track = songRes.Tracks?.FirstOrDefault() ?? default) != default)
                     {
-                        var serach = e.Player.GetTracksAsync(song.SongLink);
-
-                        await Task.Delay(TimeSpan.FromSeconds(3));
-                        var songRes = await serach;
-
-                        LavalinkTrack? track;
-                        if((track = songRes.Tracks?.FirstOrDefault() ?? default) != default)
+                        if (song.SongStart is null || song.SongEnd is null)
                         {
-                            if(song.SongStart is null || song.SongEnd is null)
-                            {
-                                await e.Player.PlayAsync(track);
-                            }
-                            else
-                            {
-                                await e.Player.PlayPartialAsync(track, (TimeSpan)song.SongStart, (TimeSpan)song.SongEnd);
-                            }
+                            await e.Player.PlayAsync(track);
                         }
-                    };
+                        else
+                        {
+                            var start = (TimeSpan)song.SongStart;
+                            var end = (TimeSpan)song.SongEnd;
+                            await e.Player.PlayPartialAsync(track, start, end);
+                        }
+                    }
+                }
+            }
+        }
+
+        private async Task GuildConnection_SongStarted(LavalinkGuildConnection sender, TrackStartEventArgs e)
+        {
+            if(ActiveGames.TryGetValue(sender.Guild.Id, out var game))
+            {
+                if (game.PlayedSongs is null) return;
+
+                var last = game.PlayedSongs.LastOrDefault();
+
+                if (last == default) return;
+
+                if(last.SongStart is not null && last.SongEnd is not null)
+                {
+                    var span = last.SongEnd.Value.Subtract(last.SongStart.Value);
+
+                    SongTimers[sender.Guild.Id] = new Timer(async (x) =>
+                    {
+                        await e.Player.PauseAsync();
+                        await Task.Delay(TimeSpan.FromSeconds(2));
+                        await e.Player.StopAsync();
+                    }, null, span, Timeout.InfiniteTimeSpan);
                 }
             }
         }

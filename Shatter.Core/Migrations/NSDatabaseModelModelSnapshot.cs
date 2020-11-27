@@ -8,7 +8,7 @@ using Shatter.Core.Database;
 
 namespace Shatter.Core.Migrations
 {
-    [DbContext(typeof(NSDatabaseModel))]
+    [DbContext(typeof(ShatterDatabaseContext))]
     partial class NSDatabaseModelModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

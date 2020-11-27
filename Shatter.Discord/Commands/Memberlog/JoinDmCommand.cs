@@ -12,9 +12,9 @@ namespace Shatter.Discord.Commands.Memberlog
 {
     public class JoinDmCommand : CommandModule
     {
-        private readonly NSDatabaseModel _model;
+        private readonly ShatterDatabaseContext _model;
 
-        public JoinDmCommand(NSDatabaseModel model)
+        public JoinDmCommand(ShatterDatabaseContext model)
         {
             this._model = model;
         }

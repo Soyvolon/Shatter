@@ -14,9 +14,9 @@ namespace Shatter.Discord.Commands.Economy
 {
     public class GiftCommand : CommandModule
     {
-        private readonly NSDatabaseModel _model;
+        private readonly ShatterDatabaseContext _model;
 
-        public GiftCommand(NSDatabaseModel model)
+        public GiftCommand(ShatterDatabaseContext model)
         {
             this._model = model;
         }

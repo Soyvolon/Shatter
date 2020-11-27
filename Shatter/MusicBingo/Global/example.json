@@ -1,13 +1,13 @@
 {
   "game_title": "Example Music Bingo Game",
   "introduction": "URL to the introduction message! Make a custom intro video and upload it to play it at the start of a game!",
-  "epilouge": "URL to the epilouge message! This plays after someone wins!",
+  "epilogue": "URL to the epilouge message! This plays after someone wins!",
   "songs": [
     {
       "display_name": "Example song title (This will show up on the bingo card, so dont make it too long)",
       "song_link": "A link to the song such as a youtube link.",
       "song_start": "The time that the song should start at",
-      "song_end": "The time the song should end at. The recommended play length is 10 seconds of music."
+      "song_end": "The time the song should end at. The recommended play length is 20 seconds of music per song."
     },
     {
       "display_name": "Another song! It is recommended to have at least 24 songs to fully fill the bingo board.",

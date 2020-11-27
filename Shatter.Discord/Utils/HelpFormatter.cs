@@ -8,6 +8,9 @@ using DSharpPlus.CommandsNext.Converters;
 using DSharpPlus.CommandsNext.Entities;
 using DSharpPlus.Entities;
 
+using Shatter.Core.Database;
+using Shatter.Core.Structures.Guilds;
+
 namespace Shatter.Discord.Utils
 {
     /// <summary>
@@ -17,12 +20,21 @@ namespace Shatter.Discord.Utils
     {
         public DiscordEmbedBuilder EmbedBuilder { get; }
         private Command Command { get; set; }
+        private ulong GuildId { get; set; }
+        private string Prefix { get; set; }
 
-        public HelpFormatter(CommandContext ctx) : base(ctx)
+        private readonly ShatterDatabaseContext _database;
+
+        public HelpFormatter(CommandContext ctx, ShatterDatabaseContext database) : base(ctx)
         {
+            this._database = database;
+
             EmbedBuilder = new DiscordEmbedBuilder()
                 .WithTitle("Help")
                 .WithColor(0x00ff95);
+
+            GuildId = ctx.Guild.Id;
+            Prefix = ctx.Prefix;
         }
 
         public override CommandHelpMessage Build()
@@ -72,7 +84,35 @@ namespace Shatter.Discord.Utils
 
         public override BaseHelpFormatter WithSubcommands(IEnumerable<Command> subcommands)
         {
-            this.EmbedBuilder.AddField(this.Command != null ? "Subcommands" : "Commands", string.Join(", ", subcommands.Select(x => Formatter.InlineCode(x.Name))), false);
+            var guild = _database.Find<GuildConfig>(GuildId);
+
+            if(guild is null)
+            {
+                guild = new GuildConfig(GuildId)
+                {
+                    Prefix = Prefix,
+                };
+                _database.Add(guild);
+                _database.SaveChanges();
+            }
+
+            HashSet<string> disabledCommands = new();
+            disabledCommands.UnionWith(guild.DisabledCommands);
+
+            foreach(var module in DiscordBot.Bot.CommandGroups)
+            {
+                if (guild.DisabledModules.Contains(module.Key))
+                    disabledCommands.UnionWith(module.Value.Select(x => x.Name.ToLower()));
+            }
+
+            disabledCommands.ExceptWith(guild.ActivatedCommands);
+
+            var cmdList = subcommands.Where(x => !disabledCommands.Contains(x.Name.ToLower()));
+
+            this.EmbedBuilder.AddField(this.Command != null ? "Subcommands" : "Commands", string.Join(", ", 
+                cmdList.Select(x => {
+                    return Formatter.InlineCode(x.Name);
+                })), false);
 
             return this;
         }
