@@ -20,7 +20,7 @@ jobs:
     - name: Build
       run: dotnet build --configuration Release --no-restore --output artifact/build/Shatter
     - name: Copy Dockerfile
-      run: cp **Dockerfile artifact/build
+      run: cp **Dockerfile artifact/
     - name: Stop Current Release
       uses: garygrossgarten/github-action-ssh@release
       continue-on-error: true
