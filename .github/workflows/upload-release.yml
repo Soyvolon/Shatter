@@ -1,0 +1,49 @@
+name: Upload to live.
+
+on:
+  workflow_dispatch:
+    # Inputs the workflow accepts.
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.100
+    - name: Install dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --configuration Release --no-restore --output artifact/build/Shatter
+    - name: Copy Dockerfile
+      run: cp **Dockerfile artifact/build
+    - name: Stop Current Release
+      uses: garygrossgarten/github-action-ssh@release
+      continue-on-error: true
+      with:
+        command: ${{ secrets.DOCKER_STOP_CMD }}
+        host: ${{ secrets.RELEASE_HOST }}
+        username: ${{ secrets.RELEASE_USER }}
+        passphrase: ${{ secrets.RELEASE_PASSPHRASE }}
+        privateKey: ${{ secrets.RELEASE_PRIVATE_KEY }}
+    - name: Copy Files over SSH
+      uses: garygrossgarten/github-action-scp@release
+      with:
+        local: artifact/
+        remote: ${{ secrets.RELEASE_DEST }}
+        host: ${{ secrets.RELEASE_HOST }}
+        username: ${{ secrets.RELEASE_USER }}
+        passphrase: ${{ secrets.RELEASE_PASSPHRASE }}
+        privateKey: ${{ secrets.RELEASE_PRIVATE_KEY }}
+    - name: Start New Release
+      uses: garygrossgarten/github-action-ssh@release
+      with:
+        command: ${{ secrets.START_DOCKER_CMD }}
+        host: ${{ secrets.RELEASE_HOST }}
+        username: ${{ secrets.RELEASE_USER }}
+        passphrase: ${{ secrets.RELEASE_PASSPHRASE }}
+        privateKey: ${{ secrets.RELEASE_PRIVATE_KEY }}
