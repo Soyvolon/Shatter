@@ -18,7 +18,7 @@ jobs:
     - name: Install dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build --configuration Release --no-restore --output artifact/build
+      run: dotnet build --configuration Release --no-restore --output artifact/build/Shatter
     - name: Copy Dockerfile
       run: cp **Dockerfile artifact/build
     - name: Upload a Build Artifact
