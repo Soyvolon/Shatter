@@ -1,8 +1,8 @@
-name: Release Artifact
+name: Upload to live.
 
 on:
-  push:
-    branches: [ main ]
+  workflow_dispatch:
+    # Inputs the workflow accepts.
 
 jobs:
   build:
@@ -21,10 +21,23 @@ jobs:
       run: dotnet build --configuration Release --no-restore --output artifact/build/Shatter
     - name: Copy Dockerfile
       run: cp **Dockerfile artifact/build
-    - name: Upload a Build Artifact
-      uses: actions/upload-artifact@v2.2.1
+    - name: Stop Current Release
+      uses: garygrossgarten/github-action-ssh@release
       with:
-        # Artifact name
-        name: "s-release"
-        # A file, directory or wildcard pattern that describes what to upload
-        path: artifact/
+        command: ${{ secrets.DOCKER_STOP_CMD }}
+        host: ${{ secrets.RELEASE_HOST }}
+        username: ${{ secrets.RELEASE_USER }}
+        passphrase: ${{ secrets.RELEASE_PASSPHRASE }}
+        privateKey: ${{ secrets.RELEASE_PRIVATE_KEY }}
+    - name: Copy Files over SSH
+      uses: garygrossgarten/github-action-scp@release
+      with:
+        local: artifact/
+    - name: Start New Release
+      uses: garygrossgarten/github-action-ssh@release
+      with:
+        command: ${{ secrets.START_DOCKER_CMD }}
+        host: ${{ secrets.RELEASE_HOST }}
+        username: ${{ secrets.RELEASE_USER }}
+        passphrase: ${{ secrets.RELEASE_PASSPHRASE }}
+        privateKey: ${{ secrets.RELEASE_PRIVATE_KEY }}
