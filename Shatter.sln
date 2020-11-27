@@ -6,7 +6,7 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Project", "Project", "{E8D13152-F420-4876-9B88-D890BF0E4DA5}"
 	ProjectSection(SolutionItems) = preProject
 		..\Faforever.Qai\.editorconfig = ..\Faforever.Qai\.editorconfig
-		..\Faforever.Qai\.gitignore = ..\Faforever.Qai\.gitignore
+		.gitignore = .gitignore
 		..\Faforever.Qai\NuGet.config = ..\Faforever.Qai\NuGet.config
 		..\Faforever.Qai\README.md = ..\Faforever.Qai\README.md
 	EndProjectSection
