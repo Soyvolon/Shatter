@@ -2,7 +2,7 @@ name: Build
 on:
   push:
     branches:
-      - master
+      - main
   pull_request:
     types: [opened, synchronize, reopened]
 jobs:
@@ -39,5 +39,7 @@ jobs:
         shell: powershell
         run: |
           .\.sonar\scanner\dotnet-sonarscanner begin -k:"Soyvolon_Shatter" -o:"soyvolon" -d:sonar.login="${{ secrets.SONAR_TOKEN }}" -d:sonar.host.url="https://sonarcloud.io"
+          dotnet restore
           dotnet build --cconfiguration Release --no-restore
+          dotnet test --no-restore --verbosity normal --collect:"XPlay Code Coverage" -r ./testresults -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
           .\.sonar\scanner\dotnet-sonarscanner end -d:sonar.login="${{ secrets.SONAR_TOKEN }}"
