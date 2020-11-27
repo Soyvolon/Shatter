@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
@@ -58,7 +58,7 @@ namespace Shatter.Core.Utils
                 using MemoryStream iconStream = new MemoryStream(bytes);
                 using Bitmap iconMap = new Bitmap(iconStream);
 
-                using var circleRes = ClipToCircle(iconMap, new PointF(iconMap.Width / 2, iconMap.Height / 2), iconMap.Width / 2, Color.Transparent);
+                using var circleRes = ClipToCircle(iconMap, new PointF(iconMap.Width / 2f, iconMap.Height / 2f), iconMap.Width / 2f, Color.Transparent);
 
                 using Bitmap resize = new Bitmap(circleRes, new Size(256, 256));
 

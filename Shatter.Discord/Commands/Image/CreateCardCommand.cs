@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Drawing;
 using System.Threading.Tasks;
 
@@ -37,7 +37,7 @@ namespace Shatter.Discord.Commands.Image
             [RemainingText]
             string input)
         {
-            if (input?.Equals("") ?? false)
+            if (input is null || input.Equals(""))
             {
                 await RespondBasicErrorAsync($"To create a card: `{ctx.Prefix}cah This is the text on the question card | this is the text on the answer card`");
                 return;

@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
@@ -19,7 +19,7 @@ namespace Shatter.Discord.Commands.Fun
         public async Task AdviceCommandAsync(CommandContext ctx)
         {
             var advice = await Advice.GetAdvice();
-            if (!(advice is null) || (advice?.Id == 0 && advice?.Contents == ""))
+            if (advice is not null && advice.Id != 0 && advice.Contents != "")
             {
                 await ctx.RespondAsync(Formatter.Bold($"[{advice.Id}]") + $" {advice.Contents}");
             }

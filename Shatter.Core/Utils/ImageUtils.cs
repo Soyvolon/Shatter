@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Threading.Tasks;
@@ -44,7 +44,7 @@ namespace Shatter.Core.Utils
 
         public static Task<Bitmap> Swirl(Bitmap image, double swirlTwists)
         {
-            double swirlX = (image.Width - 1) / 2, swirlY = (image.Height - 1) / 2;
+            double swirlX = (image.Width - 1) / 2d, swirlY = (image.Height - 1) / 2d;
 
             double swirlRadius;
             if (image.Height > image.Width)

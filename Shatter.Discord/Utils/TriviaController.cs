@@ -1,4 +1,4 @@
-﻿using System.Collections.Concurrent;
+using System.Collections.Concurrent;
 using System.Threading.Tasks;
 
 using Shatter.Core.Structures.Trivia;
@@ -7,7 +7,7 @@ namespace Shatter.Discord.Utils
 {
     public static class TriviaController
     {
-        public static readonly ConcurrentDictionary<ulong, TriviaGame> ActiveTriviaGames = new ConcurrentDictionary<ulong, TriviaGame>();
+        private static readonly ConcurrentDictionary<ulong, TriviaGame> ActiveTriviaGames = new ConcurrentDictionary<ulong, TriviaGame>();
 
         public static async Task<TriviaGame?> StartGame(ulong gameChannel, int questionCount = 1, QuestionCategory questionCategory = QuestionCategory.All)
         {
