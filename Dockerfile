@@ -2,8 +2,10 @@
 # Please create your own Dockerfile to use Docker with this program.
 FROM mcr.microsoft.com/dotnet/aspnet:5.0
 
-RUN sudo apt install libc6-dev
-RUN sudo apt install libgdiplus
+RUN apt-get update
+RUN apt-get -y install curl
+RUN apt-get --assume-yes install libgif-dev autoconf libtool automake build-essential gettext libglib2.0-dev libcairo2-dev libtiff-dev libexif-dev
+RUN apt-get --assume-yes install libc6-dev libgdiplus
 
 COPY build/Shatter App/
 WORKDIR /App

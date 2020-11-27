@@ -5,6 +5,7 @@
 
 # Other Files
 *.gz
+build/
 
 # Database Files
 *.db
