@@ -4,7 +4,7 @@
 
 # Shatter <small>1.0</small>
 
-> Brining community based fun to Discord
+> Bringing community based fun to Discord
 
 [GitHub](https://github.com/Soyvolon/Shatter)
 [Get Started](#Get-Started-With-Shatter)
