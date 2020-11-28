@@ -35,8 +35,25 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{890BAA54-E0A4-4AA9-84FA-D0C21ED3E2DD}"
 	ProjectSection(SolutionItems) = preProject
 		docs\.nojekyll = docs\.nojekyll
+		docs\_coverpage.md = docs\_coverpage.md
+		docs\_sidebar.md = docs\_sidebar.md
+		docs\commands.md = docs\commands.md
 		docs\index.html = docs\index.html
+		docs\install.md = docs\install.md
 		docs\README.md = docs\README.md
+		docs\startup.md = docs\startup.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_media", "_media", "{7C30EAB1-32F3-4817-B4B0-60CB88E903EC}"
+	ProjectSection(SolutionItems) = preProject
+		docs\_media\icon.svg = docs\_media\icon.svg
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "discord", "discord", "{3A08A63C-B042-4E38-AD07-3EC39655C762}"
+	ProjectSection(SolutionItems) = preProject
+		docs\_media\discord\discord_icon.png = docs\_media\discord\discord_icon.png
+		docs\_media\discord\discord_icon.svg = docs\_media\discord\discord_icon.svg
+		docs\_media\discord\discord_icon_cropped.png = docs\_media\discord\discord_icon_cropped.png
 	EndProjectSection
 EndProject
 Global
@@ -68,6 +85,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7C30EAB1-32F3-4817-B4B0-60CB88E903EC} = {890BAA54-E0A4-4AA9-84FA-D0C21ED3E2DD}
+		{3A08A63C-B042-4E38-AD07-3EC39655C762} = {7C30EAB1-32F3-4817-B4B0-60CB88E903EC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {01387DCA-943D-4C15-ADEF-6191F6CB419C}
