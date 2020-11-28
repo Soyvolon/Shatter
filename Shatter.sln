@@ -32,6 +32,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shatter.Tests", "Shatter.Te
 		{58AD44C9-566D-424A-ABCF-B6445106A059} = {58AD44C9-566D-424A-ABCF-B6445106A059}
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{890BAA54-E0A4-4AA9-84FA-D0C21ED3E2DD}"
+	ProjectSection(SolutionItems) = preProject
+		docs\.nojekyll = docs\.nojekyll
+		docs\index.html = docs\index.html
+		docs\README.md = docs\README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
