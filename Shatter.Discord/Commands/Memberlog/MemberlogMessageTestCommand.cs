@@ -17,7 +17,7 @@ namespace Shatter.Discord.Commands.Memberlog
 
         public MemberlogMessageTestCommand(ShatterDatabaseContext model)
         {
-            this._model = model;
+            _model = model;
         }
 
         [Command("mlmtest")]

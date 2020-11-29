@@ -36,10 +36,14 @@ namespace Shatter.Discord.Commands.Fun
                     var res = await Brainfuck.Execute(ctx, ctx.Client.GetInteractivity(), code, cts.Token);
 
                     if (res == "")
-                        await RespondBasicSuccessAsync( "No Output Detected");
-                    else
-                        await ctx.RespondAsync(res);
-                }
+					{
+						await RespondBasicSuccessAsync( "No Output Detected");
+					}
+					else
+					{
+						await ctx.RespondAsync(res);
+					}
+				}
                 catch (OperationCanceledException)
                 {
                     await RespondBasicErrorAsync("Infinite Loop Detected.");

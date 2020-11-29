@@ -62,9 +62,11 @@ namespace Shatter.Tests
             Assert.True(TestingShardId >= 0, "Shard Id Missing.");
 
             if (TestingGuild.Channels.TryGetValue(TestingChannelId, out var chan))
-                TestingChannel = chan;
+			{
+				TestingChannel = chan;
+			}
 
-            Assert.NotNull(TestingChannel, "Could not get testing channel.");
+			Assert.NotNull(TestingChannel, "Could not get testing channel.");
 
             var members = await TestingGuild.GetAllMembersAsync();
 
@@ -78,7 +80,7 @@ namespace Shatter.Tests
             var cnext = await Client.GetCommandsNextAsync();
             if (cnext.TryGetValue(TestingShardId, out var commandsNextExtension))
             {
-                this.CNext = commandsNextExtension;
+                CNext = commandsNextExtension;
                 Commands = CNext.RegisteredCommands;
             }
 

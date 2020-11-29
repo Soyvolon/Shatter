@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -17,14 +17,14 @@ namespace Shatter.Discord.Utils
     {
         private readonly DiscordRestClient Rest;
         private readonly DiscordShardedClient Client;
-        private readonly ServiceProvider Services;
+        private readonly ServiceProvider? Services;
         private bool disposedValue;
 
-        public DiscordEventHandler(DiscordShardedClient client, DiscordRestClient rest, ServiceProvider services)
+        public DiscordEventHandler(DiscordShardedClient client, DiscordRestClient rest, ServiceProvider? services)
         {
-            this.Client = client;
-            this.Rest = rest;
-            this.Services = services;
+            Client = client;
+            Rest = rest;
+            Services = services;
         }
 
         public void Initalize()
@@ -52,7 +52,12 @@ namespace Shatter.Discord.Utils
 
         private async Task MemberLog_GuildMemberAdded(DiscordClient sender, GuildMemberAddEventArgs e)
         {
-            var eventModel = Services.GetService<ShatterDatabaseContext>();
+			if (Services is null)
+			{
+				return;
+			}
+
+			var eventModel = Services.GetRequiredService<ShatterDatabaseContext>();
             var guild = eventModel.Find<GuildMemberlogs>(e.Guild.Id);
 
             if (!(guild is null))
@@ -71,7 +76,12 @@ namespace Shatter.Discord.Utils
 
         private async Task MemberLog_GuildMemberRemoved(DiscordClient sender, GuildMemberRemoveEventArgs e)
         {
-            var eventModel = Services.GetService<ShatterDatabaseContext>();
+			if (Services is null)
+			{
+				return;
+			}
+
+			var eventModel = Services.GetRequiredService<ShatterDatabaseContext>();
             var guild = eventModel.Find<GuildMemberlogs>(e.Guild.Id);
             if (!(guild is null))
             {
@@ -86,9 +96,17 @@ namespace Shatter.Discord.Utils
         #region Guild Filters
         public async Task GuildFilters_MessageCreated(DiscordClient sender, MessageCreateEventArgs e)
         {
-            if (e.Author.IsBot || (e.Author.IsSystem ?? false)) return;
+            if (e.Author.IsBot || (e.Author.IsSystem ?? false))
+			{
+				return;
+			}
 
-            var model = Services.GetService<ShatterDatabaseContext>();
+			if (Services is null)
+			{
+				return;
+			}
+
+			var model = Services.GetRequiredService<ShatterDatabaseContext>();
             var filter = await model.FindAsync<GuildFilters>(e.Guild.Id);
 
             if (!(filter is null))

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,7 +21,7 @@ namespace Shatter.Discord.Commands.Config
 
         public ModuleCommand(ShatterDatabaseContext database)
         {
-            this._database = database;
+            _database = database;
         }
 
         [Command("module")]
@@ -71,44 +71,73 @@ namespace Shatter.Discord.Commands.Config
             {
                 case "list":
                     if (args.Length < 2 ||  !args[1].Equals("command"))
-                        await ListModules(ctx);
-                    else
-                        await ListCommands(ctx);
-                    break;
+					{
+						await ListModules(ctx);
+					}
+					else
+					{
+						await ListCommands(ctx);
+					}
+
+					break;
                 case "enable":
                     if (args.Length < 3)
                     {
                         if (args.Length < 2)
-                            await RespondBasicErrorAsync("Failed to provide required paramater <type>. See `]module help` for more information.");
-                        else
-                            await RespondBasicErrorAsync("Failed to proivde required paramater <name>. See `]module help` for more information.");
-                        return;
+						{
+							await RespondBasicErrorAsync("Failed to provide required paramater <type>. See `]module help` for more information.");
+						}
+						else
+						{
+							await RespondBasicErrorAsync("Failed to proivde required paramater <name>. See `]module help` for more information.");
+						}
+
+						return;
                     }
 
                     if (args[1].Equals("module", StringComparison.OrdinalIgnoreCase))
-                        await EnableModule(ctx, args[2].ToLower());
-                    else if (args[1].Equals("command", StringComparison.OrdinalIgnoreCase))
-                        await EnableCommand(ctx, args[2].ToLower());
-                    else
-                        await RespondBasicErrorAsync("Failed to parse paramater <type>. Type must be either `module` or `command`.");
-                    break;
+					{
+						await EnableModule(ctx, args[2].ToLower());
+					}
+					else if (args[1].Equals("command", StringComparison.OrdinalIgnoreCase))
+					{
+						await EnableCommand(ctx, args[2].ToLower());
+					}
+					else
+					{
+						await RespondBasicErrorAsync("Failed to parse paramater <type>. Type must be either `module` or `command`.");
+					}
+
+					break;
                 case "disable":
                     if (args.Length < 3)
                     {
                         if (args.Length < 2)
-                            await RespondBasicErrorAsync("Failed to provide required paramater <type>. See `]module help` for more information.");
-                        else
-                            await RespondBasicErrorAsync("Failed to proivde required paramater <name>. See `]module help` for more information.");
-                        return;
+						{
+							await RespondBasicErrorAsync("Failed to provide required paramater <type>. See `]module help` for more information.");
+						}
+						else
+						{
+							await RespondBasicErrorAsync("Failed to proivde required paramater <name>. See `]module help` for more information.");
+						}
+
+						return;
                     }
 
                     if (args[1].Equals("module", StringComparison.OrdinalIgnoreCase))
-                        await DisableModule(ctx, args[2].ToLower());
-                    else if (args[1].Equals("command", StringComparison.OrdinalIgnoreCase))
-                        await DisableCommand(ctx, args[2].ToLower());
-                    else
-                        await RespondBasicErrorAsync("Failed to parse paramater <type>. Type must be either `module` or `command`.");
-                    break;
+					{
+						await DisableModule(ctx, args[2].ToLower());
+					}
+					else if (args[1].Equals("command", StringComparison.OrdinalIgnoreCase))
+					{
+						await DisableCommand(ctx, args[2].ToLower());
+					}
+					else
+					{
+						await RespondBasicErrorAsync("Failed to parse paramater <type>. Type must be either `module` or `command`.");
+					}
+
+					break;
                 case "default":
                     if(args.Length < 2)
                     {
@@ -146,10 +175,14 @@ namespace Shatter.Discord.Commands.Config
                 foreach(var group in DiscordBot.Bot.CommandGroups.Keys)
                 {
                     if (guild.DisabledModules.Contains(group))
-                        disabledModules.Add(group);
-                    else
-                        enabledModules.Add(group);
-                }
+					{
+						disabledModules.Add(group);
+					}
+					else
+					{
+						enabledModules.Add(group);
+					}
+				}
 
                 var dm = disabledModules.OrderBy(x => x);
                 var em = enabledModules.OrderBy(x => x);
@@ -204,10 +237,14 @@ namespace Shatter.Discord.Commands.Config
                 foreach (var group in DiscordBot.Bot.CommandGroups)
                 {
                     if (guild.DisabledModules.Contains(group.Key))
-                        disabledCommands.UnionWith(group.Value.Select(x => x.Name));
-                    else
-                        enabledCommands.UnionWith(group.Value.Select(x => x.Name));
-                }
+					{
+						disabledCommands.UnionWith(group.Value.Select(x => x.Name));
+					}
+					else
+					{
+						enabledCommands.UnionWith(group.Value.Select(x => x.Name));
+					}
+				}
 
                 disabledCommands.ExceptWith(guild.ActivatedCommands);
                 enabledCommands.UnionWith(guild.ActivatedCommands);
@@ -219,14 +256,14 @@ namespace Shatter.Discord.Commands.Config
 
                 foreach (var s in dc)
                 {
-                    var desc = DiscordBot.Bot.Commands[s].Description;
+                    var desc = DiscordBot.Bot.Commands?[s].Description ?? "";
                     data += Formatter.InlineCode(s) + " - " + (desc?.Length <= 50 ? desc : desc?[..47] + "...") + "\n";
                 }
 
                 data += "```Enabled Commands```\n";
                 foreach (var s in ec)
                 {
-                    var desc = DiscordBot.Bot.Commands[s].Description;
+                    var desc = DiscordBot.Bot.Commands?[s].Description ?? "";
                     data += Formatter.InlineCode(s) + " - " + (desc?.Length <= 50 ? desc : desc?[..47] + "...") + "\n";
                 }
 
@@ -270,8 +307,10 @@ namespace Shatter.Discord.Commands.Config
                         await RespondBasicSuccessAsync($"Disabled module: {module}");
                     }
                     else
-                        await RespondBasicErrorAsync($"Module already disabled.");
-                }
+					{
+						await RespondBasicErrorAsync($"Module already disabled.");
+					}
+				}
                 else
                 {
                     await RespondBasicErrorAsync($"Module group not found. See all modules with `{ctx.Prefix}module list module`.");
@@ -309,8 +348,10 @@ namespace Shatter.Discord.Commands.Config
                         await RespondBasicSuccessAsync($"Enabled module: {module}");
                     }
                     else
-                        await RespondBasicErrorAsync($"Module already enabled.");
-                }
+					{
+						await RespondBasicErrorAsync($"Module already enabled.");
+					}
+				}
                 else
                 {
                     await RespondBasicErrorAsync($"Module group not found. See all modules with `{ctx.Prefix}module list module`.");
@@ -338,7 +379,7 @@ namespace Shatter.Discord.Commands.Config
                     await _database.SaveChangesAsync();
                 }
 
-                if (DiscordBot.Bot.Commands.ContainsKey(command))
+                if (DiscordBot.Bot.Commands?.ContainsKey(command) ?? false)
                 {
                     if (guild.DisabledCommands.Add(command))
                     {
@@ -349,8 +390,10 @@ namespace Shatter.Discord.Commands.Config
                         await RespondBasicSuccessAsync($"Disabled command: {command}");
                     }
                     else
-                        await RespondBasicErrorAsync($"Command already disabled.");
-                }
+					{
+						await RespondBasicErrorAsync($"Command already disabled.");
+					}
+				}
                 else
                 {
                     await RespondBasicErrorAsync($"Command not found. See all commands with `{ctx.Prefix}module list command`.");
@@ -378,7 +421,7 @@ namespace Shatter.Discord.Commands.Config
                     await _database.SaveChangesAsync();
                 }
 
-                if (DiscordBot.Bot.Commands.ContainsKey(command))
+                if (DiscordBot.Bot.Commands?.ContainsKey(command) ?? false)
                 {
                     if (guild.ActivatedCommands.Add(command))
                     {
@@ -389,8 +432,10 @@ namespace Shatter.Discord.Commands.Config
                         await RespondBasicSuccessAsync($"Enabled command: {command}");
                     }
                     else
-                        await RespondBasicErrorAsync($"Command already enabled.");
-                }
+					{
+						await RespondBasicErrorAsync($"Command already enabled.");
+					}
+				}
                 else
                 {
                     await RespondBasicErrorAsync($"Command not found. See all modules with `{ctx.Prefix}module list command`.");
@@ -418,7 +463,7 @@ namespace Shatter.Discord.Commands.Config
                     await _database.SaveChangesAsync();
                 }
 
-                if (DiscordBot.Bot.Commands.ContainsKey(command))
+                if (DiscordBot.Bot.Commands?.ContainsKey(command) ?? false)
                 {
                     if (guild.ActivatedCommands.Remove(command) | guild.DisabledCommands.Remove(command))
                     {
@@ -428,8 +473,10 @@ namespace Shatter.Discord.Commands.Config
                         await RespondBasicSuccessAsync($"Defaulted command: {command}");
                     }
                     else
-                        await RespondBasicErrorAsync($"Command already set to default.");
-                }
+					{
+						await RespondBasicErrorAsync($"Command already set to default.");
+					}
+				}
                 else
                 {
                     await RespondBasicErrorAsync($"Command not found. See all modules with `{ctx.Prefix}module list command`.");

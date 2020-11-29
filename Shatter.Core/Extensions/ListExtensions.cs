@@ -16,9 +16,12 @@ namespace Shatter.Core.Extensions
         /// <returns>A Random Item or default if there are no items to return.</returns>
         public static T Random<T>(this List<T> list)
         {
-            if (list is null || list.Count <= 0) return default;
+            if (list is null || list.Count <= 0)
+			{
+				return default;
+			}
 
-            return list[r.Next(list.Count)];
+			return list[r.Next(list.Count)];
         }
 
         public static class ThreadSafeRandom

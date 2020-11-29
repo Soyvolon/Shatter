@@ -24,9 +24,12 @@ namespace Shatter.Core.Utils
 
         public static async Task<Tuple<string, string>?> SerachForSingle(string searchTerm)
         {
-            if (Service is null) throw new Exception("YouTube service not initialized");
+            if (Service is null)
+			{
+				throw new Exception("YouTube service not initialized");
+			}
 
-            var search = Service.Search.List("snippet");
+			var search = Service.Search.List("snippet");
             search.MaxResults = 1;
             //search.Type = "video";
             search.Q = searchTerm;
@@ -34,9 +37,11 @@ namespace Shatter.Core.Utils
             var response = await search.ExecuteAsync();
 
             if (response.Items.Count <= 0)
-                return null;
+			{
+				return null;
+			}
 
-            switch (response.Items[0].Id.Kind)
+			switch (response.Items[0].Id.Kind)
             {
                 case "youtube#video":
                     return new Tuple<string, string>($"https://youtube.com/watch?v={response.Items[0].Id.VideoId}", response.Items[0].Snippet.Title);

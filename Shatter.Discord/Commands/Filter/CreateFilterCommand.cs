@@ -22,7 +22,7 @@ namespace Shatter.Discord.Commands.Filter
 
         public CreateFilterCommand(ShatterDatabaseContext model)
         {
-            this._model = model;
+            _model = model;
         }
 
         [Command("createfilter")]
@@ -42,9 +42,11 @@ namespace Shatter.Discord.Commands.Filter
 
             bool force = false;
             if (words.Contains("-force"))
-                force = true;
+			{
+				force = true;
+			}
 
-            var filterWords = words.Where(x => GuildFilters.regex.IsMatch(x)).ToHashSet<string>();
+			var filterWords = words.Where(x => GuildFilters.regex.IsMatch(x)).ToHashSet<string>();
 
             var filter = await _model.FindAsync<GuildFilters>(ctx.Guild.Id);
             if (filter is null)

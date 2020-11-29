@@ -11,9 +11,12 @@ namespace Shatter.Discord.Commands.CustomArguments
     {
         public Task<Optional<TimeSpan>> ConvertAsync(string value, CommandContext ctx)
         {
-            if (value is null) return Task.FromResult(Optional.FromNoValue<TimeSpan>());
+            if (value is null)
+			{
+				return Task.FromResult(Optional.FromNoValue<TimeSpan>());
+			}
 
-            var span = new TimeSpan();
+			var span = new TimeSpan();
 
             for (int i = 0, c = 0; i < value.Length; i++)
             {

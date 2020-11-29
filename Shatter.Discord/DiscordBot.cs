@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -42,39 +42,39 @@ namespace Shatter.Discord
         public const string VERSION = "alpha-0.1.0";
         public static DiscordBot? Bot { get; private set; }
         public static ConcurrentDictionary<CommandHandler, Tuple<Task, CancellationTokenSource>>? CommandsInProgress { get; private set; }
-        #endregion
+		#endregion
 
-        #region Public Variables
-        public IReadOnlyDictionary<string, Command> Commands { get; private set; }
-        public ConcurrentDictionary<string, List<Command>> CommandGroups { get; private set; }
+		#region Public Variables
+		public IReadOnlyDictionary<string, Command>? Commands { get; private set; }
+		public ConcurrentDictionary<string, List<Command>> CommandGroups { get; private set; } = new();
         public BotConfig Config { get; private set; }
-        public DiscordShardedClient Client { get; private set; }
-        public DiscordRestClient Rest { get; private set; }
+        public DiscordShardedClient? Client { get; private set; }
+        public DiscordRestClient? Rest { get; private set; }
         public LavalinkConfig LavaConfig { get; private set; }
         public Stopwatch Uptime { get; private set; }
         #endregion
 
         #region Private Variables
         private readonly LogLevel logLevel;
-        private readonly bool test;
         private YouTubeConfig YTCfg;
-        private ServiceCollection services;
-        private ServiceProvider provider;
-        private DiscordEventHandler eventHandler;
+        private readonly ServiceCollection services;
+        private ServiceProvider? provider;
+        private DiscordEventHandler? eventHandler;
         #endregion
 
-        public DiscordBot(BotConfig botConfig, LavalinkConfig lavalinkConfig, YouTubeConfig youtubeConfig, ServiceCollection services, bool test = false)
+        public DiscordBot(BotConfig botConfig, LavalinkConfig lavalinkConfig, YouTubeConfig youtubeConfig, ServiceCollection services)
         {
             CommandsInProgress = new ConcurrentDictionary<CommandHandler, Tuple<Task, CancellationTokenSource>>();
 
             logLevel = LogLevel.Debug;
-            this.test = test;
 
             Config = botConfig;
             LavaConfig = lavalinkConfig;
             YTCfg = youtubeConfig;
 
             this.services = services;
+
+			Uptime = new Stopwatch();
 
             // Assign the lastest bot to to the static Bot indidcator.
             Bot = this;
@@ -113,18 +113,27 @@ namespace Shatter.Discord
 
             CommandGroups = new ConcurrentDictionary<string, List<Command>>();
 
-            foreach(var c in Commands.Values)
+            foreach(var c in Commands?.Values ?? Array.Empty<Command>())
             {
                 var ExGroup = c.CustomAttributes.FirstOrDefault(x => x is ExecutionModuleAttribute);
                 if (ExGroup != default)
                 {
-                    var group = ExGroup as ExecutionModuleAttribute;
+					ExecutionModuleAttribute? group = ExGroup as ExecutionModuleAttribute;
 
-                    if (CommandGroups.ContainsKey(group.GroupName))
-                        CommandGroups[group.GroupName].Add(c);
-                    else
-                        CommandGroups[group.GroupName] = new List<Command>() { c };
-                }
+					if (group is null)
+					{
+						continue;
+					}
+
+					if (CommandGroups.ContainsKey(group.GroupName))
+					{
+						CommandGroups[group.GroupName].Add(c);
+					}
+					else
+					{
+						CommandGroups[group.GroupName] = new List<Command>() { c };
+					}
+				}
             }
 
             var interactionConfig = GetInteractivityConfiguration();
@@ -160,7 +169,7 @@ namespace Shatter.Discord
 
         private CommandsNextConfiguration GetCommandsNextConfiguration()
         {
-            this.services.AddScoped<ShatterDatabaseContext>()
+            services.AddScoped<ShatterDatabaseContext>()
                 .AddScoped<MemeService>()
                 .AddSingleton<VoiceService>()
                 .AddSingleton<MusicBingoService>();
@@ -204,9 +213,11 @@ namespace Shatter.Discord
         private Task Client_MessageCreated(DiscordClient sender, MessageCreateEventArgs e)
         {
             if (CommandsInProgress is null)
-                return Task.CompletedTask; // Looks like we can't handle any commands.
+			{
+				return Task.CompletedTask; // Looks like we can't handle any commands.
+			}
 
-            try
+			try
             {
                 var cancel = new CancellationTokenSource();
                 var handler = new CommandHandler(Commands, sender, Config);
@@ -218,7 +229,7 @@ namespace Shatter.Discord
             }
             catch (Exception ex)
             {
-                Client.Logger.LogError(Event_CommandHandler, ex, "An unkown error occoured.");
+                Client?.Logger.LogError(Event_CommandHandler, ex, "An unkown error occoured.");
             }
 
             return Task.CompletedTask;
@@ -230,10 +241,17 @@ namespace Shatter.Discord
         {
             Uptime = Stopwatch.StartNew();
 
-            await Client.StartAsync().ConfigureAwait(false);
-            await Rest.InitializeAsync().ConfigureAwait(false);
+			if(Client is not null)
+			{
+				await Client.StartAsync().ConfigureAwait(false);
+			}
 
-            Boot = BootStatus.ready;
+			if (Rest is not null)
+			{
+				await Rest.InitializeAsync().ConfigureAwait(false);
+			}
+
+			Boot = BootStatus.ready;
         }
         #endregion
 
@@ -242,9 +260,12 @@ namespace Shatter.Discord
         {
             Bot = null;
 
-            Client.MessageCreated -= Client_MessageCreated;
+			if(Client is not null)
+			{
+				Client.MessageCreated -= Client_MessageCreated;
+			}
 
-            eventHandler?.Dispose();
+			eventHandler?.Dispose();
 
             if (!(CommandsInProgress is null))
             {
@@ -260,9 +281,16 @@ namespace Shatter.Discord
                 CommandsInProgress = null;
                 try
                 {
-                    Client.StopAsync().GetAwaiter().GetResult();
-                    Rest.Dispose();
-                }
+					if(Client is not null)
+					{
+						Client.StopAsync().GetAwaiter().GetResult();
+					}
+
+					if (Rest is not null)
+					{
+						Rest.Dispose();
+					}
+				}
                 catch { }
             }
         }
@@ -271,9 +299,12 @@ namespace Shatter.Discord
         {
             Bot = null;
 
-            Client.MessageCreated -= Client_MessageCreated;
+			if(Client is not null)
+			{
+				Client.MessageCreated -= Client_MessageCreated;
+			}
 
-            eventHandler?.Dispose();
+			eventHandler?.Dispose();
 
             if (!(CommandsInProgress is null))
             {
@@ -292,11 +323,16 @@ namespace Shatter.Discord
                 CommandsInProgress = null;
                 try
                 {
-                    var stop = Client.StopAsync();
-                    Rest.Dispose();
+					if (Client is not null)
+					{
+						await Client.StopAsync();
+					}
 
-                    await stop;
-                }
+					if (Rest is not null)
+					{
+						Rest.Dispose();
+					}
+				}
                 catch { }
             }
         }

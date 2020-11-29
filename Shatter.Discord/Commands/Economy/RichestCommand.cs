@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -25,7 +25,7 @@ namespace Shatter.Discord.Commands.Economy
 
         public RichestCommand(ShatterDatabaseContext model)
         {
-            this._model = model;
+            _model = model;
         }
 
         [Command("richest")]
@@ -78,7 +78,7 @@ namespace Shatter.Discord.Commands.Economy
 
                 var pages = interact.GeneratePagesInEmbed(data, SplitType.Line, embed);
 
-                interact.SendPaginatedMessageAsync(ctx.Channel, ctx.Member, pages);
+                await interact.SendPaginatedMessageAsync(ctx.Channel, ctx.Member, pages);
             }
             else
             {

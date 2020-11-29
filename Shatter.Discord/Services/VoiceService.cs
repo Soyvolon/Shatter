@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,9 +36,11 @@ namespace Shatter.Discord.Services
             if (DJs.TryGetValue(ctx.Guild.Id, out ulong dj))
             {
                 if (ctx.Member.Id == dj)
-                    return true;
+				{
+					return true;
+				}
 
-                if (ctx.Member.VoiceState?.Channel.Users.Any(x => x.Id == dj) ?? false)
+				if (ctx.Member.VoiceState?.Channel.Users.Any(x => x.Id == dj) ?? false)
                 {
                     return false;
                 }
@@ -69,7 +71,12 @@ namespace Shatter.Discord.Services
                 var searchResult = await node.GetTracksAsync(search);
                 var Track = searchResult.Tracks.FirstOrDefault();
 
-                var queueResult = await QueueSong(node, Track, memberId);
+				if (Track is null)
+				{
+					return new(false, null);
+				}
+
+				var queueResult = await QueueSong(node, Track, memberId);
 
                 return new Tuple<bool, LavalinkTrack?>(queueResult, Track);
             }
@@ -82,18 +89,25 @@ namespace Shatter.Discord.Services
 
             var searchResult = await node.GetTracksAsync(search);
             var Track = searchResult.Tracks.FirstOrDefault();
-            
-            var queueResult = await QueueSong(node, Track, memberId);
 
-            return new Tuple<bool, LavalinkTrack?>(queueResult, Track);
+			if (Track is null)
+			{
+				return new(false, null);
+			}
+
+			var queueResult = await QueueSong(node, Track, memberId);
+
+            return new(queueResult, Track);
         }
 
         private async Task<bool> QueueSong(LavalinkGuildConnection conn, LavalinkTrack track, ulong memberId)
         {
             if (track is null)
-                return false;
+			{
+				return false;
+			}
 
-            if (GuildQueues.TryGetValue(conn.Guild.Id, out var queue))
+			if (GuildQueues.TryGetValue(conn.Guild.Id, out var queue))
             {
                 queue.Enqueue(track);
             }
@@ -133,22 +147,31 @@ namespace Shatter.Discord.Services
 
         private async Task GuildConnection_SongStarted(LavalinkGuildConnection sender, TrackStartEventArgs e)
         {
-            if (IgnoreEventsList.ContainsKey(sender.Guild.Id)) return;
+            if (IgnoreEventsList.ContainsKey(sender.Guild.Id))
+			{
+				return;
+			}
 
-            if (PlayingStatusMessages.TryGetValue(sender.Guild.Id, out ulong chan))
+			if (PlayingStatusMessages.TryGetValue(sender.Guild.Id, out ulong chan))
             {
                 var nowPlaying = sender.CurrentState.CurrentTrack;
-                await DiscordBot.Bot.Rest.CreateMessageAsync(chan, "", false, CommandModule.SuccessBase()
-                    .WithDescription($":green_circle: :notes:] {nowPlaying.Title} by {nowPlaying.Author} - `{sender.CurrentState.PlaybackPosition:mm\\:ss}/{nowPlaying.Length:mm\\:ss}`"),
-                    null);
-            }
+				if(DiscordBot.Bot?.Rest is not null)
+				{
+					await DiscordBot.Bot.Rest.CreateMessageAsync(chan, "", false, CommandModule.SuccessBase()
+						.WithDescription($":green_circle: :notes:] {nowPlaying.Title} by {nowPlaying.Author} - `{sender.CurrentState.PlaybackPosition:mm\\:ss}/{nowPlaying.Length:mm\\:ss}`"),
+						null);
+				}
+			}
         }
 
         private async Task GuildConnection_SongFinished(LavalinkGuildConnection sender, TrackFinishEventArgs e)
         {
-            if (IgnoreEventsList.ContainsKey(sender.Guild.Id)) return;
+            if (IgnoreEventsList.ContainsKey(sender.Guild.Id))
+			{
+				return;
+			}
 
-            if (e.Reason == TrackEndReason.Finished || e.Reason == TrackEndReason.Stopped)
+			if (e.Reason == TrackEndReason.Finished || e.Reason == TrackEndReason.Stopped)
             {
                 if (GuildQueues.TryGetValue(sender.Guild.Id, out var queue))
                 {
@@ -189,9 +212,11 @@ namespace Shatter.Discord.Services
             var idealNode = lava.GetIdealNodeConnection(guild.VoiceRegion);
 
             if (idealNode is null || idealNode.ConnectedGuilds.Count > MaxGuildConsPerNode)
-                idealNode = await lava.ConnectAsync(GetLavalinkConfiguration());
+			{
+				idealNode = await lava.ConnectAsync(GetLavalinkConfiguration());
+			}
 
-            return idealNode;
+			return idealNode;
         }
 
         private static LavalinkConfiguration GetLavalinkConfiguration()
@@ -200,7 +225,7 @@ namespace Shatter.Discord.Services
             {
                 RestEndpoint = new DSharpPlus.Net.ConnectionEndpoint { Hostname = "localhost", Port = 2333 },
                 SocketEndpoint = new DSharpPlus.Net.ConnectionEndpoint { Hostname = "localhost", Port = 2333 },
-                Password = DiscordBot.Bot.LavaConfig.Password
+                Password = DiscordBot.Bot?.LavaConfig.Password
             };
 
             return lcfg;

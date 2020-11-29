@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -56,7 +56,7 @@ namespace Shatter.Discord.Services
 
             var mem = new MemoryStream();
 
-            this.map?.Save(mem, ImageFormat.Png);
+            map?.Save(mem, ImageFormat.Png);
 
             mem?.Seek(0, SeekOrigin.Begin);
 
@@ -65,8 +65,8 @@ namespace Shatter.Discord.Services
 
         public Task RegisterGraphics(Bitmap image)
         {
-            this.map = image;
-            this.img = Graphics.FromImage(this.map);
+            map = image;
+            img = Graphics.FromImage(map);
 
             return Task.CompletedTask;
         }
@@ -84,9 +84,11 @@ namespace Shatter.Discord.Services
             }
 
             if (f is null)
-                f = new Font("Arial", size);
+			{
+				f = new Font("Arial", size);
+			}
 
-            this.font = f;
+			this.font = f;
 
             return Task.CompletedTask;
         }
@@ -94,23 +96,36 @@ namespace Shatter.Discord.Services
         public Task RegisterBrush(Brush? brush = null)
         {
             if (brush is null)
-                this.defaultBrush = new SolidBrush(Color.Black);
-            else
-                this.defaultBrush = brush;
+			{
+				defaultBrush = new SolidBrush(Color.Black);
+			}
+			else
+			{
+				defaultBrush = brush;
+			}
 
-            return Task.CompletedTask;
+			return Task.CompletedTask;
         }
 
         public Task AddText(Rectangle position, string caption, Brush? brush)
         {
-            if (this.img is null) throw new Exception("Bitmap is null. A Bitmap must be registered with MemeService.RegisterBitmap");
+            if (img is null)
+			{
+				throw new Exception("Bitmap is null. A Bitmap must be registered with MemeService.RegisterBitmap");
+			}
 
-            // Register a font and brush if the saved item is null
-            if (this.font is null) RegisterFont(null);
-            if (this.defaultBrush is null) RegisterBrush(null);
+			// Register a font and brush if the saved item is null
+			if (font is null)
+			{
+				RegisterFont(null);
+			}
 
+			if (defaultBrush is null)
+			{
+				RegisterBrush(null);
+			}
 
-            this.img.DrawString(caption, this.font, brush ?? this.defaultBrush, position);
+			img.DrawString(caption, font ?? new Font("Arial", 18), brush ?? defaultBrush ?? new SolidBrush(Color.Black), position);
 
             return Task.CompletedTask;
         }

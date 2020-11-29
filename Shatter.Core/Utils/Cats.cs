@@ -32,16 +32,22 @@ namespace Shatter.Core.Utils
                     }
 
                     if (arg.Contains("gif") || arg.Contains("jpg") || arg.Contains("png"))
-                        typeTree += arg + ",";
-                }
+					{
+						typeTree += arg + ",";
+					}
+				}
 
                 if (order.Length > 0)
-                    request += Order + order;
+				{
+					request += Order + order;
+				}
 
-                if (typeTree.Length > 0)
-                    request += ImageType + typeTree[..(typeTree.Length - 1)] + "&";
+				if (typeTree.Length > 0)
+				{
+					request += ImageType + typeTree[..(typeTree.Length - 1)] + "&";
+				}
 
-                request = request[..(request.Length - 1)];
+				request = request[..(request.Length - 1)];
             }
 
             return request;

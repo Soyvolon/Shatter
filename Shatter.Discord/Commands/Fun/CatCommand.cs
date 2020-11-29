@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
@@ -17,7 +17,7 @@ namespace Shatter.Discord.Commands.Fun
         [Aliases("cats")]
         [RequireUserPermissions(Permissions.AccessChannels)]
         [ExecutionModule("fun")]
-        public async Task CatCommandAsnyc(CommandContext ctx, params string[]? args)
+        public async Task CatCommandAsnyc(CommandContext ctx, params string[] args)
         {
             CatData cat = default;
             bool skipRandom = false;

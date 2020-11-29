@@ -12,7 +12,7 @@ namespace Shatter.Core
 {
 	public static class ConfigurationManager
     {
-        private static string Root = "Configs";
+        private static readonly string Root = "Configs";
 
         public static async Task<BotConfig?> RegisterBotConfiguration(ILogger? logger)
         {
@@ -30,11 +30,15 @@ namespace Shatter.Core
             }
 
             if (logger is null)
-                Console.WriteLine("Missing bot_config.json file in Configs volume.");
-            else
-                logger.LogError($"Missing bot_config.json file in Configs volume.");
+			{
+				Console.WriteLine("Missing bot_config.json file in Configs volume.");
+			}
+			else
+			{
+				logger.LogError($"Missing bot_config.json file in Configs volume.");
+			}
 
-            return null;
+			return null;
         }
 
         public static async Task<DatabaseConfig?> RegisterDatabase(ILogger? logger)
@@ -54,11 +58,15 @@ namespace Shatter.Core
             }
 
             if (logger is null)
-                Console.WriteLine("Missing database_config.json file in Configs volume.");
-            else
-                logger.LogError($"Missing database_config.json file in Configs volume.");
+			{
+				Console.WriteLine("Missing database_config.json file in Configs volume.");
+			}
+			else
+			{
+				logger.LogError($"Missing database_config.json file in Configs volume.");
+			}
 
-            return null;
+			return null;
         }
 
         public static async Task<LavalinkConfig?> RegisterLavaLink(ILogger? logger)
@@ -77,11 +85,15 @@ namespace Shatter.Core
             }
 
             if (logger is null)
-                Console.WriteLine("Missing lavalink_config.json file in Configs volume.");
-            else
-                logger.LogError($"Missing lavalink_config.json file in Configs volume.");
+			{
+				Console.WriteLine("Missing lavalink_config.json file in Configs volume.");
+			}
+			else
+			{
+				logger.LogError($"Missing lavalink_config.json file in Configs volume.");
+			}
 
-            return null;
+			return null;
         }
 
         public static async Task<YouTubeConfig?> RegisterYouTube(ILogger? logger)
@@ -101,11 +113,15 @@ namespace Shatter.Core
             }
 
             if (logger is null)
-                Console.WriteLine("Missing youtube_config.json file in Configs volume.");
-            else
-                logger.LogError($"Missing youtube_config.json file in Configs volume.");
+			{
+				Console.WriteLine("Missing youtube_config.json file in Configs volume.");
+			}
+			else
+			{
+				logger.LogError($"Missing youtube_config.json file in Configs volume.");
+			}
 
-            return null;
+			return null;
         }
     }
 }

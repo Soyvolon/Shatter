@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 
 using DSharpPlus.CommandsNext;
@@ -55,9 +55,11 @@ namespace Shatter.Discord.Utils
             {
                 string? msg = null;
                 if (!(g.JoinMessage?.Message is null))
-                    msg = await ReplaceValues(g.JoinMessage.Message, ctx);
+				{
+					msg = await ReplaceValues(g.JoinMessage.Message, ctx);
+				}
 
-                await SendJoinMessageAsync(g, msg, ctx.Member.Username, ctx.Member?.AvatarUrl ?? "");
+				await SendJoinMessageAsync(g, msg, ctx.Member.Username, ctx.Member?.AvatarUrl ?? "");
             }
         }
 
@@ -67,15 +69,22 @@ namespace Shatter.Discord.Utils
             {
                 string? msg = null;
                 if (!(g.JoinMessage?.Message is null))
-                    msg = await ReplaceValues(g.JoinMessage.Message, e);
+				{
+					msg = await ReplaceValues(g.JoinMessage.Message, e);
+				}
 
-                await SendJoinMessageAsync(g, msg, e.Member.Username, e.Member?.AvatarUrl ?? "");
+				await SendJoinMessageAsync(g, msg, e.Member.Username, e.Member?.AvatarUrl ?? "");
             }
         }
 
         public static async Task SendJoinMessageAsync(GuildMemberlogs g, string? msg, string username, string avatarUrl)
         {
-            if (g.JoinMessage?.IsEmbed ?? false)
+			if (DiscordBot.Bot?.Rest is null)
+			{
+				return;
+			}
+
+			if (g.JoinMessage?.IsEmbed ?? false)
             {
                 DiscordEmbedBuilder embed = new DiscordEmbedBuilder()
                 {
@@ -91,10 +100,10 @@ namespace Shatter.Discord.Utils
 
                 try
                 {
-                    await DiscordBot.Bot.Rest.CreateMessageAsync((ulong)g.MemberlogChannel, "", false, embed, null);
+                    await DiscordBot.Bot.Rest.CreateMessageAsync(g.MemberlogChannel ?? 0UL, "", false, embed, null);
                 }
-                catch { } // ignore
-            }
+				catch { /* Backgroun task, ignore rest exceptions. */ } // ignore
+			}
             else if (g.JoinMessage?.IsImage ?? false)
             {
                 using var stream = await SvgHandler.GetWelcomeImage(true, username, avatarUrl);
@@ -102,19 +111,19 @@ namespace Shatter.Discord.Utils
                 {
                     try
                     {
-                        await DiscordBot.Bot.Rest.UploadFileAsync((ulong)g.MemberlogChannel, stream, "welcome-message.png", "", false, null, null);
+                        await DiscordBot.Bot.Rest.UploadFileAsync(g.MemberlogChannel ?? 0UL, stream, "welcome-message.png", "", false, null, null);
                     }
-                    catch { } // ignore
+                    catch { /* Backgroun task, ignore rest exceptions. */ } // ignore
                 }
             }
             else if (!(msg is null))
             {
                 try
                 {
-                    await DiscordBot.Bot.Rest.CreateMessageAsync((ulong)g.MemberlogChannel, msg, false, null, null);
+                    await DiscordBot.Bot.Rest.CreateMessageAsync(g.MemberlogChannel ?? 0UL, msg, false, null, null);
                 }
-                catch { } // ignore
-            }
+				catch { /* Backgroun task, ignore rest exceptions. */ } // ignore
+			}
         }
 
         public static async Task SendLeaveMessageAsync(GuildMemberlogs g, CommandContext ctx)
@@ -123,9 +132,11 @@ namespace Shatter.Discord.Utils
             {
                 string? msg = null;
                 if (!(g.LeaveMessage?.Message is null))
-                    msg = await ReplaceValues(g.LeaveMessage.Message, ctx);
+				{
+					msg = await ReplaceValues(g.LeaveMessage.Message, ctx);
+				}
 
-                await SendLeaveMessageAsync(g, msg, ctx.Member.Username, ctx.Member?.AvatarUrl ?? "");
+				await SendLeaveMessageAsync(g, msg, ctx.Member.Username, ctx.Member?.AvatarUrl ?? "");
             }
         }
 
@@ -135,15 +146,22 @@ namespace Shatter.Discord.Utils
             {
                 string? msg = null;
                 if (!(g.LeaveMessage?.Message is null))
-                    msg = await ReplaceValues(g.LeaveMessage.Message, e);
+				{
+					msg = await ReplaceValues(g.LeaveMessage.Message, e);
+				}
 
-                await SendLeaveMessageAsync(g, msg, e.Member.Username, e.Member?.AvatarUrl ?? "");
+				await SendLeaveMessageAsync(g, msg, e.Member.Username, e.Member?.AvatarUrl ?? "");
             }
         }
 
         public static async Task SendLeaveMessageAsync(GuildMemberlogs g, string? msg, string username, string avatarUrl)
         {
-            if (g.LeaveMessage?.IsEmbed ?? false)
+			if (DiscordBot.Bot?.Rest is null)
+			{
+				return;
+			}
+
+			if (g.LeaveMessage?.IsEmbed ?? false)
             {
                 DiscordEmbedBuilder embed = new DiscordEmbedBuilder()
                 {
@@ -159,11 +177,11 @@ namespace Shatter.Discord.Utils
 
                 try
                 {
-                    await DiscordBot.Bot.Rest.CreateMessageAsync((ulong)g.MemberlogChannel, "", false, embed, null);
-                }
-                catch { } // ignore
+                    await DiscordBot.Bot.Rest.CreateMessageAsync(g.MemberlogChannel ?? 0UL, "", false, embed, null);
+				}
+				catch { /* Ignore errors from the REST client sening in the backgroung. */ } // ignore
 
-            }
+			}
             else if (g.LeaveMessage?.IsImage ?? false)
             {
                 using var stream = await SvgHandler.GetWelcomeImage(false, username, avatarUrl);
@@ -171,26 +189,29 @@ namespace Shatter.Discord.Utils
                 {
                     try
                     {
-                        await DiscordBot.Bot.Rest.UploadFileAsync((ulong)g.MemberlogChannel, stream, "farewell-message.png", "", false, null, null);
-                    }
-                    catch { } // ignore
-                }
+                        await DiscordBot.Bot.Rest.UploadFileAsync(g.MemberlogChannel ?? 0UL, stream, "farewell-message.png", "", false, null, null);
+					}
+					catch { /* Ignore errors from the REST client sening in the backgroung. */ } // ignore
+				}
             }
             else if (!(g.LeaveMessage?.Message is null))
             {
                 try
                 {
-                    await DiscordBot.Bot.Rest.CreateMessageAsync((ulong)g.MemberlogChannel, msg, false, null, null);
+                    await DiscordBot.Bot.Rest.CreateMessageAsync(g.MemberlogChannel ?? 0UL, msg, false, null, null);
                 }
-                catch { } // ignore
+                catch { /* Ignore errors from the REST client sening in the backgroung. */ } // ignore
             }
         }
 
         public static async Task SendJoinDMMessage(GuildMemberlogs g, GuildMemberAddEventArgs e)
         {
-            if (g.JoinDmMessage is null) return;
+            if (g.JoinDmMessage is null)
+			{
+				return;
+			}
 
-            var msg = await ReplaceValues(g.JoinDmMessage, e);
+			var msg = await ReplaceValues(g.JoinDmMessage, e);
             try
             {
                 var dms = await e.Member.CreateDmChannelAsync();

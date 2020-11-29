@@ -16,7 +16,7 @@ namespace Shatter.Discord.Commands.Games.Trivia.Admin
 
         public TriviaQuestionLimitCommand(ShatterDatabaseContext model)
         {
-            this._model = model;
+            _model = model;
         }
 
         [Command("limittrivia")]
@@ -35,9 +35,11 @@ namespace Shatter.Discord.Commands.Games.Trivia.Admin
 
             cfg.TriviaQuestionLimit = limit > 50 ? 50 : limit;
             if (cfg.TriviaQuestionLimit <= 0)
-                cfg.TriviaQuestionLimit = 1;
+			{
+				cfg.TriviaQuestionLimit = 1;
+			}
 
-            await _model.SaveChangesAsync();
+			await _model.SaveChangesAsync();
 
             await ctx.RespondAsync($"Set the question limit to {cfg.TriviaQuestionLimit}. The max questions per game can be no larger than 50.");
         }

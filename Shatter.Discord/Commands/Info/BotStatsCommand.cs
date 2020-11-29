@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+using System;
 using System.Reflection;
 using System.Threading.Tasks;
 
@@ -24,7 +23,7 @@ namespace Shatter.Discord.Commands.Info
         {
             int guilds = 0, channels = 0, users = 0;
 
-            foreach (var shard in DiscordBot.Bot.Client.ShardClients.Values)
+            foreach (var shard in DiscordBot.Bot?.Client?.ShardClients.Values ?? Array.Empty<DiscordClient>())
             {
                 foreach (var g in shard.Guilds.Values)
                 {
@@ -44,10 +43,8 @@ namespace Shatter.Discord.Commands.Info
 
             var mods = "**```http\n" + string.Join("\n", new string[]
             {
-                $"Memory GB  :: [Currently Broken]MB",
-                $"CPU        :: [Currently Broken]%",
                 $"Ping MS    :: {ctx.Client.Ping}MS",
-                $"Uptime     :: {DiscordBot.Bot.Uptime.Elapsed:c}"
+                $"Uptime     :: {DiscordBot.Bot?.Uptime.Elapsed:c}"
             }) + "```**";
 
             var dsharpplus = Assembly.GetAssembly(typeof(DiscordClient))?.GetName() ?? null;
@@ -63,14 +60,14 @@ namespace Shatter.Discord.Commands.Info
             var info = "**```http\n" + string.Join("\n", new string[]
             {
                 $"Creator    :: {Creator}",
-                $"Modules    :: {DiscordBot.Bot.CommandGroups.Count()}",
-                $"Commands   :: {DiscordBot.Bot.Commands.Count()}",
-                $"Website    :: Coming Soon",
+                $"Modules    :: {DiscordBot.Bot?.CommandGroups?.Count}",
+                $"Commands   :: {DiscordBot.Bot?.Commands?.Count}",
+                $"Website    :: https://soyvolon.github.io/Shatter/#/",
                 //$"Patreon    :: Coming Soon",
-                $"PayPal     :: https://paypal.me/pools/c/8tgZB4cjzU"
+                $"Ko-Fi      :: https://ko-fi.com/Soyvolon"
             }) + "```**";
 
-            var embed = CommandModule.SuccessBase()
+            var embed = SuccessBase()
                 .AddField("—— Shards ——", shards, true)
                 .AddField("—— Usage ——", mods, true)
                 .AddField("—— Environment ——", envir, true)

@@ -20,9 +20,11 @@ namespace Shatter.Discord.Commands.Info
             var roles = m.Roles.Where(x => !x.Name.Contains("everyone"));
             List<string> roleStrings = new List<string>();
             foreach (var role in roles)
-                roleStrings.Add(role.Mention);
+			{
+				roleStrings.Add(role.Mention);
+			}
 
-            var embed = CommandModule.SuccessBase()
+			var embed = CommandModule.SuccessBase()
                 .WithTitle(m.Username + "#" + m.Discriminator)
                 .WithDescription(m.Nickname ?? "No Nickname")
                 .AddField("Roles", string.Join(", ", roleStrings))

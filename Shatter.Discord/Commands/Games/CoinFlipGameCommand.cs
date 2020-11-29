@@ -18,7 +18,7 @@ namespace Shatter.Discord.Commands.Games
 
         public CoinFlipGameCommand(ShatterDatabaseContext model)
         {
-            this._model = model;
+            _model = model;
             Random = new Random();
         }
 

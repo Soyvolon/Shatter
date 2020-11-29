@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -24,7 +24,7 @@ namespace Shatter.Discord.Commands.Games.Trivia
 
         public TriviaLeaderboardCommand(ShatterDatabaseContext model)
         {
-            this._model = model;
+            _model = model;
         }
 
         [Command("triviatop")]
@@ -66,14 +66,20 @@ namespace Shatter.Discord.Commands.Games.Trivia
                     foreach (var arg in lowerArgs)
                     {
                         if (arg == "server")
-                            leaderboardType = LeaderboardType.Server;
+						{
+							leaderboardType = LeaderboardType.Server;
+						}
 
-                        if (arg == "percent")
-                            sortByPercentCorrect = true;
+						if (arg == "percent")
+						{
+							sortByPercentCorrect = true;
+						}
 
-                        if (arg == "me")
-                            displayPersonalData = true;
-                    }
+						if (arg == "me")
+						{
+							displayPersonalData = true;
+						}
+					}
                 }
             }
 
@@ -131,19 +137,23 @@ namespace Shatter.Discord.Commands.Games.Trivia
 
                 players.Reverse();
                 foreach (var player in players)
-                    data += $"{i}. {(player.Username == "" ? player.UserId.ToString() : player.Username)} - " +
+				{
+					data += $"{i}. {(player.Username == "" ? player.UserId.ToString() : player.Username)} - " +
                         $"{(sortByPercentCorrect ? player.PercentCorrect.ToString("0.##") + "%" : player.Points + " points\n")}";
+				}
 
-                if (data == "")
-                    data += "No leaderboards found!";
+				if (data == "")
+				{
+					data += "No leaderboards found!";
+				}
 
-                var embed = new DiscordEmbedBuilder()
+				var embed = new DiscordEmbedBuilder()
                     .WithTitle($"{(leaderboardType == LeaderboardType.Global ? "Global" : ctx.Guild.Name)} Trivia Leaderboard")
                     .WithColor(DiscordColor.Purple);
 
                 var pages = interact.GeneratePagesInEmbed(data, SplitType.Line, embed);
 
-                interact.SendPaginatedMessageAsync(ctx.Channel, ctx.Member, pages);
+                await interact.SendPaginatedMessageAsync(ctx.Channel, ctx.Member, pages);
             }
         }
     }

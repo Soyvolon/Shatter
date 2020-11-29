@@ -19,7 +19,7 @@ namespace Shatter.Discord.Commands.Filter
 
         public FilterIgnoreCommand(ShatterDatabaseContext model)
         {
-            this._model = model;
+            _model = model;
         }
 
         [Command("filterignore")]
@@ -88,8 +88,10 @@ namespace Shatter.Discord.Commands.Filter
                     added = false;
                 }
                 else
-                    currentNames.Add(name);
-            }
+				{
+					currentNames.Add(name);
+				}
+			}
 
             filter.BypassFilters.UpdateOrAddValue(id, currentNames, filter, _model);
             await _model.SaveChangesAsync();

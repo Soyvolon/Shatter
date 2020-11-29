@@ -16,8 +16,8 @@ namespace Shatter.Discord.Commands.Games.Music.Bingo
 
         public StopBingoGameCommand(MusicBingoService bingo, VoiceService voice)
         {
-            this._bingo = bingo;
-            this._voice = voice;
+            _bingo = bingo;
+            _voice = voice;
         }
 
         [Command("stopbingo")]

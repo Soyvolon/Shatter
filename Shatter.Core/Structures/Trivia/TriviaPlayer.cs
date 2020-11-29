@@ -28,6 +28,6 @@ namespace Shatter.Core.Structures.Trivia
         }
 
         public TriviaPlayer() { }
-        public TriviaPlayer(ulong uId) { this.UserId = uId; }
+        public TriviaPlayer(ulong uId) { UserId = uId; }
     }
 }

@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
@@ -15,7 +15,7 @@ namespace Shatter.Discord.Commands.Music
 
         public PlayCommand(VoiceService voice)
         {
-            this._voice = voice;
+            _voice = voice;
         }
 
         [Command("play")]
@@ -35,8 +35,11 @@ namespace Shatter.Discord.Commands.Music
 
             if (res.Item1)
             {
-                await ctx.RespondAsync($"Queued: {res.Item2.Title} by {res.Item2.Author}");
-            }
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+				// If item 1 is true, the second value will never be null.
+				await ctx.RespondAsync($"Queued: {res.Item2.Title} by {res.Item2.Author}");
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+			}
             else
             {
                 await ctx.RespondAsync("Failed to add song to Queue.");

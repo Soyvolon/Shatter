@@ -23,7 +23,7 @@ namespace Shatter.Discord.Commands.Memes
 
         public TheSearchCommand(MemeService meme)
         {
-            this._meme = meme;
+            _meme = meme;
         }
 
         [Command("thesearch")]

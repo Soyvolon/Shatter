@@ -6,7 +6,7 @@ namespace Shatter.Core.Utils
 {
 	public static class ImageLoader
     {
-        public static Bitmap? GetBitmapFromUrl(string url)
+        public static Bitmap GetBitmapFromUrl(string url)
         {
             using var client = new WebClient();
             var bytes = client.DownloadData(url);

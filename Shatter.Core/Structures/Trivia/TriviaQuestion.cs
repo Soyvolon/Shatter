@@ -35,9 +35,11 @@ namespace Shatter.Core.Structures.Trivia
 
             var id = 1;
             foreach (var q in res.IncorrectAnswers)
-                PossibleAnswers.Add(id++, Encoding.ASCII.GetString(Convert.FromBase64String(q)));
+			{
+				PossibleAnswers.Add(id++, Encoding.ASCII.GetString(Convert.FromBase64String(q)));
+			}
 
-            QuestionString = Encoding.ASCII.GetString(Convert.FromBase64String(res.QuestionString));
+			QuestionString = Encoding.ASCII.GetString(Convert.FromBase64String(res.QuestionString));
 
             DifficultyString = Encoding.ASCII.GetString(Convert.FromBase64String(res.Difficulty));
 

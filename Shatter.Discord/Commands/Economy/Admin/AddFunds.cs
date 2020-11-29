@@ -18,7 +18,7 @@ namespace Shatter.Discord.Commands.Economy.Admin
 
         public AddFunds(ShatterDatabaseContext model)
         {
-            this._model = model;
+            _model = model;
         }
 
         [Command("addfunds")]

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Drawing;
@@ -32,17 +32,20 @@ namespace Shatter.Discord.Services
 
         public MusicBingoService(VoiceService voice, IServiceProvider services)
         {
-            this._voice = voice;
-            this._services = services;
+            _voice = voice;
+            _services = services;
         }
 
         public async Task<bool> StartGameAsync(MusicBingoGame game, CommandContext ctx)
         {
             // A game is already in progress
-            if (ActiveGames.ContainsKey(ctx.Guild.Id)) return false;
+            if (ActiveGames.ContainsKey(ctx.Guild.Id))
+			{
+				return false;
+			}
 
-            // Get the connection used for this guild and add a reference to this event handler.
-            var con = await _voice.GetOrCreateConnection(ctx.Client, ctx.Guild, ctx.Member.VoiceState.Channel);
+			// Get the connection used for this guild and add a reference to this event handler.
+			var con = await _voice.GetOrCreateConnection(ctx.Client, ctx.Guild, ctx.Member.VoiceState.Channel);
             con.PlaybackFinished += GuildConnection_SongFinished;
             con.PlaybackStarted += GuildConnection_SongStarted;
 
@@ -51,10 +54,14 @@ namespace Shatter.Discord.Services
 
             var members = new List<ulong>();
             foreach (var m in ctx.Member.VoiceState.Channel.Users)
-                if(m.Id != DiscordBot.Bot.Client.CurrentUser.Id)
-                    members.Add(m.Id);
+			{
+				if (m.Id != DiscordBot.Bot?.Client?.CurrentUser.Id)
+				{
+					members.Add(m.Id);
+				}
+			}
 
-            game.Initalize(members);
+			game.Initalize(members);
 
             GameConnections[ctx.Guild.Id] = new Tuple<DiscordChannel, DiscordGuild, DiscordClient>
                 (
@@ -149,17 +156,25 @@ namespace Shatter.Discord.Services
             GameConnections.TryRemove(guildId, out _);
             ActiveGames.TryRemove(guildId, out _);
             if(SongTimers.TryRemove(guildId, out var t))
-                t.Change(0, Timeout.Infinite);
-        }
+			{
+				t.Change(0, Timeout.Infinite);
+			}
+		}
 
         public bool CheckPlayerWin(ulong guildId, ulong userId)
         {
             if(ActiveGames.TryGetValue(guildId, out var game))
-                if(game.BingoBoards.TryGetValue(userId, out var board))
-                    if(game.PlayedSongs is not null)
-                        return board.IsWinner(game.PlayedSongs);
+			{
+				if (game.BingoBoards.TryGetValue(userId, out var board))
+				{
+					if (game.PlayedSongs is not null)
+					{
+						return board.IsWinner(game.PlayedSongs);
+					}
+				}
+			}
 
-            return false;
+			return false;
         }
 
         private async Task PlayIntroduction(LavalinkGuildConnection con)
@@ -167,9 +182,12 @@ namespace Shatter.Discord.Services
             var serach = await con.GetTracksAsync(new Uri(_gameIntro));
             var track = serach.Tracks?.FirstOrDefault() ?? default;
 
-            if (track == default) return;
+            if (track == default)
+			{
+				return;
+			}
 
-            var start = TimeSpan.FromSeconds(30);
+			var start = TimeSpan.FromSeconds(30);
             var end = TimeSpan.FromSeconds(35);
             await con.PlayPartialAsync(track, start, end);
             await Task.Delay(TimeSpan.FromSeconds(5));
@@ -179,6 +197,9 @@ namespace Shatter.Discord.Services
         private async Task PlayOutOfSongs(TrackFinishEventArgs e, ulong guildId)
         {
             StopGame(guildId, false);
+
+			// will require await at some point
+			await Task.Delay(0);
 
             // TODO: Replace with custom out of songs vid
 
@@ -219,17 +240,23 @@ namespace Shatter.Discord.Services
             }
         }
 
-        private async Task GuildConnection_SongStarted(LavalinkGuildConnection sender, TrackStartEventArgs e)
+        private Task GuildConnection_SongStarted(LavalinkGuildConnection sender, TrackStartEventArgs e)
         {
             if(ActiveGames.TryGetValue(sender.Guild.Id, out var game))
             {
-                if (game.PlayedSongs is null) return;
+                if (game.PlayedSongs is null)
+				{
+					return Task.CompletedTask;
+				}
 
-                var last = game.PlayedSongs.LastOrDefault();
+				var last = game.PlayedSongs.LastOrDefault();
 
-                if (last == default) return;
+                if (last == default)
+				{
+					return Task.CompletedTask;
+				}
 
-                if(last.SongStart is not null && last.SongEnd is not null)
+				if (last.SongStart is not null && last.SongEnd is not null)
                 {
                     var span = last.SongEnd.Value.Subtract(last.SongStart.Value);
 
@@ -241,6 +268,8 @@ namespace Shatter.Discord.Services
                     }, null, span, Timeout.InfiniteTimeSpan);
                 }
             }
+
+			return Task.CompletedTask;
         }
     }
 }

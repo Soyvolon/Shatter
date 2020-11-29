@@ -35,9 +35,11 @@ namespace Shatter.Discord.Commands.Games.Trivia
             string outputString = $"[id: {Formatter.Bold("0")}] All Categories\n";
 
             foreach (var cat in categories)
-                outputString += $"[id: {Formatter.Bold(cat.Id.ToString())}] {cat.Name}\n";
+			{
+				outputString += $"[id: {Formatter.Bold(cat.Id.ToString())}] {cat.Name}\n";
+			}
 
-            await ctx.RespondAsync(outputString);
+			await ctx.RespondAsync(outputString);
         }
     }
 }

@@ -27,8 +27,10 @@ namespace Shatter.Discord.Utils
                 {
                     var bypasses = filter.BypassFilters[e.Channel.Id];
                     if (bypasses.Contains(GuildFilters.AllFilters))
-                        return;
-                    else
+					{
+						return;
+					}
+					else
                     {
                         foreach(var b in bypasses)
                         {
@@ -44,8 +46,10 @@ namespace Shatter.Discord.Utils
                 {
                     var bypasses = filter.BypassFilters[e.Author.Id];
                     if (bypasses.Contains(GuildFilters.AllFilters))
-                        return;
-                    else
+					{
+						return;
+					}
+					else
                     {
                         foreach (var b in bypasses)
                         {
@@ -63,9 +67,11 @@ namespace Shatter.Discord.Utils
 
                 // Guild managers auto bypass.
                 if (member.PermissionsIn(e.Channel).HasPermission(Permissions.ManageGuild))
-                    return;
+				{
+					return;
+				}
 
-                foreach(var role in member.Roles)
+				foreach (var role in member.Roles)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
 
@@ -73,8 +79,10 @@ namespace Shatter.Discord.Utils
                     {
                         var bypasses = filter.BypassFilters[role.Id];
                         if (bypasses.Contains(GuildFilters.AllFilters))
-                            return;
-                        else
+						{
+							return;
+						}
+						else
                         {
                             foreach (var b in bypasses)
                             {

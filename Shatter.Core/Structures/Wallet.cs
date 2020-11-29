@@ -20,7 +20,7 @@ namespace Shatter.Core.Structures
 
         public Wallet(ulong userId, string user)
         {
-            this.UserId = userId;
+            UserId = userId;
             Balance = 100;
             Username = user;
             LastDaily = DateTime.MinValue;
@@ -64,7 +64,7 @@ namespace Shatter.Core.Structures
         public int Transfer(int ammount, Wallet to)
         {
             to.Add(ammount);
-            return this.Subtract(ammount);
+            return Subtract(ammount);
         }
     }
 }

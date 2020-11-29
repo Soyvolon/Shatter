@@ -16,7 +16,7 @@ namespace Shatter.Discord.Commands.Music
 
         public SkipToMusicCommand(VoiceService voice)
         {
-            this._voice = voice;
+            _voice = voice;
         }
 
         [Command("skipto")]
@@ -42,9 +42,11 @@ namespace Shatter.Discord.Commands.Music
                     var i = 0; // ammount - 1 to include the current track.
                     LavalinkTrack? track;
                     while (queue.TryDequeue(out track) && i < amount - 1)
-                        i++;
+					{
+						i++;
+					}
 
-                    if (track is null)
+					if (track is null)
                     {
                         _voice.GuildQueues.TryRemove(ctx.Guild.Id, out _);
                         await RespondBasicSuccessAsync( $"All songs skipped.{(HostChanged ? $"\n{ctx.Member.Mention} is the new host!" : "")}");
@@ -56,10 +58,14 @@ namespace Shatter.Discord.Commands.Music
                     }
                 }
                 else
-                    await RespondBasicErrorAsync("No songs to skip!");
-            }
+				{
+					await RespondBasicErrorAsync("No songs to skip!");
+				}
+			}
             else
-                await RespondBasicErrorAsync($"You do not have permissions to force-skip a song! Start a vote skip with `{ctx.Prefix}voteskip`");
-        }
+			{
+				await RespondBasicErrorAsync($"You do not have permissions to force-skip a song! Start a vote skip with `{ctx.Prefix}voteskip`");
+			}
+		}
     }
 }

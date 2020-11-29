@@ -16,7 +16,7 @@ namespace Shatter.Discord.Commands.Config
 
         public Prefix(ShatterDatabaseContext model)
         {
-            this._model = model;
+            _model = model;
         }
 
         [Command("prefix")]

@@ -19,7 +19,7 @@ namespace Shatter.Discord.Commands.Filter
 
         public FilterLevelCommand(ShatterDatabaseContext model)
         {
-            this._model = model;
+            _model = model;
         }
 
         [Command("filterlevel")]

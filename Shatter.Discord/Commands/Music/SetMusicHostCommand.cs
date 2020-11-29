@@ -16,7 +16,7 @@ namespace Shatter.Discord.Commands.Music
 
         public SetMusicHostCommand(VoiceService voice)
         {
-            this._voice = voice;
+            _voice = voice;
         }
 
         [Command("host")]
@@ -41,7 +41,9 @@ namespace Shatter.Discord.Commands.Music
                 await RespondBasicSuccessAsync( $"{newHost.Mention} is the new host!");
             }
             else
-                await RespondBasicErrorAsync($"You do not have permissions to change the current host!");
-        }
+			{
+				await RespondBasicErrorAsync($"You do not have permissions to change the current host!");
+			}
+		}
     }
 }

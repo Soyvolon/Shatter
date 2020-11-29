@@ -16,7 +16,7 @@ namespace Shatter.Discord.Commands.Memberlog
 
         public JoinDmCommand(ShatterDatabaseContext model)
         {
-            this._model = model;
+            _model = model;
         }
 
         [Command("joindm")]

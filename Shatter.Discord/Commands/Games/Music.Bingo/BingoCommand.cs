@@ -13,7 +13,7 @@ namespace Shatter.Discord.Commands.Games.Music.Bingo
 
         public BingoCommand(MusicBingoService bingo)
         {
-            this._bingo = bingo;
+            _bingo = bingo;
         }
 
         [Command("bingo")]

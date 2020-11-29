@@ -17,7 +17,7 @@ namespace Shatter.Discord.Commands.Filter
 
         public DeleteFilterCommand(ShatterDatabaseContext model)
         {
-            this._model = model;
+            _model = model;
         }
 
         [Command("deletefilter")]

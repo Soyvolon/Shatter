@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 
 using DSharpPlus;
@@ -19,7 +19,7 @@ namespace Shatter.Discord.Commands.Mod
 
         public BanCommand(ShatterDatabaseContext model)
         {
-            this._model = model;
+            _model = model;
         }
 
         [Command("ban")]
@@ -94,8 +94,11 @@ namespace Shatter.Discord.Commands.Mod
         {
             try
             {
-                await DiscordBot.Bot.Rest.CreateGuildBanAsync(ctx.Guild.Id, userId, 0, reason);
-            }
+				if(DiscordBot.Bot?.Rest is not null)
+				{
+					await DiscordBot.Bot.Rest.CreateGuildBanAsync(ctx.Guild.Id, userId, 0, reason);
+				}
+			}
             catch
             {
                 await RespondBasicErrorAsync($"Failed to ban {userId}");

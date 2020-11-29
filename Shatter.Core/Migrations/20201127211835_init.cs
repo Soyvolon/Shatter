@@ -1,9 +1,10 @@
 using System;
+
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Shatter.Core.Migrations
 {
-    public partial class init : Migration
+	public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

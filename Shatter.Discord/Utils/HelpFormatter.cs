@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
@@ -19,7 +19,7 @@ namespace Shatter.Discord.Utils
 	public class HelpFormatter : BaseHelpFormatter
     {
         public DiscordEmbedBuilder EmbedBuilder { get; }
-        private Command Command { get; set; }
+        private Command? Command { get; set; }
         private ulong GuildId { get; set; }
         private string Prefix { get; set; }
 
@@ -27,7 +27,7 @@ namespace Shatter.Discord.Utils
 
         public HelpFormatter(CommandContext ctx, ShatterDatabaseContext database) : base(ctx)
         {
-            this._database = database;
+            _database = database;
 
             EmbedBuilder = new DiscordEmbedBuilder()
                 .WithTitle("Help")
@@ -39,25 +39,31 @@ namespace Shatter.Discord.Utils
 
         public override CommandHelpMessage Build()
         {
-            if (this.Command is null)
-                this.EmbedBuilder.WithDescription("Listing all modules. Specify a command to see more infomration.");
+            if (Command is null)
+			{
+				EmbedBuilder.WithDescription("Listing all modules. Specify a command to see more infomration.");
+			}
 
-            return new CommandHelpMessage(embed: this.EmbedBuilder.Build());
+			return new CommandHelpMessage(embed: EmbedBuilder.Build());
         }
 
         public override BaseHelpFormatter WithCommand(Command command)
         {
-            this.Command = command;
+            Command = command;
 
-            this.EmbedBuilder.WithDescription($"{Formatter.InlineCode(command.Name)}: {command.Description ?? "No description provided."}");
+            EmbedBuilder.WithDescription($"{Formatter.InlineCode(command.Name)}: {command.Description ?? "No description provided."}");
 
             if (command is CommandGroup cgroup && cgroup.IsExecutableWithoutSubcommands)
-                this.EmbedBuilder.WithDescription($"{this.EmbedBuilder.Description}\n\nThis group can be executed as a standalone command.");
+			{
+				EmbedBuilder.WithDescription($"{EmbedBuilder.Description}\n\nThis group can be executed as a standalone command.");
+			}
 
-            if (command.Aliases?.Any() == true)
-                this.EmbedBuilder.AddField("Aliases", string.Join(", ", command.Aliases.Select(Formatter.InlineCode)), false);
+			if (command.Aliases?.Any() == true)
+			{
+				EmbedBuilder.AddField("Aliases", string.Join(", ", command.Aliases.Select(Formatter.InlineCode)), false);
+			}
 
-            if (command.Overloads?.Any() == true)
+			if (command.Overloads?.Any() == true)
             {
                 var sb = new StringBuilder();
 
@@ -66,17 +72,21 @@ namespace Shatter.Discord.Utils
                     sb.Append('`').Append(command.QualifiedName);
 
                     foreach (var arg in ovl.Arguments)
-                        sb.Append(arg.IsOptional || arg.IsCatchAll ? " [" : " <").Append(arg.Name).Append(arg.IsCatchAll ? "..." : "").Append(arg.IsOptional || arg.IsCatchAll ? ']' : '>');
+					{
+						sb.Append(arg.IsOptional || arg.IsCatchAll ? " [" : " <").Append(arg.Name).Append(arg.IsCatchAll ? "..." : "").Append(arg.IsOptional || arg.IsCatchAll ? ']' : '>');
+					}
 
-                    sb.Append("`\n");
+					sb.Append("`\n");
 
                     foreach (var arg in ovl.Arguments)
-                        sb.Append('`').Append(arg.Name).Append(" (").Append(this.CommandsNext.GetUserFriendlyTypeName(arg.Type)).Append(")`: ").Append(arg.Description ?? "No description provided.").Append('\n');
+					{
+						sb.Append('`').Append(arg.Name).Append(" (").Append(CommandsNext.GetUserFriendlyTypeName(arg.Type)).Append(")`: ").Append(arg.Description ?? "No description provided.").Append('\n');
+					}
 
-                    sb.Append('\n');
+					sb.Append('\n');
                 }
 
-                this.EmbedBuilder.AddField("Arguments", sb.ToString().Trim(), false);
+                EmbedBuilder.AddField("Arguments", sb.ToString().Trim(), false);
             }
 
             return this;
@@ -99,17 +109,22 @@ namespace Shatter.Discord.Utils
             HashSet<string> disabledCommands = new();
             disabledCommands.UnionWith(guild.DisabledCommands);
 
-            foreach(var module in DiscordBot.Bot.CommandGroups)
-            {
-                if (guild.DisabledModules.Contains(module.Key))
-                    disabledCommands.UnionWith(module.Value.Select(x => x.Name.ToLower()));
-            }
+			if (DiscordBot.Bot is not null)
+			{
+				foreach (var module in DiscordBot.Bot.CommandGroups)
+				{
+					if (guild.DisabledModules.Contains(module.Key))
+					{
+						disabledCommands.UnionWith(module.Value.Select(x => x.Name.ToLower()));
+					}
+				}
+			}
 
             disabledCommands.ExceptWith(guild.ActivatedCommands);
 
             var cmdList = subcommands.Where(x => !disabledCommands.Contains(x.Name.ToLower()));
 
-            this.EmbedBuilder.AddField(this.Command != null ? "Subcommands" : "Commands", string.Join(", ", 
+            EmbedBuilder.AddField(Command != null ? "Subcommands" : "Commands", string.Join(", ", 
                 cmdList.Select(x => {
                     return Formatter.InlineCode(x.Name);
                 })), false);

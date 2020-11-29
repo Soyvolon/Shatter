@@ -23,8 +23,12 @@ namespace Shatter.Discord.Utils
 
         public static async Task RespondErrorAsync(CommandsNextExtension cnext, CommandErrorEventArgs e)
         {
-            if (e == null) return;
-            if (e.Exception is ChecksFailedException cfex)
+            if (e == null)
+			{
+				return;
+			}
+
+			if (e.Exception is ChecksFailedException cfex)
             {
                 await ChecksFailedResponderAsync(e, cfex).ConfigureAwait(false);
             }

@@ -24,7 +24,7 @@ namespace Shatter.Discord.Commands.Image
 
         public CreateCardCommand(MemeService meme)
         {
-            this._meme = meme;
+            _meme = meme;
         }
 
         [Command("cah")]

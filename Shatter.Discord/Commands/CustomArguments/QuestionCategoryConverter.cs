@@ -13,10 +13,11 @@ namespace Shatter.Discord.Commands.CustomArguments
         public Task<Optional<QuestionCategory>> ConvertAsync(string value, CommandContext ctx)
         {
             if (int.TryParse(value, out int catNum))
-                return Task.FromResult(Optional.FromValue((QuestionCategory)catNum));
+			{
+				return Task.FromResult(Optional.FromValue((QuestionCategory)catNum));
+			}
 
-
-            return Task.FromResult(Optional.FromNoValue<QuestionCategory>());
+			return Task.FromResult(Optional.FromNoValue<QuestionCategory>());
         }
     }
 }

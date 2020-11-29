@@ -21,10 +21,10 @@ namespace Shatter.Core.Structures
 
         public MemberlogMessage(string? msg, bool isEmbed, bool hasImage, string? imageUrl)
         {
-            this.Message = Message;
-            this.IsEmbed = isEmbed;
-            this.IsImage = hasImage;
-            this.ImageUrl = imageUrl;
+            Message = Message;
+            IsEmbed = isEmbed;
+            IsImage = hasImage;
+            ImageUrl = imageUrl;
         }
     }
 }

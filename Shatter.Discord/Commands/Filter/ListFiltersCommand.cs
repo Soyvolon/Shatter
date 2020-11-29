@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
@@ -17,7 +17,7 @@ namespace Shatter.Discord.Commands.Filter
 
         public ListFiltersCommand(ShatterDatabaseContext model)
         {
-            this._model = model;
+            _model = model;
         }
 
         [Command("listfilters")]
@@ -39,14 +39,16 @@ namespace Shatter.Discord.Commands.Filter
 
             var data = "";
             foreach (var item in filter.Filters)
-                data += $"{item.Key} [{item.Value.Item1}]: `{string.Join("`, `", item.Value.Item2)}`\n";
+			{
+				data += $"{item.Key} [{item.Value.Item1}]: `{string.Join("`, `", item.Value.Item2)}`\n";
+			}
 
-            var embed = CommandModule.SuccessBase()
+			var embed = CommandModule.SuccessBase()
                 .WithTitle("Filter Name [Filter Severity]: Filter Words");
 
             var pages = interact.GeneratePagesInEmbed(data, DSharpPlus.Interactivity.Enums.SplitType.Line, embed);
 
-            interact.SendPaginatedMessageAsync(ctx.Channel, ctx.Member, pages);
+            await interact.SendPaginatedMessageAsync(ctx.Channel, ctx.Member, pages);
         }
     }
 }

@@ -24,10 +24,13 @@ namespace Shatter.Core.Structures.Music.Bingo
 
             foreach (var song in shuffledSongs)
             {
-                if (PlacedSongs >= 24) return;
-                // we have no empty spots left!
+                if (PlacedSongs >= 24)
+				{
+					return;
+				}
+				// we have no empty spots left!
 
-                int x, y;
+				int x, y;
                 do
                 {
                     x = ThreadSafeRandom.ThisThreadsRandom.Next(0, 5);

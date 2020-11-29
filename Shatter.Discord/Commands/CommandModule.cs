@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -31,7 +31,7 @@ namespace Shatter.Discord.Commands
     {
         public CommandModule() { }
 
-        private CommandContext ctx;
+        private CommandContext? ctx;
 
         public override Task BeforeExecutionAsync(CommandContext ctx)
         {
@@ -102,22 +102,37 @@ namespace Shatter.Discord.Commands
         }
 
         public async Task RespondBasicSuccessAsync(string message)
-        {
-            var b = SuccessBase()
+		{
+			if (ctx is null)
+			{
+				return;
+			}
+
+			var b = SuccessBase()
                 .WithDescription(message);
             await ctx.RespondAsync(embed: b.Build());
         }
 
         public async Task RespondBasicErrorAsync(string message)
-        {
-            var b = ErrorBase()
+		{
+			if (ctx is null)
+			{
+				return;
+			}
+
+			var b = ErrorBase()
                 .WithDescription(message);
             await ctx.RespondAsync(embed: b.Build());
         }
 
         public async Task RespondWithFile(string caption, string fileName, string contents)
         {
-            FileStream fs = new FileStream($"{fileName}-{ctx.User.Id}.txt", FileMode.OpenOrCreate);
+			if (ctx is null)
+			{
+				return;
+			}
+
+			FileStream fs = new FileStream($"{fileName}-{ctx.User.Id}.txt", FileMode.OpenOrCreate);
             StreamWriter sr = new StreamWriter(fs);
 
             await sr.WriteAsync(contents);

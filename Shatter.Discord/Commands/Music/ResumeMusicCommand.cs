@@ -15,7 +15,7 @@ namespace Shatter.Discord.Commands.Music
 
         public ResumeMusicCommand(VoiceService voice)
         {
-            this._voice = voice;
+            _voice = voice;
         }
 
         [Command("resume")]
@@ -40,7 +40,9 @@ namespace Shatter.Discord.Commands.Music
                 await RespondBasicSuccessAsync( $"Resumed!{(HostChanged ? $"\n{ctx.Member.Mention} is the new host!" : "")}");
             }
             else
-                await RespondBasicErrorAsync($"You do not have permissions to resume a song!");
-        }
+			{
+				await RespondBasicErrorAsync($"You do not have permissions to resume a song!");
+			}
+		}
     }
 }

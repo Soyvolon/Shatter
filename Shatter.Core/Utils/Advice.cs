@@ -14,8 +14,8 @@ namespace Shatter.Core.Utils
 
         private Advice(JObject res)
         {
-            this.Id = res["slip"]?["id"]?.ToObject<int>() ?? 0;
-            this.Contents = res["slip"]?["advice"]?.ToString() ?? "";
+            Id = res["slip"]?["id"]?.ToObject<int>() ?? 0;
+            Contents = res["slip"]?["advice"]?.ToString() ?? "";
         }
 
         public static async Task<Advice?> GetAdvice()

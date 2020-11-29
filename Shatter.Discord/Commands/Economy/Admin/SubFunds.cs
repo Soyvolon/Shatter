@@ -19,7 +19,7 @@ namespace Shatter.Discord.Commands.Economy.Admin
 
         public SubFunds(ShatterDatabaseContext model)
         {
-            this._model = model;
+            _model = model;
         }
 
         [Command("subfunds")]
@@ -44,9 +44,11 @@ namespace Shatter.Discord.Commands.Economy.Admin
             var res = wallet.Subtract(ammount);
 
             if (res < 0)
-                res = wallet.Add(Math.Abs(res));
+			{
+				res = wallet.Add(Math.Abs(res));
+			}
 
-            await _model.SaveChangesAsync();
+			await _model.SaveChangesAsync();
 
             await ctx.RespondAsync($"Removed {ammount.ToMoney()} from {m.Nickname}. Their balance is now {res.ToMoney()}");
         }

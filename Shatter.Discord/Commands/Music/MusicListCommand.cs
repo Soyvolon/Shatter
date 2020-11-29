@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
@@ -19,7 +19,7 @@ namespace Shatter.Discord.Commands.Music
 
         public MusicListCommand(VoiceService voice)
         {
-            this._voice = voice;
+            _voice = voice;
         }
 
         [Command("nowplaying")]
@@ -48,13 +48,19 @@ namespace Shatter.Discord.Commands.Music
                 foreach (var track in queue)
                 {
                     if (i == 1)
-                        data += $"\n:yellow_circle: **{i}]** {track.Title} by {track.Author} - `{track.Length:mm\\:ss}`";
-                    else if (i == last)
-                        data += $"\n:red_circle: **{i}]** {track.Title} by {track.Author} - `{track.Length:mm\\:ss}`";
-                    else
-                        data += $"\n:black_circle: **{i}]** {track.Title} by {track.Author} - `{track.Length:mm\\:ss}`";
+					{
+						data += $"\n:yellow_circle: **{i}]** {track.Title} by {track.Author} - `{track.Length:mm\\:ss}`";
+					}
+					else if (i == last)
+					{
+						data += $"\n:red_circle: **{i}]** {track.Title} by {track.Author} - `{track.Length:mm\\:ss}`";
+					}
+					else
+					{
+						data += $"\n:black_circle: **{i}]** {track.Title} by {track.Author} - `{track.Length:mm\\:ss}`";
+					}
 
-                    i++;
+					i++;
                 }
             }
 
@@ -71,7 +77,7 @@ namespace Shatter.Discord.Commands.Music
                 Stop = DiscordEmoji.FromName(ctx.Client, ":stop_button:"),
             };
 
-            interact.SendPaginatedMessageAsync(ctx.Channel, ctx.Member, pages, emojis);
+            await interact.SendPaginatedMessageAsync(ctx.Channel, ctx.Member, pages, emojis);
         }
     }
 }

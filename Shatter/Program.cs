@@ -29,7 +29,9 @@ namespace Shatter
 			var db = await ConfigurationManager.RegisterDatabase(serviceProvider.GetService<ILogger<Program>>());
 
 			if (db is null)
+			{
 				return -1;
+			}
 
 			services.AddDbContext<ShatterDatabaseContext>(options =>
 				 {
@@ -42,19 +44,25 @@ namespace Shatter
 			var botConfig = await ConfigurationManager.RegisterBotConfiguration(serviceProvider.GetService<ILogger<Program>>());
 
             if (botConfig is null)
-                return -1;
+			{
+				return -1;
+			}
 
-            var lavaConfig = await ConfigurationManager.RegisterLavaLink(serviceProvider.GetService<ILogger<Program>>());
+			var lavaConfig = await ConfigurationManager.RegisterLavaLink(serviceProvider.GetService<ILogger<Program>>());
 
             if (lavaConfig is null)
-                return -1;
+			{
+				return -1;
+			}
 
-            var ytConfig = await ConfigurationManager.RegisterYouTube(serviceProvider.GetService<ILogger<Program>>());
+			var ytConfig = await ConfigurationManager.RegisterYouTube(serviceProvider.GetService<ILogger<Program>>());
 
             if (ytConfig is null)
-                return -1;
+			{
+				return -1;
+			}
 
-            using var bot = new DiscordBot((BotConfig)botConfig, (LavalinkConfig)lavaConfig, (YouTubeConfig)ytConfig, services);
+			using var bot = new DiscordBot((BotConfig)botConfig, (LavalinkConfig)lavaConfig, (YouTubeConfig)ytConfig, services);
 
 			var model = serviceProvider.GetRequiredService<ShatterDatabaseContext>();
 

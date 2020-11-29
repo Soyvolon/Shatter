@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 
 using DSharpPlus;
@@ -23,7 +23,7 @@ namespace Shatter.Discord.Commands.Games.Trivia
 
         public TriviaGameCommand(ShatterDatabaseContext model)
         {
-            this._model = model;
+            _model = model;
         }
 
         [Command("trivia")]
@@ -81,9 +81,12 @@ namespace Shatter.Discord.Commands.Games.Trivia
 
                 while (await game.PopNextQuestion(out TriviaQuestion? question))
                 {
-                    var mapped = question.GetMappedAnswers();
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+					// False positive.
+					var mapped = question.GetMappedAnswers();
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
 
-                    var embed = new DiscordEmbedBuilder()
+					var embed = new DiscordEmbedBuilder()
                         .WithColor(DiscordColor.Purple)
                         .WithTitle("Trivia!")
                         .WithDescription("You have 20 seconds to answer this question! Type the number of the answer that is correct to win!")
@@ -133,9 +136,11 @@ namespace Shatter.Discord.Commands.Games.Trivia
                     }
 
                     if (trivia.Username != ctx.Member.Username)
-                        trivia.Username = ctx.Member.Username;
+					{
+						trivia.Username = ctx.Member.Username;
+					}
 
-                    await _model.SaveChangesAsync();
+					await _model.SaveChangesAsync();
                 }
             }
             finally

@@ -48,11 +48,15 @@ namespace Shatter.Core.Utils
 
             double swirlRadius;
             if (image.Height > image.Width)
-                swirlRadius = image.Width * .75f;
-            else
-                swirlRadius = image.Height * .75f;
+			{
+				swirlRadius = image.Width * .75f;
+			}
+			else
+			{
+				swirlRadius = image.Height * .75f;
+			}
 
-            Bitmap swirled = new Bitmap(image.Width, image.Height);
+			Bitmap swirled = new Bitmap(image.Width, image.Height);
 
             for (int y = 0; y < (swirled.Height - 1); y++)
             {

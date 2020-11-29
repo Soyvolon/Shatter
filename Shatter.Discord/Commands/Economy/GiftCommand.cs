@@ -18,7 +18,7 @@ namespace Shatter.Discord.Commands.Economy
 
         public GiftCommand(ShatterDatabaseContext model)
         {
-            this._model = model;
+            _model = model;
         }
 
         [Command("gift")]
@@ -77,8 +77,10 @@ namespace Shatter.Discord.Commands.Economy
                 }
 
                 if (save)
-                    await _model.SaveChangesAsync();
-            }
+				{
+					await _model.SaveChangesAsync();
+				}
+			}
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Shatter.Discord.Commands.Mod
 
         public UnbanCommand(ShatterDatabaseContext model)
         {
-            this._model = model;
+            _model = model;
         }
 
         [Command("unban")]
@@ -50,8 +50,10 @@ namespace Shatter.Discord.Commands.Mod
             {
                 // Remove a temp ban if it exsists.
                 if (cfg.UserBans.RemoveValue(user.Id, cfg, _model, out _))
-                    await _model.SaveChangesAsync();
-            }
+				{
+					await _model.SaveChangesAsync();
+				}
+			}
 
             await RespondBasicSuccessAsync( $"Unbanned {user.Id}");
         }

@@ -15,7 +15,7 @@ namespace Shatter.Discord.Commands.Music
 
         public SkipCommand(VoiceService voice)
         {
-            this._voice = voice;
+            _voice = voice;
         }
 
         [Command("skip")]
@@ -40,7 +40,9 @@ namespace Shatter.Discord.Commands.Music
                 await RespondBasicSuccessAsync( $"Skipping...{(HostChanged ? $"\n{ctx.Member.Mention} is the new host!" : "")}");
             }
             else
-                await RespondBasicErrorAsync($"You do not have permissions to force-skip a song! Start a vote skip with `{ctx.Prefix}voteskip`");
-        }
+			{
+				await RespondBasicErrorAsync($"You do not have permissions to force-skip a song! Start a vote skip with `{ctx.Prefix}voteskip`");
+			}
+		}
     }
 }

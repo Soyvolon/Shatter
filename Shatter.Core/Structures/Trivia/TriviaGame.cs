@@ -14,7 +14,7 @@ namespace Shatter.Core.Structures.Trivia
         public readonly int QuestionCount;
 
         private ConcurrentBag<TriviaQuestion>? Questions;
-        private ConcurrentDictionary<ulong, TriviaPlayer> Players;
+        private readonly ConcurrentDictionary<ulong, TriviaPlayer> Players;
 
         private const string request_base = "https://opentdb.com/api.php?encode=base64";
         private const string amount_base = "amount=";
@@ -34,17 +34,22 @@ namespace Shatter.Core.Structures.Trivia
             string request = request_base + "&" + amount_base + QuestionCount;
 
             if (Category != QuestionCategory.All)
-                request += $"&{category_base}{(int)Category}";
+			{
+				request += $"&{category_base}{(int)Category}";
+			}
 
-            var res = await client.GetAsync(request);
+			var res = await client.GetAsync(request);
 
             var json = await res.Content.ReadAsStringAsync();
 
             var triviaResponse = JsonConvert.DeserializeObject<TriviaResponse>(json);
 
-            if (triviaResponse.ResponseCode != 0) throw new Exception("API Error. Check input string.");
+            if (triviaResponse.ResponseCode != 0)
+			{
+				throw new Exception("API Error. Check input string.");
+			}
 
-            Questions = new ConcurrentBag<TriviaQuestion>();
+			Questions = new ConcurrentBag<TriviaQuestion>();
 
             foreach (var question in triviaResponse.Questions)
             {
@@ -54,12 +59,17 @@ namespace Shatter.Core.Structures.Trivia
 
         public Task<bool> PopNextQuestion(out TriviaQuestion? question)
         {
-            if (Questions is null) throw new Exception("Triva Questions not Loaded.");
+            if (Questions is null)
+			{
+				throw new Exception("Triva Questions not Loaded.");
+			}
 
-            if (Questions.TryTake(out question))
-                return Task.FromResult(true);
+			if (Questions.TryTake(out question))
+			{
+				return Task.FromResult(true);
+			}
 
-            return Task.FromResult(false);
+			return Task.FromResult(false);
         }
     }
 }

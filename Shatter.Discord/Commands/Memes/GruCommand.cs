@@ -26,7 +26,7 @@ namespace Shatter.Discord.Commands.Memes
 
         public GruCommand(MemeService meme)
         {
-            this._meme = meme;
+            _meme = meme;
         }
 
         [Command("gru")]

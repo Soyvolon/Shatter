@@ -23,11 +23,17 @@ namespace Shatter.Discord.Commands.CustomArguments
         {
             var lower = value.ToLower();
             if (AddWords.Contains(lower))
-                return Task.FromResult(Optional.FromValue(AddRemove.Add));
-            else if (RemoveWords.Contains(lower))
-                return Task.FromResult(Optional.FromValue(AddRemove.Remove));
-            else
-                return Task.FromResult(Optional.FromNoValue<AddRemove>());
-        }
+			{
+				return Task.FromResult(Optional.FromValue(AddRemove.Add));
+			}
+			else if (RemoveWords.Contains(lower))
+			{
+				return Task.FromResult(Optional.FromValue(AddRemove.Remove));
+			}
+			else
+			{
+				return Task.FromResult(Optional.FromNoValue<AddRemove>());
+			}
+		}
     }
 }

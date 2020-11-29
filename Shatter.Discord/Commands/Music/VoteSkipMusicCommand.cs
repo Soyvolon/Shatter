@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -17,7 +17,7 @@ namespace Shatter.Discord.Commands.Music
 
         public VoteSkipMusicCommand(VoiceService voice)
         {
-            this._voice = voice;
+            _voice = voice;
         }
 
         [Command("voteskip")]
@@ -45,7 +45,7 @@ namespace Shatter.Discord.Commands.Music
 
             if (_voice.VoteSkips.TryGetValue(ctx.Guild.Id, out var votes) || required == 1)
             {
-                if (votes.Contains(ctx.Member.Id))
+                if (votes?.Contains(ctx.Member.Id) ?? false)
                 {
                     await RespondBasicErrorAsync("You already voted to skip this song!");
                     return;
@@ -60,7 +60,7 @@ namespace Shatter.Discord.Commands.Music
                 else
                 {
                     _voice.VoteSkips[ctx.Guild.Id].Add(ctx.Member.Id);
-                    await RespondBasicSuccessAsync( $"Voted to skip! {votes.Count + 1}/{required} votes have been cast.");
+                    await RespondBasicSuccessAsync( $"Voted to skip! {votes?.Count + 1}/{required} votes have been cast.");
                 }
             }
             else

@@ -18,7 +18,7 @@ namespace Shatter.Discord.Commands.Economy
 
         public EconDailyCommand(ShatterDatabaseContext model)
         {
-            this._model = model;
+            _model = model;
         }
 
         [Command("daily")]
@@ -51,7 +51,9 @@ namespace Shatter.Discord.Commands.Economy
             }
 
             if (save)
-                await _model.SaveChangesAsync();
-        }
+			{
+				await _model.SaveChangesAsync();
+			}
+		}
     }
 }

@@ -1,8 +1,5 @@
+
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
@@ -15,12 +12,21 @@ namespace Shatter.Core.Database
 		{
 			var db = ConfigurationManager.RegisterDatabase(null).Result;
 
-			if (db is null) return null;
+			if (db is null)
+			{
+				throw new InvalidConfigException("Failed to register database");
+			}
 
 			var optionsBuilder = new DbContextOptionsBuilder<ShatterDatabaseContext>();
 			optionsBuilder.UseSqlite(db.DataSource);
 
 			return new ShatterDatabaseContext(optionsBuilder.Options);
+		}
+
+		private class InvalidConfigException : Exception
+		{
+			public InvalidConfigException() : base() { }
+			public InvalidConfigException(string? message) : base(message) { }
 		}
 	}
 }

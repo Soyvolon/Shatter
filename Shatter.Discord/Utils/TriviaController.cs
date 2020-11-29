@@ -11,9 +11,12 @@ namespace Shatter.Discord.Utils
 
         public static async Task<TriviaGame?> StartGame(ulong gameChannel, int questionCount = 1, QuestionCategory questionCategory = QuestionCategory.All)
         {
-            if (ActiveTriviaGames.ContainsKey(gameChannel)) return null;
+            if (ActiveTriviaGames.ContainsKey(gameChannel))
+			{
+				return null;
+			}
 
-            var game = new TriviaGame(gameChannel, questionCount, questionCategory);
+			var game = new TriviaGame(gameChannel, questionCount, questionCategory);
 
             await game.LoadQuestionsAsync();
 

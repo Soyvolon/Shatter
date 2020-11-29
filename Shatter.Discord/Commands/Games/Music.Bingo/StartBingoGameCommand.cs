@@ -23,8 +23,8 @@ namespace Shatter.Discord.Commands.Games.Music.Bingo
 
         public StartBingoGameCommand(MusicBingoService bingo, VoiceService voice)
         {
-            this._bingo = bingo;
-            this._voice = voice;
+            _bingo = bingo;
+            _voice = voice;
         }
 
         [Command("startbingo")]
@@ -64,9 +64,11 @@ namespace Shatter.Discord.Commands.Games.Music.Bingo
                 globalNames = new HashSet<string>();
 
                 foreach (var path in paths)
-                    globalNames.Add(Path.GetFileNameWithoutExtension(path));
+				{
+					globalNames.Add(Path.GetFileNameWithoutExtension(path));
+				}
 
-                globalNames.Remove("example");
+				globalNames.Remove("example");
             }
 
             var globalData = globalNames is not null ? "`" + string.Join("`, `", globalNames) + "`" : "No boards found.";
@@ -79,8 +81,10 @@ namespace Shatter.Discord.Commands.Games.Music.Bingo
                 localNames = new HashSet<string>();
 
                 foreach(var path in paths)
-                    localNames.Add(Path.GetFileNameWithoutExtension(path));
-            }
+				{
+					localNames.Add(Path.GetFileNameWithoutExtension(path));
+				}
+			}
 
             var localData = localNames is not null ? "`" + string.Join("`, `", localNames) + "`" : "No boards found.";
 

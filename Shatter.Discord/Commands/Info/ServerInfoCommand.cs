@@ -23,9 +23,15 @@ namespace Shatter.Discord.Commands.Info
             {
                 try
                 {
-                    if (m.IsBot) bots++;
-                    else users++;
-                }
+                    if (m.IsBot)
+					{
+						bots++;
+					}
+					else
+					{
+						users++;
+					}
+				}
                 catch
                 {
                     users++;

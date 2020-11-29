@@ -39,9 +39,11 @@ namespace Shatter.Core.Structures.Music.Bingo
         {
             Songs.Shuffle(); // shuffle the list
             foreach (var s in Songs) // and queue the songs
-                QueuedSongs.Enqueue(s);
-            // create the played songs list
-            PlayedSongs = new(Songs.Count);
+			{
+				QueuedSongs.Enqueue(s);
+			}
+			// create the played songs list
+			PlayedSongs = new(Songs.Count);
 
             // build the boards
             foreach(var player in playerIds)
@@ -55,9 +57,11 @@ namespace Shatter.Core.Structures.Music.Bingo
         public MusicBingoSong? GetNextSong()
         {
             if(QueuedSongs.TryDequeue(out MusicBingoSong? song))
-                PlayedSongs?.Add(song);
+			{
+				PlayedSongs?.Add(song);
+			}
 
-            return song;
+			return song;
         }
     }
 }

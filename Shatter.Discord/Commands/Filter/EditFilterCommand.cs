@@ -21,7 +21,7 @@ namespace Shatter.Discord.Commands.Filter
 
         public EditFilterCommand(ShatterDatabaseContext model)
         {
-            this._model = model;
+            _model = model;
         }
 
         [Command("editfilter")]

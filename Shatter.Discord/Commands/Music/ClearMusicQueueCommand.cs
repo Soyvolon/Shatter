@@ -15,7 +15,7 @@ namespace Shatter.Discord.Commands.Music
 
         public ClearMusicQueueCommand(VoiceService voice)
         {
-            this._voice = voice;
+            _voice = voice;
         }
 
         [Command("clearsongs")]
@@ -41,7 +41,9 @@ namespace Shatter.Discord.Commands.Music
                 await RespondBasicSuccessAsync( $"Cleared the Queue.{(HostChanged ? $"\n{ ctx.Member.Mention} is the new host!" : "")}");
             }
             else
-                await RespondBasicErrorAsync("You do not have permission to clear the queue!");
-        }
+			{
+				await RespondBasicErrorAsync("You do not have permission to clear the queue!");
+			}
+		}
     }
 }

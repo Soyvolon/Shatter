@@ -15,7 +15,7 @@ namespace Shatter.Discord.Commands.Music
 
         public DisconnectVoice(VoiceService voice)
         {
-            this._voice = voice;
+            _voice = voice;
         }
 
         [Command("disconnect")]
@@ -36,18 +36,24 @@ namespace Shatter.Discord.Commands.Music
             bool disconected = false;
 
             if (_voice.IsDJ(ctx, out bool _))
-                disconected = true;
+			{
+				disconected = true;
+			}
 
-            if (ctx.Member.PermissionsIn(conn.Channel).HasPermission(Permissions.ManageChannels))
-                disconected = true;
+			if (ctx.Member.PermissionsIn(conn.Channel).HasPermission(Permissions.ManageChannels))
+			{
+				disconected = true;
+			}
 
-            if (disconected)
+			if (disconected)
             {
                 await conn.DisconnectAsync();
                 await RespondBasicSuccessAsync( "Bye Bye :wave:");
             }
             else
-                await RespondBasicErrorAsync("You don't have permission for that!");
-        }
+			{
+				await RespondBasicErrorAsync("You don't have permission for that!");
+			}
+		}
     }
 }

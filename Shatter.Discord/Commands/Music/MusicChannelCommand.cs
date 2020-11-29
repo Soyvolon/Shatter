@@ -15,7 +15,7 @@ namespace Shatter.Discord.Commands.Music
 
         public MusicChannelCommand(VoiceService voice)
         {
-            this._voice = voice;
+            _voice = voice;
         }
 
         [Command("playingchannel")]
@@ -41,7 +41,9 @@ namespace Shatter.Discord.Commands.Music
                 await RespondBasicSuccessAsync( $"Playing message channel changed.{(HostChanged ? $"\n{ ctx.Member.Mention} is the new host!" : "")}");
             }
             else
-                await RespondBasicErrorAsync("You do not have permission to change the playing messages channel!");
-        }
+			{
+				await RespondBasicErrorAsync("You do not have permission to change the playing messages channel!");
+			}
+		}
     }
 }

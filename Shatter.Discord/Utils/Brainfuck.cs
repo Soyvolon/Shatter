@@ -29,10 +29,14 @@ namespace Shatter.Discord.Utils
                 else
                 {
                     if (c == '[')
-                        startLoops++;
-                    else if (c == ']')
-                        endLoops++;
-                }
+					{
+						startLoops++;
+					}
+					else if (c == ']')
+					{
+						endLoops++;
+					}
+				}
             }
 
             if (startLoops != endLoops)

@@ -24,7 +24,7 @@ namespace Shatter.Discord.Commands.Image
 
         public DeathNoteCommand(MemeService meme)
         {
-            this._meme = meme;
+            _meme = meme;
         }
 
         [Command("deathnote")]
