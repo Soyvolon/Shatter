@@ -19,7 +19,7 @@ namespace Shatter.Discord.Commands.Filter
 
         public FilterIgnoreCommand(ShatterDatabaseContext model)
         {
-            _model = model;
+			this._model = model;
         }
 
         [Command("filterignore")]
@@ -58,12 +58,12 @@ namespace Shatter.Discord.Commands.Filter
         {
             var name = filterName?.ToLower() ?? GuildFilters.AllFilters; // A indicates ALL filters.
 
-            var filter = await _model.FindAsync<GuildFilters>(ctx.Guild.Id);
+            var filter = await this._model.FindAsync<GuildFilters>(ctx.Guild.Id);
             if (filter is null)
             {
                 filter = new GuildFilters(ctx.Guild.Id);
-                await _model.AddAsync(filter);
-                await _model.SaveChangesAsync();
+                await this._model.AddAsync(filter);
+                await this._model.SaveChangesAsync();
             }
 
             if (name != GuildFilters.AllFilters && !filter.Filters.TryGetValue(name, out var fData))
@@ -93,8 +93,8 @@ namespace Shatter.Discord.Commands.Filter
 				}
 			}
 
-            filter.BypassFilters.UpdateOrAddValue(id, currentNames, filter, _model);
-            await _model.SaveChangesAsync();
+            filter.BypassFilters.UpdateOrAddValue(id, currentNames, filter, this._model);
+            await this._model.SaveChangesAsync();
 
             await RespondBasicSuccessAsync( $"Bypass filter {(added ? "added" : "removed")}.");
         }

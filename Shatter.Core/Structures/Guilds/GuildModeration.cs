@@ -21,11 +21,11 @@ namespace Shatter.Core.Structures.Guilds
 
         public GuildModeration(ulong gid)
         {
-            GuildId = gid;
-            UserBans = new ConcurrentDictionary<ulong, DateTime>();
-            SlowmodeLocks = new ConcurrentDictionary<ulong, DateTime>();
-            UserMutes = new ConcurrentDictionary<ulong, DateTime>();
-            ModLogChannel = null;
+			this.GuildId = gid;
+			this.UserBans = new ConcurrentDictionary<ulong, DateTime>();
+			this.SlowmodeLocks = new ConcurrentDictionary<ulong, DateTime>();
+			this.UserMutes = new ConcurrentDictionary<ulong, DateTime>();
+			this.ModLogChannel = null;
         }
     }
 }

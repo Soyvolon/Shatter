@@ -16,7 +16,7 @@ namespace Shatter.Discord.Commands.Config
 
         public Prefix(ShatterDatabaseContext model)
         {
-            _model = model;
+			this._model = model;
         }
 
         [Command("prefix")]
@@ -27,7 +27,7 @@ namespace Shatter.Discord.Commands.Config
         {
             var p = prefix.Trim();
 
-            var config = await _model.Configs.FindAsync(ctx.Guild.Id);
+            var config = await this._model.Configs.FindAsync(ctx.Guild.Id);
 
             if (config is null)
             {
@@ -41,7 +41,7 @@ namespace Shatter.Discord.Commands.Config
             {
                 config.Prefix = p;
 
-                await _model.SaveChangesAsync();
+                await this._model.SaveChangesAsync();
             }
 
             await ctx.RespondAsync($"Your server's prefix is now: `{p}`!");

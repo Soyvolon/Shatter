@@ -217,8 +217,8 @@ namespace Shatter.Discord.Utils
                 var dms = await e.Member.CreateDmChannelAsync();
 
                 await dms.SendMessageAsync(msg);
-            }
-            catch { } // ignore
-        }
+			}
+			catch { /* If it doesnt sent to the user, its most likely because the user has DMs disabled. Ignore. */ } // ignore
+		}
     }
 }

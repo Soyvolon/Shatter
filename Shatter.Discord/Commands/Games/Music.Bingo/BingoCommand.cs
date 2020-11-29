@@ -13,7 +13,7 @@ namespace Shatter.Discord.Commands.Games.Music.Bingo
 
         public BingoCommand(MusicBingoService bingo)
         {
-            _bingo = bingo;
+			this._bingo = bingo;
         }
 
         [Command("bingo")]
@@ -27,7 +27,7 @@ namespace Shatter.Discord.Commands.Games.Music.Bingo
                 return;
             }
 
-            if (_bingo.ActiveGames.TryGetValue(ctx.Guild.Id, out var game))
+            if (this._bingo.ActiveGames.TryGetValue(ctx.Guild.Id, out var game))
             {
                 if (game.BingoBoards.TryGetValue(ctx.User.Id, out var board))
                 {
@@ -39,7 +39,7 @@ namespace Shatter.Discord.Commands.Games.Music.Bingo
 
                     if(board.IsWinner(game.PlayedSongs))
                     {
-                        _bingo.StopGame(ctx.Guild.Id);
+						this._bingo.StopGame(ctx.Guild.Id);
                         await RespondBasicSuccessAsync($"Congrats {ctx.User.Mention}, you won the bingo game!");
                     }
                     else

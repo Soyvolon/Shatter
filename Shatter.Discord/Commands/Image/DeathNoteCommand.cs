@@ -24,7 +24,7 @@ namespace Shatter.Discord.Commands.Image
 
         public DeathNoteCommand(MemeService meme)
         {
-            _meme = meme;
+			this._meme = meme;
         }
 
         [Command("deathnote")]
@@ -35,9 +35,9 @@ namespace Shatter.Discord.Commands.Image
             [Description("User to add to your DeathNote")]
             DiscordMember member)
         {
-            captions[0] = new Tuple<Rectangle, string, Brush?>(captions[0].Item1, member.DisplayName, null);
+			this.captions[0] = new Tuple<Rectangle, string, Brush?>(this.captions[0].Item1, member.DisplayName, null);
 
-            using var stream = await _meme.BuildMemeAsync(Resources.Images_DeathNote, captions, "apple", 12, new SolidBrush(Color.Black));
+            using var stream = await this._meme.BuildMemeAsync(Resources.Images_DeathNote, this.captions, "apple", 12, new SolidBrush(Color.Black));
 
             await ctx.RespondWithFileAsync("deathnote-meme.png", stream, ctx.Member.Id == member.Id ? "*Looks like you killed yourself*" : "");
         }

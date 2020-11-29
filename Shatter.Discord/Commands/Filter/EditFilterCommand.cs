@@ -21,7 +21,7 @@ namespace Shatter.Discord.Commands.Filter
 
         public EditFilterCommand(ShatterDatabaseContext model)
         {
-            _model = model;
+			this._model = model;
         }
 
         [Command("editfilter")]
@@ -42,7 +42,7 @@ namespace Shatter.Discord.Commands.Filter
         {
             var name = filterName.ToLower();
 
-            var filter = await _model.FindAsync<GuildFilters>(ctx.Guild.Id);
+            var filter = await this._model.FindAsync<GuildFilters>(ctx.Guild.Id);
             if (filter is null || !filter.Filters.TryGetValue(name, out var filterData))
             {
                 await RespondBasicErrorAsync("Filter does not exist");
@@ -61,8 +61,8 @@ namespace Shatter.Discord.Commands.Filter
                     break;
             }
 
-            filter.Filters.UpdateOrAddValue(name, new Tuple<int, HashSet<string>>(filterData.Item1, filterWords), filter, _model);
-            await _model.SaveChangesAsync();
+            filter.Filters.UpdateOrAddValue(name, new Tuple<int, HashSet<string>>(filterData.Item1, filterWords), filter, this._model);
+            await this._model.SaveChangesAsync();
 
             await RespondBasicSuccessAsync( $"Edited filter {name}, the filter now contains the words:\n" +
                 $"`{string.Join("`, `", filterWords)}`");

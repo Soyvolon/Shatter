@@ -16,7 +16,7 @@ namespace Shatter.Discord.Commands.Music
 
         public SkipToMusicCommand(VoiceService voice)
         {
-            _voice = voice;
+			this._voice = voice;
         }
 
         [Command("skipto")]
@@ -26,7 +26,7 @@ namespace Shatter.Discord.Commands.Music
         [ExecutionModule("music")]
         public async Task SkipToMusicCommandAsync(CommandContext ctx, int amount)
         {
-            var conn = await _voice.GetGuildConnection(ctx);
+            var conn = await this._voice.GetGuildConnection(ctx);
 
             if (conn is null)
             {
@@ -34,10 +34,10 @@ namespace Shatter.Discord.Commands.Music
                 return;
             }
 
-            if (_voice.IsDJ(ctx, out bool HostChanged)
+            if (this._voice.IsDJ(ctx, out bool HostChanged)
                 || ctx.Member.PermissionsIn(conn.Channel).HasPermission(Permissions.ManageChannels))
             {
-                if (_voice.GuildQueues.TryGetValue(ctx.Guild.Id, out var queue))
+                if (this._voice.GuildQueues.TryGetValue(ctx.Guild.Id, out var queue))
                 {
                     var i = 0; // ammount - 1 to include the current track.
                     LavalinkTrack? track;
@@ -48,7 +48,7 @@ namespace Shatter.Discord.Commands.Music
 
 					if (track is null)
                     {
-                        _voice.GuildQueues.TryRemove(ctx.Guild.Id, out _);
+						this._voice.GuildQueues.TryRemove(ctx.Guild.Id, out _);
                         await RespondBasicSuccessAsync( $"All songs skipped.{(HostChanged ? $"\n{ctx.Member.Mention} is the new host!" : "")}");
                     }
                     else

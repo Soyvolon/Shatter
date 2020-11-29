@@ -18,8 +18,8 @@ namespace Shatter.Discord.Commands.Games
 
         public CoinFlipGameCommand(ShatterDatabaseContext model)
         {
-            _model = model;
-            Random = new Random();
+			this._model = model;
+			this.Random = new Random();
         }
 
         [Command("coinflip")]
@@ -30,7 +30,7 @@ namespace Shatter.Discord.Commands.Games
         [ExecutionModule("games")]
         public async Task ExampleCommandAsync(CommandContext ctx)
         {
-            var wallet = _model.Wallets.Find(ctx.User.Id);
+            var wallet = this._model.Wallets.Find(ctx.User.Id);
             if (wallet is null)
             {
                 wallet = new Wallet(ctx.User.Id, ctx.User.Username);
@@ -38,7 +38,7 @@ namespace Shatter.Discord.Commands.Games
 
             if (wallet.HasEnough(1))
             {
-                if (Random.NextDouble() >= 0.5)
+                if (this.Random.NextDouble() >= 0.5)
                 {
                     wallet.Add(1);
                     await ctx.RespondAsync("Heads! Here, keep it.");
@@ -54,7 +54,7 @@ namespace Shatter.Discord.Commands.Games
                 await ctx.RespondAsync("You don't have a coin to bet!");
             }
 
-            await _model.SaveChangesAsync();
+            await this._model.SaveChangesAsync();
         }
     }
 }

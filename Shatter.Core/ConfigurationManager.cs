@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -26,7 +26,7 @@ namespace Shatter.Core
                 {
                     return JsonConvert.DeserializeObject<BotConfig>(json);
                 }
-                catch { }
+                catch { /* Ignore JSON erros, a null value will be returned later after logging. */ }
             }
 
             if (logger is null)
@@ -53,9 +53,9 @@ namespace Shatter.Core
                 try
                 {
                     return JsonConvert.DeserializeObject<DatabaseConfig>(json);
-                }
-                catch { }
-            }
+				}
+				catch { /* Ignore JSON erros, a null value will be returned later after logging. */ }
+			}
 
             if (logger is null)
 			{
@@ -80,9 +80,9 @@ namespace Shatter.Core
                 try
                 {
                     return JsonConvert.DeserializeObject<LavalinkConfig>(json);
-                }
-                catch { }
-            }
+				}
+				catch { /* Ignore JSON erros, a null value will be returned later after logging. */ }
+			}
 
             if (logger is null)
 			{
@@ -108,9 +108,9 @@ namespace Shatter.Core
                 try
                 {
                     return JsonConvert.DeserializeObject<YouTubeConfig>(json);
-                }
-                catch { }
-            }
+				}
+				catch { /* Ignore JSON erros, a null value will be returned later after logging. */ }
+			}
 
             if (logger is null)
 			{

@@ -22,20 +22,20 @@ namespace Shatter.Core.Structures.Trivia
 
         public TriviaGame(ulong channel, int questions = 1, QuestionCategory category = QuestionCategory.All)
         {
-            ChannelId = channel;
-            Category = category;
-            QuestionCount = questions;
-            Players = new ConcurrentDictionary<ulong, TriviaPlayer>();
+			this.ChannelId = channel;
+			this.Category = category;
+			this.QuestionCount = questions;
+			this.Players = new ConcurrentDictionary<ulong, TriviaPlayer>();
         }
 
         public async Task LoadQuestionsAsync()
         {
             var client = new HttpClient();
-            string request = request_base + "&" + amount_base + QuestionCount;
+            string request = request_base + "&" + amount_base + this.QuestionCount;
 
-            if (Category != QuestionCategory.All)
+            if (this.Category != QuestionCategory.All)
 			{
-				request += $"&{category_base}{(int)Category}";
+				request += $"&{category_base}{(int)this.Category}";
 			}
 
 			var res = await client.GetAsync(request);
@@ -49,22 +49,22 @@ namespace Shatter.Core.Structures.Trivia
 				throw new Exception("API Error. Check input string.");
 			}
 
-			Questions = new ConcurrentBag<TriviaQuestion>();
+			this.Questions = new ConcurrentBag<TriviaQuestion>();
 
             foreach (var question in triviaResponse.Questions)
             {
-                Questions.Add(new TriviaQuestion(question));
+				this.Questions.Add(new TriviaQuestion(question));
             }
         }
 
         public Task<bool> PopNextQuestion(out TriviaQuestion? question)
         {
-            if (Questions is null)
+            if (this.Questions is null)
 			{
 				throw new Exception("Triva Questions not Loaded.");
 			}
 
-			if (Questions.TryTake(out question))
+			if (this.Questions.TryTake(out question))
 			{
 				return Task.FromResult(true);
 			}

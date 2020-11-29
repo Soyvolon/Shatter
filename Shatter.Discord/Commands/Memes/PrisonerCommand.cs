@@ -23,7 +23,7 @@ namespace Shatter.Discord.Commands.Memes
 
         public PrisonerCommand(MemeService meme)
         {
-            _meme = meme;
+			this._meme = meme;
         }
 
         [Command("prisoner")]
@@ -35,9 +35,9 @@ namespace Shatter.Discord.Commands.Memes
             [Description("The message for the prisoner")]
             [RemainingText] string msg)
         {
-            captions[0] = new Tuple<Rectangle, string, Brush?>(captions[0].Item1, msg, null);
+			this.captions[0] = new Tuple<Rectangle, string, Brush?>(this.captions[0].Item1, msg, null);
 
-            using var img = await _meme.BuildMemeAsync(Resources.Images_Prison, captions, "roboto", 10, new SolidBrush(Color.Black));
+            using var img = await this._meme.BuildMemeAsync(Resources.Images_Prison, this.captions, "roboto", 10, new SolidBrush(Color.Black));
 
             await ctx.RespondWithFileAsync("prisoner-meme.png", img);
         }

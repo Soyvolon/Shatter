@@ -15,13 +15,13 @@ namespace Shatter.Tests
         [OneTimeSetUp]
         public void SetUp()
         {
-            Http = new HttpClient();
+			this.Http = new HttpClient();
         }
 
         [OneTimeTearDown]
         public void TearDown()
         {
-            Http.Dispose();
+			this.Http.Dispose();
         }
 
         [Test]

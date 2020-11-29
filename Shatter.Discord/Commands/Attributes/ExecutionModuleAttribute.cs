@@ -7,7 +7,7 @@ namespace Shatter.Discord.Commands.Attributes
     {
         public ExecutionModuleAttribute(string Group)
         {
-            GroupName = Group;
+			this.GroupName = Group;
         }
 
         public string GroupName { get; set; }

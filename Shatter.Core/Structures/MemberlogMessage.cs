@@ -1,4 +1,4 @@
-﻿
+
 using Microsoft.EntityFrameworkCore;
 
 namespace Shatter.Core.Structures
@@ -13,18 +13,18 @@ namespace Shatter.Core.Structures
 
         public MemberlogMessage()
         {
-            Message = null;
-            IsEmbed = false;
-            IsImage = false;
-            ImageUrl = null;
+			this.Message = null;
+			this.IsEmbed = false;
+			this.IsImage = false;
+			this.ImageUrl = null;
         }
 
         public MemberlogMessage(string? msg, bool isEmbed, bool hasImage, string? imageUrl)
         {
-            Message = Message;
-            IsEmbed = isEmbed;
-            IsImage = hasImage;
-            ImageUrl = imageUrl;
+			this.Message = msg;
+			this.IsEmbed = isEmbed;
+			this.IsImage = hasImage;
+			this.ImageUrl = imageUrl;
         }
     }
 }

@@ -27,10 +27,10 @@ namespace Shatter.Discord.Utils
 
         public CommandHandler(IReadOnlyDictionary<string, Command>? commands, DiscordClient client, BotConfig botConfig)
         {
-            _commands = commands;
-            _config = botConfig;
-            _client = client;
-            _logger = _client.Logger;
+			this._commands = commands;
+			this._config = botConfig;
+			this._client = client;
+			this._logger = this._client.Logger;
         }
 
         // TODO: Update to save guild config state. This will run as is, but will not hold any saved data between sessions.
@@ -40,7 +40,7 @@ namespace Shatter.Discord.Utils
             {
                 cancellationToken.ThrowIfCancellationRequested();
 
-				if (_commands is null)
+				if (this._commands is null)
 				{
 					return;
 				}
@@ -54,7 +54,7 @@ namespace Shatter.Discord.Utils
                     guildConfig = new GuildConfig
                     {
                         GuildId = msg.Channel.GuildId,
-                        Prefix = _config.Prefix
+                        Prefix = this._config.Prefix
                     };
 
                     model.Configs.Add(guildConfig);
@@ -127,13 +127,13 @@ namespace Shatter.Discord.Utils
 
         public async Task<int> PrefixResolver(DiscordMessage msg, GuildConfig guildConfig)
         {
-            if (!msg.Channel.PermissionsFor(await msg.Channel.Guild.GetMemberAsync(_client.CurrentUser.Id).ConfigureAwait(false)).HasPermission(Permissions.SendMessages))
+            if (!msg.Channel.PermissionsFor(await msg.Channel.Guild.GetMemberAsync(this._client.CurrentUser.Id).ConfigureAwait(false)).HasPermission(Permissions.SendMessages))
 			{
 				return -1; //Checks if bot can't send messages, if so ignore.
 			}
-			else if (msg.Content.StartsWith(_client.CurrentUser.Mention))
+			else if (msg.Content.StartsWith(this._client.CurrentUser.Mention))
 			{
-				return _client.CurrentUser.Mention.Length; // Always respond to a mention.
+				return this._client.CurrentUser.Mention.Length; // Always respond to a mention.
 			}
 			else
             {
@@ -148,7 +148,7 @@ namespace Shatter.Discord.Utils
                 }
                 catch (Exception err)
                 {
-                    _logger.LogError(DiscordBot.Event_CommandHandler, $"Prefix Resolver failed in guild {msg.Channel.Guild.Name}:", DateTime.Now, err);
+					this._logger.LogError(DiscordBot.Event_CommandHandler, $"Prefix Resolver failed in guild {msg.Channel.Guild.Name}:", DateTime.Now, err);
                     return -1;
                 }
             }

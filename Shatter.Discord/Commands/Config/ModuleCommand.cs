@@ -21,7 +21,7 @@ namespace Shatter.Discord.Commands.Config
 
         public ModuleCommand(ShatterDatabaseContext database)
         {
-            _database = database;
+			this._database = database;
         }
 
         [Command("module")]
@@ -157,7 +157,7 @@ namespace Shatter.Discord.Commands.Config
         {
             if(DiscordBot.Bot?.CommandGroups is not null)
             {
-                var guild = await _database.FindAsync<GuildConfig>(ctx.Guild.Id);
+                var guild = await this._database.FindAsync<GuildConfig>(ctx.Guild.Id);
 
                 if (guild is null)
                 {
@@ -165,8 +165,8 @@ namespace Shatter.Discord.Commands.Config
                     {
                         Prefix = ctx.Prefix,
                     };
-                    await _database.AddAsync(guild);
-                    await _database.SaveChangesAsync();
+                    await this._database.AddAsync(guild);
+                    await this._database.SaveChangesAsync();
                 }
 
                 HashSet<string> disabledModules = new();
@@ -219,7 +219,7 @@ namespace Shatter.Discord.Commands.Config
         {
             if (DiscordBot.Bot?.CommandGroups is not null)
             {
-                var guild = await _database.FindAsync<GuildConfig>(ctx.Guild.Id);
+                var guild = await this._database.FindAsync<GuildConfig>(ctx.Guild.Id);
 
                 if (guild is null)
                 {
@@ -227,8 +227,8 @@ namespace Shatter.Discord.Commands.Config
                     {
                         Prefix = ctx.Prefix,
                     };
-                    await _database.AddAsync(guild);
-                    await _database.SaveChangesAsync();
+                    await this._database.AddAsync(guild);
+                    await this._database.SaveChangesAsync();
                 }
 
                 HashSet<string> disabledCommands = new();
@@ -285,7 +285,7 @@ namespace Shatter.Discord.Commands.Config
         {
             if (DiscordBot.Bot?.CommandGroups is not null)
             {
-                var guild = await _database.FindAsync<GuildConfig>(ctx.Guild.Id);
+                var guild = await this._database.FindAsync<GuildConfig>(ctx.Guild.Id);
 
                 if (guild is null)
                 {
@@ -293,16 +293,16 @@ namespace Shatter.Discord.Commands.Config
                     {
                         Prefix = ctx.Prefix,
                     };
-                    await _database.AddAsync(guild);
-                    await _database.SaveChangesAsync();
+                    await this._database.AddAsync(guild);
+                    await this._database.SaveChangesAsync();
                 }
 
                 if(DiscordBot.Bot.CommandGroups.ContainsKey(module))
                 {
                     if (guild.DisabledModules.Add(module))
                     {
-                        _database.Update(guild);
-                        await _database.SaveChangesAsync();
+						this._database.Update(guild);
+                        await this._database.SaveChangesAsync();
 
                         await RespondBasicSuccessAsync($"Disabled module: {module}");
                     }
@@ -326,7 +326,7 @@ namespace Shatter.Discord.Commands.Config
         {
             if (DiscordBot.Bot?.CommandGroups is not null)
             {
-                var guild = await _database.FindAsync<GuildConfig>(ctx.Guild.Id);
+                var guild = await this._database.FindAsync<GuildConfig>(ctx.Guild.Id);
 
                 if (guild is null)
                 {
@@ -334,16 +334,16 @@ namespace Shatter.Discord.Commands.Config
                     {
                         Prefix = ctx.Prefix,
                     };
-                    await _database.AddAsync(guild);
-                    await _database.SaveChangesAsync();
+                    await this._database.AddAsync(guild);
+                    await this._database.SaveChangesAsync();
                 }
 
                 if (DiscordBot.Bot.CommandGroups.ContainsKey(module))
                 {
                     if (guild.DisabledModules.Remove(module))
                     {
-                        _database.Update(guild);
-                        await _database.SaveChangesAsync();
+						this._database.Update(guild);
+                        await this._database.SaveChangesAsync();
 
                         await RespondBasicSuccessAsync($"Enabled module: {module}");
                     }
@@ -367,7 +367,7 @@ namespace Shatter.Discord.Commands.Config
         {
             if (DiscordBot.Bot?.CommandGroups is not null)
             {
-                var guild = await _database.FindAsync<GuildConfig>(ctx.Guild.Id);
+                var guild = await this._database.FindAsync<GuildConfig>(ctx.Guild.Id);
 
                 if (guild is null)
                 {
@@ -375,8 +375,8 @@ namespace Shatter.Discord.Commands.Config
                     {
                         Prefix = ctx.Prefix,
                     };
-                    await _database.AddAsync(guild);
-                    await _database.SaveChangesAsync();
+                    await this._database.AddAsync(guild);
+                    await this._database.SaveChangesAsync();
                 }
 
                 if (DiscordBot.Bot.Commands?.ContainsKey(command) ?? false)
@@ -384,8 +384,8 @@ namespace Shatter.Discord.Commands.Config
                     if (guild.DisabledCommands.Add(command))
                     {
                         guild.ActivatedCommands.Remove(command);
-                        _database.Update(guild);
-                        await _database.SaveChangesAsync();
+						this._database.Update(guild);
+                        await this._database.SaveChangesAsync();
 
                         await RespondBasicSuccessAsync($"Disabled command: {command}");
                     }
@@ -409,7 +409,7 @@ namespace Shatter.Discord.Commands.Config
         {
             if (DiscordBot.Bot?.CommandGroups is not null)
             {
-                var guild = await _database.FindAsync<GuildConfig>(ctx.Guild.Id);
+                var guild = await this._database.FindAsync<GuildConfig>(ctx.Guild.Id);
 
                 if (guild is null)
                 {
@@ -417,8 +417,8 @@ namespace Shatter.Discord.Commands.Config
                     {
                         Prefix = ctx.Prefix,
                     };
-                    await _database.AddAsync(guild);
-                    await _database.SaveChangesAsync();
+                    await this._database.AddAsync(guild);
+                    await this._database.SaveChangesAsync();
                 }
 
                 if (DiscordBot.Bot.Commands?.ContainsKey(command) ?? false)
@@ -426,8 +426,8 @@ namespace Shatter.Discord.Commands.Config
                     if (guild.ActivatedCommands.Add(command))
                     {
                         guild.DisabledCommands.Remove(command);
-                        _database.Update(guild);
-                        await _database.SaveChangesAsync();
+						this._database.Update(guild);
+                        await this._database.SaveChangesAsync();
 
                         await RespondBasicSuccessAsync($"Enabled command: {command}");
                     }
@@ -451,7 +451,7 @@ namespace Shatter.Discord.Commands.Config
         {
             if (DiscordBot.Bot?.CommandGroups is not null)
             {
-                var guild = await _database.FindAsync<GuildConfig>(ctx.Guild.Id);
+                var guild = await this._database.FindAsync<GuildConfig>(ctx.Guild.Id);
 
                 if (guild is null)
                 {
@@ -459,16 +459,16 @@ namespace Shatter.Discord.Commands.Config
                     {
                         Prefix = ctx.Prefix,
                     };
-                    await _database.AddAsync(guild);
-                    await _database.SaveChangesAsync();
+                    await this._database.AddAsync(guild);
+                    await this._database.SaveChangesAsync();
                 }
 
                 if (DiscordBot.Bot.Commands?.ContainsKey(command) ?? false)
                 {
                     if (guild.ActivatedCommands.Remove(command) | guild.DisabledCommands.Remove(command))
                     {
-                        _database.Update(guild);
-                        await _database.SaveChangesAsync();
+						this._database.Update(guild);
+                        await this._database.SaveChangesAsync();
 
                         await RespondBasicSuccessAsync($"Defaulted command: {command}");
                     }

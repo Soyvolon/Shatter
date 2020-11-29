@@ -30,15 +30,15 @@ namespace Shatter.Discord.Services
 
         public MemeService()
         {
-            // TODO update paths to be Path.Join for OS specific releases.
-            FontCollection.AddFontFile("./Resources/Fonts/ArchitectsDaughter-Regular.ttf");
-            FontCollection.AddFontFile("./Resources/Fonts/Bangers-Regular.ttf");
-            FontCollection.AddFontFile("./Resources/Fonts/HomemadeApple-Regular.ttf");
-            FontCollection.AddFontFile("./Resources/Fonts/Roboto-Black.ttf");
-            FontCollection.AddFontFile("./Resources/Fonts/Roboto-Regular.ttf");
-            FontCollection.AddFontFile("./Resources/Fonts/Schoolbell-Regular.ttf");
+			// TODO update paths to be Path.Join for OS specific releases.
+			this.FontCollection.AddFontFile("./Resources/Fonts/ArchitectsDaughter-Regular.ttf");
+			this.FontCollection.AddFontFile("./Resources/Fonts/Bangers-Regular.ttf");
+			this.FontCollection.AddFontFile("./Resources/Fonts/HomemadeApple-Regular.ttf");
+			this.FontCollection.AddFontFile("./Resources/Fonts/Roboto-Black.ttf");
+			this.FontCollection.AddFontFile("./Resources/Fonts/Roboto-Regular.ttf");
+			this.FontCollection.AddFontFile("./Resources/Fonts/Schoolbell-Regular.ttf");
 
-            fonts = FontCollection.Families;
+			this.fonts = this.FontCollection.Families;
         }
 
         public async Task<MemoryStream?> BuildMemeAsync(Bitmap image, Tuple<Rectangle, string, Brush?>[] captions, string? font = null, int fsize = 16, Brush? defaultBrush = null)
@@ -56,7 +56,7 @@ namespace Shatter.Discord.Services
 
             var mem = new MemoryStream();
 
-            map?.Save(mem, ImageFormat.Png);
+			this.map?.Save(mem, ImageFormat.Png);
 
             mem?.Seek(0, SeekOrigin.Begin);
 
@@ -65,8 +65,8 @@ namespace Shatter.Discord.Services
 
         public Task RegisterGraphics(Bitmap image)
         {
-            map = image;
-            img = Graphics.FromImage(map);
+			this.map = image;
+			this.img = Graphics.FromImage(this.map);
 
             return Task.CompletedTask;
         }
@@ -78,9 +78,9 @@ namespace Shatter.Discord.Services
             {
                 try
                 {
-                    f = new Font(family: fonts[id], size);
+                    f = new Font(family: this.fonts[id], size);
                 }
-                catch { }
+                catch { /* default font is created later if this fails */ }
             }
 
             if (f is null)
@@ -97,11 +97,11 @@ namespace Shatter.Discord.Services
         {
             if (brush is null)
 			{
-				defaultBrush = new SolidBrush(Color.Black);
+				this.defaultBrush = new SolidBrush(Color.Black);
 			}
 			else
 			{
-				defaultBrush = brush;
+				this.defaultBrush = brush;
 			}
 
 			return Task.CompletedTask;
@@ -109,32 +109,32 @@ namespace Shatter.Discord.Services
 
         public Task AddText(Rectangle position, string caption, Brush? brush)
         {
-            if (img is null)
+            if (this.img is null)
 			{
 				throw new Exception("Bitmap is null. A Bitmap must be registered with MemeService.RegisterBitmap");
 			}
 
 			// Register a font and brush if the saved item is null
-			if (font is null)
+			if (this.font is null)
 			{
 				RegisterFont(null);
 			}
 
-			if (defaultBrush is null)
+			if (this.defaultBrush is null)
 			{
 				RegisterBrush(null);
 			}
 
-			img.DrawString(caption, font ?? new Font("Arial", 18), brush ?? defaultBrush ?? new SolidBrush(Color.Black), position);
+			this.img.DrawString(caption, this.font ?? new Font("Arial", 18), brush ?? this.defaultBrush ?? new SolidBrush(Color.Black), position);
 
             return Task.CompletedTask;
         }
 
         public void Dispose()
         {
-            img?.Dispose();
-            defaultBrush?.Dispose();
-            font?.Dispose();
+			this.img?.Dispose();
+			this.defaultBrush?.Dispose();
+			this.font?.Dispose();
         }
     }
 }

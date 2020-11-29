@@ -23,7 +23,7 @@ namespace Shatter.Discord.Commands.Memes
 
         public NutCommand(MemeService meme)
         {
-            _meme = meme;
+			this._meme = meme;
         }
 
         [Command("nut")]
@@ -35,9 +35,9 @@ namespace Shatter.Discord.Commands.Memes
             [Description("Text to put in the meme")]
             [RemainingText] string msg)
         {
-            captions[0] = new Tuple<Rectangle, string, Brush?>(captions[0].Item1, msg, null);
+			this.captions[0] = new Tuple<Rectangle, string, Brush?>(this.captions[0].Item1, msg, null);
 
-            using var img = await _meme.BuildMemeAsync(Resources.Images_NutMeme, captions, "roboto", 40, new SolidBrush(Color.Black));
+            using var img = await this._meme.BuildMemeAsync(Resources.Images_NutMeme, this.captions, "roboto", 40, new SolidBrush(Color.Black));
 
             await ctx.RespondWithFileAsync("nut-meme.png", img);
         }

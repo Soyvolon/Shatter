@@ -15,7 +15,7 @@ namespace Shatter.Discord.Commands.Music
 
         public MusicChannelCommand(VoiceService voice)
         {
-            _voice = voice;
+			this._voice = voice;
         }
 
         [Command("playingchannel")]
@@ -26,7 +26,7 @@ namespace Shatter.Discord.Commands.Music
         [ExecutionModule("music")]
         public async Task MusicChannelCommandAsync(CommandContext ctx)
         {
-            var conn = await _voice.GetGuildConnection(ctx);
+            var conn = await this._voice.GetGuildConnection(ctx);
 
             if (conn is null)
             {
@@ -34,10 +34,10 @@ namespace Shatter.Discord.Commands.Music
                 return;
             }
 
-            if (_voice.IsDJ(ctx, out bool HostChanged)
+            if (this._voice.IsDJ(ctx, out bool HostChanged)
                 || ctx.Member.PermissionsIn(conn.Channel).HasPermission(Permissions.ManageChannels))
             {
-                _voice.PlayingStatusMessages[ctx.Guild.Id] = ctx.Channel.Id;
+				this._voice.PlayingStatusMessages[ctx.Guild.Id] = ctx.Channel.Id;
                 await RespondBasicSuccessAsync( $"Playing message channel changed.{(HostChanged ? $"\n{ ctx.Member.Mention} is the new host!" : "")}");
             }
             else

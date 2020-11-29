@@ -23,7 +23,7 @@ namespace Shatter.Discord.Commands.Memes
 
         public TheSearchCommand(MemeService meme)
         {
-            _meme = meme;
+			this._meme = meme;
         }
 
         [Command("thesearch")]
@@ -35,11 +35,11 @@ namespace Shatter.Discord.Commands.Memes
             [Description("A stupid idea")]
             [RemainingText] string msg)
         {
-            captions[0] = new Tuple<Rectangle, string, Brush?>(captions[0].Item1, msg.ToUpper(), null);
+			this.captions[0] = new Tuple<Rectangle, string, Brush?>(this.captions[0].Item1, msg.ToUpper(), null);
 
             var font = 2;
 
-            using var img = await _meme.BuildMemeAsync(Resources.Images_TheSearch, captions, "architect", font, new SolidBrush(Color.DarkSlateGray));
+            using var img = await this._meme.BuildMemeAsync(Resources.Images_TheSearch, this.captions, "architect", font, new SolidBrush(Color.DarkSlateGray));
 
             await ctx.RespondWithFileAsync("thesearch-meme.png", img);
         }

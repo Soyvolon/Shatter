@@ -39,54 +39,54 @@ namespace Shatter.Tests
             var lavalConfig = (LavalinkConfig)await ConfigurationManager.RegisterLavaLink(null);
             var ytCfg = (YouTubeConfig)await ConfigurationManager.RegisterYouTube(null);
 
-            Bot = new DiscordBot(botCfg, lavalConfig, ytCfg, new ServiceCollection(), true); // Designate test run.
+			this.Bot = new DiscordBot(botCfg, lavalConfig, ytCfg, new ServiceCollection(), true); // Designate test run.
 
-            await Bot.InitializeAsync();
+            await this.Bot.InitializeAsync();
 
-            await Bot.StartAsync();
+            await this.Bot.StartAsync();
 
-            Client = Bot.Client;
+			this.Client = this.Bot.Client;
 
-            Assert.True(Bot.Boot == DiscordBot.BootStatus.ready, "Boot status not marked as ready.");
+            Assert.True(this.Bot.Boot == DiscordBot.BootStatus.ready, "Boot status not marked as ready.");
 
-            foreach (var s in Client.ShardClients.Values)
+            foreach (var s in this.Client.ShardClients.Values)
             {
                 if (s.Guilds.TryGetValue(TestingGuildId, out var guild))
                 {
-                    TestingGuild = guild;
-                    TestingShardId = s.ShardId;
+					this.TestingGuild = guild;
+					this.TestingShardId = s.ShardId;
                 }
             }
 
-            Assert.NotNull(TestingGuild, "Could not get testing guild.");
-            Assert.True(TestingShardId >= 0, "Shard Id Missing.");
+            Assert.NotNull(this.TestingGuild, "Could not get testing guild.");
+            Assert.True(this.TestingShardId >= 0, "Shard Id Missing.");
 
-            if (TestingGuild.Channels.TryGetValue(TestingChannelId, out var chan))
+            if (this.TestingGuild.Channels.TryGetValue(TestingChannelId, out var chan))
 			{
-				TestingChannel = chan;
+				this.TestingChannel = chan;
 			}
 
-			Assert.NotNull(TestingChannel, "Could not get testing channel.");
+			Assert.NotNull(this.TestingChannel, "Could not get testing channel.");
 
-            var members = await TestingGuild.GetAllMembersAsync();
+            var members = await this.TestingGuild.GetAllMembersAsync();
 
             Assert.NotNull(members);
             Assert.NotZero(members.Count);
 
-            Actors = members.Where(x => x.Roles.Any(x => x.Id == ActorRoleId)).ToList();
+			this.Actors = members.Where(x => x.Roles.Any(x => x.Id == ActorRoleId)).ToList();
 
-            Assert.NotZero(Actors.Count, "Missing Actors for further testing.");
+            Assert.NotZero(this.Actors.Count, "Missing Actors for further testing.");
 
-            var cnext = await Client.GetCommandsNextAsync();
-            if (cnext.TryGetValue(TestingShardId, out var commandsNextExtension))
+            var cnext = await this.Client.GetCommandsNextAsync();
+            if (cnext.TryGetValue(this.TestingShardId, out var commandsNextExtension))
             {
-                CNext = commandsNextExtension;
-                Commands = CNext.RegisteredCommands;
+				this.CNext = commandsNextExtension;
+				this.Commands = this.CNext.RegisteredCommands;
             }
 
-            Assert.NotNull(CNext, "Missing Commands Next Extension for testing shard.");
+            Assert.NotNull(this.CNext, "Missing Commands Next Extension for testing shard.");
 
-            var msg = await TestingChannel.SendMessageAsync("Starting Unit Tests . . .");
+            var msg = await this.TestingChannel.SendMessageAsync("Starting Unit Tests . . .");
 
             Assert.NotNull(msg, "Message failed to send.");
         }
@@ -95,32 +95,32 @@ namespace Shatter.Tests
         public async Task TearDown()
         {
 
-            await TestingChannel.SendMessageAsync(". . . Unit Tests Complete");
+            await this.TestingChannel.SendMessageAsync(". . . Unit Tests Complete");
 
-            await Client.StopAsync();
+            await this.Client.StopAsync();
         }
 
         [Order(1)]
         [Test]
         public async Task PrefixCommandTest()
         {
-            Commands.TryGetValue("prefix", out Command cmd);
+			this.Commands.TryGetValue("prefix", out Command cmd);
 
             Assert.NotNull(cmd, "Prefix Command not found.");
 
-            var ctx = CNext.CreateFakeContext(Actors.Random(), TestingChannel, "]prefix >", "]", cmd, ">");
+            var ctx = this.CNext.CreateFakeContext(this.Actors.Random(), this.TestingChannel, "]prefix >", "]", cmd, ">");
 
             var res = await cmd.ExecuteAsync(ctx);
 
             Assert.True(res.IsSuccessful, "Command should have executed.");
 
-            ctx = CNext.CreateFakeContext(Actors.Random(), TestingChannel, ">prefix ]", ">", cmd, "]");
+            ctx = this.CNext.CreateFakeContext(this.Actors.Random(), this.TestingChannel, ">prefix ]", ">", cmd, "]");
 
             res = await cmd.ExecuteAsync(ctx);
 
             Assert.True(res.IsSuccessful, "Command should have executed.");
 
-            ctx = CNext.CreateFakeContext(Actors.Random(), TestingChannel, "]prefix", "]", cmd);
+            ctx = this.CNext.CreateFakeContext(this.Actors.Random(), this.TestingChannel, "]prefix", "]", cmd);
 
             res = await cmd.ExecuteAsync(ctx);
 
@@ -131,17 +131,17 @@ namespace Shatter.Tests
         [Test]
         public async Task SAHCryptoCommandTest()
         {
-            Commands.TryGetValue("crypto", out Command cmd);
+			this.Commands.TryGetValue("crypto", out Command cmd);
 
             Assert.NotNull(cmd, "Crypto command not found.");
 
-            var ctx = CNext.CreateFakeContext(Actors.Random(), TestingChannel, "]crypto testdata", "]", cmd, "testdata");
+            var ctx = this.CNext.CreateFakeContext(this.Actors.Random(), this.TestingChannel, "]crypto testdata", "]", cmd, "testdata");
 
             var res = await cmd.ExecuteAsync(ctx);
 
             Assert.True(res.IsSuccessful, "Command should have executed.");
 
-            ctx = CNext.CreateFakeContext(Actors.Random(), TestingChannel, "]crypto", "]", cmd);
+            ctx = this.CNext.CreateFakeContext(this.Actors.Random(), this.TestingChannel, "]crypto", "]", cmd);
 
             res = await cmd.ExecuteAsync(ctx);
 
@@ -152,11 +152,11 @@ namespace Shatter.Tests
         [Test]
         public async Task AddFundsCommandTest()
         {
-            Commands.TryGetValue("addfunds", out Command cmd);
+			this.Commands.TryGetValue("addfunds", out Command cmd);
 
             Assert.NotNull(cmd, "Add Funds command not found.");
 
-            var ctx = CNext.CreateFakeContext(Actors.Random(), TestingChannel, $"]addfunds 1000 {Actors[0].Mention}", "]", cmd, $"1000 {Actors[0].Mention}");
+            var ctx = this.CNext.CreateFakeContext(this.Actors.Random(), this.TestingChannel, $"]addfunds 1000 {this.Actors[0].Mention}", "]", cmd, $"1000 {this.Actors[0].Mention}");
 
             var res = await cmd.ExecuteAsync(ctx);
 
@@ -167,20 +167,20 @@ namespace Shatter.Tests
         [Test]
         public async Task BalanceCommandTest()
         {
-            Commands.TryGetValue("balance", out Command cmd);
+			this.Commands.TryGetValue("balance", out Command cmd);
 
             Assert.NotNull(cmd, "Balance command not found.");
 
             for (int i = 0; i < 2; i++)
             {
-                var ctxI = CNext.CreateFakeContext(Actors[i], TestingChannel, $"]balance", "]", cmd);
+                var ctxI = this.CNext.CreateFakeContext(this.Actors[i], this.TestingChannel, $"]balance", "]", cmd);
 
                 var resI = await cmd.ExecuteAsync(ctxI);
 
                 Assert.True(resI.IsSuccessful, "Command should have executed.");
             }
 
-            var ctx = CNext.CreateFakeContext(Actors[0], TestingChannel, $"]balance {Actors[1].Mention}", "]", cmd, Actors[1].Mention);
+            var ctx = this.CNext.CreateFakeContext(this.Actors[0], this.TestingChannel, $"]balance {this.Actors[1].Mention}", "]", cmd, this.Actors[1].Mention);
 
             var res = await cmd.ExecuteAsync(ctx);
 
@@ -191,41 +191,41 @@ namespace Shatter.Tests
         [Test]
         public async Task GiftCommandTest()
         {
-            Commands.TryGetValue("gift", out Command cmd);
+			this.Commands.TryGetValue("gift", out Command cmd);
 
             Assert.NotNull(cmd, "Gift command not found.");
 
-            var ctx = CNext.CreateFakeContext(Actors[0], TestingChannel, $"]gift {Actors[1].Mention} 500", "]", cmd, $"{Actors[1].Mention} 500");
+            var ctx = this.CNext.CreateFakeContext(this.Actors[0], this.TestingChannel, $"]gift {this.Actors[1].Mention} 500", "]", cmd, $"{this.Actors[1].Mention} 500");
 
             var res = await cmd.ExecuteAsync(ctx);
 
             Assert.True(res.IsSuccessful);
 
-            ctx = CNext.CreateFakeContext(Actors[0], TestingChannel, $"]gift {Actors[1].Mention} 500000", "]", cmd, $"{Actors[1].Mention} 500000");
+            ctx = this.CNext.CreateFakeContext(this.Actors[0], this.TestingChannel, $"]gift {this.Actors[1].Mention} 500000", "]", cmd, $"{this.Actors[1].Mention} 500000");
 
             res = await cmd.ExecuteAsync(ctx);
 
             Assert.True(res.IsSuccessful);
 
-            ctx = CNext.CreateFakeContext(Actors[0], TestingChannel, $"]gift {Client.CurrentUser.Mention} 500", "]", cmd, $"{Client.CurrentUser.Mention} 500");
+            ctx = this.CNext.CreateFakeContext(this.Actors[0], this.TestingChannel, $"]gift {this.Client.CurrentUser.Mention} 500", "]", cmd, $"{this.Client.CurrentUser.Mention} 500");
 
             res = await cmd.ExecuteAsync(ctx);
 
             Assert.True(res.IsSuccessful);
 
-            ctx = CNext.CreateFakeContext(Actors[0], TestingChannel, $"]gift {Actors[0].Mention} 500", "]", cmd, $"{Actors[0].Mention} 500");
+            ctx = this.CNext.CreateFakeContext(this.Actors[0], this.TestingChannel, $"]gift {this.Actors[0].Mention} 500", "]", cmd, $"{this.Actors[0].Mention} 500");
 
             res = await cmd.ExecuteAsync(ctx);
 
             Assert.True(res.IsSuccessful);
 
-            ctx = CNext.CreateFakeContext(Actors[0], TestingChannel, $"]gift {Actors[0].Mention}", "]", cmd, $"{Actors[0].Mention}");
+            ctx = this.CNext.CreateFakeContext(this.Actors[0], this.TestingChannel, $"]gift {this.Actors[0].Mention}", "]", cmd, $"{this.Actors[0].Mention}");
 
             res = await cmd.ExecuteAsync(ctx);
 
             Assert.False(res.IsSuccessful);
 
-            ctx = CNext.CreateFakeContext(Actors[0], TestingChannel, $"]gift 500", "]", cmd, $"500");
+            ctx = this.CNext.CreateFakeContext(this.Actors[0], this.TestingChannel, $"]gift 500", "]", cmd, $"500");
 
             res = await cmd.ExecuteAsync(ctx);
 
@@ -236,11 +236,11 @@ namespace Shatter.Tests
         [Test]
         public async Task SubFundsCommandTest()
         {
-            Commands.TryGetValue("subfunds", out Command cmd);
+			this.Commands.TryGetValue("subfunds", out Command cmd);
 
             Assert.NotNull(cmd, "Sub Funds command not found.");
 
-            var ctx = CNext.CreateFakeContext(Actors.Random(), TestingChannel, $"]subfunds 500 {Actors[0].Mention}", "]", cmd, $"500 {Actors[0].Mention}");
+            var ctx = this.CNext.CreateFakeContext(this.Actors.Random(), this.TestingChannel, $"]subfunds 500 {this.Actors[0].Mention}", "]", cmd, $"500 {this.Actors[0].Mention}");
 
             var res = await cmd.ExecuteAsync(ctx);
 
@@ -251,11 +251,11 @@ namespace Shatter.Tests
         [Test]
         public async Task AdviceCommandTest()
         {
-            Commands.TryGetValue("advice", out Command cmd);
+			this.Commands.TryGetValue("advice", out Command cmd);
 
             Assert.NotNull(cmd, "Advice command not found.");
 
-            var ctx = CNext.CreateFakeContext(Actors.Random(), TestingChannel, $"]advice", "]", cmd);
+            var ctx = this.CNext.CreateFakeContext(this.Actors.Random(), this.TestingChannel, $"]advice", "]", cmd);
 
             var res = await cmd.ExecuteAsync(ctx);
 
@@ -266,11 +266,11 @@ namespace Shatter.Tests
         [Test]
         public async Task TableFlipCommandTest()
         {
-            Commands.TryGetValue("tableflip", out Command cmd);
+			this.Commands.TryGetValue("tableflip", out Command cmd);
 
             Assert.NotNull(cmd, "Table Flip command not found.");
 
-            var ctx = CNext.CreateFakeContext(Actors.Random(), TestingChannel, $"]tableflip", "]", cmd);
+            var ctx = this.CNext.CreateFakeContext(this.Actors.Random(), this.TestingChannel, $"]tableflip", "]", cmd);
 
             var res = await cmd.ExecuteAsync(ctx);
 
@@ -281,11 +281,11 @@ namespace Shatter.Tests
         [Test]
         public async Task UnFlipCommandTest()
         {
-            Commands.TryGetValue("unflip", out Command cmd);
+			this.Commands.TryGetValue("unflip", out Command cmd);
 
             Assert.NotNull(cmd, "Un Flip command not found.");
 
-            var ctx = CNext.CreateFakeContext(Actors.Random(), TestingChannel, $"]unflip", "]", cmd);
+            var ctx = this.CNext.CreateFakeContext(this.Actors.Random(), this.TestingChannel, $"]unflip", "]", cmd);
 
             var res = await cmd.ExecuteAsync(ctx);
 
@@ -296,18 +296,18 @@ namespace Shatter.Tests
         [Test]
         public async Task BurnCommandTest()
         {
-            Commands.TryGetValue("burn", out Command cmd);
+			this.Commands.TryGetValue("burn", out Command cmd);
 
             Assert.NotNull(cmd, "Burn command not found.");
 
-            var ctx = CNext.CreateFakeContext(Actors[0], TestingChannel, $"]burn {Actors[1].Mention}", "]", cmd, $"{Actors[1].Mention}");
+            var ctx = this.CNext.CreateFakeContext(this.Actors[0], this.TestingChannel, $"]burn {this.Actors[1].Mention}", "]", cmd, $"{this.Actors[1].Mention}");
 
             var res = await cmd.ExecuteAsync(ctx);
 
             Assert.True(res.IsSuccessful, "Command should have executed.");
 
-            var ctx_1 = CNext.CreateFakeContext(Actors[0], TestingChannel, $"]burn {Actors[1].Mention}", "]", cmd, $"{Actors[1].Mention}");
-            var ctx_2 = CNext.CreateFakeContext(Actors[1], TestingChannel, $"]burn {Actors[0].Mention}", "]", cmd, $"{Actors[0].Mention}");
+            var ctx_1 = this.CNext.CreateFakeContext(this.Actors[0], this.TestingChannel, $"]burn {this.Actors[1].Mention}", "]", cmd, $"{this.Actors[1].Mention}");
+            var ctx_2 = this.CNext.CreateFakeContext(this.Actors[1], this.TestingChannel, $"]burn {this.Actors[0].Mention}", "]", cmd, $"{this.Actors[0].Mention}");
 
             var cmd_1 = cmd.ExecuteAsync(ctx_1);
             var cmd_2 = cmd.ExecuteAsync(ctx_2);
@@ -322,41 +322,41 @@ namespace Shatter.Tests
         [Test]
         public async Task CatCommandTest()
         {
-            Commands.TryGetValue("cat", out Command cmd);
+			this.Commands.TryGetValue("cat", out Command cmd);
 
             Assert.NotNull(cmd, "Cat command not found.");
 
-            var ctx = CNext.CreateFakeContext(Actors[0], TestingChannel, $"]cat jpg png", "]", cmd, "jpg png");
+            var ctx = this.CNext.CreateFakeContext(this.Actors[0], this.TestingChannel, $"]cat jpg png", "]", cmd, "jpg png");
 
             var res = await cmd.ExecuteAsync(ctx);
 
             Assert.True(res.IsSuccessful, "Command should have executed.");
 
-            ctx = CNext.CreateFakeContext(Actors[0], TestingChannel, $"]cat gif", "]", cmd, "gif");
+            ctx = this.CNext.CreateFakeContext(this.Actors[0], this.TestingChannel, $"]cat gif", "]", cmd, "gif");
 
             res = await cmd.ExecuteAsync(ctx);
 
             Assert.True(res.IsSuccessful, "Command should have executed.");
 
-            ctx = CNext.CreateFakeContext(Actors[0], TestingChannel, $"]cat gif jpg random", "]", cmd, "gif jpg random");
+            ctx = this.CNext.CreateFakeContext(this.Actors[0], this.TestingChannel, $"]cat gif jpg random", "]", cmd, "gif jpg random");
 
             res = await cmd.ExecuteAsync(ctx);
 
             Assert.True(res.IsSuccessful, "Command should have executed.");
 
-            ctx = CNext.CreateFakeContext(Actors[0], TestingChannel, $"]cat mine that", "]", cmd, "mine that");
+            ctx = this.CNext.CreateFakeContext(this.Actors[0], this.TestingChannel, $"]cat mine that", "]", cmd, "mine that");
 
             res = await cmd.ExecuteAsync(ctx);
 
             Assert.True(res.IsSuccessful, "Command should have executed.");
 
-            ctx = CNext.CreateFakeContext(Actors[0], TestingChannel, $"]cat id=qsGk4el-D", "]", cmd, "id=qsGk4el-D");
+            ctx = this.CNext.CreateFakeContext(this.Actors[0], this.TestingChannel, $"]cat id=qsGk4el-D", "]", cmd, "id=qsGk4el-D");
 
             res = await cmd.ExecuteAsync(ctx);
 
             Assert.True(res.IsSuccessful, "Command should have executed.");
 
-            ctx = CNext.CreateFakeContext(Actors[0], TestingChannel, $"]cat id=", "]", cmd, "id=");
+            ctx = this.CNext.CreateFakeContext(this.Actors[0], this.TestingChannel, $"]cat id=", "]", cmd, "id=");
 
             res = await cmd.ExecuteAsync(ctx);
 
@@ -367,17 +367,17 @@ namespace Shatter.Tests
         [Test]
         public async Task RichestCommandTest()
         {
-            Commands.TryGetValue("richest", out Command cmd);
+			this.Commands.TryGetValue("richest", out Command cmd);
 
             Assert.NotNull(cmd, "Richest command not found.");
 
-            var ctx = CNext.CreateFakeContext(Actors[0], TestingChannel, $"]richest", "]", cmd);
+            var ctx = this.CNext.CreateFakeContext(this.Actors[0], this.TestingChannel, $"]richest", "]", cmd);
 
             var res = await cmd.ExecuteAsync(ctx);
 
             Assert.True(res.IsSuccessful, "Command should have executed.");
 
-            ctx = CNext.CreateFakeContext(Actors[0], TestingChannel, $"]richest server", "]", cmd, "server");
+            ctx = this.CNext.CreateFakeContext(this.Actors[0], this.TestingChannel, $"]richest server", "]", cmd, "server");
 
             res = await cmd.ExecuteAsync(ctx);
 
@@ -388,11 +388,11 @@ namespace Shatter.Tests
         [Test]
         public async Task DonaldCommandTest()
         {
-            Commands.TryGetValue("donald", out Command cmd);
+			this.Commands.TryGetValue("donald", out Command cmd);
 
             Assert.NotNull(cmd, "Donald command not found.");
 
-            var ctx = CNext.CreateFakeContext(Actors[0], TestingChannel, $"]donald My IQ is one of the highest.", "]", cmd, "My IQ is one of the highest.");
+            var ctx = this.CNext.CreateFakeContext(this.Actors[0], this.TestingChannel, $"]donald My IQ is one of the highest.", "]", cmd, "My IQ is one of the highest.");
 
             var res = await cmd.ExecuteAsync(ctx);
 
@@ -403,25 +403,25 @@ namespace Shatter.Tests
         [Test]
         public async Task GruCommandTest()
         {
-            Commands.TryGetValue("gru", out Command cmd);
+			this.Commands.TryGetValue("gru", out Command cmd);
 
             Assert.NotNull(cmd, "Gru command not found.");
 
-            var ctx = CNext.CreateFakeContext(Actors[0], TestingChannel, $"]gru Find a gru meme template | Create a custom gru meme generator | Nobody uses it", "]",
+            var ctx = this.CNext.CreateFakeContext(this.Actors[0], this.TestingChannel, $"]gru Find a gru meme template | Create a custom gru meme generator | Nobody uses it", "]",
                 cmd, "Find a gru meme template | Create a custom gru meme generator | Nobody uses it");
 
             var res = await cmd.ExecuteAsync(ctx);
 
             Assert.True(res.IsSuccessful, "Command should have executed.");
 
-            ctx = CNext.CreateFakeContext(Actors[0], TestingChannel, $"]gru Find a gru meme template | Create a custom gru meme generat", "]",
+            ctx = this.CNext.CreateFakeContext(this.Actors[0], this.TestingChannel, $"]gru Find a gru meme template | Create a custom gru meme generat", "]",
                 cmd, "Find a gru meme template | Create a custom gru meme generat");
 
             res = await cmd.ExecuteAsync(ctx);
 
             Assert.True(res.IsSuccessful, "Command should have executed.");
 
-            ctx = CNext.CreateFakeContext(Actors[0], TestingChannel, $"]gru Find a gru meme template | Create a custom | gru | meme generat", "]",
+            ctx = this.CNext.CreateFakeContext(this.Actors[0], this.TestingChannel, $"]gru Find a gru meme template | Create a custom | gru | meme generat", "]",
                 cmd, "Find a gru meme template | Create a custom | gru | meme generat");
 
             res = await cmd.ExecuteAsync(ctx);
@@ -433,11 +433,11 @@ namespace Shatter.Tests
         [Test]
         public async Task NutCommandTest()
         {
-            Commands.TryGetValue("nut", out Command cmd);
+			this.Commands.TryGetValue("nut", out Command cmd);
 
             Assert.NotNull(cmd, "Nut command not found.");
 
-            var ctx = CNext.CreateFakeContext(Actors[0], TestingChannel, $"]nut Find a gru meme template | Create a custom gru meme generator | Nobody uses it", "]",
+            var ctx = this.CNext.CreateFakeContext(this.Actors[0], this.TestingChannel, $"]nut Find a gru meme template | Create a custom gru meme generator | Nobody uses it", "]",
                 cmd, "Find a gru meme template | Create a custom gru meme generator | Nobody uses it");
 
             var res = await cmd.ExecuteAsync(ctx);
@@ -449,11 +449,11 @@ namespace Shatter.Tests
         [Test]
         public async Task PrisonerCommandTest()
         {
-            Commands.TryGetValue("prisoner", out Command cmd);
+			this.Commands.TryGetValue("prisoner", out Command cmd);
 
             Assert.NotNull(cmd, "Prisoner command not found.");
 
-            var ctx = CNext.CreateFakeContext(Actors[0], TestingChannel, $"]prisoner I used the Gru Meme Generator", "]",
+            var ctx = this.CNext.CreateFakeContext(this.Actors[0], this.TestingChannel, $"]prisoner I used the Gru Meme Generator", "]",
                 cmd, "I used the Gru Meme Generator");
 
             var res = await cmd.ExecuteAsync(ctx);
@@ -465,12 +465,12 @@ namespace Shatter.Tests
         [Test]
         public async Task PunchCommandTest()
         {
-            Commands.TryGetValue("punch", out Command cmd);
+			this.Commands.TryGetValue("punch", out Command cmd);
 
             Assert.NotNull(cmd, "Punch command not found.");
 
-            var ctx = CNext.CreateFakeContext(Actors[0], TestingChannel, $"]punch {Actors[1].Mention}", "]",
-                cmd, $"{Actors[1].Mention}");
+            var ctx = this.CNext.CreateFakeContext(this.Actors[0], this.TestingChannel, $"]punch {this.Actors[1].Mention}", "]",
+                cmd, $"{this.Actors[1].Mention}");
 
             var res = await cmd.ExecuteAsync(ctx);
 
@@ -481,11 +481,11 @@ namespace Shatter.Tests
         [Test]
         public async Task TheSearchCommandTest()
         {
-            Commands.TryGetValue("thesearch", out Command cmd);
+			this.Commands.TryGetValue("thesearch", out Command cmd);
 
             Assert.NotNull(cmd, "The Search command not found.");
 
-            var ctx = CNext.CreateFakeContext(Actors[0], TestingChannel, $"]thesearch Don't use Shatter", "]",
+            var ctx = this.CNext.CreateFakeContext(this.Actors[0], this.TestingChannel, $"]thesearch Don't use Shatter", "]",
                 cmd, "Don't use Shatter");
 
             var res = await cmd.ExecuteAsync(ctx);
@@ -497,11 +497,11 @@ namespace Shatter.Tests
         [Test]
         public async Task CoinFlipGameCommandTest()
         {
-            Commands.TryGetValue("coinflip", out Command cmd);
+			this.Commands.TryGetValue("coinflip", out Command cmd);
 
             Assert.NotNull(cmd, "Coin Flip command not found.");
 
-            var ctx = CNext.CreateFakeContext(Actors[0], TestingChannel, $"]coinflip", "]",
+            var ctx = this.CNext.CreateFakeContext(this.Actors[0], this.TestingChannel, $"]coinflip", "]",
                 cmd);
 
             var res = await cmd.ExecuteAsync(ctx);
@@ -513,11 +513,11 @@ namespace Shatter.Tests
         [Test]
         public async Task TriviaGameCommandTest()
         {
-            Commands.TryGetValue("trivia", out Command cmd);
+			this.Commands.TryGetValue("trivia", out Command cmd);
 
             Assert.NotNull(cmd, "Trivia command not found.");
 
-            var ctx = CNext.CreateFakeContext(Actors[0], TestingChannel, $"]trivia", "]",
+            var ctx = this.CNext.CreateFakeContext(this.Actors[0], this.TestingChannel, $"]trivia", "]",
                 cmd);
 
             var res = await cmd.ExecuteAsync(ctx);
@@ -529,32 +529,32 @@ namespace Shatter.Tests
         [Test]
         public async Task TriviaTopCommandTest()
         {
-            Commands.TryGetValue("triviatop", out Command cmd);
+			this.Commands.TryGetValue("triviatop", out Command cmd);
 
             Assert.NotNull(cmd, "Trivia Top command not found.");
 
-            var ctx = CNext.CreateFakeContext(Actors[0], TestingChannel, $"]triviatop", "]",
+            var ctx = this.CNext.CreateFakeContext(this.Actors[0], this.TestingChannel, $"]triviatop", "]",
                 cmd);
 
             var res = await cmd.ExecuteAsync(ctx);
 
             Assert.True(res.IsSuccessful, "Command should have executed.");
 
-            ctx = CNext.CreateFakeContext(Actors[0], TestingChannel, $"]triviatop server", "]",
+            ctx = this.CNext.CreateFakeContext(this.Actors[0], this.TestingChannel, $"]triviatop server", "]",
                 cmd, "server");
 
             res = await cmd.ExecuteAsync(ctx);
 
             Assert.True(res.IsSuccessful, "Command should have executed.");
 
-            ctx = CNext.CreateFakeContext(Actors[0], TestingChannel, $"]triviatop me", "]",
+            ctx = this.CNext.CreateFakeContext(this.Actors[0], this.TestingChannel, $"]triviatop me", "]",
                 cmd, "me");
 
             res = await cmd.ExecuteAsync(ctx);
 
             Assert.True(res.IsSuccessful, "Command should have executed.");
 
-            ctx = CNext.CreateFakeContext(Actors[0], TestingChannel, $"]triviatop percent", "]",
+            ctx = this.CNext.CreateFakeContext(this.Actors[0], this.TestingChannel, $"]triviatop percent", "]",
                 cmd, "percent");
 
             res = await cmd.ExecuteAsync(ctx);

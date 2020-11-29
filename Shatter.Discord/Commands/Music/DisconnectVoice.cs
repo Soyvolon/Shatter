@@ -15,7 +15,7 @@ namespace Shatter.Discord.Commands.Music
 
         public DisconnectVoice(VoiceService voice)
         {
-            _voice = voice;
+			this._voice = voice;
         }
 
         [Command("disconnect")]
@@ -26,7 +26,7 @@ namespace Shatter.Discord.Commands.Music
         [ExecutionModule("music")]
         public async Task DisconnectVoiceCommandAsync(CommandContext ctx)
         {
-            var conn = await _voice.GetGuildConnection(ctx);
+            var conn = await this._voice.GetGuildConnection(ctx);
             if (conn is null)
             {
                 await RespondBasicErrorAsync("Already disconnected!");
@@ -35,7 +35,7 @@ namespace Shatter.Discord.Commands.Music
 
             bool disconected = false;
 
-            if (_voice.IsDJ(ctx, out bool _))
+            if (this._voice.IsDJ(ctx, out bool _))
 			{
 				disconected = true;
 			}

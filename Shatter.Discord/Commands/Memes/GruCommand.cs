@@ -26,7 +26,7 @@ namespace Shatter.Discord.Commands.Memes
 
         public GruCommand(MemeService meme)
         {
-            _meme = meme;
+			this._meme = meme;
         }
 
         [Command("gru")]
@@ -47,12 +47,12 @@ namespace Shatter.Discord.Commands.Memes
                 return;
             }
 
-            captions[0] = new Tuple<Rectangle, string, Brush?>(captions[0].Item1, captionStrings[0], null);
-            captions[1] = new Tuple<Rectangle, string, Brush?>(captions[1].Item1, captionStrings[1], null);
-            captions[2] = new Tuple<Rectangle, string, Brush?>(captions[2].Item1, captionStrings[2], null);
-            captions[3] = new Tuple<Rectangle, string, Brush?>(captions[3].Item1, captionStrings[2], null);
+			this.captions[0] = new Tuple<Rectangle, string, Brush?>(this.captions[0].Item1, captionStrings[0], null);
+			this.captions[1] = new Tuple<Rectangle, string, Brush?>(this.captions[1].Item1, captionStrings[1], null);
+			this.captions[2] = new Tuple<Rectangle, string, Brush?>(this.captions[2].Item1, captionStrings[2], null);
+			this.captions[3] = new Tuple<Rectangle, string, Brush?>(this.captions[3].Item1, captionStrings[2], null);
 
-            using var img = await _meme.BuildMemeAsync(Resources.Images_Gru, captions, "robotoblack", 20, new SolidBrush(Color.Black));
+            using var img = await this._meme.BuildMemeAsync(Resources.Images_Gru, this.captions, "robotoblack", 20, new SolidBrush(Color.Black));
 
             await ctx.RespondWithFileAsync("gru-meme.png", img);
         }

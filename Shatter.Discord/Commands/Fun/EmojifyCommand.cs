@@ -76,7 +76,7 @@ namespace Shatter.Discord.Commands.Fun
             var data = "";
             foreach (char c in lower)
 			{
-				data += (emojis.TryGetValue(c.ToString(), out string? value) ? value : c.ToString()) + " ";
+				data += (this.emojis.TryGetValue(c.ToString(), out string? value) ? value : c.ToString()) + " ";
 			}
 
 			await ctx.RespondAsync(data);

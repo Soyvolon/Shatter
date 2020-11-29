@@ -17,7 +17,7 @@ namespace Shatter.Discord.Commands.Filter
 
         public ListFiltersCommand(ShatterDatabaseContext model)
         {
-            _model = model;
+			this._model = model;
         }
 
         [Command("listfilters")]
@@ -28,7 +28,7 @@ namespace Shatter.Discord.Commands.Filter
         [ExecutionModule("filter")]
         public async Task ListFiltersCommandAsync(CommandContext ctx)
         {
-            var filter = await _model.FindAsync<GuildFilters>(ctx.Guild.Id);
+            var filter = await this._model.FindAsync<GuildFilters>(ctx.Guild.Id);
             if (filter is null || filter.Filters.Count <= 0)
             {
                 await RespondBasicErrorAsync("No filter found.");

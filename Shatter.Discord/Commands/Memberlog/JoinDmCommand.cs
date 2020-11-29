@@ -16,7 +16,7 @@ namespace Shatter.Discord.Commands.Memberlog
 
         public JoinDmCommand(ShatterDatabaseContext model)
         {
-            _model = model;
+			this._model = model;
         }
 
         [Command("joindm")]
@@ -47,12 +47,12 @@ namespace Shatter.Discord.Commands.Memberlog
                 return;
             }
 
-            var guild = _model.Find<GuildMemberlogs>(ctx.Guild.Id);
+            var guild = this._model.Find<GuildMemberlogs>(ctx.Guild.Id);
 
             if (guild is null)
             {
                 guild = new GuildMemberlogs(ctx.Guild.Id);
-                _model.Add(guild);
+				this._model.Add(guild);
             }
 
             if (msg.Equals("disable"))
@@ -66,7 +66,7 @@ namespace Shatter.Discord.Commands.Memberlog
                 await RespondBasicSuccessAsync( $"Set the join DM message to: \n```\n{message}```");
             }
 
-            await _model.SaveChangesAsync();
+            await this._model.SaveChangesAsync();
         }
     }
 }

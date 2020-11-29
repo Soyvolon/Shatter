@@ -11,9 +11,9 @@ namespace Shatter.Core.Structures.Music.Bingo
 
         public MusicBingoBoard()
         {
-            Board = new MusicBingoSong[5, 5];
-            Board[2, 2] = null; // free space
-            PlacedSongs = 0;
+			this.Board = new MusicBingoSong[5, 5];
+			this.Board[2, 2] = null; // free space
+			this.PlacedSongs = 0;
         }
 
         public void PopulateBoard(List<MusicBingoSong> songList)
@@ -24,7 +24,7 @@ namespace Shatter.Core.Structures.Music.Bingo
 
             foreach (var song in shuffledSongs)
             {
-                if (PlacedSongs >= 24)
+                if (this.PlacedSongs >= 24)
 				{
 					return;
 				}
@@ -36,13 +36,13 @@ namespace Shatter.Core.Structures.Music.Bingo
                     x = ThreadSafeRandom.ThisThreadsRandom.Next(0, 5);
                     y = ThreadSafeRandom.ThisThreadsRandom.Next(0, 5);
                 }
-                while ((x == 2 && y == 2) || Board[x,y] is not null);
-                // make sure this isnt the free space.
-                // or that the board already has a place filled there.
+                while ((x == 2 && y == 2) || this.Board[x,y] is not null);
+				// make sure this isnt the free space.
+				// or that the board already has a place filled there.
 
-                Board[x, y] = song;
+				this.Board[x, y] = song;
 
-                PlacedSongs++;
+				this.PlacedSongs++;
             }
         }
 
@@ -61,7 +61,7 @@ namespace Shatter.Core.Structures.Music.Bingo
             {
                 for(int y = 0; y < 5; y++)
                 {
-                    if (Board[x, y] is null || playedSongs.Contains(Board[x, y]))
+                    if (this.Board[x, y] is null || playedSongs.Contains(this.Board[x, y]))
                     {
                         c++;
                     }
@@ -88,7 +88,7 @@ namespace Shatter.Core.Structures.Music.Bingo
             {
                 for (int x = 0; x < 5; x++)
                 {
-                    if (Board[x, y] is null || playedSongs.Contains(Board[x, y]))
+                    if (this.Board[x, y] is null || playedSongs.Contains(this.Board[x, y]))
                     {
                         c++;
                     }
@@ -110,20 +110,20 @@ namespace Shatter.Core.Structures.Music.Bingo
 
         private bool CheckLeftDiag(List<MusicBingoSong> playedSongs)
         {
-            return Board[0, 0] is null || playedSongs.Contains(Board[0, 0])
-                && Board[1, 1] is null || playedSongs.Contains(Board[1, 1])
-                && Board[2, 2] is null || playedSongs.Contains(Board[2, 2])
-                && Board[3, 3] is null || playedSongs.Contains(Board[3, 3])
-                && Board[4, 4] is null || playedSongs.Contains(Board[4, 4]);
+            return this.Board[0, 0] is null || playedSongs.Contains(this.Board[0, 0])
+                && this.Board[1, 1] is null || playedSongs.Contains(this.Board[1, 1])
+                && this.Board[2, 2] is null || playedSongs.Contains(this.Board[2, 2])
+                && this.Board[3, 3] is null || playedSongs.Contains(this.Board[3, 3])
+                && this.Board[4, 4] is null || playedSongs.Contains(this.Board[4, 4]);
         }
 
         private bool CheckRightDiag(List<MusicBingoSong> playedSongs)
         {
-            return Board[0, 4] is null || playedSongs.Contains(Board[0, 4])
-                && Board[1, 3] is null || playedSongs.Contains(Board[1, 3])
-                && Board[2, 2] is null || playedSongs.Contains(Board[2, 2])
-                && Board[3, 1] is null || playedSongs.Contains(Board[3, 1])
-                && Board[4, 0] is null || playedSongs.Contains(Board[4, 0]);
+            return this.Board[0, 4] is null || playedSongs.Contains(this.Board[0, 4])
+                && this.Board[1, 3] is null || playedSongs.Contains(this.Board[1, 3])
+                && this.Board[2, 2] is null || playedSongs.Contains(this.Board[2, 2])
+                && this.Board[3, 1] is null || playedSongs.Contains(this.Board[3, 1])
+                && this.Board[4, 0] is null || playedSongs.Contains(this.Board[4, 0]);
         }
     }
 }

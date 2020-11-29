@@ -17,7 +17,7 @@ namespace Shatter.Discord.Commands.Memberlog
 
         public MemberlogChannelCommand(ShatterDatabaseContext model)
         {
-            _model = model;
+			this._model = model;
         }
 
         [Command("mlchannel")]
@@ -30,12 +30,12 @@ namespace Shatter.Discord.Commands.Memberlog
             [Description("The channel memberlog messages are sent in.")]
             DiscordChannel? channel = null)
         {
-            var guild = _model.Find<GuildMemberlogs>(ctx.Guild.Id);
+            var guild = this._model.Find<GuildMemberlogs>(ctx.Guild.Id);
 
             if (guild is null)
             {
                 guild = new GuildMemberlogs(ctx.Guild.Id);
-                await _model.AddAsync(guild);
+                await this._model.AddAsync(guild);
             }
 
             Task res;
@@ -60,7 +60,7 @@ namespace Shatter.Discord.Commands.Memberlog
                 res = RespondBasicSuccessAsync( "Memberlogs will be sent in: " + channel.Mention);
             }
 
-            await _model.SaveChangesAsync();
+            await this._model.SaveChangesAsync();
             await res;
         }
     }

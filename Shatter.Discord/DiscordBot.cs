@@ -66,15 +66,15 @@ namespace Shatter.Discord
         {
             CommandsInProgress = new ConcurrentDictionary<CommandHandler, Tuple<Task, CancellationTokenSource>>();
 
-            logLevel = LogLevel.Debug;
+			this.logLevel = LogLevel.Debug;
 
-            Config = botConfig;
-            LavaConfig = lavalinkConfig;
-            YTCfg = youtubeConfig;
+			this.Config = botConfig;
+			this.LavaConfig = lavalinkConfig;
+			this.YTCfg = youtubeConfig;
 
             this.services = services;
 
-			Uptime = new Stopwatch();
+			this.Uptime = new Stopwatch();
 
             // Assign the lastest bot to to the static Bot indidcator.
             Bot = this;
@@ -87,12 +87,12 @@ namespace Shatter.Discord
         #region Initialize
         public async Task InitializeAsync()
         {
-            Boot = BootStatus.booting;
+			this.Boot = BootStatus.booting;
 
-            Client = new DiscordShardedClient(GetDiscordConfiguration());
-            Rest = new DiscordRestClient(GetDiscordConfiguration());
+			this.Client = new DiscordShardedClient(GetDiscordConfiguration());
+			this.Rest = new DiscordRestClient(GetDiscordConfiguration());
 
-            var commands = await Client.UseCommandsNextAsync(GetCommandsNextConfiguration()).ConfigureAwait(false);
+            var commands = await this.Client.UseCommandsNextAsync(GetCommandsNextConfiguration()).ConfigureAwait(false);
 
             foreach (CommandsNextExtension c in commands.Values)
             {
@@ -103,7 +103,7 @@ namespace Shatter.Discord
 
                 c.SetHelpFormatter<HelpFormatter>();
 
-                Commands = c.RegisteredCommands;
+				this.Commands = c.RegisteredCommands;
 
                 c.RegisterConverter(new LeaderboardTypeConverter());
                 c.RegisterConverter(new QuestionCategoryConverter());
@@ -111,9 +111,9 @@ namespace Shatter.Discord
                 c.RegisterConverter(new AddRemoveTypeConverter());
             }
 
-            CommandGroups = new ConcurrentDictionary<string, List<Command>>();
+			this.CommandGroups = new ConcurrentDictionary<string, List<Command>>();
 
-            foreach(var c in Commands?.Values ?? Array.Empty<Command>())
+            foreach(var c in this.Commands?.Values ?? Array.Empty<Command>())
             {
                 var ExGroup = c.CustomAttributes.FirstOrDefault(x => x is ExecutionModuleAttribute);
                 if (ExGroup != default)
@@ -125,29 +125,29 @@ namespace Shatter.Discord
 						continue;
 					}
 
-					if (CommandGroups.ContainsKey(group.GroupName))
+					if (this.CommandGroups.ContainsKey(group.GroupName))
 					{
-						CommandGroups[group.GroupName].Add(c);
+						this.CommandGroups[group.GroupName].Add(c);
 					}
 					else
 					{
-						CommandGroups[group.GroupName] = new List<Command>() { c };
+						this.CommandGroups[group.GroupName] = new List<Command>() { c };
 					}
 				}
             }
 
             var interactionConfig = GetInteractivityConfiguration();
 
-            await Client.UseInteractivityAsync(interactionConfig).ConfigureAwait(false);
+            await this.Client.UseInteractivityAsync(interactionConfig).ConfigureAwait(false);
 
-            var lavas = await Client.UseLavalinkAsync();
+            var lavas = await this.Client.UseLavalinkAsync();
 
-            // Register any additional client events.
-            eventHandler = new DiscordEventHandler(Client, Rest, provider);
-            eventHandler.Initalize();
+			// Register any additional client events.
+			this.eventHandler = new DiscordEventHandler(this.Client, this.Rest, this.provider);
+			this.eventHandler.Initalize();
 
-            // Register the event needed to send data to the Command Handler.
-            Client.MessageCreated += Client_MessageCreated;
+			// Register the event needed to send data to the Command Handler.
+			this.Client.MessageCreated += Client_MessageCreated;
         }
 
 
@@ -155,10 +155,10 @@ namespace Shatter.Discord
         {
             var cfg = new DiscordConfiguration
             {
-                Token = Config.Token,
+                Token = this.Config.Token,
                 TokenType = TokenType.Bot,
                 MinimumLogLevel = logLevel,
-                ShardCount = Config.Shards,
+                ShardCount = this.Config.Shards,
                 Intents = DiscordIntents.Guilds | DiscordIntents.GuildBans | DiscordIntents.GuildMessages
                 | DiscordIntents.DirectMessages | DiscordIntents.GuildMessageReactions | DiscordIntents.GuildVoiceStates
                 | DiscordIntents.GuildMembers,
@@ -169,12 +169,12 @@ namespace Shatter.Discord
 
         private CommandsNextConfiguration GetCommandsNextConfiguration()
         {
-            services.AddScoped<ShatterDatabaseContext>()
+			this.services.AddScoped<ShatterDatabaseContext>()
                 .AddScoped<MemeService>()
                 .AddSingleton<VoiceService>()
                 .AddSingleton<MusicBingoService>();
 
-            provider = services.BuildServiceProvider();
+			this.provider = this.services.BuildServiceProvider();
 
             var ccfg = new CommandsNextConfiguration
             {
@@ -183,7 +183,7 @@ namespace Shatter.Discord
                 EnableDefaultHelp = true,
                 CaseSensitive = false,
                 IgnoreExtraArguments = true,
-                StringPrefixes = new string[] { Config.Prefix },
+                StringPrefixes = new string[] { this.Config.Prefix },
                 Services = provider,
                 UseDefaultCommandHandler = false
             };
@@ -220,7 +220,7 @@ namespace Shatter.Discord
 			try
             {
                 var cancel = new CancellationTokenSource();
-                var handler = new CommandHandler(Commands, sender, Config);
+                var handler = new CommandHandler(this.Commands, sender, this.Config);
                 var task = handler.MessageReceivedAsync(sender.GetCommandsNext(), e.Message, cancel.Token);
                 if (task.Status == TaskStatus.Running)
                 {
@@ -229,7 +229,7 @@ namespace Shatter.Discord
             }
             catch (Exception ex)
             {
-                Client?.Logger.LogError(Event_CommandHandler, ex, "An unkown error occoured.");
+				this.Client?.Logger.LogError(Event_CommandHandler, ex, "An unkown error occoured.");
             }
 
             return Task.CompletedTask;
@@ -239,19 +239,19 @@ namespace Shatter.Discord
         #region Start
         public async Task StartAsync()
         {
-            Uptime = Stopwatch.StartNew();
+			this.Uptime = Stopwatch.StartNew();
 
-			if(Client is not null)
+			if(this.Client is not null)
 			{
-				await Client.StartAsync().ConfigureAwait(false);
+				await this.Client.StartAsync().ConfigureAwait(false);
 			}
 
-			if (Rest is not null)
+			if (this.Rest is not null)
 			{
-				await Rest.InitializeAsync().ConfigureAwait(false);
+				await this.Rest.InitializeAsync().ConfigureAwait(false);
 			}
 
-			Boot = BootStatus.ready;
+			this.Boot = BootStatus.ready;
         }
         #endregion
 
@@ -260,12 +260,12 @@ namespace Shatter.Discord
         {
             Bot = null;
 
-			if(Client is not null)
+			if(this.Client is not null)
 			{
-				Client.MessageCreated -= Client_MessageCreated;
+				this.Client.MessageCreated -= Client_MessageCreated;
 			}
 
-			eventHandler?.Dispose();
+			this.eventHandler?.Dispose();
 
             if (!(CommandsInProgress is null))
             {
@@ -281,17 +281,17 @@ namespace Shatter.Discord
                 CommandsInProgress = null;
                 try
                 {
-					if(Client is not null)
+					if(this.Client is not null)
 					{
-						Client.StopAsync().GetAwaiter().GetResult();
+						this.Client.StopAsync().GetAwaiter().GetResult();
 					}
 
-					if (Rest is not null)
+					if (this.Rest is not null)
 					{
-						Rest.Dispose();
+						this.Rest.Dispose();
 					}
 				}
-                catch { }
+                catch { /* If there is an error disposing these, its because they are not started and thus dont need to be stopped. Ignore it. */ }
             }
         }
 
@@ -299,12 +299,12 @@ namespace Shatter.Discord
         {
             Bot = null;
 
-			if(Client is not null)
+			if(this.Client is not null)
 			{
-				Client.MessageCreated -= Client_MessageCreated;
+				this.Client.MessageCreated -= Client_MessageCreated;
 			}
 
-			eventHandler?.Dispose();
+			this.eventHandler?.Dispose();
 
             if (!(CommandsInProgress is null))
             {
@@ -323,18 +323,18 @@ namespace Shatter.Discord
                 CommandsInProgress = null;
                 try
                 {
-					if (Client is not null)
+					if (this.Client is not null)
 					{
-						await Client.StopAsync();
+						await this.Client.StopAsync();
 					}
 
-					if (Rest is not null)
+					if (this.Rest is not null)
 					{
-						Rest.Dispose();
+						this.Rest.Dispose();
 					}
 				}
-                catch { }
-            }
+				catch { /* If there is an error disposing these, its because they are not started and thus dont need to be stopped. Ignore it. */ }
+			}
         }
     }
 }

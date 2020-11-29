@@ -19,7 +19,7 @@ namespace Shatter.Discord.Commands.Music
 
         public MusicListCommand(VoiceService voice)
         {
-            _voice = voice;
+			this._voice = voice;
         }
 
         [Command("nowplaying")]
@@ -29,7 +29,7 @@ namespace Shatter.Discord.Commands.Music
         [ExecutionModule("music")]
         public async Task MusicListCommandAsync(CommandContext ctx)
         {
-            var conn = await _voice.GetGuildConnection(ctx);
+            var conn = await this._voice.GetGuildConnection(ctx);
 
             if (conn is null)
             {
@@ -41,7 +41,7 @@ namespace Shatter.Discord.Commands.Music
             var nowPlaying = conn.CurrentState.CurrentTrack;
             string data = $":green_circle: :notes:] {nowPlaying.Title} by {nowPlaying.Author} - `{conn.CurrentState.PlaybackPosition:mm\\:ss}/{nowPlaying.Length:mm\\:ss}`";
 
-            if (_voice.GuildQueues.TryGetValue(ctx.Guild.Id, out var queue))
+            if (this._voice.GuildQueues.TryGetValue(ctx.Guild.Id, out var queue))
             {
                 int i = 1;
                 int last = queue.Count;

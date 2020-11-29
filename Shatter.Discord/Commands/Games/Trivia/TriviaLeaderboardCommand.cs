@@ -24,7 +24,7 @@ namespace Shatter.Discord.Commands.Games.Trivia
 
         public TriviaLeaderboardCommand(ShatterDatabaseContext model)
         {
-            _model = model;
+			this._model = model;
         }
 
         [Command("triviatop")]
@@ -85,7 +85,7 @@ namespace Shatter.Discord.Commands.Games.Trivia
 
             if (displayPersonalData)
             {
-                var player = _model.TriviaPlayers.Find(ctx.Member.Id);
+                var player = this._model.TriviaPlayers.Find(ctx.Member.Id);
 
                 if (player is null)
                 {
@@ -109,7 +109,7 @@ namespace Shatter.Discord.Commands.Games.Trivia
             {
                 List<TriviaPlayer> players;
 
-                players = _model.TriviaPlayers
+                players = this._model.TriviaPlayers
                     .AsNoTracking()
                     .ToList();
 

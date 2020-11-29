@@ -18,7 +18,7 @@ namespace Shatter.Discord.Commands.Economy.Admin
 
         public AddFunds(ShatterDatabaseContext model)
         {
-            _model = model;
+			this._model = model;
         }
 
         [Command("addfunds")]
@@ -28,12 +28,12 @@ namespace Shatter.Discord.Commands.Economy.Admin
         [ExecutionModule("economy")]
         public async Task AddFundsCommandAsync(CommandContext ctx, int ammount, DiscordMember m)
         {
-            var wallet = await _model.FindAsync<Wallet>(m.Id);
+            var wallet = await this._model.FindAsync<Wallet>(m.Id);
 
             if (wallet is null)
             {
                 wallet = new Wallet(m.Id, ctx.Member.Username);
-                _model.Add(wallet);
+				this._model.Add(wallet);
             }
             else
             {
@@ -42,7 +42,7 @@ namespace Shatter.Discord.Commands.Economy.Admin
 
             var res = wallet.Add(ammount);
 
-            await _model.SaveChangesAsync();
+            await this._model.SaveChangesAsync();
 
             await ctx.RespondAsync($"Added {ammount.ToMoney()} to {m.Nickname}. Their balance is now {res.ToMoney()}");
         }

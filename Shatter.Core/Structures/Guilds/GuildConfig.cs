@@ -29,16 +29,16 @@ namespace Shatter.Core.Structures.Guilds
 
         public GuildConfig(ulong gid, string p, bool aptg, int tql)
         {
-            GuildId = gid;
+			this.GuildId = gid;
 
-            Prefix = p;
+			this.Prefix = p;
 
-            AllowPublicTriviaGames = aptg;
-            TriviaQuestionLimit = tql;
+			this.AllowPublicTriviaGames = aptg;
+			this.TriviaQuestionLimit = tql;
 
-            ActivatedCommands = new HashSet<string>();
-            DisabledCommands = new HashSet<string>();
-            DisabledModules = new HashSet<string>()
+			this.ActivatedCommands = new HashSet<string>();
+			this.DisabledCommands = new HashSet<string>();
+			this.DisabledModules = new HashSet<string>()
             {// Deafult disabled command modules.
                 "memberlog",
                 "mod",

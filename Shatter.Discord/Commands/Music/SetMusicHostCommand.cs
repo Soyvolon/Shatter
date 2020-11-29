@@ -16,7 +16,7 @@ namespace Shatter.Discord.Commands.Music
 
         public SetMusicHostCommand(VoiceService voice)
         {
-            _voice = voice;
+			this._voice = voice;
         }
 
         [Command("host")]
@@ -26,7 +26,7 @@ namespace Shatter.Discord.Commands.Music
         [ExecutionModule("music")]
         public async Task ExampleCommandAsync(CommandContext ctx, DiscordMember newHost)
         {
-            var conn = await _voice.GetGuildConnection(ctx);
+            var conn = await this._voice.GetGuildConnection(ctx);
 
             if (conn is null)
             {
@@ -34,10 +34,10 @@ namespace Shatter.Discord.Commands.Music
                 return;
             }
 
-            if (_voice.IsDJ(ctx, out bool _)
+            if (this._voice.IsDJ(ctx, out bool _)
                 || ctx.Member.PermissionsIn(conn.Channel).HasPermission(Permissions.ManageChannels))
             {
-                _voice.DJs[ctx.Guild.Id] = newHost.Id;
+				this._voice.DJs[ctx.Guild.Id] = newHost.Id;
                 await RespondBasicSuccessAsync( $"{newHost.Mention} is the new host!");
             }
             else

@@ -23,7 +23,7 @@ namespace Shatter.Discord.Commands.Games.Trivia
 
         public TriviaGameCommand(ShatterDatabaseContext model)
         {
-            _model = model;
+			this._model = model;
         }
 
         [Command("trivia")]
@@ -39,13 +39,13 @@ namespace Shatter.Discord.Commands.Games.Trivia
             [Description("The category to pick questions from. If you want this random, leave it blank or use an id of 0.")]
             QuestionCategory questionCategory = QuestionCategory.All)
         {
-            var cfg = _model.Configs.Find(ctx.Guild.Id);
+            var cfg = this._model.Configs.Find(ctx.Guild.Id);
 
             if (cfg is null)
             {
                 cfg = new GuildConfig(ctx.Guild.Id);
-                _model.Configs.Add(cfg);
-                await _model.SaveChangesAsync();
+				this._model.Configs.Add(cfg);
+                await this._model.SaveChangesAsync();
             }
 
             if (cfg.TriviaQuestionLimit <= 0)
@@ -103,23 +103,23 @@ namespace Shatter.Discord.Commands.Games.Trivia
                         break; // Goto finally block
                     }
 
-                    var trivia = _model.TriviaPlayers.Find(response.Result.Author.Id);
+                    var trivia = this._model.TriviaPlayers.Find(response.Result.Author.Id);
 
                     if (trivia is null)
                     {
                         trivia = new TriviaPlayer(response.Result.Author.Id);
-                        _model.Add(trivia);
+						this._model.Add(trivia);
                     }
 
                     var answerString = response.Result.Content.ToLowerInvariant().Trim();
                     if (answerString == mapped.Item2.ToString() || answerString == mapped.Item3)
                     { // Response is correct
                         await ctx.RespondAsync($"Thats the correct answer! You earned {question.Worth.ToMoney()}");
-                        var wallet = _model.Wallets.Find(response.Result.Author.Id);
+                        var wallet = this._model.Wallets.Find(response.Result.Author.Id);
                         if (wallet is null)
                         {
                             wallet = new Wallet(response.Result.Author.Id);
-                            await _model.AddAsync(wallet);
+                            await this._model.AddAsync(wallet);
                         }
 
                         wallet.Add(question.Worth);
@@ -140,7 +140,7 @@ namespace Shatter.Discord.Commands.Games.Trivia
 						trivia.Username = ctx.Member.Username;
 					}
 
-					await _model.SaveChangesAsync();
+					await this._model.SaveChangesAsync();
                 }
             }
             finally

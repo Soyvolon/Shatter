@@ -18,7 +18,7 @@ namespace Shatter.Discord.Commands.Economy
 
         public BalanceCommand(ShatterDatabaseContext model)
         {
-            _model = model;
+			this._model = model;
         }
 
         [Command("balance")]
@@ -40,13 +40,13 @@ namespace Shatter.Discord.Commands.Economy
 				m = member;
 			}
 
-			var wallet = _model.Wallets.Find(m.Id);
+			var wallet = this._model.Wallets.Find(m.Id);
 
             if (wallet is null)
             {
                 wallet = new Wallet(m.Id, ctx.User.Username);
-                // Save the new wallet to the database.
-                _model.Wallets.Add(wallet);
+				// Save the new wallet to the database.
+				this._model.Wallets.Add(wallet);
                 save = true;
             }
             else
@@ -60,7 +60,7 @@ namespace Shatter.Discord.Commands.Economy
 
             if (save)
 			{
-				_ = await _model.SaveChangesAsync();
+				_ = await this._model.SaveChangesAsync();
 			}
 
 			var b = CommandModule.SuccessBase()

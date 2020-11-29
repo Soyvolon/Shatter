@@ -18,7 +18,7 @@ namespace Shatter.Discord.Commands.Economy
 
         public EconDailyCommand(ShatterDatabaseContext model)
         {
-            _model = model;
+			this._model = model;
         }
 
         [Command("daily")]
@@ -26,14 +26,14 @@ namespace Shatter.Discord.Commands.Economy
         [ExecutionModule("economy")]
         public async Task EconDailyCommandAsync(CommandContext ctx)
         {
-            var wallet = _model.Wallets.Find(ctx.Member.Id);
+            var wallet = this._model.Wallets.Find(ctx.Member.Id);
 
             bool save = false;
 
             if (wallet is null)
             {
                 wallet = new Wallet(ctx.Member.Id, ctx.Member.Username);
-                _model.Add(wallet);
+				this._model.Add(wallet);
                 save = true;
             }
 
@@ -52,7 +52,7 @@ namespace Shatter.Discord.Commands.Economy
 
             if (save)
 			{
-				await _model.SaveChangesAsync();
+				await this._model.SaveChangesAsync();
 			}
 		}
     }

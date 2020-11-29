@@ -17,7 +17,7 @@ namespace Shatter.Discord.Commands.Filter
 
         public DeleteFilterCommand(ShatterDatabaseContext model)
         {
-            _model = model;
+			this._model = model;
         }
 
         [Command("deletefilter")]
@@ -32,15 +32,15 @@ namespace Shatter.Discord.Commands.Filter
         {
             var name = filterName.ToLower();
 
-            var filter = await _model.FindAsync<GuildFilters>(ctx.Guild.Id);
+            var filter = await this._model.FindAsync<GuildFilters>(ctx.Guild.Id);
             if (filter is null || !filter.Filters.TryGetValue(name, out _))
             {
                 await RespondBasicErrorAsync("Filter dosn't exist.");
                 return;
             }
 
-            filter.Filters.RemoveValue(name, filter, _model, out _);
-            await _model.SaveChangesAsync();
+            filter.Filters.RemoveValue(name, filter, this._model, out _);
+            await this._model.SaveChangesAsync();
 
             await RespondBasicSuccessAsync( "Filter deleted.");
         }

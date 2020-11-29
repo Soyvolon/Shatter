@@ -22,28 +22,28 @@ namespace Shatter.Discord.Utils
 
         public DiscordEventHandler(DiscordShardedClient client, DiscordRestClient rest, ServiceProvider? services)
         {
-            Client = client;
-            Rest = rest;
-            Services = services;
+			this.Client = client;
+			this.Rest = rest;
+			this.Services = services;
         }
 
         public void Initalize()
         {
-            // Register client events.
-            Client.Ready += Client_Ready;
+			// Register client events.
+			this.Client.Ready += Client_Ready;
 
-            #region Memberlogging Assignment
-            Client.GuildMemberAdded += MemberLog_GuildMemberAdded;
-            Client.GuildMemberRemoved += MemberLog_GuildMemberRemoved;
-            #endregion
+			#region Memberlogging Assignment
+			this.Client.GuildMemberAdded += MemberLog_GuildMemberAdded;
+			this.Client.GuildMemberRemoved += MemberLog_GuildMemberRemoved;
+			#endregion
 
-            #region Guild Filters Assignment
-            Client.MessageCreated += GuildFilters_MessageCreated;
+			#region Guild Filters Assignment
+			this.Client.MessageCreated += GuildFilters_MessageCreated;
             #endregion
         }
         private Task Client_Ready(DiscordClient sender, ReadyEventArgs e)
         {
-            Client.Logger.LogInformation(DiscordBot.Event_CommandHandler, "Client Ready!");
+			this.Client.Logger.LogInformation(DiscordBot.Event_CommandHandler, "Client Ready!");
 
             return Task.CompletedTask;
         }
@@ -52,12 +52,12 @@ namespace Shatter.Discord.Utils
 
         private async Task MemberLog_GuildMemberAdded(DiscordClient sender, GuildMemberAddEventArgs e)
         {
-			if (Services is null)
+			if (this.Services is null)
 			{
 				return;
 			}
 
-			var eventModel = Services.GetRequiredService<ShatterDatabaseContext>();
+			var eventModel = this.Services.GetRequiredService<ShatterDatabaseContext>();
             var guild = eventModel.Find<GuildMemberlogs>(e.Guild.Id);
 
             if (!(guild is null))
@@ -76,12 +76,12 @@ namespace Shatter.Discord.Utils
 
         private async Task MemberLog_GuildMemberRemoved(DiscordClient sender, GuildMemberRemoveEventArgs e)
         {
-			if (Services is null)
+			if (this.Services is null)
 			{
 				return;
 			}
 
-			var eventModel = Services.GetRequiredService<ShatterDatabaseContext>();
+			var eventModel = this.Services.GetRequiredService<ShatterDatabaseContext>();
             var guild = eventModel.Find<GuildMemberlogs>(e.Guild.Id);
             if (!(guild is null))
             {
@@ -101,12 +101,12 @@ namespace Shatter.Discord.Utils
 				return;
 			}
 
-			if (Services is null)
+			if (this.Services is null)
 			{
 				return;
 			}
 
-			var model = Services.GetRequiredService<ShatterDatabaseContext>();
+			var model = this.Services.GetRequiredService<ShatterDatabaseContext>();
             var filter = await model.FindAsync<GuildFilters>(e.Guild.Id);
 
             if (!(filter is null))
@@ -121,18 +121,18 @@ namespace Shatter.Discord.Utils
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!disposedValue)
+            if (!this.disposedValue)
             {
-                // Unregister events
-                Client.Ready -= Client_Ready;
+				// Unregister events
+				this.Client.Ready -= Client_Ready;
 
-                #region Memberlogging Assignment
-                Client.GuildMemberAdded -= MemberLog_GuildMemberAdded;
-                Client.GuildMemberRemoved -= MemberLog_GuildMemberRemoved;
-                #endregion
+				#region Memberlogging Assignment
+				this.Client.GuildMemberAdded -= MemberLog_GuildMemberAdded;
+				this.Client.GuildMemberRemoved -= MemberLog_GuildMemberRemoved;
+				#endregion
 
-                #region Guild Filters Assignment
-                Client.MessageCreated -= GuildFilters_MessageCreated;
+				#region Guild Filters Assignment
+				this.Client.MessageCreated -= GuildFilters_MessageCreated;
                 #endregion
 
                 if (disposing)
@@ -144,7 +144,7 @@ namespace Shatter.Discord.Utils
                     }
                 }
 
-                disposedValue = true;
+				this.disposedValue = true;
             }
         }
 

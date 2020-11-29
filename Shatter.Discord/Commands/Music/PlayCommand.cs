@@ -15,7 +15,7 @@ namespace Shatter.Discord.Commands.Music
 
         public PlayCommand(VoiceService voice)
         {
-            _voice = voice;
+			this._voice = voice;
         }
 
         [Command("play")]
@@ -31,7 +31,7 @@ namespace Shatter.Discord.Commands.Music
                 return;
             }
 
-            var res = await _voice.QueueSong(ctx, search);
+            var res = await this._voice.QueueSong(ctx, search);
 
             if (res.Item1)
             {

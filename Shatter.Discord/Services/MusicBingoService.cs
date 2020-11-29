@@ -32,25 +32,25 @@ namespace Shatter.Discord.Services
 
         public MusicBingoService(VoiceService voice, IServiceProvider services)
         {
-            _voice = voice;
-            _services = services;
+			this._voice = voice;
+			this._services = services;
         }
 
         public async Task<bool> StartGameAsync(MusicBingoGame game, CommandContext ctx)
         {
             // A game is already in progress
-            if (ActiveGames.ContainsKey(ctx.Guild.Id))
+            if (this.ActiveGames.ContainsKey(ctx.Guild.Id))
 			{
 				return false;
 			}
 
 			// Get the connection used for this guild and add a reference to this event handler.
-			var con = await _voice.GetOrCreateConnection(ctx.Client, ctx.Guild, ctx.Member.VoiceState.Channel);
+			var con = await this._voice.GetOrCreateConnection(ctx.Client, ctx.Guild, ctx.Member.VoiceState.Channel);
             con.PlaybackFinished += GuildConnection_SongFinished;
             con.PlaybackStarted += GuildConnection_SongStarted;
 
-            // Add the id to the ignore list.
-            _voice.IgnoreEventsList[ctx.Guild.Id] = 0;
+			// Add the id to the ignore list.
+			this._voice.IgnoreEventsList[ctx.Guild.Id] = 0;
 
             var members = new List<ulong>();
             foreach (var m in ctx.Member.VoiceState.Channel.Users)
@@ -63,13 +63,13 @@ namespace Shatter.Discord.Services
 
 			game.Initalize(members);
 
-            GameConnections[ctx.Guild.Id] = new Tuple<DiscordChannel, DiscordGuild, DiscordClient>
+			this.GameConnections[ctx.Guild.Id] = new Tuple<DiscordChannel, DiscordGuild, DiscordClient>
                 (
                     ctx.Member.VoiceState.Channel,
                     ctx.Guild,
                     ctx.Client
                 );
-            ActiveGames[ctx.Guild.Id] = game;
+			this.ActiveGames[ctx.Guild.Id] = game;
 
             await SendBingoBoards(ctx.Guild.Id);
 
@@ -80,9 +80,9 @@ namespace Shatter.Discord.Services
 
         private async Task SendBingoBoards(ulong id)
         {
-            if (GameConnections.TryGetValue(id, out var con))
+            if (this.GameConnections.TryGetValue(id, out var con))
             {
-                if (ActiveGames.TryGetValue(id, out var game))
+                if (this.ActiveGames.TryGetValue(id, out var game))
                 {
                     foreach(var board in game.BingoBoards)
                     {
@@ -143,19 +143,19 @@ namespace Shatter.Discord.Services
                 }
             }
 
-            var _image = _services.GetRequiredService<MemeService>();
+            var _image = this._services.GetRequiredService<MemeService>();
             return await _image.BuildMemeAsync(Resources.Images_BingoBoard, captions, "", 35, new SolidBrush(Color.Black));
         }
 
         public void StopGame(ulong guildId, bool hasWinner = true)
         { // has winner is false when all the songs run out or the game was closed by the command.
-            // TODO: Play custom end of game sounds if there is a winner.
+		  // TODO: Play custom end of game sounds if there is a winner.
 
-            _voice.IgnoreEventsList.TryRemove(guildId, out _); // remove from ignore list.
+			this._voice.IgnoreEventsList.TryRemove(guildId, out _); // remove from ignore list.
 
-            GameConnections.TryRemove(guildId, out _);
-            ActiveGames.TryRemove(guildId, out _);
-            if(SongTimers.TryRemove(guildId, out var t))
+			this.GameConnections.TryRemove(guildId, out _);
+			this.ActiveGames.TryRemove(guildId, out _);
+            if(this.SongTimers.TryRemove(guildId, out var t))
 			{
 				t.Change(0, Timeout.Infinite);
 			}
@@ -163,7 +163,7 @@ namespace Shatter.Discord.Services
 
         public bool CheckPlayerWin(ulong guildId, ulong userId)
         {
-            if(ActiveGames.TryGetValue(guildId, out var game))
+            if(this.ActiveGames.TryGetValue(guildId, out var game))
 			{
 				if (game.BingoBoards.TryGetValue(userId, out var board))
 				{
@@ -208,7 +208,7 @@ namespace Shatter.Discord.Services
         // Special handler for the bingo games to introduce delays and anything else needed.
         private async Task GuildConnection_SongFinished(LavalinkGuildConnection sender, TrackFinishEventArgs e)
         {
-            if(ActiveGames.TryGetValue(sender.Guild.Id, out var game))
+            if(this.ActiveGames.TryGetValue(sender.Guild.Id, out var game))
             {
                 var song = game.GetNextSong();
                 if(song is null)
@@ -242,7 +242,7 @@ namespace Shatter.Discord.Services
 
         private Task GuildConnection_SongStarted(LavalinkGuildConnection sender, TrackStartEventArgs e)
         {
-            if(ActiveGames.TryGetValue(sender.Guild.Id, out var game))
+            if(this.ActiveGames.TryGetValue(sender.Guild.Id, out var game))
             {
                 if (game.PlayedSongs is null)
 				{
@@ -260,7 +260,7 @@ namespace Shatter.Discord.Services
                 {
                     var span = last.SongEnd.Value.Subtract(last.SongStart.Value);
 
-                    SongTimers[sender.Guild.Id] = new Timer(async (x) =>
+					this.SongTimers[sender.Guild.Id] = new Timer(async (x) =>
                     {
                         await e.Player.PauseAsync();
                         await Task.Delay(TimeSpan.FromSeconds(2));

@@ -19,7 +19,7 @@ namespace Shatter.Discord.Commands.Filter
 
         public FilterLevelCommand(ShatterDatabaseContext model)
         {
-            _model = model;
+			this._model = model;
         }
 
         [Command("filterlevel")]
@@ -45,16 +45,16 @@ namespace Shatter.Discord.Commands.Filter
                 return;
             }
 
-            var filter = await _model.FindAsync<GuildFilters>(ctx.Guild.Id);
+            var filter = await this._model.FindAsync<GuildFilters>(ctx.Guild.Id);
             if (filter is null || !filter.Filters.TryGetValue(name, out var filterData))
             {
                 await RespondBasicErrorAsync("Filter does not exist.");
                 return;
             }
 
-            filter.Filters.UpdateOrAddValue(name, new Tuple<int, HashSet<string>>(severity, filterData.Item2), filter, _model);
+            filter.Filters.UpdateOrAddValue(name, new Tuple<int, HashSet<string>>(severity, filterData.Item2), filter, this._model);
 
-            await _model.SaveChangesAsync();
+            await this._model.SaveChangesAsync();
 
             await RespondBasicSuccessAsync( $"Updated severity to level `{severity}` - " +
                 $"{(severity == 1 ? "Only if the word directly matches." : "If the word is found anywhere.")}");

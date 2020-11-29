@@ -33,7 +33,7 @@ namespace Shatter.Discord.Services
         {
             DJChanged = false;
 
-            if (DJs.TryGetValue(ctx.Guild.Id, out ulong dj))
+            if (this.DJs.TryGetValue(ctx.Guild.Id, out ulong dj))
             {
                 if (ctx.Member.Id == dj)
 				{
@@ -47,7 +47,7 @@ namespace Shatter.Discord.Services
             }
 
             DJChanged = true;
-            DJs[ctx.Guild.Id] = ctx.Member.Id;
+			this.DJs[ctx.Guild.Id] = ctx.Member.Id;
             return true;
         }
 
@@ -107,19 +107,19 @@ namespace Shatter.Discord.Services
 				return false;
 			}
 
-			if (GuildQueues.TryGetValue(conn.Guild.Id, out var queue))
+			if (this.GuildQueues.TryGetValue(conn.Guild.Id, out var queue))
             {
                 queue.Enqueue(track);
             }
             else
             {
-                GuildQueues[conn.Guild.Id] = new ConcurrentQueue<LavalinkTrack>();
+				this.GuildQueues[conn.Guild.Id] = new ConcurrentQueue<LavalinkTrack>();
                 await conn.PlayAsync(track);
             }
 
-            if (!DJs.TryGetValue(conn.Guild.Id, out var id) || id == 0)
+            if (!this.DJs.TryGetValue(conn.Guild.Id, out var id) || id == 0)
             {
-                DJs[conn.Guild.Id] = memberId;
+				this.DJs[conn.Guild.Id] = memberId;
             }
 
             return true;
@@ -136,10 +136,10 @@ namespace Shatter.Discord.Services
                 con.PlaybackFinished += GuildConnection_SongFinished;
                 con.PlaybackStarted += GuildConnection_SongStarted;
 
-                // Remove any old data that is stored when a new connection is created
-                DJs.TryRemove(con.Guild.Id, out _);
-                GuildQueues.TryRemove(con.Guild.Id, out _);
-                PlayingStatusMessages.TryRemove(con.Guild.Id, out _);
+				// Remove any old data that is stored when a new connection is created
+				this.DJs.TryRemove(con.Guild.Id, out _);
+				this.GuildQueues.TryRemove(con.Guild.Id, out _);
+				this.PlayingStatusMessages.TryRemove(con.Guild.Id, out _);
             }
 
             return con;
@@ -147,12 +147,12 @@ namespace Shatter.Discord.Services
 
         private async Task GuildConnection_SongStarted(LavalinkGuildConnection sender, TrackStartEventArgs e)
         {
-            if (IgnoreEventsList.ContainsKey(sender.Guild.Id))
+            if (this.IgnoreEventsList.ContainsKey(sender.Guild.Id))
 			{
 				return;
 			}
 
-			if (PlayingStatusMessages.TryGetValue(sender.Guild.Id, out ulong chan))
+			if (this.PlayingStatusMessages.TryGetValue(sender.Guild.Id, out ulong chan))
             {
                 var nowPlaying = sender.CurrentState.CurrentTrack;
 				if(DiscordBot.Bot?.Rest is not null)
@@ -166,14 +166,14 @@ namespace Shatter.Discord.Services
 
         private async Task GuildConnection_SongFinished(LavalinkGuildConnection sender, TrackFinishEventArgs e)
         {
-            if (IgnoreEventsList.ContainsKey(sender.Guild.Id))
+            if (this.IgnoreEventsList.ContainsKey(sender.Guild.Id))
 			{
 				return;
 			}
 
 			if (e.Reason == TrackEndReason.Finished || e.Reason == TrackEndReason.Stopped)
             {
-                if (GuildQueues.TryGetValue(sender.Guild.Id, out var queue))
+                if (this.GuildQueues.TryGetValue(sender.Guild.Id, out var queue))
                 {
                     if (queue.TryDequeue(out var track))
                     {
@@ -181,7 +181,7 @@ namespace Shatter.Discord.Services
                     }
                     else
                     {
-                        GuildQueues.TryRemove(sender.Guild.Id, out _);
+						this.GuildQueues.TryRemove(sender.Guild.Id, out _);
                     }
                 }
             }

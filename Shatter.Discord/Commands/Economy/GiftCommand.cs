@@ -18,7 +18,7 @@ namespace Shatter.Discord.Commands.Economy
 
         public GiftCommand(ShatterDatabaseContext model)
         {
-            _model = model;
+			this._model = model;
         }
 
         [Command("gift")]
@@ -40,23 +40,23 @@ namespace Shatter.Discord.Commands.Economy
             {
                 bool save = false;
 
-                var from = await _model.FindAsync<Wallet>(ctx.Member.Id);
+                var from = await this._model.FindAsync<Wallet>(ctx.Member.Id);
 
                 if (from is null)
                 {
                     from = new Wallet(ctx.Member.Id, ctx.Member.Username);
-                    _model.Add(from);
+					this._model.Add(from);
                     save = true;
                 }
 
                 if (from.HasEnough(ammount))
                 {
-                    var to = await _model.FindAsync<Wallet>(m.Id);
+                    var to = await this._model.FindAsync<Wallet>(m.Id);
 
                     if (to is null)
                     {
                         to = new Wallet(m.Id, m.Username);
-                        _model.Add(to);
+						this._model.Add(to);
                     }
                     else
                     {
@@ -78,7 +78,7 @@ namespace Shatter.Discord.Commands.Economy
 
                 if (save)
 				{
-					await _model.SaveChangesAsync();
+					await this._model.SaveChangesAsync();
 				}
 			}
         }

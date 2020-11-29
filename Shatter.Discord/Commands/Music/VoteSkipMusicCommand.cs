@@ -17,7 +17,7 @@ namespace Shatter.Discord.Commands.Music
 
         public VoteSkipMusicCommand(VoiceService voice)
         {
-            _voice = voice;
+			this._voice = voice;
         }
 
         [Command("voteskip")]
@@ -27,7 +27,7 @@ namespace Shatter.Discord.Commands.Music
         [ExecutionModule("music")]
         public async Task VoteSkipMusicCommandAsync(CommandContext ctx)
         {
-            var conn = await _voice.GetGuildConnection(ctx);
+            var conn = await this._voice.GetGuildConnection(ctx);
 
             if (conn is null)
             {
@@ -43,7 +43,7 @@ namespace Shatter.Discord.Commands.Music
 
             var required = Math.Ceiling(conn.Channel.Users.Count() / 2.0);
 
-            if (_voice.VoteSkips.TryGetValue(ctx.Guild.Id, out var votes) || required == 1)
+            if (this._voice.VoteSkips.TryGetValue(ctx.Guild.Id, out var votes) || required == 1)
             {
                 if (votes?.Contains(ctx.Member.Id) ?? false)
                 {
@@ -53,19 +53,19 @@ namespace Shatter.Discord.Commands.Music
 
                 if (votes?.Count + 1 >= required)
                 {
-                    _voice.VoteSkips.TryRemove(ctx.Guild.Id, out _);
+					this._voice.VoteSkips.TryRemove(ctx.Guild.Id, out _);
                     await conn.StopAsync();
                     await RespondBasicSuccessAsync( "Vote skip complete, Skipping song!");
                 }
                 else
                 {
-                    _voice.VoteSkips[ctx.Guild.Id].Add(ctx.Member.Id);
+					this._voice.VoteSkips[ctx.Guild.Id].Add(ctx.Member.Id);
                     await RespondBasicSuccessAsync( $"Voted to skip! {votes?.Count + 1}/{required} votes have been cast.");
                 }
             }
             else
             {
-                _voice.VoteSkips[ctx.Guild.Id] = new System.Collections.Generic.List<ulong>() { ctx.Member.Id };
+				this._voice.VoteSkips[ctx.Guild.Id] = new System.Collections.Generic.List<ulong>() { ctx.Member.Id };
                 await RespondBasicSuccessAsync( $"Stared a vote to skip the current song! {required} votes required to skip.");
             }
         }

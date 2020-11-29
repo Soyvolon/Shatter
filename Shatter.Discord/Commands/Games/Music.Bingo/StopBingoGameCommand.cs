@@ -16,8 +16,8 @@ namespace Shatter.Discord.Commands.Games.Music.Bingo
 
         public StopBingoGameCommand(MusicBingoService bingo, VoiceService voice)
         {
-            _bingo = bingo;
-            _voice = voice;
+			this._bingo = bingo;
+			this._voice = voice;
         }
 
         [Command("stopbingo")]
@@ -32,11 +32,11 @@ namespace Shatter.Discord.Commands.Games.Music.Bingo
                 return;
             }
 
-            var conn = await _voice.GetGuildConnection(ctx);
+            var conn = await this._voice.GetGuildConnection(ctx);
 
             if (conn is not null)
             {
-                if (!(_voice.IsDJ(ctx, out bool _)
+                if (!(this._voice.IsDJ(ctx, out bool _)
                 || ctx.Member.PermissionsIn(conn.Channel).HasPermission(Permissions.ManageChannels)))
                 {
                     await RespondBasicErrorAsync("You are not the DJ and cannot stop a bingo game!");
@@ -44,9 +44,9 @@ namespace Shatter.Discord.Commands.Games.Music.Bingo
                 }
                 else
                 { // stop anything playing first.
-                    _voice.GuildQueues[ctx.Guild.Id].Clear();
+					this._voice.GuildQueues[ctx.Guild.Id].Clear();
                     await conn.StopAsync();
-                    _bingo.StopGame(ctx.Guild.Id, false);
+					this._bingo.StopGame(ctx.Guild.Id, false);
                     await RespondBasicSuccessAsync("Bingo game stopped.");
                 }
             }

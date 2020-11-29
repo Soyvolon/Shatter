@@ -17,7 +17,7 @@ namespace Shatter.Discord.Commands.Memberlog
 
         public MemberlogMessageTestCommand(ShatterDatabaseContext model)
         {
-            _model = model;
+			this._model = model;
         }
 
         [Command("mlmtest")]
@@ -27,12 +27,12 @@ namespace Shatter.Discord.Commands.Memberlog
         [ExecutionModule("memberlog")]
         public async Task MemberlogMessageTestCommandAsync(CommandContext ctx)
         {
-            var guild = await _model.FindAsync<GuildMemberlogs>(ctx.Guild.Id);
+            var guild = await this._model.FindAsync<GuildMemberlogs>(ctx.Guild.Id);
 
             if (guild is null)
             {
                 guild = new GuildMemberlogs(ctx.Guild.Id);
-                await _model.AddAsync(guild);
+                await this._model.AddAsync(guild);
             }
 
             if (guild.MemberlogChannel is null)

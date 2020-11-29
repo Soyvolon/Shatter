@@ -18,9 +18,9 @@ namespace Shatter.Core.Utils
 
         private Fortune(JObject json)
         {
-            Data = json["fortune"]?.ToObject<FortuneData>() ?? throw new Exception("API Error");
-            Lesson = json["lesson"]?.ToObject<FortuneLesson>() ?? throw new Exception("API Error");
-            Lotto = json["lotto"]?.ToObject<FortuneLotto>() ?? throw new Exception("API Error");
+			this.Data = json["fortune"]?.ToObject<FortuneData>() ?? throw new Exception("API Error");
+			this.Lesson = json["lesson"]?.ToObject<FortuneLesson>() ?? throw new Exception("API Error");
+			this.Lotto = json["lotto"]?.ToObject<FortuneLotto>() ?? throw new Exception("API Error");
         }
 
         public static async Task<Fortune?> GetFortuneCookie()

@@ -20,10 +20,10 @@ namespace Shatter.Core.Structures
 
         public Wallet(ulong userId, string user)
         {
-            UserId = userId;
-            Balance = 100;
-            Username = user;
-            LastDaily = DateTime.MinValue;
+			this.UserId = userId;
+			this.Balance = 100;
+			this.Username = user;
+			this.LastDaily = DateTime.MinValue;
         }
 
         /// <summary>
@@ -33,8 +33,8 @@ namespace Shatter.Core.Structures
         /// <returns>The new balance.</returns>
         public int Add(int amount)
         {
-            Balance += amount;
-            return Balance;
+			this.Balance += amount;
+            return this.Balance;
         }
 
         /// <summary>
@@ -44,8 +44,8 @@ namespace Shatter.Core.Structures
         /// <returns>The new balance.</returns>
         public int Subtract(int amount)
         {
-            Balance -= amount;
-            return Balance;
+			this.Balance -= amount;
+            return this.Balance;
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace Shatter.Core.Structures
         /// </summary>
         /// <param name="amount">Value to check against.</param>
         /// <returns>True if the user has more money than the value passed to <paramref name="amount"/></returns>
-        public bool HasEnough(int amount = 0) => Balance >= amount;
+        public bool HasEnough(int amount = 0) => this.Balance >= amount;
 
         /// <summary>
         /// Transfers an ammount to another wallet.

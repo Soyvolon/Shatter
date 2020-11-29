@@ -21,34 +21,34 @@ namespace Shatter.Core.Structures.Trivia
             switch (Encoding.ASCII.GetString(Convert.FromBase64String(res.Difficulty)))
             {
                 case "easy":
-                    Worth = 50;
+					this.Worth = 50;
                     break;
                 case "medium":
-                    Worth = 100;
+					this.Worth = 100;
                     break;
                 case "hard":
-                    Worth = 150;
+					this.Worth = 150;
                     break;
             }
 
-            PossibleAnswers.Add(0, Encoding.ASCII.GetString(Convert.FromBase64String(res.CorrectAnswer)));
+			this.PossibleAnswers.Add(0, Encoding.ASCII.GetString(Convert.FromBase64String(res.CorrectAnswer)));
 
             var id = 1;
             foreach (var q in res.IncorrectAnswers)
 			{
-				PossibleAnswers.Add(id++, Encoding.ASCII.GetString(Convert.FromBase64String(q)));
+				this.PossibleAnswers.Add(id++, Encoding.ASCII.GetString(Convert.FromBase64String(q)));
 			}
 
-			QuestionString = Encoding.ASCII.GetString(Convert.FromBase64String(res.QuestionString));
+			this.QuestionString = Encoding.ASCII.GetString(Convert.FromBase64String(res.QuestionString));
 
-            DifficultyString = Encoding.ASCII.GetString(Convert.FromBase64String(res.Difficulty));
+			this.DifficultyString = Encoding.ASCII.GetString(Convert.FromBase64String(res.Difficulty));
 
-            CategoryString = Encoding.ASCII.GetString(Convert.FromBase64String(res.Category));
+			this.CategoryString = Encoding.ASCII.GetString(Convert.FromBase64String(res.Category));
         }
 
         public Tuple<string, int, string> GetMappedAnswers()
         {
-            var questions = PossibleAnswers.ToList();
+            var questions = this.PossibleAnswers.ToList();
             questions.Shuffle();
 
             string choices = "";
@@ -59,7 +59,7 @@ namespace Shatter.Core.Structures.Trivia
             foreach (var answer in questions)
             {
                 choices += $"{c}: {answer.Value}\n";
-                if (answer.Key == CorrectAnswerKey)
+                if (answer.Key == this.CorrectAnswerKey)
                 {
                     correctPos = c;
                     correctString = answer.Value.ToLowerInvariant().Trim();

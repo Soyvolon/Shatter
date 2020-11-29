@@ -19,7 +19,7 @@ namespace Shatter.Discord.Commands.Mod
 
         public BanCommand(ShatterDatabaseContext model)
         {
-            _model = model;
+			this._model = model;
         }
 
         [Command("ban")]
@@ -51,18 +51,18 @@ namespace Shatter.Discord.Commands.Mod
             DateTime? bannedUntil = null;
             if (!(banLength is null))
             {
-                var cfg = _model.Find<GuildModeration>(ctx.Guild.Id);
+                var cfg = this._model.Find<GuildModeration>(ctx.Guild.Id);
                 if (cfg is null)
                 {
                     cfg = new GuildModeration(ctx.Guild.Id);
-                    _model.Add(cfg);
-                    await _model.SaveChangesAsync();
+					this._model.Add(cfg);
+                    await this._model.SaveChangesAsync();
                 }
 
                 bannedUntil = DateTime.UtcNow.Add((TimeSpan)banLength);
-                cfg.UserBans.UpdateOrAddValue(user.Id, (DateTime)bannedUntil, cfg, _model);
+                cfg.UserBans.UpdateOrAddValue(user.Id, (DateTime)bannedUntil, cfg, this._model);
 
-                await _model.SaveChangesAsync();
+                await this._model.SaveChangesAsync();
             }
 
             await RespondBasicSuccessAsync( $"Banned {user.Mention} {(banLength is null ? "permanetly" : $"until {bannedUntil?.ToShortDateString() ?? "forever"}")}");
@@ -108,18 +108,18 @@ namespace Shatter.Discord.Commands.Mod
             DateTime? bannedUntil = null;
             if (!(banLength is null))
             {
-                var cfg = _model.Find<GuildModeration>(ctx.Guild.Id);
+                var cfg = this._model.Find<GuildModeration>(ctx.Guild.Id);
                 if (cfg is null)
                 {
                     cfg = new GuildModeration(ctx.Guild.Id);
-                    _model.Add(cfg);
-                    await _model.SaveChangesAsync();
+					this._model.Add(cfg);
+                    await this._model.SaveChangesAsync();
                 }
 
                 bannedUntil = DateTime.UtcNow.Add((TimeSpan)banLength);
-                cfg.UserBans.UpdateOrAddValue(userId, (DateTime)bannedUntil, cfg, _model);
+                cfg.UserBans.UpdateOrAddValue(userId, (DateTime)bannedUntil, cfg, this._model);
 
-                await _model.SaveChangesAsync();
+                await this._model.SaveChangesAsync();
             }
 
             await RespondBasicSuccessAsync( $"Banned {userId} {(banLength is null ? "permanetly" : $"until {bannedUntil?.ToShortDateString() ?? "forever"}")}");

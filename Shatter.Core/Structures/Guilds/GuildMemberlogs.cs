@@ -17,11 +17,11 @@ namespace Shatter.Core.Structures.Guilds
 
         public GuildMemberlogs(ulong gid)
         {
-            GuildId = gid;
-            JoinDmMessage = null;
-            MemberlogChannel = null;
-            JoinMessage = null;
-            LeaveMessage = null;
+			this.GuildId = gid;
+			this.JoinDmMessage = null;
+			this.MemberlogChannel = null;
+			this.JoinMessage = null;
+			this.LeaveMessage = null;
         }
     }
 }

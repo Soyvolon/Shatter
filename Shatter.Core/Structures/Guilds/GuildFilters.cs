@@ -25,7 +25,7 @@ namespace Shatter.Core.Structures.Guilds
             get
             {
                 var set = new HashSet<string>();
-                var data = Filters.Where(x => x.Value.Item1 == 1);
+                var data = this.Filters.Where(x => x.Value.Item1 == 1);
                 foreach (var ary in data)
                 {
                     set.UnionWith(ary.Value.Item2);
@@ -40,7 +40,7 @@ namespace Shatter.Core.Structures.Guilds
             get
             {
                 var set = new HashSet<string>();
-                var data = Filters.Where(x => x.Value.Item1 == 2);
+                var data = this.Filters.Where(x => x.Value.Item1 == 2);
                 foreach (var ary in data)
                 {
                     set.UnionWith(ary.Value.Item2);
@@ -53,9 +53,9 @@ namespace Shatter.Core.Structures.Guilds
 
         public GuildFilters(ulong gid)
         {
-            GuildId = gid;
-            Filters = new ConcurrentDictionary<string, Tuple<int, HashSet<string>>>();
-            BypassFilters = new ConcurrentDictionary<ulong, HashSet<string>>();
+			this.GuildId = gid;
+			this.Filters = new ConcurrentDictionary<string, Tuple<int, HashSet<string>>>();
+			this.BypassFilters = new ConcurrentDictionary<ulong, HashSet<string>>();
         }
     }
 }

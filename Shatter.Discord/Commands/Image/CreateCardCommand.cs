@@ -24,7 +24,7 @@ namespace Shatter.Discord.Commands.Image
 
         public CreateCardCommand(MemeService meme)
         {
-            _meme = meme;
+			this._meme = meme;
         }
 
         [Command("cah")]
@@ -52,10 +52,10 @@ namespace Shatter.Discord.Commands.Image
                 return;
             }
 
-            captions[0] = new Tuple<Rectangle, string, Brush?>(captions[0].Item1, captionStrings[0], new SolidBrush(Color.White));
-            captions[1] = new Tuple<Rectangle, string, Brush?>(captions[1].Item1, captionStrings[1], new SolidBrush(Color.Black));
+			this.captions[0] = new Tuple<Rectangle, string, Brush?>(this.captions[0].Item1, captionStrings[0], new SolidBrush(Color.White));
+			this.captions[1] = new Tuple<Rectangle, string, Brush?>(this.captions[1].Item1, captionStrings[1], new SolidBrush(Color.Black));
 
-            using var stream = await _meme.BuildMemeAsync(Resources.Images_CAH, captions, "schoolbell", 24);
+            using var stream = await this._meme.BuildMemeAsync(Resources.Images_CAH, this.captions, "schoolbell", 24);
 
             await ctx.RespondWithFileAsync("cah-meme.png", stream);
         }

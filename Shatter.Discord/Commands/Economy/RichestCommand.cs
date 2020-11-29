@@ -25,7 +25,7 @@ namespace Shatter.Discord.Commands.Economy
 
         public RichestCommand(ShatterDatabaseContext model)
         {
-            _model = model;
+			this._model = model;
         }
 
         [Command("richest")]
@@ -38,7 +38,7 @@ namespace Shatter.Discord.Commands.Economy
         {
             List<Wallet> wallets;
 
-            wallets = _model.Wallets
+            wallets = this._model.Wallets
                     .AsNoTracking()
                     .OrderByDescending(x => x.Balance)
                     .ToList();

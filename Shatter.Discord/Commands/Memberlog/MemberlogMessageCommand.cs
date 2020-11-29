@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Threading.Tasks;
 
 using DSharpPlus;
@@ -18,7 +18,7 @@ namespace Shatter.Discord.Commands.Memberlog
 
         public MemberlogMessageCommand(ShatterDatabaseContext model)
         {
-            _model = model;
+			this._model = model;
         }
 
         [Command("mlmessage")]
@@ -57,12 +57,12 @@ namespace Shatter.Discord.Commands.Memberlog
                 return;
             }
 
-            var guild = await _model.FindAsync<GuildMemberlogs>(ctx.Guild.Id);
+            var guild = await this._model.FindAsync<GuildMemberlogs>(ctx.Guild.Id);
 
             if (guild is null)
             {
                 guild = new GuildMemberlogs(ctx.Guild.Id);
-                await _model.AddAsync(guild);
+                await this._model.AddAsync(guild);
             }
 
             Task res;
@@ -107,7 +107,7 @@ namespace Shatter.Discord.Commands.Memberlog
                 }
             }
 
-            await _model.SaveChangesAsync();
+            await this._model.SaveChangesAsync();
         }
     }
 }

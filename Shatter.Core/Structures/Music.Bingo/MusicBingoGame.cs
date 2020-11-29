@@ -30,35 +30,35 @@ namespace Shatter.Core.Structures.Music.Bingo
 
         public MusicBingoGame()
         {
-            QueuedSongs = new();
-            BingoBoards = new();
-            PlayedSongs = null;
+			this.QueuedSongs = new();
+			this.BingoBoards = new();
+			this.PlayedSongs = null;
         }
 
         public void Initalize(IEnumerable<ulong> playerIds)
         {
-            Songs.Shuffle(); // shuffle the list
-            foreach (var s in Songs) // and queue the songs
+			this.Songs.Shuffle(); // shuffle the list
+            foreach (var s in this.Songs) // and queue the songs
 			{
-				QueuedSongs.Enqueue(s);
+				this.QueuedSongs.Enqueue(s);
 			}
 			// create the played songs list
-			PlayedSongs = new(Songs.Count);
+			this.PlayedSongs = new(this.Songs.Count);
 
             // build the boards
             foreach(var player in playerIds)
             {
                 var board = new MusicBingoBoard();
-                board.PopulateBoard(Songs);
-                BingoBoards[player] = board;
+                board.PopulateBoard(this.Songs);
+				this.BingoBoards[player] = board;
             }
         }
 
         public MusicBingoSong? GetNextSong()
         {
-            if(QueuedSongs.TryDequeue(out MusicBingoSong? song))
+            if(this.QueuedSongs.TryDequeue(out MusicBingoSong? song))
 			{
-				PlayedSongs?.Add(song);
+				this.PlayedSongs?.Add(song);
 			}
 
 			return song;

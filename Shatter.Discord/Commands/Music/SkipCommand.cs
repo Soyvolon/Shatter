@@ -15,7 +15,7 @@ namespace Shatter.Discord.Commands.Music
 
         public SkipCommand(VoiceService voice)
         {
-            _voice = voice;
+			this._voice = voice;
         }
 
         [Command("skip")]
@@ -25,7 +25,7 @@ namespace Shatter.Discord.Commands.Music
         [ExecutionModule("music")]
         public async Task SkipMusicCommandAsnyc(CommandContext ctx)
         {
-            var conn = await _voice.GetGuildConnection(ctx);
+            var conn = await this._voice.GetGuildConnection(ctx);
 
             if (conn is null)
             {
@@ -33,7 +33,7 @@ namespace Shatter.Discord.Commands.Music
                 return;
             }
 
-            if (_voice.IsDJ(ctx, out bool HostChanged)
+            if (this._voice.IsDJ(ctx, out bool HostChanged)
                 || ctx.Member.PermissionsIn(conn.Channel).HasPermission(Permissions.ManageChannels))
             {
                 await conn.StopAsync();

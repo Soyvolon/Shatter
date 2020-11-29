@@ -22,7 +22,7 @@ namespace Shatter.Discord.Commands.Filter
 
         public CreateFilterCommand(ShatterDatabaseContext model)
         {
-            _model = model;
+			this._model = model;
         }
 
         [Command("createfilter")]
@@ -48,12 +48,12 @@ namespace Shatter.Discord.Commands.Filter
 
 			var filterWords = words.Where(x => GuildFilters.regex.IsMatch(x)).ToHashSet<string>();
 
-            var filter = await _model.FindAsync<GuildFilters>(ctx.Guild.Id);
+            var filter = await this._model.FindAsync<GuildFilters>(ctx.Guild.Id);
             if (filter is null)
             {
                 filter = new GuildFilters(ctx.Guild.Id);
-                await _model.AddAsync(filter);
-                await _model.SaveChangesAsync();
+                await this._model.AddAsync(filter);
+                await this._model.SaveChangesAsync();
             }
 
             if (!force && filter.Filters.TryGetValue(name, out _))
@@ -64,11 +64,11 @@ namespace Shatter.Discord.Commands.Filter
                 return;
             }
 
-            filter.Filters.UpdateOrAddValue(name, new Tuple<int, HashSet<string>>(1, filterWords), filter, _model);
+            filter.Filters.UpdateOrAddValue(name, new Tuple<int, HashSet<string>>(1, filterWords), filter, this._model);
 
             var data = JsonConvert.SerializeObject(filter.Filters);
 
-            await _model.SaveChangesAsync();
+            await this._model.SaveChangesAsync();
 
             await RespondBasicSuccessAsync( $"Created new filter by the name of {name} with the words:\n" +
                 $"`{string.Join("`, `", filterWords)}`");

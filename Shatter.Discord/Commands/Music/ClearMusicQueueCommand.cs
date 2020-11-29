@@ -15,7 +15,7 @@ namespace Shatter.Discord.Commands.Music
 
         public ClearMusicQueueCommand(VoiceService voice)
         {
-            _voice = voice;
+			this._voice = voice;
         }
 
         [Command("clearsongs")]
@@ -26,7 +26,7 @@ namespace Shatter.Discord.Commands.Music
         [ExecutionModule("music")]
         public async Task ClearSongsCommandAsync(CommandContext ctx)
         {
-            var conn = await _voice.GetGuildConnection(ctx);
+            var conn = await this._voice.GetGuildConnection(ctx);
 
             if (conn is null)
             {
@@ -34,10 +34,10 @@ namespace Shatter.Discord.Commands.Music
                 return;
             }
 
-            if (_voice.IsDJ(ctx, out bool HostChanged)
+            if (this._voice.IsDJ(ctx, out bool HostChanged)
                 || ctx.Member.PermissionsIn(conn.Channel).HasPermission(Permissions.ManageChannels))
             {
-                _voice.GuildQueues[ctx.Guild.Id] = new System.Collections.Concurrent.ConcurrentQueue<DSharpPlus.Lavalink.LavalinkTrack>();
+				this._voice.GuildQueues[ctx.Guild.Id] = new System.Collections.Concurrent.ConcurrentQueue<DSharpPlus.Lavalink.LavalinkTrack>();
                 await RespondBasicSuccessAsync( $"Cleared the Queue.{(HostChanged ? $"\n{ ctx.Member.Mention} is the new host!" : "")}");
             }
             else

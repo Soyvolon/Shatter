@@ -27,40 +27,40 @@ namespace Shatter.Discord.Utils
 
         public HelpFormatter(CommandContext ctx, ShatterDatabaseContext database) : base(ctx)
         {
-            _database = database;
+			this._database = database;
 
-            EmbedBuilder = new DiscordEmbedBuilder()
+			this.EmbedBuilder = new DiscordEmbedBuilder()
                 .WithTitle("Help")
                 .WithColor(0x00ff95);
 
-            GuildId = ctx.Guild.Id;
-            Prefix = ctx.Prefix;
+			this.GuildId = ctx.Guild.Id;
+			this.Prefix = ctx.Prefix;
         }
 
         public override CommandHelpMessage Build()
         {
-            if (Command is null)
+            if (this.Command is null)
 			{
-				EmbedBuilder.WithDescription("Listing all modules. Specify a command to see more infomration.");
+				this.EmbedBuilder.WithDescription("Listing all modules. Specify a command to see more infomration.");
 			}
 
-			return new CommandHelpMessage(embed: EmbedBuilder.Build());
+			return new CommandHelpMessage(embed: this.EmbedBuilder.Build());
         }
 
         public override BaseHelpFormatter WithCommand(Command command)
         {
-            Command = command;
+			this.Command = command;
 
-            EmbedBuilder.WithDescription($"{Formatter.InlineCode(command.Name)}: {command.Description ?? "No description provided."}");
+			this.EmbedBuilder.WithDescription($"{Formatter.InlineCode(command.Name)}: {command.Description ?? "No description provided."}");
 
             if (command is CommandGroup cgroup && cgroup.IsExecutableWithoutSubcommands)
 			{
-				EmbedBuilder.WithDescription($"{EmbedBuilder.Description}\n\nThis group can be executed as a standalone command.");
+				this.EmbedBuilder.WithDescription($"{this.EmbedBuilder.Description}\n\nThis group can be executed as a standalone command.");
 			}
 
 			if (command.Aliases?.Any() == true)
 			{
-				EmbedBuilder.AddField("Aliases", string.Join(", ", command.Aliases.Select(Formatter.InlineCode)), false);
+				this.EmbedBuilder.AddField("Aliases", string.Join(", ", command.Aliases.Select(Formatter.InlineCode)), false);
 			}
 
 			if (command.Overloads?.Any() == true)
@@ -80,13 +80,13 @@ namespace Shatter.Discord.Utils
 
                     foreach (var arg in ovl.Arguments)
 					{
-						sb.Append('`').Append(arg.Name).Append(" (").Append(CommandsNext.GetUserFriendlyTypeName(arg.Type)).Append(")`: ").Append(arg.Description ?? "No description provided.").Append('\n');
+						sb.Append('`').Append(arg.Name).Append(" (").Append(this.CommandsNext.GetUserFriendlyTypeName(arg.Type)).Append(")`: ").Append(arg.Description ?? "No description provided.").Append('\n');
 					}
 
 					sb.Append('\n');
                 }
 
-                EmbedBuilder.AddField("Arguments", sb.ToString().Trim(), false);
+				this.EmbedBuilder.AddField("Arguments", sb.ToString().Trim(), false);
             }
 
             return this;
@@ -94,16 +94,16 @@ namespace Shatter.Discord.Utils
 
         public override BaseHelpFormatter WithSubcommands(IEnumerable<Command> subcommands)
         {
-            var guild = _database.Find<GuildConfig>(GuildId);
+            var guild = this._database.Find<GuildConfig>(this.GuildId);
 
             if(guild is null)
             {
-                guild = new GuildConfig(GuildId)
+                guild = new GuildConfig(this.GuildId)
                 {
                     Prefix = Prefix,
                 };
-                _database.Add(guild);
-                _database.SaveChanges();
+				this._database.Add(guild);
+				this._database.SaveChanges();
             }
 
             HashSet<string> disabledCommands = new();
@@ -124,7 +124,7 @@ namespace Shatter.Discord.Utils
 
             var cmdList = subcommands.Where(x => !disabledCommands.Contains(x.Name.ToLower()));
 
-            EmbedBuilder.AddField(Command != null ? "Subcommands" : "Commands", string.Join(", ", 
+			this.EmbedBuilder.AddField(this.Command != null ? "Subcommands" : "Commands", string.Join(", ", 
                 cmdList.Select(x => {
                     return Formatter.InlineCode(x.Name);
                 })), false);

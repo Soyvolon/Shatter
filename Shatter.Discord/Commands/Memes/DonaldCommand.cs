@@ -29,8 +29,8 @@ namespace Shatter.Discord.Commands.Memes
             var embed = new DiscordEmbedBuilder()
                 .WithAuthor("Donald J. Trump (@realDonaldTrump)", "https://twitter.moc/realDonaldTrump", pfp)
                 .WithDescription(msg)
-                .AddField("Retweets", Math.Floor(rand.Next() * 1e2).ToString(), true)
-                .AddField("Likes", Math.Floor(rand.Next() * 1e2).ToString(), true)
+                .AddField("Retweets", Math.Floor(this.rand.Next() * 1e2).ToString(), true)
+                .AddField("Likes", Math.Floor(this.rand.Next() * 1e2).ToString(), true)
                 .WithFooter("Twitter", twtr);
 
             await ctx.RespondAsync($@"https://twitter.moc/realDonaldTrump/status/{ctx.Message.Id}", embed: embed);

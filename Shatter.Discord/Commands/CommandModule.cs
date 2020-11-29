@@ -103,36 +103,36 @@ namespace Shatter.Discord.Commands
 
         public async Task RespondBasicSuccessAsync(string message)
 		{
-			if (ctx is null)
+			if (this.ctx is null)
 			{
 				return;
 			}
 
 			var b = SuccessBase()
                 .WithDescription(message);
-            await ctx.RespondAsync(embed: b.Build());
+            await this.ctx.RespondAsync(embed: b.Build());
         }
 
         public async Task RespondBasicErrorAsync(string message)
 		{
-			if (ctx is null)
+			if (this.ctx is null)
 			{
 				return;
 			}
 
 			var b = ErrorBase()
                 .WithDescription(message);
-            await ctx.RespondAsync(embed: b.Build());
+            await this.ctx.RespondAsync(embed: b.Build());
         }
 
         public async Task RespondWithFile(string caption, string fileName, string contents)
         {
-			if (ctx is null)
+			if (this.ctx is null)
 			{
 				return;
 			}
 
-			FileStream fs = new FileStream($"{fileName}-{ctx.User.Id}.txt", FileMode.OpenOrCreate);
+			FileStream fs = new FileStream($"{fileName}-{this.ctx.User.Id}.txt", FileMode.OpenOrCreate);
             StreamWriter sr = new StreamWriter(fs);
 
             await sr.WriteAsync(contents);
@@ -145,7 +145,7 @@ namespace Shatter.Discord.Commands
 
             fs = new FileStream(path, FileMode.Open);
 
-            await ctx.Channel.SendFileAsync(fs, caption);
+            await this.ctx.Channel.SendFileAsync(fs, caption);
 
             await fs.DisposeAsync();
 

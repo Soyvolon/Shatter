@@ -18,7 +18,7 @@ namespace Shatter.Discord.Commands.Mod
 
         public UnbanCommand(ShatterDatabaseContext model)
         {
-            _model = model;
+			this._model = model;
         }
 
         [Command("unban")]
@@ -44,14 +44,14 @@ namespace Shatter.Discord.Commands.Mod
                 return;
             }
 
-            var cfg = _model.Find<GuildModeration>(ctx.Guild.Id);
+            var cfg = this._model.Find<GuildModeration>(ctx.Guild.Id);
 
             if (!(cfg is null))
             {
                 // Remove a temp ban if it exsists.
-                if (cfg.UserBans.RemoveValue(user.Id, cfg, _model, out _))
+                if (cfg.UserBans.RemoveValue(user.Id, cfg, this._model, out _))
 				{
-					await _model.SaveChangesAsync();
+					await this._model.SaveChangesAsync();
 				}
 			}
 

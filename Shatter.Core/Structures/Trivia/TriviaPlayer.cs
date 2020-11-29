@@ -15,7 +15,7 @@ namespace Shatter.Core.Structures.Trivia
         {
             get
             {
-                return QuestionsCorrect + QuestionsIncorrect;
+                return this.QuestionsCorrect + this.QuestionsIncorrect;
             }
         }
 
@@ -23,11 +23,11 @@ namespace Shatter.Core.Structures.Trivia
         {
             get
             {
-                return (QuestionsCorrect / (float)TotalQuestions) * 100;
+                return (this.QuestionsCorrect / (float)this.TotalQuestions) * 100;
             }
         }
 
         public TriviaPlayer() { }
-        public TriviaPlayer(ulong uId) { UserId = uId; }
+        public TriviaPlayer(ulong uId) { this.UserId = uId; }
     }
 }
