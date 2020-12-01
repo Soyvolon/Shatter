@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
@@ -69,7 +69,9 @@ namespace Shatter.Discord.Commands.Games.Music.Bingo
 				}
 
 				globalNames.Remove("example");
-            }
+
+				globalNames.RemoveWhere(x => x.StartsWith('_'));
+			}
 
             var globalData = globalNames is not null ? "`" + string.Join("`, `", globalNames) + "`" : "No boards found.";
 
@@ -84,6 +86,8 @@ namespace Shatter.Discord.Commands.Games.Music.Bingo
 				{
 					localNames.Add(Path.GetFileNameWithoutExtension(path));
 				}
+
+				localNames.RemoveWhere(x => x.StartsWith('_'));
 			}
 
             var localData = localNames is not null ? "`" + string.Join("`, `", localNames) + "`" : "No boards found.";
@@ -118,7 +122,7 @@ namespace Shatter.Discord.Commands.Games.Music.Bingo
                     await RespondBasicErrorAsync("Bingo setup timed out.");
                     return;
                 }
-                else if (res.Result.Content.Equals("cancel", System.StringComparison.OrdinalIgnoreCase))
+                else if (res.Result.Content.Equals("cancel", StringComparison.OrdinalIgnoreCase))
                 {
                     await RespondBasicErrorAsync("Aborting setup.");
                     return;
@@ -128,7 +132,7 @@ namespace Shatter.Discord.Commands.Games.Music.Bingo
 
             } while (!(
                 ( // Check to see if it starts with a global: tag, then remove the global and check for a match.
-                    msg.StartsWith("global:", System.StringComparison.OrdinalIgnoreCase)
+                    msg.StartsWith("global:", StringComparison.OrdinalIgnoreCase)
                         && (globalNames?.Contains(msg[7..].Trim()) ?? false)
                 ) // if that fails, check for a local match.
                 || (localNames?.Contains(msg) ?? false)
