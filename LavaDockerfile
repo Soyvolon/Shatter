@@ -3,7 +3,7 @@
 
 FROM adoptopenjdk/openjdk13-openj9:ubi
 
-COPY Shatter/build/Shatter/Lavalink.jar Lava/
-COPY Shatter/build/Shatter/application.yml Lava/
+COPY build/Shatter/Lavalink.jar Lava/
+COPY build/Shatter/application.yml Lava/
 WORKDIR /Lava
 ENTRYPOINT ["java", "-jar", "Lavalink.jar"]

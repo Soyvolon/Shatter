@@ -10,6 +10,6 @@ RUN apt-get -y install curl
 RUN apt-get --assume-yes install libgif-dev autoconf libtool automake build-essential gettext libglib2.0-dev libcairo2-dev libtiff-dev libexif-dev
 RUN apt-get --assume-yes install libc6-dev libgdiplus
 
-COPY Shatter/build/Shatter App/
+COPY build/Shatter App/
 WORKDIR /App
 ENTRYPOINT ["dotnet", "Shatter.dll"]
