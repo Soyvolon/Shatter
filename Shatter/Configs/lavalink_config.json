@@ -1,3 +1,5 @@
 {
-  "password": ""
+  "password": "",
+  "ip": "",
+  "port": 2333
 }

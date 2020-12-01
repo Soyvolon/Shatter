@@ -1,0 +1,9 @@
+# build: docker build -t lava-image -f LavaDockerfile .
+# run: docker run -d --name lava --restart always lava-image --bind 127.0.0.1
+
+FROM adoptopenjdk/openjdk13-openj9:ubi
+
+COPY Shatter/build/Shatter/Lavalink.jar Lava/
+COPY Shatter/build/Shatter/application.yml Lava/
+WORKDIR /Lava
+ENTRYPOINT ["java", "-jar", "Lavalink.jar"]

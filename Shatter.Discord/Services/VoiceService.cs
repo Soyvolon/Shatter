@@ -221,14 +221,25 @@ namespace Shatter.Discord.Services
 
         private static LavalinkConfiguration GetLavalinkConfiguration()
         {
-            var lcfg = new LavalinkConfiguration
-            {
-                RestEndpoint = new DSharpPlus.Net.ConnectionEndpoint { Hostname = "localhost", Port = 2333 },
-                SocketEndpoint = new DSharpPlus.Net.ConnectionEndpoint { Hostname = "localhost", Port = 2333 },
-                Password = DiscordBot.Bot?.LavaConfig.Password
+			var cfg = DiscordBot.Bot?.LavaConfig;
+
+			if (cfg is null) throw new InvalidLavalinkConfigException("Failed to get lavalink config");
+
+			var lcfg = new LavalinkConfiguration
+			{
+				RestEndpoint = new DSharpPlus.Net.ConnectionEndpoint { Hostname = cfg.Value.Ip, Port = cfg.Value.Port },
+				SocketEndpoint = new DSharpPlus.Net.ConnectionEndpoint { Hostname = cfg.Value.Ip, Port = cfg.Value.Port },
+				Password = cfg.Value.Password
             };
 
             return lcfg;
         }
+
+		public class InvalidLavalinkConfigException : Exception
+		{
+			public InvalidLavalinkConfigException() : base() { }
+			public InvalidLavalinkConfigException(string? message) : base(message) { }
+		}
+
     }
 }

@@ -1,4 +1,4 @@
-﻿
+
 using Newtonsoft.Json;
 
 namespace Shatter.Core.Structures
@@ -7,5 +7,9 @@ namespace Shatter.Core.Structures
     {
         [JsonProperty("password")]
         public string Password { get; set; }
+		[JsonProperty("ip")]
+		public string Ip { get; set; }
+		[JsonProperty("port")]
+		public int Port { get; set; }
     }
 }
