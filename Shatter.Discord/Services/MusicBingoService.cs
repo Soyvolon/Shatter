@@ -40,7 +40,7 @@ namespace Shatter.Discord.Services
 			this._voice = voice;
 			this._services = services;
 
-			using FileStream fs = new(Path.Join("MusicBingo", "defaults.json"), FileMode.Open);
+			using FileStream fs = new(Path.Join("Configs", "bingo_defaults.json"), FileMode.Open);
 			using StreamReader sr = new(fs);
 			var json = sr.ReadToEnd();
 
@@ -178,6 +178,14 @@ namespace Shatter.Discord.Services
 		{ // has winner is false when all the songs run out or the game was closed by the command.
 		  // TODO: Play custom end of game sounds if there is a winner.
 
+			this._voice.IgnoreEventsList.TryRemove(guildId, out _); // remove from ignore list.
+
+			this.GameConnections.TryRemove(guildId, out _);
+			if (this.SongTimers.TryRemove(guildId, out var t))
+			{
+				await t.DisposeAsync();
+			}
+
 			if (this.ActiveGames.TryRemove(guildId, out var game))
 			{
 				// if this is null we dont play an exit.
@@ -188,17 +196,10 @@ namespace Shatter.Discord.Services
 
 					if(track != default)
 					{
+						game.NoAutoStop = true;
 						await con.PlayAsync(track);
 					}
 				}
-			}
-
-			this._voice.IgnoreEventsList.TryRemove(guildId, out _); // remove from ignore list.
-
-			this.GameConnections.TryRemove(guildId, out _);
-            if(this.SongTimers.TryRemove(guildId, out var t))
-			{
-				t.Change(0, Timeout.Infinite);
 			}
 		}
 
@@ -212,19 +213,23 @@ namespace Shatter.Discord.Services
 				return;
 			}
 
+			game.NoAutoStop = true;
 			await con.PlayAsync(track);
         }
 
         private async Task PlayOutOfSongs(TrackFinishEventArgs e, ulong guildId)
         {
-            await StopGame(guildId, e.Player);
+            await StopGame(guildId, null);
 
-			// will require await at some point
-			await Task.Delay(0);
+			var serach = await e.Player.GetTracksAsync(_defaults.NoWinner);
+			var track = serach.Tracks?.FirstOrDefault() ?? default;
 
-            // TODO: Replace with custom out of songs vid
-
-        }
+			if (track == default)
+			{
+				return;
+			}
+			await e.Player.PlayAsync(track);
+		}
 
         // Special handler for the bingo games to introduce delays and anything else needed.
         private async Task GuildConnection_SongFinished(LavalinkGuildConnection sender, TrackFinishEventArgs e)
@@ -265,6 +270,12 @@ namespace Shatter.Discord.Services
         {
             if(this.ActiveGames.TryGetValue(sender.Guild.Id, out var game))
             {
+				if(game.NoAutoStop)
+				{
+					game.NoAutoStop = false;
+					return Task.CompletedTask;
+				}
+
                 if (game.PlayedSongs is null)
 				{
 					return Task.CompletedTask;
@@ -272,22 +283,20 @@ namespace Shatter.Discord.Services
 
 				var last = game.PlayedSongs.LastOrDefault();
 
-                if (last == default)
+				if (last != default)
 				{
-					return Task.CompletedTask;
+					if (last.SongStart is not null && last.SongEnd is not null)
+					{
+						var span = last.SongEnd.Value.Subtract(last.SongStart.Value);
+
+						this.SongTimers[sender.Guild.Id] = new Timer(async (x) =>
+						{
+							await e.Player.PauseAsync();
+							await Task.Delay(TimeSpan.FromSeconds(2));
+							await e.Player.StopAsync();
+						}, null, span, Timeout.InfiniteTimeSpan);
+					}
 				}
-
-				if (last.SongStart is not null && last.SongEnd is not null)
-                {
-                    var span = last.SongEnd.Value.Subtract(last.SongStart.Value);
-
-					this.SongTimers[sender.Guild.Id] = new Timer(async (x) =>
-                    {
-                        await e.Player.PauseAsync();
-                        await Task.Delay(TimeSpan.FromSeconds(2));
-                        await e.Player.StopAsync();
-                    }, null, span, Timeout.InfiniteTimeSpan);
-                }
             }
 
 			return Task.CompletedTask;

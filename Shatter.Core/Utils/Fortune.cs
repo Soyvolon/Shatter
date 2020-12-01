@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -35,9 +35,11 @@ namespace Shatter.Core.Utils
 
                 var array = JArray.Parse(response);
 
-                JObject data = array[0].ToObject<JObject>();
+				JObject? data = array[0].ToObject<JObject>();
 
-                return new Fortune(data);
+				if (data is null) return null;
+
+				return new Fortune(data);
             }
             catch
             {

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Shatter.Core.Structures.Guilds
@@ -27,11 +27,11 @@ namespace Shatter.Core.Structures.Guilds
 
         public GuildConfig(ulong gid) : this(gid, CoreUtils.Prefix, true, 10) { }
 
-        public GuildConfig(ulong gid, string p, bool aptg, int tql)
-        {
+		public GuildConfig(ulong gid, string? p, bool aptg, int tql)
+		{
 			this.GuildId = gid;
 
-			this.Prefix = p;
+			this.Prefix = p ?? "]";
 
 			this.AllowPublicTriviaGames = aptg;
 			this.TriviaQuestionLimit = tql;

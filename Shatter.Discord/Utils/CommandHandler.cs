@@ -127,6 +127,12 @@ namespace Shatter.Discord.Utils
 
         public async Task<int> PrefixResolver(DiscordMessage msg, GuildConfig guildConfig)
         {
+			if(msg.Channel.Guild is null)
+			{
+				// dont respond to DMs
+				return -1;
+			}
+
             if (!msg.Channel.PermissionsFor(await msg.Channel.Guild.GetMemberAsync(this._client.CurrentUser.Id).ConfigureAwait(false)).HasPermission(Permissions.SendMessages))
 			{
 				return -1; //Checks if bot can't send messages, if so ignore.

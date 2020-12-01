@@ -18,7 +18,7 @@ namespace Shatter.Core.Database
 			}
 
 			var optionsBuilder = new DbContextOptionsBuilder<ShatterDatabaseContext>();
-			optionsBuilder.UseSqlite(db.DataSource);
+			optionsBuilder.UseSqlite(db.Value.DataSource);
 
 			return new ShatterDatabaseContext(optionsBuilder.Options);
 		}

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 
@@ -14,7 +14,7 @@ namespace Shatter.Core.Extensions
         /// <typeparam name="T">Type of items</typeparam>
         /// <param name="list">List to pick a value from.</param>
         /// <returns>A Random Item or default if there are no items to return.</returns>
-        public static T Random<T>(this List<T> list)
+        public static T? Random<T>(this List<T> list)
         {
             if (list is null || list.Count <= 0)
 			{

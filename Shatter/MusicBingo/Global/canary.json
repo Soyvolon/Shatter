@@ -1,7 +1,7 @@
 {
   "game_title": "Canary's Arsenal",
-  "introduction": "",
-  "epilogue": "",
+  "introduction": "https://youtu.be/xl4bMLVXic0",
+  "epilogue": "https://youtu.be/8eHVr9LrOTw",
   "songs": [
     {
       "display_name": "Tiny Dancer - Elton John",
@@ -155,7 +155,7 @@
     },
     {
       "display_name": "The Greatest Show - Hugh Jackman et al.",
-      "song_link": "",
+      "song_link": "https://www.youtube.com/watch?v=NyVYXRD1Ans",
       "song_start": "00:01:30",
       "song_end": "00:01:46"
     },

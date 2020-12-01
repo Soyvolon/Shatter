@@ -10,10 +10,12 @@ namespace Shatter.Discord.Commands.Games.Music.Bingo
 	public class BingoCommand : CommandModule
     {
         private readonly MusicBingoService _bingo;
+		private readonly VoiceService _voice;
 
-        public BingoCommand(MusicBingoService bingo)
+        public BingoCommand(MusicBingoService bingo, VoiceService voice)
         {
 			this._bingo = bingo;
+			this._voice = voice;
         }
 
         [Command("bingo")]
@@ -39,7 +41,8 @@ namespace Shatter.Discord.Commands.Games.Music.Bingo
 
                     if(board.IsWinner(game.PlayedSongs))
                     {
-						await this._bingo.StopGame(ctx.Guild.Id);
+						var conn = await _voice.GetOrCreateConnection(ctx.Client, ctx.Guild, ctx.Member.VoiceState.Channel);
+						await this._bingo.StopGame(ctx.Guild.Id, conn);
                         await RespondBasicSuccessAsync($"Congrats {ctx.User.Mention}, you won the bingo game!");
                     }
                     else

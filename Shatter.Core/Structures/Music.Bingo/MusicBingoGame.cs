@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 
@@ -27,6 +27,8 @@ namespace Shatter.Core.Structures.Music.Bingo
         public ConcurrentDictionary<ulong, MusicBingoBoard> BingoBoards { get; init; }
         [JsonIgnore]
         public List<MusicBingoSong>? PlayedSongs { get; private set; }
+		[JsonIgnore]
+		public bool NoAutoStop = false;
 
         public MusicBingoGame()
         {

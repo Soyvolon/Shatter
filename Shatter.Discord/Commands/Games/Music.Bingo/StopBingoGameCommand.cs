@@ -44,7 +44,8 @@ namespace Shatter.Discord.Commands.Games.Music.Bingo
                 }
                 else
                 { // stop anything playing first.
-					this._voice.GuildQueues[ctx.Guild.Id].Clear();
+					if(this._voice.GuildQueues.TryGetValue(ctx.Guild.Id, out var queue))
+						queue.Clear();
                     await conn.StopAsync();
 					await this._bingo.StopGame(ctx.Guild.Id, null);
                     await RespondBasicSuccessAsync("Bingo game stopped.");

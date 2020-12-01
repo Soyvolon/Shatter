@@ -50,7 +50,8 @@ namespace Shatter.Discord.Commands.Games.Music.Bingo
                 }
                 else
                 { // stop anything playing first.
-					this._voice.GuildQueues[ctx.Guild.Id].Clear();
+					if(this._voice.GuildQueues.TryGetValue(ctx.Guild.Id, out var queue))
+						queue.Clear();
                     await conn.StopAsync();
                 }
             }
@@ -169,7 +170,7 @@ namespace Shatter.Discord.Commands.Games.Music.Bingo
 
             await ctx.RespondAsync(embed: embed);
 
-            await Task.Delay(TimeSpan.FromSeconds(15));
+            //await Task.Delay(TimeSpan.FromSeconds(15));
 
             await this._bingo.StartGameAsync(game, ctx);
         }

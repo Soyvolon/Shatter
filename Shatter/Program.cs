@@ -35,7 +35,7 @@ namespace Shatter
 
 			services.AddDbContext<ShatterDatabaseContext>(options =>
 				 {
-						options.UseSqlite(db.DataSource)
+						options.UseSqlite(db.Value.DataSource)
 							.EnableDetailedErrors();
 				 });
 
