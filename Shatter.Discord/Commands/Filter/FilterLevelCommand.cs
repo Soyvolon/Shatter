@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -52,7 +52,9 @@ namespace Shatter.Discord.Commands.Filter
                 return;
             }
 
-            filter.Filters.UpdateOrAddValue(name, new Tuple<int, HashSet<string>>(severity, filterData.Item2), filter, this._model);
+			this._model.Update(filter);
+
+			filter.Filters[name] = new Tuple<int, HashSet<string>>(severity, filterData.Item2);
 
             await this._model.SaveChangesAsync();
 

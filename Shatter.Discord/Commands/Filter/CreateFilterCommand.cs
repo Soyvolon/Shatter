@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -64,7 +64,8 @@ namespace Shatter.Discord.Commands.Filter
                 return;
             }
 
-            filter.Filters.UpdateOrAddValue(name, new Tuple<int, HashSet<string>>(1, filterWords), filter, this._model);
+			this._model.Update(filter);
+			filter.Filters[name] = new Tuple<int, HashSet<string>>(1, filterWords);
 
             var data = JsonConvert.SerializeObject(filter.Filters);
 

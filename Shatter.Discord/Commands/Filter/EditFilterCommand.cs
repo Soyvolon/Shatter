@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -61,7 +61,8 @@ namespace Shatter.Discord.Commands.Filter
                     break;
             }
 
-            filter.Filters.UpdateOrAddValue(name, new Tuple<int, HashSet<string>>(filterData.Item1, filterWords), filter, this._model);
+			this._model.Update(filter);
+			filter.Filters[name] = new Tuple<int, HashSet<string>>(filterData.Item1, filterWords);
             await this._model.SaveChangesAsync();
 
             await RespondBasicSuccessAsync( $"Edited filter {name}, the filter now contains the words:\n" +

@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
@@ -46,7 +46,7 @@ namespace Shatter.Discord.Commands.Games.Music.Bingo
                 { // stop anything playing first.
 					this._voice.GuildQueues[ctx.Guild.Id].Clear();
                     await conn.StopAsync();
-					this._bingo.StopGame(ctx.Guild.Id, false);
+					await this._bingo.StopGame(ctx.Guild.Id, null);
                     await RespondBasicSuccessAsync("Bingo game stopped.");
                 }
             }

@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
@@ -49,8 +49,9 @@ namespace Shatter.Discord.Commands.Mod
             if (!(cfg is null))
             {
                 // Remove a temp ban if it exsists.
-                if (cfg.UserBans.RemoveValue(user.Id, cfg, this._model, out _))
+                if (cfg.UserBans.TryRemove(user.Id, out _))
 				{
+					this._model.Update(cfg);
 					await this._model.SaveChangesAsync();
 				}
 			}

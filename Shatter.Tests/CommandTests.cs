@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -39,7 +39,7 @@ namespace Shatter.Tests
             var lavalConfig = (LavalinkConfig)await ConfigurationManager.RegisterLavaLink(null);
             var ytCfg = (YouTubeConfig)await ConfigurationManager.RegisterYouTube(null);
 
-			this.Bot = new DiscordBot(botCfg, lavalConfig, ytCfg, new ServiceCollection(), true); // Designate test run.
+			this.Bot = new DiscordBot(botCfg, lavalConfig, ytCfg, new ServiceCollection()); // Designate test run.
 
             await this.Bot.InitializeAsync();
 

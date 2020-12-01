@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
@@ -39,7 +39,8 @@ namespace Shatter.Discord.Commands.Filter
                 return;
             }
 
-            filter.Filters.RemoveValue(name, filter, this._model, out _);
+			this._model.Update(filter);
+			filter.Filters.TryRemove(name, out _);
             await this._model.SaveChangesAsync();
 
             await RespondBasicSuccessAsync( "Filter deleted.");

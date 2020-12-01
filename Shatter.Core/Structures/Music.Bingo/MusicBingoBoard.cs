@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
 using static Shatter.Core.Extensions.ListExtensions;
 
@@ -54,7 +54,8 @@ namespace Shatter.Core.Structures.Music.Bingo
                 || CheckRightDiag(playedSongs);
         }
 
-        private bool CheckHorizontal(List<MusicBingoSong> playedSongs)
+#pragma warning disable CS8604 // Possible null reference argument. always checks for null before getting the value.
+		private bool CheckHorizontal(List<MusicBingoSong> playedSongs)
         {
             int c = 0;
             for(int x = 0; x < 5; x++)
@@ -88,8 +89,8 @@ namespace Shatter.Core.Structures.Music.Bingo
             {
                 for (int x = 0; x < 5; x++)
                 {
-                    if (this.Board[x, y] is null || playedSongs.Contains(this.Board[x, y]))
-                    {
+					if (this.Board[x, y] is null || playedSongs.Contains(this.Board[x, y]))
+					{
                         c++;
                     }
                     else
@@ -124,6 +125,7 @@ namespace Shatter.Core.Structures.Music.Bingo
                 && this.Board[2, 2] is null || playedSongs.Contains(this.Board[2, 2])
                 && this.Board[3, 1] is null || playedSongs.Contains(this.Board[3, 1])
                 && this.Board[4, 0] is null || playedSongs.Contains(this.Board[4, 0]);
-        }
-    }
+		}
+#pragma warning restore CS8604 // Possible null reference argument.
+	}
 }

@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
@@ -39,7 +39,7 @@ namespace Shatter.Discord.Commands.Games.Music.Bingo
 
                     if(board.IsWinner(game.PlayedSongs))
                     {
-						this._bingo.StopGame(ctx.Guild.Id);
+						await this._bingo.StopGame(ctx.Guild.Id);
                         await RespondBasicSuccessAsync($"Congrats {ctx.User.Mention}, you won the bingo game!");
                     }
                     else

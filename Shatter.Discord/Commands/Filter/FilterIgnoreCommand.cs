@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using DSharpPlus;
@@ -93,7 +93,8 @@ namespace Shatter.Discord.Commands.Filter
 				}
 			}
 
-            filter.BypassFilters.UpdateOrAddValue(id, currentNames, filter, this._model);
+			this._model.Update(filter);
+			filter.BypassFilters[id] = currentNames;
             await this._model.SaveChangesAsync();
 
             await RespondBasicSuccessAsync( $"Bypass filter {(added ? "added" : "removed")}.");

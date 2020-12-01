@@ -60,7 +60,8 @@ namespace Shatter.Discord.Commands.Mod
                 }
 
                 bannedUntil = DateTime.UtcNow.Add((TimeSpan)banLength);
-                cfg.UserBans.UpdateOrAddValue(user.Id, (DateTime)bannedUntil, cfg, this._model);
+				this._model.Update(cfg);
+				cfg.UserBans[user.Id] = (DateTime)bannedUntil;
 
                 await this._model.SaveChangesAsync();
             }
@@ -117,7 +118,10 @@ namespace Shatter.Discord.Commands.Mod
                 }
 
                 bannedUntil = DateTime.UtcNow.Add((TimeSpan)banLength);
-                cfg.UserBans.UpdateOrAddValue(userId, (DateTime)bannedUntil, cfg, this._model);
+
+				this._model.Update(cfg);
+
+				cfg.UserBans[userId] = (DateTime)bannedUntil;
 
                 await this._model.SaveChangesAsync();
             }
