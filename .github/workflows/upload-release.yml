@@ -1,4 +1,4 @@
-name: Upload to live.
+name: Upload to Live
 
 on:
   workflow_dispatch:
@@ -21,6 +21,8 @@ jobs:
       run: dotnet build --configuration Release --no-restore --output artifact/build/Shatter
     - name: Copy Dockerfile
       run: cp **Dockerfile artifact/
+    - name: Copy LavaDockerfile
+      run: cp **LavaDockerfile artifact/
     - name: Stop Current Release
       uses: garygrossgarten/github-action-ssh@release
       continue-on-error: true
