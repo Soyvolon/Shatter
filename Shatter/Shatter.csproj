@@ -27,9 +27,6 @@
     <None Update="MusicBingo\Global\canary.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="MusicBingo\Global\test_ending.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="MusicBingo\Global\onehit.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
