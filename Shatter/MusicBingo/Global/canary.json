@@ -1,0 +1,169 @@
+{
+  "game_title": "Canary's Arsenal",
+  "introduction": "",
+  "epilogue": "",
+  "songs": [
+    {
+      "display_name": "Tiny Dancer - Elton John",
+      "song_link": "https://www.youtube.com/watch?v=Al8UHnjusq0",
+      "song_start": "00:00:12",
+      "song_end": "00:00:22"
+    },
+    {
+      "display_name": "Set Fire to the Rain - Adele",
+      "song_link": "https://www.youtube.com/watch?v=uj3nFNIV2jY",
+      "song_start": "00:01:17",
+      "song_end": "00:01:30"
+    },
+    {
+      "display_name": "Walking On Sunshine - Abandon",
+      "song_link": "https://www.youtube.com/watch?v=t8q_sOZkQEU",
+      "song_start": "00:00:08",
+      "song_end": "00:00:23"
+    },
+    {
+      "display_name": "Thunder - Imagine Dragons",
+      "song_link": "https://www.youtube.com/watch?v=fKopy74weus",
+      "song_start": "00:01:13",
+      "song_end": "00:01:25"
+    },
+    {
+      "display_name": "Wings - Hurts",
+      "song_link": "https://www.youtube.com/watch?v=PedE5IZ7DfE",
+      "song_start": "00:01:12",
+      "song_end": "00:01:25"
+    },
+    {
+      "display_name": "Pompeii - Bastille",
+      "song_link": "https://www.youtube.com/watch?v=m326LNIRB3k",
+      "song_start": "00:00:17",
+      "song_end": "00:00:32"
+    },
+    {
+      "display_name": "Titanium (feat. Sia) - David Guetta, Sia",
+      "song_link": "https://www.youtube.com/watch?v=KxnpFKZowcs",
+      "song_start": "00:01:30",
+      "song_end": "00:01:44"
+    },
+    {
+      "display_name": "Bad Day - Daniel Powter",
+      "song_link": "https://www.youtube.com/watch?v=-rYjfciwWGk",
+      "song_start": "00:00:07",
+      "song_end": "00:00:19"
+    },
+    {
+      "display_name": "Lullaby - Sigala, Paloma Faith",
+      "song_link": "https://www.youtube.com/watch?v=ghSQz2BcDQU",
+      "song_start": "00:01:20",
+      "song_end": "00:01:35"
+    },
+    {
+      "display_name": "Things We Lost In The Fire - Bastille",
+      "song_link": "https://www.youtube.com/watch?v=MGR4U7W1dZU",
+      "song_start": "00:01:00",
+      "song_end": "00:01:15"
+    },
+    {
+      "display_name": "Legend - The Score",
+      "song_link": "https://www.youtube.com/watch?v=jecQcgbyetw",
+      "song_start": "00:00:16",
+      "song_end": "00:00:28"
+    },
+    {
+      "display_name": "We Will Rock You - Queen",
+      "song_link": "https://www.youtube.com/watch?v=UvEmwYg6aFw",
+      "song_start": "00:00:00",
+      "song_end": "00:00:10"
+    },
+    {
+      "display_name": "Fight Song - Rachel Platten",
+      "song_link": "https://www.youtube.com/watch?v=XbxNtPiCBK8",
+      "song_start": "00:01:07",
+      "song_end": "00:01:19"
+    },
+    {
+      "display_name": "Africa - TOTO",
+      "song_link": "https://www.youtube.com/watch?v=QAo_Ycocl1E",
+      "song_start": "00:01:04",
+      "song_end": "00:01:15"
+    },
+    {
+      "display_name": "Another One Bites The Dust - Queen",
+      "song_link": "https://www.youtube.com/watch?v=1tLYYSofs3U",
+      "song_start": "00:00:00",
+      "song_end": "00:00:15"
+    },
+    {
+      "display_name": "Sing Me To Sleep - Alan Walker",
+      "song_link": "https://www.youtube.com/watch?v=2i2khp_npdE",
+      "song_start": "00:01:32",
+      "song_end": "00:01:43"
+    },
+    {
+      "display_name": "Toxic - Britney Spears",
+      "song_link": "https://www.youtube.com/watch?v=AY8b7bVIJP0",
+      "song_start": "00:00:10",
+      "song_end": "00:00:27"
+    },
+    {
+      "display_name": "Fireflies - Owl City",
+      "song_link": "https://www.youtube.com/watch?v=QBgl4rVz3Ks",
+      "song_start": "00:01:14",
+      "song_end": "00:01:29"
+    },
+    {
+      "display_name": "Human - Christina Perri",
+      "song_link": "https://www.youtube.com/watch?v=2ZFka5_8itM",
+      "song_start": "00:01:22",
+      "song_end": "00:01:32"
+    },
+    {
+      "display_name": "Rescue - Lauren Daigle",
+      "song_link": "https://www.youtube.com/watch?v=9PugD11k3JU",
+      "song_start": "00:01:04",
+      "song_end": "00:01:19"
+    },
+    {
+      "display_name": "Safe and Sound - Kurt Hugo Schneider, Sam Tsui",
+      "song_link": "https://www.youtube.com/watch?v=u41DQn8mQT4",
+      "song_start": "00:01:18",
+      "song_end": "00:01:32"
+    },
+    {
+      "display_name": "Stronger (What Doesn't Kill You) - Kely Clarkson",
+      "song_link": "https://www.youtube.com/watch?v=Xn676-fLq7I",
+      "song_start": "00:01:16",
+      "song_end": "00:01:33"
+    },
+    {
+      "display_name": "Over The Rainbow - Connie Talbot",
+      "song_link": "https://www.youtube.com/watch?v=pe6KVIqR1UU",
+      "song_start": "00:00:55",
+      "song_end": "00:01:10"
+    },
+    {
+      "display_name": "Fix You - Coldplay",
+      "song_link": "https://www.youtube.com/watch?v=k4V3Mo61fJM",
+      "song_start": "00:01:48",
+      "song_end": "00:02:05"
+    },
+    {
+      "display_name": "Radioactive - Imagine Dragons",
+      "song_link": "https://www.youtube.com/watch?v=CAEUnn0HNLM",
+      "song_start": "00:00:54",
+      "song_end": "00:01:11"
+    },
+    {
+      "display_name": "The Greatest Show - Hugh Jackman et al.",
+      "song_link": "",
+      "song_start": "00:01:30",
+      "song_end": "00:01:46"
+    },
+    {
+      "display_name": "Brave - Sara Bareilles",
+      "song_link": "https://www.youtube.com/watch?v=QUQsqBqxoR4",
+      "song_start": "00:01:25",
+      "song_end": "00:01:40"
+    }
+  ]
+}
