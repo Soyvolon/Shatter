@@ -47,7 +47,7 @@ namespace Shatter.Discord.Commands.Games.Music.Bingo
 					if(this._voice.GuildQueues.TryGetValue(ctx.Guild.Id, out var queue))
 						queue.Clear();
                     await conn.StopAsync();
-					await this._bingo.StopGame(ctx.Guild.Id, null);
+					await this._bingo.StopGame(ctx.Guild.Id, conn, false);
                     await RespondBasicSuccessAsync("Bingo game stopped.");
                 }
             }

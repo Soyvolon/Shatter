@@ -42,7 +42,7 @@ namespace Shatter.Discord.Commands.Games.Music.Bingo
                     if(board.IsWinner(game.PlayedSongs))
                     {
 						var conn = await _voice.GetOrCreateConnection(ctx.Client, ctx.Guild, ctx.Member.VoiceState.Channel);
-						await this._bingo.StopGame(ctx.Guild.Id, conn);
+						await this._bingo.StopGame(ctx.Guild.Id, conn, true);
                         await RespondBasicSuccessAsync($"Congrats {ctx.User.Mention}, you won the bingo game!");
                     }
                     else

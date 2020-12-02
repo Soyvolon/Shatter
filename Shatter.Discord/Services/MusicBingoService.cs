@@ -174,7 +174,7 @@ namespace Shatter.Discord.Services
 			return false;
 		}
 
-		public async Task StopGame(ulong guildId, LavalinkGuildConnection? con = null)
+		public async Task StopGame(ulong guildId, LavalinkGuildConnection? con, bool playWin = false)
 		{ // has winner is false when all the songs run out or the game was closed by the command.
 		  // TODO: Play custom end of game sounds if there is a winner.
 
@@ -186,11 +186,15 @@ namespace Shatter.Discord.Services
 				await t.DisposeAsync();
 			}
 
-			if (this.ActiveGames.TryRemove(guildId, out var game))
+			if (this.ActiveGames.TryGetValue(guildId, out var game))
 			{
+				game.Completed = true;
+
 				// if this is null we dont play an exit.
-				if (con is not null)
+				if (playWin && con is not null)
 				{
+					await con.StopAsync();
+
 					var serach = await con.GetTracksAsync(game.Epilogue ?? _defaults.Winner);
 					var track = serach.Tracks?.FirstOrDefault() ?? default;
 
@@ -200,6 +204,13 @@ namespace Shatter.Discord.Services
 						await con.PlayAsync(track);
 					}
 				}
+			}
+			else
+			{
+				this.ActiveGames.TryRemove(guildId, out _);
+
+				if (con is not null)
+					await con.DisconnectAsync();
 			}
 		}
 
@@ -219,7 +230,9 @@ namespace Shatter.Discord.Services
 
         private async Task PlayOutOfSongs(TrackFinishEventArgs e, ulong guildId)
         {
-            await StopGame(guildId, null);
+            await StopGame(guildId, null, false);
+
+			await e.Player.StopAsync();
 
 			var serach = await e.Player.GetTracksAsync(_defaults.NoWinner);
 			var track = serach.Tracks?.FirstOrDefault() ?? default;
@@ -228,6 +241,7 @@ namespace Shatter.Discord.Services
 			{
 				return;
 			}
+
 			await e.Player.PlayAsync(track);
 		}
 
@@ -236,6 +250,13 @@ namespace Shatter.Discord.Services
         {
             if(this.ActiveGames.TryGetValue(sender.Guild.Id, out var game))
             {
+				if(game.Completed)
+				{
+					ActiveGames.TryRemove(sender.Guild.Id, out _);
+					await sender.DisconnectAsync();
+					return;
+				}
+
                 var song = game.GetNextSong();
                 if(song is null)
                 {

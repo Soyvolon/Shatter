@@ -28,7 +28,9 @@ namespace Shatter.Core.Structures.Music.Bingo
         [JsonIgnore]
         public List<MusicBingoSong>? PlayedSongs { get; private set; }
 		[JsonIgnore]
-		public bool NoAutoStop = false;
+		public bool NoAutoStop { get; set; } = false;
+		[JsonIgnore]
+		public bool Completed { get; set; } = false;
 
         public MusicBingoGame()
         {
