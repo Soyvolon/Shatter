@@ -170,7 +170,7 @@ namespace Shatter.Discord.Commands.Games.Music.Bingo
 
             await ctx.RespondAsync(embed: embed);
 
-            //await Task.Delay(TimeSpan.FromSeconds(15));
+            await Task.Delay(TimeSpan.FromSeconds(15));
 
             await this._bingo.StartGameAsync(game, ctx);
         }
