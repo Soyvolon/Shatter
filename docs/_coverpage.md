@@ -6,8 +6,9 @@
 
 > Bringing community based fun to Discord
 
+[Invite Shatter](https://discord.com/oauth2/authorize?client_id=755597498843922454&scope=bot&permissions=3468358)
+[Get Started](#shatter)
 [GitHub](https://github.com/Soyvolon/Shatter)
-[Get Started](#Get-Started-With-Shatter)
 
 <!-- background color -->
 ![color](#191c1c)
