@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Drawing;
 using System.Threading.Tasks;
 
@@ -28,7 +28,6 @@ namespace Shatter.Discord.Commands.Memes
 
         [Command("thesearch")]
         [Description("The search continues meme")]
-        [RequireUserPermissions(Permissions.AccessChannels)]
         [RequireBotPermissions(Permissions.AttachFiles)]
         [ExecutionModule("memes")]
         public async Task TheSearchCommandAsync(CommandContext ctx,

@@ -28,8 +28,6 @@ namespace Shatter.Discord.Commands.Games.Trivia
 
         [Command("trivia")]
         [Description("Play a game of Trivia!")]
-        [RequireUserPermissions(Permissions.AccessChannels)]
-        [RequireBotPermissions(Permissions.SendMessages)]
         [Cooldown(1, 5, CooldownBucketType.User)]
         [ExecutionModule("games")]
         public async Task SingleTriviaCommandAsync(CommandContext ctx,

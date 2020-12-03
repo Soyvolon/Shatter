@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
@@ -12,7 +12,6 @@ namespace Shatter.Discord.Commands.Fun
     {
         [Command("unflip")]
         [Description("Animated unflipping of the table.")]
-        [RequireUserPermissions(Permissions.AccessChannels)]
         [Cooldown(1, 3, CooldownBucketType.User)]
         [ExecutionModule("fun")]
         public async Task ExampleCommandAsync(CommandContext ctx)

@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
@@ -18,9 +18,9 @@ namespace Shatter.Discord.Commands.Music
 			this._voice = voice;
         }
 
-        [Command("playingchannel")]
+        [Command("musicchannel")]
         [Description("Switch the playing channel to your current channel!")]
-        [Aliases("musicchannel")]
+        [Aliases("playingchannel")]
         [RequireUserPermissions(Permissions.UseVoice)]
         [RequireBotPermissions(Permissions.UseVoice)]
         [ExecutionModule("music")]

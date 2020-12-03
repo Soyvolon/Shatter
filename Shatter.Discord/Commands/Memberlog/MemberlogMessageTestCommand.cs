@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
@@ -20,9 +20,9 @@ namespace Shatter.Discord.Commands.Memberlog
 			this._model = model;
         }
 
-        [Command("mlmtest")]
+        [Command("memberlogmessagetest")]
         [Description("Tests your set memberlog messages")]
-        [Aliases("mlmessagetest", "memberlogmessagetest")]
+        [Aliases("mlmessagetest", "mlmtest")]
         [RequireUserPermissions(Permissions.ManageGuild)]
         [ExecutionModule("memberlog")]
         public async Task MemberlogMessageTestCommandAsync(CommandContext ctx)

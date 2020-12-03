@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -17,7 +17,6 @@ namespace Shatter.Discord.Commands.Fun
     {
         [Command("cow")]
         [Description("Get a random ASCII Cow")]
-        [RequireBotPermissions(Permissions.SendMessages)]
         [ExecutionModule("fun")]
         public async Task CowCommandAsync(CommandContext ctx)
         {

@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 
+using Shatter.Discord.Commands.Attributes;
 using Shatter.Discord.Services;
 
 namespace Shatter.Discord.Commands.Games.Music.Bingo
@@ -21,6 +22,7 @@ namespace Shatter.Discord.Commands.Games.Music.Bingo
         [Command("bingo")]
         [Description("Check to see if you have won the bingo game!")]
         [Cooldown(1, 15, CooldownBucketType.User)]
+		[ExecutionModule("games")]
         public async Task BingoCommandAsync(CommandContext ctx)
         {
             if (ctx.Member.VoiceState?.Channel is null)

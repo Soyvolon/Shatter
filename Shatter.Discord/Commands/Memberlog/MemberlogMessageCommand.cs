@@ -21,9 +21,9 @@ namespace Shatter.Discord.Commands.Memberlog
 			this._model = model;
         }
 
-        [Command("mlmessage")]
+        [Command("memberlogmessage")]
         [Description("Set the memberlog join or leave message and type")]
-        [Aliases("mlmsg", "memberlogmessage")]
+        [Aliases("mlmsg", "mlmessage")]
         [RequireUserPermissions(Permissions.ManageGuild)]
         [ExecutionModule("memberlog")]
         public async Task MemberlogMessageCommandAsync(CommandContext ctx,

@@ -23,7 +23,7 @@ namespace Shatter.Discord.Commands.Games.Music.Bingo
         [Command("stopbingo")]
         [Description("Stops the currently in progress bingo game. Can only be run by the person who started the game" +
             " or a member with the manage ")]
-        [ExecutionModule("bingo")]
+        [ExecutionModule("games")]
         public async Task StopBingoGameCommandAsync(CommandContext ctx)
         {
             if (ctx.Member.VoiceState?.Channel is null)

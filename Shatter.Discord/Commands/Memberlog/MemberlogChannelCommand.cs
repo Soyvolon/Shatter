@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
@@ -20,10 +20,10 @@ namespace Shatter.Discord.Commands.Memberlog
 			this._model = model;
         }
 
-        [Command("mlchannel")]
+        [Command("memberlogchannel")]
         [Description("Sets the channel to send memberlog messages in.")]
         [RequireUserPermissions(Permissions.ManageGuild)]
-        [Aliases("memberlogchannel", "mlchan")]
+        [Aliases("mlchannel", "mlchan")]
         [Priority(2)]
         [ExecutionModule("memberlog")]
         public async Task MemberlogChannelCommandAsync(CommandContext ctx,

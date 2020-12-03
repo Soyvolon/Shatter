@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using System.Threading.Tasks;
 
 using DSharpPlus;
@@ -16,7 +16,6 @@ namespace Shatter.Discord.Commands.Fun
 
         [Command("burn")]
         [Description("Burn another user!")]
-        [RequireUserPermissions(Permissions.AccessChannels)]
         [RequireBotPermissions(Permissions.AttachFiles)]
         [Cooldown(1, 5, CooldownBucketType.User)]
         [ExecutionModule("fun")]

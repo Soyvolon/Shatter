@@ -27,9 +27,9 @@ namespace Shatter.Discord.Commands.Image
 			this._meme = meme;
         }
 
-        [Command("cah")]
+        [Command("createcard")]
         [Description("Create your own Cards Against Humanity cards!")]
-        [Aliases("createcard")]
+        [Aliases("cah")]
         [RequireBotPermissions(Permissions.AttachFiles)]
         [ExecutionModule("image")]
         public async Task ExampleCommandAsync(CommandContext ctx,

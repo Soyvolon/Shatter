@@ -30,7 +30,7 @@ namespace Shatter.Discord.Commands.Economy
 
         [Command("richest")]
         [Description("Get the richest users.")]
-        [RequireUserPermissions(Permissions.AccessChannels)]
+		[Aliases("baltop")]
         [Cooldown(1, 10, CooldownBucketType.User)]
         [Priority(2)]
         [ExecutionModule("economy")]

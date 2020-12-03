@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using DSharpPlus;
@@ -65,7 +65,7 @@ namespace Shatter.Discord.Commands.Fun
 
         [Command("emojify")]
         [Description("Emojify your message!")]
-        [RequireBotPermissions(Permissions.SendMessages)]
+        
         [ExecutionModule("fun")]
         public async Task EmojifyCommandAsync(CommandContext ctx,
             [Description("The message to emojify!")]

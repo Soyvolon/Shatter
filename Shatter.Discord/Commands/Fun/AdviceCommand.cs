@@ -14,7 +14,6 @@ namespace Shatter.Discord.Commands.Fun
         [Command("advice")]
         [Description("Advice for the soul")]
         [Cooldown(1, 5, CooldownBucketType.User)]
-        [RequireUserPermissions(Permissions.AccessChannels)]
         [ExecutionModule("fun")]
         public async Task AdviceCommandAsync(CommandContext ctx)
         {

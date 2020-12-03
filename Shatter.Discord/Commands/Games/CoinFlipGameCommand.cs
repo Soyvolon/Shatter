@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 
 using DSharpPlus;
@@ -25,8 +25,6 @@ namespace Shatter.Discord.Commands.Games
         [Command("coinflip")]
         [Description("Flip a Coin!")]
         [Aliases("coingame")]
-        [RequireUserPermissions(Permissions.AccessChannels)]
-        [RequireBotPermissions(Permissions.SendMessages)]
         [ExecutionModule("games")]
         public async Task ExampleCommandAsync(CommandContext ctx)
         {

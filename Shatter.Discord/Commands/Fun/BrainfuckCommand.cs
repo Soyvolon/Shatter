@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -18,7 +18,6 @@ namespace Shatter.Discord.Commands.Fun
 
         [Command("brainfuck")]
         [Description("Complie and execute brainfuck code!")]
-        [RequireUserPermissions(Permissions.AccessChannels)]
         [ExecutionModule("fun")]
         public async Task BrainfuckCommandAsync(CommandContext ctx,
             [Description("Brainfuck code")]

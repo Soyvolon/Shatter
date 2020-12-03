@@ -27,10 +27,9 @@ namespace Shatter.Discord.Commands.Games.Trivia
 			this._model = model;
         }
 
-        [Command("triviatop")]
+        [Command("trivialeaderboard")]
         [Description("The trivia leaderboards!")]
-        [Aliases("trivialeaderboard")]
-        [RequireUserPermissions(Permissions.AccessChannels)]
+        [Aliases("triviatop")]
         [ExecutionModule("games")]
         public async Task TriviaLeaderboardCommandAsync(CommandContext ctx,
             [Description("Filter the leaderboards in various ways! Use the keyword `info` to see more filtering options.")]

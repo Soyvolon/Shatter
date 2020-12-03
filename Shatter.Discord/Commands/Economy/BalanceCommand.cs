@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
@@ -24,7 +24,6 @@ namespace Shatter.Discord.Commands.Economy
         [Command("balance")]
         [Description("Shows your current balance.")]
         [Aliases(new string[] { "bal", "money" })]
-        [RequireUserPermissions(Permissions.AccessChannels)]
         [ExecutionModule("economy")]
         public async Task BalanceCommandAsync(CommandContext ctx, DiscordMember? member = null)
         {

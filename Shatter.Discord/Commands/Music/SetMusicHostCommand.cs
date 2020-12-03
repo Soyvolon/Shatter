@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
@@ -19,8 +19,9 @@ namespace Shatter.Discord.Commands.Music
 			this._voice = voice;
         }
 
-        [Command("host")]
+        [Command("sethost")]
         [Description("Set the host of the current session")]
+		[Aliases("host")]
         [RequireUserPermissions(Permissions.UseVoice)]
         [RequireBotPermissions(Permissions.UseVoice)]
         [ExecutionModule("music")]

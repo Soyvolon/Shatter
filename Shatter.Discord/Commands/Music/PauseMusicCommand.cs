@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
@@ -18,8 +18,9 @@ namespace Shatter.Discord.Commands.Music
 			this._voice = voice;
         }
 
-        [Command("pause")]
+        [Command("pausemusic")]
         [Description("Pauses the music!")]
+		[Aliases("pause")]
         [RequireUserPermissions(Permissions.UseVoice)]
         [RequireBotPermissions(Permissions.UseVoice)]
         [ExecutionModule("music")]

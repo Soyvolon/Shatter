@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
@@ -13,7 +13,7 @@ namespace Shatter.Discord.Commands.Fun
     {
         [Command("fortune")]
         [Description("Open a fortune cookie")]
-        [RequireBotPermissions(Permissions.SendMessages)]
+        
         [ExecutionModule("fun")]
         public async Task FortuneCommandAsync(CommandContext ctx)
         {

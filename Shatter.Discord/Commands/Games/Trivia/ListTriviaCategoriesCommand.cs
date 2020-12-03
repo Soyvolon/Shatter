@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -18,7 +18,6 @@ namespace Shatter.Discord.Commands.Games.Trivia
         [Command("triviacategories")]
         [Description("Lists the categories for trivia")]
         [Aliases("tcategories")]
-        [RequireUserPermissions(Permissions.AccessChannels)]
         [ExecutionModule("games")]
         public async Task ListTriviaCategoriesAsync(CommandContext ctx)
         {

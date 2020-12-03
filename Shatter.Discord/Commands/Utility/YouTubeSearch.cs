@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
@@ -10,9 +10,9 @@ namespace Shatter.Discord.Commands.Utility
 {
 	public class YouTubeSearch : CommandModule
     {
-        [Command("ytsearch")]
+        [Command("youtubesearch")]
         [Description("Serach youtube.")]
-        [Aliases("searchyt", "searchyoutube", "youtubesearch")]
+        [Aliases("searchyt", "searchyoutube", "ytsearch")]
         [ExecutionModule("utility")]
         public async Task YouTubeSearchAsync(CommandContext ctx,
             [Description("Search string")]

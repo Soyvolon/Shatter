@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,7 +15,6 @@ namespace Shatter.Discord.Commands.Fun
     {
         [Command("urban")]
         [Description("Serach the Urban Dictionary")]
-        [RequireBotPermissions(Permissions.SendMessages)]
         [ExecutionModule("fun")]
         public async Task UrbanDictionaryCommandAsync(CommandContext ctx,
             [Description("What do you want to serach for?")]

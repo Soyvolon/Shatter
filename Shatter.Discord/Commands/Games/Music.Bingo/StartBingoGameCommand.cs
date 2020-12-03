@@ -29,7 +29,7 @@ namespace Shatter.Discord.Commands.Games.Music.Bingo
 
         [Command("startbingo")]
         [Description("Starts a new bingo game! You must be in VC and the bot can not be being used by another user in a VC!")]
-        [ExecutionModule("bingo")]
+        [ExecutionModule("games")]
         public async Task StartBingoGameCommandAsync(CommandContext ctx)
         {
             if (ctx.Member.VoiceState?.Channel is null)

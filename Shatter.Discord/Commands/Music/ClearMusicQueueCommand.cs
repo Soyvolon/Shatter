@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
@@ -21,8 +21,7 @@ namespace Shatter.Discord.Commands.Music
         [Command("clearsongs")]
         [Description("Clears the song Queue. Leaves the current song playing.")]
         [Aliases("clearqueue")]
-        [RequireUserPermissions(Permissions.UseVoice)]
-        [RequireBotPermissions(Permissions.UseVoice)]
+        [RequirePermissions(Permissions.UseVoice)]
         [ExecutionModule("music")]
         public async Task ClearSongsCommandAsync(CommandContext ctx)
         {

@@ -22,10 +22,9 @@ namespace Shatter.Discord.Commands.Music
 			this._voice = voice;
         }
 
-        [Command("nowplaying")]
+        [Command("musiclist")]
         [Description("Shows the currently playing song along with any queued songs.")]
-        [Aliases("musiclist")]
-        [RequireUserPermissions(Permissions.AccessChannels)]
+        [Aliases("nowplaying")]
         [ExecutionModule("music")]
         public async Task MusicListCommandAsync(CommandContext ctx)
         {

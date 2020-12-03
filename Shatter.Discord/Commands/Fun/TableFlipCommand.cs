@@ -12,7 +12,6 @@ namespace Shatter.Discord.Commands.Fun
     {
         [Command("tableflip")]
         [Description("Animated Table Flip")]
-        [RequireUserPermissions(Permissions.AccessChannels)]
         [Cooldown(1, 3, CooldownBucketType.User)]
         [ExecutionModule("fun")]
         public static async Task TableflipCommandAsync(CommandContext ctx)
