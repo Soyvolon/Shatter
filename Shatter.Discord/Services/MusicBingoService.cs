@@ -99,11 +99,13 @@ namespace Shatter.Discord.Services
                     {
                         if(con.Item2.Members.TryGetValue(board.Key, out var m))
                         {
-                            var dm = await m.CreateDmChannelAsync();
+							var dm = await m.CreateDmChannelAsync();
 
-                            using var img = await BuildImage(board.Value);
+							using var img = await BuildImage(board.Value);
 
-                            await dm.SendFileAsync("bingo-board.png", img);
+							await dm.SendFileAsync("bingo-board.png", img);
+
+							await Task.Delay(TimeSpan.FromSeconds(0.75));
                         }
                     }
                 }
