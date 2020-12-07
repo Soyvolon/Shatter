@@ -35,10 +35,13 @@ namespace Shatter.Discord.Commands.Memes
             [RemainingText] string msg)
         {
 			this.captions[0] = new Tuple<Rectangle, string, Brush?>(this.captions[0].Item1, msg.ToUpper(), null);
-
-            var font = 2;
-
-            using var img = await this._meme.BuildMemeAsync(Resources.Images_TheSearch, this.captions, "architect", font, new SolidBrush(Color.DarkSlateGray));
+			// System differences for this font between ubuntu and windows? Causes odd font sizing and will need release testing adjustments.
+#if DEBUG
+			var font = 2;
+#else
+			var font = 12;
+#endif
+			using var img = await this._meme.BuildMemeAsync(Resources.Images_TheSearch, this.captions, "architect", font, new SolidBrush(Color.DarkSlateGray));
 
             await ctx.RespondWithFileAsync("thesearch-meme.png", img);
         }
