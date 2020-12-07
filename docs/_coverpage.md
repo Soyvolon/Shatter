@@ -3,7 +3,7 @@
 ![logo](_media/icon.svg)
 
 # Shatter <small>1.0</small>
-
+![Live](https://github.com/Soyvolon/Shatter/workflows/Live/badge.svg) ![Build](https://github.com/Soyvolon/Shatter/workflows/Build/badge.svg)
 > Bringing community based fun to Discord
 
 [Invite Shatter](https://discord.com/oauth2/authorize?client_id=755597498843922454&scope=bot&permissions=3468358)
