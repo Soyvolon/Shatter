@@ -11,7 +11,7 @@ namespace Shatter.Discord.Commands.Fun
 {
 	public class FortuneCommand : CommandModule
     {
-        [Command("fortune")]
+        //[Command("fortune")]
         [Description("Open a fortune cookie")]
         
         [ExecutionModule("fun")]
