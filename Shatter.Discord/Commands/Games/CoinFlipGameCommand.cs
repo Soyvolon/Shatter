@@ -32,6 +32,8 @@ namespace Shatter.Discord.Commands.Games
             if (wallet is null)
             {
                 wallet = new Wallet(ctx.User.Id, ctx.User.Username);
+				await _model.AddAsync(wallet);
+				await _model.SaveChangesAsync();
             }
 
             if (wallet.HasEnough(1))
