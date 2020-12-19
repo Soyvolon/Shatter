@@ -58,7 +58,7 @@ namespace Shatter.Discord.Services
 			// Get the connection used for this guild and add a reference to this event handler.
 			var con = await this._voice.GetOrCreateConnection(ctx.Client, ctx.Guild, ctx.Member.VoiceState.Channel);
             con.PlaybackFinished += GuildConnection_SongFinished;
-            con.PlaybackStarted += GuildConnection_SongStarted;
+            //con.PlaybackStarted += GuildConnection_SongStarted;
 
 			// Add the id to the ignore list.
 			this._voice.IgnoreEventsList[ctx.Guild.Id] = 0;
@@ -287,42 +287,6 @@ namespace Shatter.Discord.Services
                     }
                 }
             }
-        }
-
-        private Task GuildConnection_SongStarted(LavalinkGuildConnection sender, TrackStartEventArgs e)
-        {
-            if(this.ActiveGames.TryGetValue(sender.Guild.Id, out var game))
-            {
-				if(game.NoAutoStop)
-				{
-					game.NoAutoStop = false;
-					return Task.CompletedTask;
-				}
-
-                if (game.PlayedSongs is null)
-				{
-					return Task.CompletedTask;
-				}
-
-				var last = game.PlayedSongs.LastOrDefault();
-
-				if (last != default)
-				{
-					if (last.SongStart is not null && last.SongEnd is not null)
-					{
-						var span = last.SongEnd.Value.Subtract(last.SongStart.Value);
-
-						this.SongTimers[sender.Guild.Id] = new Timer(async (x) =>
-						{
-							await e.Player.PauseAsync();
-							await Task.Delay(TimeSpan.FromSeconds(2));
-							await e.Player.StopAsync();
-						}, null, span, Timeout.InfiniteTimeSpan);
-					}
-				}
-            }
-
-			return Task.CompletedTask;
         }
     }
 }
