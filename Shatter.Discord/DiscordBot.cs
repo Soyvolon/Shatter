@@ -39,7 +39,7 @@ namespace Shatter.Discord
         #endregion
 
         #region Static Variables
-        public const string VERSION = "alpha-0.1.1";
+        public const string VERSION = "beta-0.1.1";
         public static DiscordBot? Bot { get; private set; }
         public static ConcurrentDictionary<CommandHandler, Tuple<Task, CancellationTokenSource>>? CommandsInProgress { get; private set; }
 		#endregion
