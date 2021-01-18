@@ -7,7 +7,7 @@ namespace Shatter.Core.Utils
 {
 	public class Advice
     {
-        public const string AdviceRequest = "http://api.adviceslip.com/advice";
+        public const string AdviceRequest = "https://api.adviceslip.com/advice";
 
         public int Id { get; private set; }
         public string Contents { get; private set; }

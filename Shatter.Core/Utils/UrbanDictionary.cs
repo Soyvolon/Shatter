@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -10,7 +10,7 @@ namespace Shatter.Core.Utils
 {
 	public static class UrbanDictionary
     {
-        private const string RequestString = "http://api.urbandictionary.com/v0/define?term=";
+        private const string RequestString = "https://api.urbandictionary.com/v0/define?term=";
 
         public static async Task<List<UrbanDictonaryResult>?> Search(string term)
         {

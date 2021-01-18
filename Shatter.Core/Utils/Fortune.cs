@@ -10,7 +10,7 @@ namespace Shatter.Core.Utils
 {
 	public class Fortune
     {
-        private const string FortuneRequest = "http://fortunecookieapi.herokuapp.com/v1/cookie";
+        private const string FortuneRequest = "https://fortunecookieapi.herokuapp.com/v1/cookie";
 
         public FortuneData Data;
         public FortuneLesson Lesson;
