@@ -33,9 +33,6 @@
     <None Update="MusicBingo\Global\onehit.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="MusicBingo\Global\tester.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="Utils\JSON\ascii_cows.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
