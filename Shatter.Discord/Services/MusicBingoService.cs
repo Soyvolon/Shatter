@@ -190,13 +190,11 @@ namespace Shatter.Discord.Services
 
 			if (this.ActiveGames.TryGetValue(guildId, out var game))
 			{
-				game.Completed = true;
+				game.EndGame();
 
 				// if this is null we dont play an exit.
 				if (playWin && con is not null)
 				{
-					await con.StopAsync();
-
 					var serach = await con.GetTracksAsync(game.Epilogue ?? _defaults.Winner);
 					var track = serach.Tracks?.FirstOrDefault() ?? default;
 
@@ -256,6 +254,12 @@ namespace Shatter.Discord.Services
 				{
 					ActiveGames.TryRemove(sender.Guild.Id, out _);
 					await sender.DisconnectAsync();
+					return;
+				}
+
+				if (game.RunningCompletion)
+				{
+					game.EndGame();
 					return;
 				}
 
