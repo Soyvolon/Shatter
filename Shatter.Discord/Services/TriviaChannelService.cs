@@ -40,10 +40,10 @@ namespace Shatter.Discord.Services
 		public void Start(DiscordChannel channel, TimeSpan tbq,
 			TimeSpan totalTime, bool? questionTypes)
 		{
+			var tte = DateTime.Now.Add(totalTime);
+
 			ActiveChannels[channel.Id] = new Timer(async (x) =>
 			{
-				var tte = DateTime.Now.Add(totalTime);
-
 				await ExecuteQuestions(channel, tte, questionTypes);
 
 			}, null, TimeSpan.Zero, tbq);
