@@ -145,7 +145,7 @@ namespace Shatter.Discord.Commands
 
             fs = new FileStream(path, FileMode.Open);
 
-            await this.ctx.Channel.SendFileAsync(fs, caption);
+            await this.ctx.Channel.SendMessageAsync(new DiscordMessageBuilder().WithFile(caption, fs));
 
             await fs.DisposeAsync();
 

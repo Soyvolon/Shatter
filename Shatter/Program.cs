@@ -9,6 +9,7 @@ using Shatter.Core;
 using Shatter.Core.Database;
 using Shatter.Core.Structures;
 using Shatter.Discord;
+using Shatter.Discord.Services;
 
 namespace Shatter
 {
@@ -37,7 +38,8 @@ namespace Shatter
 				 {
 						options.UseSqlite(db.Value.DataSource)
 							.EnableDetailedErrors();
-				 });
+				 })
+				.AddScoped<TriviaChannelService>();
 
 			serviceProvider = services.BuildServiceProvider();
 

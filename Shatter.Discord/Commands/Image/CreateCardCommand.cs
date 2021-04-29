@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
-
+using DSharpPlus.Entities;
 using Shatter.Discord.Commands.Attributes;
 using Shatter.Discord.Properties;
 using Shatter.Discord.Services;
@@ -57,7 +57,7 @@ namespace Shatter.Discord.Commands.Image
 
             using var stream = await this._meme.BuildMemeAsync(Resources.Images_CAH, this.captions, "schoolbell", 24);
 
-            await ctx.RespondWithFileAsync("cah-meme.png", stream);
+            await ctx.RespondAsync(new DiscordMessageBuilder().WithFile("cah-meme.png", stream));
         }
     }
 }

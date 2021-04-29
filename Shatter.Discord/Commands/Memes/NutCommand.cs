@@ -1,11 +1,11 @@
-﻿using System;
+using System;
 using System.Drawing;
 using System.Threading.Tasks;
 
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
-
+using DSharpPlus.Entities;
 using Shatter.Discord.Commands.Attributes;
 using Shatter.Discord.Properties;
 using Shatter.Discord.Services;
@@ -39,7 +39,7 @@ namespace Shatter.Discord.Commands.Memes
 
             using var img = await this._meme.BuildMemeAsync(Resources.Images_NutMeme, this.captions, "roboto", 40, new SolidBrush(Color.Black));
 
-            await ctx.RespondWithFileAsync("nut-meme.png", img);
+            await ctx.RespondAsync(new DiscordMessageBuilder().WithFile("nut-meme.png", img));
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -50,7 +50,7 @@ namespace Shatter.Discord.Commands.Image
             map.Save(mem, System.Drawing.Imaging.ImageFormat.Png);
             mem.Seek(0, SeekOrigin.Begin);
 
-            await ctx.RespondWithFileAsync("negated-img.png", mem);
+            await ctx.RespondAsync(new DiscordMessageBuilder().WithFile("negated-img.png", mem));
         }
     }
 }

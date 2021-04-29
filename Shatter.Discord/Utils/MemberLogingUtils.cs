@@ -100,7 +100,7 @@ namespace Shatter.Discord.Utils
 
                 try
                 {
-                    await DiscordBot.Bot.Rest.CreateMessageAsync(g.MemberlogChannel ?? 0UL, "", false, embed, null);
+                    await DiscordBot.Bot.Rest.CreateMessageAsync(g.MemberlogChannel ?? 0UL, embed);
                 }
 				catch { /* Backgroun task, ignore rest exceptions. */ } // ignore
 			}
@@ -111,7 +111,8 @@ namespace Shatter.Discord.Utils
                 {
                     try
                     {
-                        await DiscordBot.Bot.Rest.UploadFileAsync(g.MemberlogChannel ?? 0UL, stream, "welcome-message.png", "", false, null, null);
+                        await DiscordBot.Bot.Rest.CreateMessageAsync(g.MemberlogChannel ?? 0UL, 
+							new DiscordMessageBuilder().WithFile("welcome-message.png", stream));
                     }
                     catch { /* Backgroun task, ignore rest exceptions. */ } // ignore
                 }
@@ -120,7 +121,7 @@ namespace Shatter.Discord.Utils
             {
                 try
                 {
-                    await DiscordBot.Bot.Rest.CreateMessageAsync(g.MemberlogChannel ?? 0UL, msg, false, null, null);
+                    await DiscordBot.Bot.Rest.CreateMessageAsync(g.MemberlogChannel ?? 0UL, msg);
                 }
 				catch { /* Backgroun task, ignore rest exceptions. */ } // ignore
 			}
@@ -177,7 +178,7 @@ namespace Shatter.Discord.Utils
 
                 try
                 {
-                    await DiscordBot.Bot.Rest.CreateMessageAsync(g.MemberlogChannel ?? 0UL, "", false, embed, null);
+                    await DiscordBot.Bot.Rest.CreateMessageAsync(g.MemberlogChannel ?? 0UL, embed);
 				}
 				catch { /* Ignore errors from the REST client sening in the backgroung. */ } // ignore
 
@@ -189,7 +190,8 @@ namespace Shatter.Discord.Utils
                 {
                     try
                     {
-                        await DiscordBot.Bot.Rest.UploadFileAsync(g.MemberlogChannel ?? 0UL, stream, "farewell-message.png", "", false, null, null);
+                        await DiscordBot.Bot.Rest.CreateMessageAsync(g.MemberlogChannel ?? 0UL, 
+							new DiscordMessageBuilder().WithFile("farewell-message.png", stream));
 					}
 					catch { /* Ignore errors from the REST client sening in the backgroung. */ } // ignore
 				}
@@ -198,7 +200,7 @@ namespace Shatter.Discord.Utils
             {
                 try
                 {
-                    await DiscordBot.Bot.Rest.CreateMessageAsync(g.MemberlogChannel ?? 0UL, msg, false, null, null);
+                    await DiscordBot.Bot.Rest.CreateMessageAsync(g.MemberlogChannel ?? 0UL, msg);
                 }
                 catch { /* Ignore errors from the REST client sening in the backgroung. */ } // ignore
             }

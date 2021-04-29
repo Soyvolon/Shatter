@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -55,7 +55,7 @@ namespace Shatter.Discord.Commands.Image
             swirledMap.Save(mem, System.Drawing.Imaging.ImageFormat.Png);
             mem.Seek(0, SeekOrigin.Begin);
 
-            await ctx.RespondWithFileAsync("swirl-img.png", mem);
+            await ctx.RespondAsync(new DiscordMessageBuilder().WithFile("swirl-img.png", mem));
         }
     }
 }

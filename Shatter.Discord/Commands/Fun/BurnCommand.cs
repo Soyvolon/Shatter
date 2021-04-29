@@ -29,7 +29,7 @@ namespace Shatter.Discord.Commands.Fun
 
             mem?.Seek(0, SeekOrigin.Begin);
 
-            await ctx.Channel.SendFileAsync("burn-img.gif", mem, msg);
+            await ctx.Channel.SendMessageAsync(new DiscordMessageBuilder().WithFile("burn-img.gif", mem).WithContent(msg));
         }
     }
 }

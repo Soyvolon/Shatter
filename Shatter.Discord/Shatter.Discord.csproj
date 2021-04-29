@@ -7,21 +7,21 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="DSharpPlus" Version="4.0.0-nightly-00769" />
-    <PackageReference Include="DSharpPlus.CommandsNext" Version="4.0.0-nightly-00769" />
-    <PackageReference Include="DSharpPlus.Interactivity" Version="4.0.0-nightly-00769" />
-    <PackageReference Include="DSharpPlus.Lavalink" Version="4.0.0-nightly-00769" />
-    <PackageReference Include="DSharpPlus.Rest" Version="4.0.0-nightly-00769" />
-    <PackageReference Include="Google.Apis.YouTube.v3" Version="1.49.0.2148" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.0">
+    <PackageReference Include="DSharpPlus" Version="4.0.1" />
+    <PackageReference Include="DSharpPlus.CommandsNext" Version="4.0.1" />
+    <PackageReference Include="DSharpPlus.Interactivity" Version="4.0.1" />
+    <PackageReference Include="DSharpPlus.Lavalink" Version="4.0.1" />
+    <PackageReference Include="DSharpPlus.Rest" Version="4.0.1" />
+    <PackageReference Include="Google.Apis.YouTube.v3" Version="1.51.0.2294" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.5">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Npgsql" Version="5.0.0" />
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.0" />
-    <PackageReference Include="Svg" Version="3.1.1" />
-    <PackageReference Include="System.Diagnostics.PerformanceCounter" Version="5.0.0" />
-    <PackageReference Include="System.Drawing.Common" Version="5.0.0" />
+    <PackageReference Include="Npgsql" Version="5.0.4" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.5.1" />
+    <PackageReference Include="Svg" Version="3.2.3" />
+    <PackageReference Include="System.Diagnostics.PerformanceCounter" Version="5.0.1" />
+    <PackageReference Include="System.Drawing.Common" Version="5.0.2" />
     <PackageReference Include="System.Resources.Extensions" Version="5.0.0" />
   </ItemGroup>
 

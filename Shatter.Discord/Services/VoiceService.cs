@@ -157,9 +157,8 @@ namespace Shatter.Discord.Services
                 var nowPlaying = sender.CurrentState.CurrentTrack;
 				if(DiscordBot.Bot?.Rest is not null)
 				{
-					await DiscordBot.Bot.Rest.CreateMessageAsync(chan, "", false, CommandModule.SuccessBase()
-						.WithDescription($":green_circle: :notes:] {nowPlaying.Title} by {nowPlaying.Author} - `{sender.CurrentState.PlaybackPosition:mm\\:ss}/{nowPlaying.Length:mm\\:ss}`"),
-						null);
+					await DiscordBot.Bot.Rest.CreateMessageAsync(chan, CommandModule.SuccessBase()
+						.WithDescription($":green_circle: :notes:] {nowPlaying.Title} by {nowPlaying.Author} - `{sender.CurrentState.PlaybackPosition:mm\\:ss}/{nowPlaying.Length:mm\\:ss}`"));
 				}
 			}
         }

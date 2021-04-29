@@ -19,6 +19,7 @@ namespace Shatter.Core.Database
         public DbSet<GuildFilters> Filters { get; set; }
         public DbSet<GuildModeration> Moderations { get; set; }
         public DbSet<GuildMemberlogs> Memberlogs { get; set; }
+		public DbSet<CustomTriviaQuestion> TriviaQuestions { get; set; }
         #endregion
 
         #region User Data

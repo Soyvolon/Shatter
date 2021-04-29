@@ -103,7 +103,7 @@ namespace Shatter.Discord.Services
 
 							using var img = await BuildImage(board.Value);
 
-							await dm.SendFileAsync("bingo-board.png", img);
+							await dm.SendMessageAsync(new DiscordMessageBuilder().WithFile("bingo-board.png", img));
 
 							await Task.Delay(TimeSpan.FromSeconds(0.75));
                         }

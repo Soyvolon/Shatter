@@ -41,8 +41,8 @@ namespace Shatter.Discord.Commands.Memes
 
             final?.Seek(0, SeekOrigin.Begin);
 
-            await ctx.RespondWithFileAsync("punch-meme.png", final,
-                $"{Formatter.Bold(ctx.Member.DisplayName)} {Formatter.Italic("sucker punches")} {Formatter.Bold(member.DisplayName)}");
+            await ctx.RespondAsync(new DiscordMessageBuilder().WithFile("punch-meme.png", final).WithContent(
+                $"{Formatter.Bold(ctx.Member.DisplayName)} {Formatter.Italic("sucker punches")} {Formatter.Bold(member.DisplayName)}"));
         }
     }
 }

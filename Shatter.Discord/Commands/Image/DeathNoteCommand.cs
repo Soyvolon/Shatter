@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Drawing;
 using System.Threading.Tasks;
 
@@ -39,7 +39,9 @@ namespace Shatter.Discord.Commands.Image
 
             using var stream = await this._meme.BuildMemeAsync(Resources.Images_DeathNote, this.captions, "apple", 12, new SolidBrush(Color.Black));
 
-            await ctx.RespondWithFileAsync("deathnote-meme.png", stream, ctx.Member.Id == member.Id ? "*Looks like you killed yourself*" : "");
+            await ctx.RespondAsync(new DiscordMessageBuilder()
+				.WithFile("deathnote-meme.png", stream)
+				.WithContent(ctx.Member.Id == member.Id ? "*Looks like you killed yourself*" : ""));
         }
     }
 }

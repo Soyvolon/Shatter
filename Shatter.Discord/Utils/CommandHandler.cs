@@ -53,7 +53,7 @@ namespace Shatter.Discord.Utils
                 {
                     guildConfig = new GuildConfig
                     {
-                        GuildId = msg.Channel.GuildId,
+                        GuildId = msg.Channel.GuildId.Value,
                         Prefix = this._config.Prefix
                     };
 
